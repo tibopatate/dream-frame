@@ -120,7 +120,7 @@ export function AboutStorytellingSection({
         <ScrollReveal direction="right" delay={0.2} className="lg:col-span-6 relative">
           <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-neutral-800 shadow-2xl group">
             <Image
-              src={craftImage || "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop"}
+              src={craftImage || "/atelier/WhatsApp Image 2026-09-08 at 13.47.09.jpeg"}
               alt="Atelier d'artisanat Dream Frame"
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-700"

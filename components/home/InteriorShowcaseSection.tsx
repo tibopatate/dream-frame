@@ -47,19 +47,24 @@ const REVIEWS = [
 
 const GALLERY_PHOTOS = [
   {
-    url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1000&auto=format&fit=crop',
-    title: 'Salon Moderne & Étagère Design',
-    model: 'Porsche 911 GT3 RS',
+    url: '/atelier/WhatsApp Image 2026-09-08 at 13.47.09.jpeg',
+    title: 'Pagani Huayra & Cadre Relief 3D',
+    model: 'Pagani Huayra V12',
   },
   {
-    url: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop',
-    title: 'Bureau de Direction Exécutif',
-    model: 'Ferrari F40',
+    url: '/atelier/WhatsApp Image 2026-09-08 at 13.47.08 (1).jpeg',
+    title: 'Audi R8 V10 Performance',
+    model: 'Audi R8 V10',
   },
   {
-    url: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1000&auto=format&fit=crop',
-    title: 'Console d&apos;Entrée & Éclairage Tamisé',
-    model: 'Lamborghini Revuelto',
+    url: '/atelier/WhatsApp Image 2026-09-08 at 13.47.10.jpeg',
+    title: 'BMW M4 Competition Isle of Man',
+    model: 'BMW M4 Competition',
+  },
+  {
+    url: '/atelier/WhatsApp Image 2026-09-08 at 13.47.07.jpeg',
+    title: 'Finition Artisanale Atelier France',
+    model: 'Édition Galerie Muséal',
   },
 ]
 
