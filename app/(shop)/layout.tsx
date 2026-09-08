@@ -7,6 +7,7 @@ import { CartNotification } from '@/components/CartNotification'
 import { FlyToCart } from '@/components/FlyToCart'
 import { SearchModal } from '@/components/SearchModal'
 import { FloatingContactWidget } from '@/components/FloatingContactWidget'
+import { StickyMobileBuyBar } from '@/components/StickyMobileBuyBar'
 import { getSettings } from '@/lib/data-store'
 
 export const metadata = {
@@ -24,6 +25,8 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
       {/* Drawer mobile — rendu au niveau racine pour dépasser le header sticky */}
       <MobileNavDrawer />
       <div className="flex-1">{children}</div>
+      {/* Barre d'Achat Mobile Récurrente Flottante (1-Tap Mobile Conversion) */}
+      <StickyMobileBuyBar />
       <ShopFooter />
     </div>
   )
