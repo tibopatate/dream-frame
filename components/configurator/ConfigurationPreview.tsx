@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { ConfigOption } from '@/lib/configurator-data'
-import { Zap, Eye } from 'lucide-react'
+import { Zap, Eye, Box, Compass } from 'lucide-react'
 
 interface ConfigurationPreviewProps {
   dimension: ConfigOption
@@ -18,6 +18,7 @@ export function ConfigurationPreview({
   scale,
 }: ConfigurationPreviewProps) {
   const [ledActive, setLedActive] = useState(true)
+  const [viewAngle, setViewAngle] = useState<'face' | 'perspective' | 'macro'>('face')
 
   // Style de bordure et texture selon la matière choisie
   const getFrameBorderStyle = () => {
@@ -34,10 +35,23 @@ export function ConfigurationPreview({
     }
   }
 
+  // Transformation 3D selon l'angle choisi (Section 16 du Mega Prompt)
+  const get3DTransform = () => {
+    switch (viewAngle) {
+      case 'perspective':
+        return 'perspective(1200px) rotateY(-16deg) rotateX(6deg) scale(0.95)'
+      case 'macro':
+        return 'scale(1.22) translateY(12px)'
+      case 'face':
+      default:
+        return 'none'
+    }
+  }
+
   const scaleFactor = scale.scaleFactor || 0.78
 
   return (
-    <div className="relative w-full h-full min-h-[480px] lg:min-h-[640px] flex flex-col items-center justify-center p-6 lg:p-12 bg-carbon border border-graphite overflow-hidden">
+    <div className="relative w-full h-full min-h-[500px] lg:min-h-[660px] flex flex-col items-center justify-center p-6 lg:p-12 bg-carbon border border-graphite overflow-hidden rounded-2xl">
       {/* Simulation rétroéclairage LED d'ambiance */}
       {ledActive && (
         <div className="absolute inset-0 pointer-events-none transition-opacity duration-700">
@@ -45,27 +59,75 @@ export function ConfigurationPreview({
         </div>
       )}
 
-      {/* Bouton Toggle Rétroéclairage LED */}
-      <button
-        type="button"
-        onClick={() => setLedActive(!ledActive)}
-        className={`absolute top-6 right-6 z-20 flex items-center gap-2 px-3.5 py-2 text-[10px] font-mono tracking-widest uppercase transition-all duration-300 border ${
-          ledActive
-            ? 'bg-champagne text-obsidian border-champagne font-bold shadow-champagne-glow'
-            : 'bg-obsidian text-ash border-graphite hover:text-porcelain hover:border-ash'
-        }`}
-      >
-        <Zap className="w-3 h-3" />
-        {ledActive ? 'LED : Active' : 'LED : Éteinte'}
-      </button>
+      {/* Barre supérieure de Contrôles Visuels (Angles & LED - Section 16) */}
+      <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between gap-2 flex-wrap">
+        {/* Sélecteur d'angle 3D */}
+        <div className="flex items-center gap-1 bg-obsidian/80 backdrop-blur-md p-1 border border-graphite rounded-lg">
+          <button
+            type="button"
+            onClick={() => setViewAngle('face')}
+            className={`px-2.5 py-1 text-[9px] font-mono uppercase tracking-wider rounded transition-all ${
+              viewAngle === 'face'
+                ? 'bg-neutral-800 text-champagne font-bold'
+                : 'text-ash hover:text-porcelain'
+            }`}
+          >
+            Vue Face
+          </button>
+          <button
+            type="button"
+            onClick={() => setViewAngle('perspective')}
+            className={`px-2.5 py-1 text-[9px] font-mono uppercase tracking-wider rounded transition-all ${
+              viewAngle === 'perspective'
+                ? 'bg-neutral-800 text-champagne font-bold'
+                : 'text-ash hover:text-porcelain'
+            }`}
+          >
+            3D Relief
+          </button>
+          <button
+            type="button"
+            onClick={() => setViewAngle('macro')}
+            className={`px-2.5 py-1 text-[9px] font-mono uppercase tracking-wider rounded transition-all ${
+              viewAngle === 'macro'
+                ? 'bg-neutral-800 text-champagne font-bold'
+                : 'text-ash hover:text-porcelain'
+            }`}
+          >
+            Macro Zoom
+          </button>
+        </div>
 
-      {/* Le Cadre Virtuel Morphologique */}
+        {/* Bouton Toggle Rétroéclairage LED */}
+        <button
+          type="button"
+          onClick={() => setLedActive(!ledActive)}
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-[9px] font-mono tracking-widest uppercase transition-all duration-300 border rounded-lg ${
+            ledActive
+              ? 'bg-champagne text-obsidian border-champagne font-bold shadow-champagne-glow'
+              : 'bg-obsidian/90 text-ash border-graphite hover:text-porcelain hover:border-ash'
+          }`}
+        >
+          <Zap className="w-3 h-3" />
+          {ledActive ? 'LED : Active' : 'LED : Éteinte'}
+        </button>
+      </div>
+
+      {/* Le Cadre Virtuel Morphologique avec support 3D */}
       <div
-        className={`relative z-10 w-full max-w-[420px] transition-all duration-500 p-6 sm:p-8 flex flex-col justify-between border-[12px] sm:border-[16px] shadow-2xl ${getFrameBorderStyle()}`}
+        className={`relative z-10 w-full max-w-[420px] transition-all duration-700 ease-out p-6 sm:p-8 flex flex-col justify-between border-[12px] sm:border-[16px] shadow-2xl ${getFrameBorderStyle()} ${
+          viewAngle === 'perspective' ? 'shadow-[-30px_25px_45px_rgba(0,0,0,0.8)]' : ''
+        }`}
         style={{
           aspectRatio: dimension.aspectRatio || '3 / 4',
+          transform: get3DTransform(),
         }}
       >
+        {/* Reflet de lumière sur vitrage acrylique */}
+        {viewAngle === 'perspective' && (
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none rounded" />
+        )}
+
         {/* Passe-partout muséal intérieur avec biseau */}
         <div className="relative w-full h-full bg-[#070706] border border-graphite/60 flex flex-col justify-between p-6 overflow-hidden">
           {/* Marquage musée haute horlogerie / galerie */}
@@ -114,7 +176,7 @@ export function ConfigurationPreview({
       </div>
 
       {/* Récapitulatif technique sous le cadre */}
-      <div className="relative z-10 mt-6 flex items-center gap-6 text-[10px] font-mono tracking-widest uppercase text-ash">
+      <div className="relative z-10 mt-6 flex items-center gap-4 sm:gap-6 text-[10px] font-mono tracking-widest uppercase text-ash flex-wrap justify-center">
         <span>Format : {dimension.subtitle}</span>
         <span className="text-graphite">/</span>
         <span>Châssis : {finish.name}</span>

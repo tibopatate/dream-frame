@@ -30,13 +30,52 @@ export function ThreeTierSelector({
 }: ThreeTierSelectorProps) {
   return (
     <div className="space-y-6 sm:space-y-8 select-none">
-      {/* ─── RANGÉE 1 (EN HAUT) : LE FORMAT DU CADRE ───────────────────────── */}
+      {/* ─── ACTE 01 : LE MODÈLE AUTOMOBILE (Section 15) ───────────────────── */}
       <div className="space-y-2.5">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-            1. Choisissez la taille du cadre
+          <span className="text-xs font-mono uppercase tracking-widest text-amber-400 font-bold">
+            01 — Choisissez votre automobile
           </span>
-          <span className="text-[10px] font-mono text-amber-400">Glissez horizontalement →</span>
+          <span className="text-[10px] font-mono text-neutral-400">Glissez horizontalement →</span>
+        </div>
+
+        <div className="flex gap-3 overflow-x-auto no-scrollbar py-1 snap-x snap-mandatory">
+          {cars.map((car) => {
+            const isSelected = car.id === selectedCarId
+            return (
+              <button
+                key={car.id}
+                type="button"
+                onClick={() => onSelectCar(car.id)}
+                className={`snap-start flex-shrink-0 p-3 rounded-xl border text-left transition-all duration-200 flex items-center gap-3 cursor-pointer min-w-[210px] sm:min-w-[230px] ${
+                  isSelected
+                    ? 'bg-neutral-800 border-amber-400/90 text-white shadow-lg shadow-amber-400/5'
+                    : 'bg-neutral-900/90 border-neutral-800 text-neutral-400 hover:border-neutral-700 hover:text-white'
+                }`}
+              >
+                {/* Vignette Photo */}
+                <div className="relative w-12 h-10 rounded-lg overflow-hidden bg-black border border-neutral-800 flex-shrink-0">
+                  {car.imageUrl && (
+                    <Image src={car.imageUrl} alt={car.name} fill className="object-cover" />
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold truncate text-white">{car.name}</p>
+                  <p className="text-[10px] font-mono text-amber-400/90">{car.subtitle}</p>
+                </div>
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* ─── ACTE 02 : LE FORMAT DU CADRE (Section 15) ───────────────────────── */}
+      <div className="space-y-2.5">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-mono uppercase tracking-widest text-neutral-300 font-bold">
+            02 — Choisissez le format
+          </span>
+          <span className="text-[10px] font-mono text-neutral-400">Proportions réelles</span>
         </div>
 
         <div className="flex gap-3 overflow-x-auto no-scrollbar py-1 snap-x snap-mandatory">
@@ -71,50 +110,11 @@ export function ThreeTierSelector({
         </div>
       </div>
 
-      {/* ─── RANGÉE 2 (AU MILIEU) : LE MODÈLE AUTOMOBILE ───────────────────── */}
+      {/* ─── ACTE 03 : L'ÉCHELLE & OPTIONS (Section 15) ────────────────────────── */}
       <div className="space-y-2.5">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-            2. Choisissez l'automobile
-          </span>
-          <span className="text-[10px] font-mono text-amber-400">Glissez horizontalement →</span>
-        </div>
-
-        <div className="flex gap-3 overflow-x-auto no-scrollbar py-1 snap-x snap-mandatory">
-          {cars.map((car) => {
-            const isSelected = car.id === selectedCarId
-            return (
-              <button
-                key={car.id}
-                type="button"
-                onClick={() => onSelectCar(car.id)}
-                className={`snap-start flex-shrink-0 p-3 rounded-xl border text-left transition-all duration-200 flex items-center gap-3 cursor-pointer min-w-[210px] sm:min-w-[230px] ${
-                  isSelected
-                    ? 'bg-neutral-800 border-amber-400/90 text-white shadow-lg shadow-amber-400/5'
-                    : 'bg-neutral-900/90 border-neutral-800 text-neutral-400 hover:border-neutral-700 hover:text-white'
-                }`}
-              >
-                {/* Vignette Photo */}
-                <div className="relative w-12 h-10 rounded-lg overflow-hidden bg-black border border-neutral-800 flex-shrink-0">
-                  {car.imageUrl && (
-                    <Image src={car.imageUrl} alt={car.name} fill className="object-cover" />
-                  )}
-                </div>
-                <div className="min-w-0">
-                  <p className="text-xs font-semibold truncate text-white">{car.name}</p>
-                  <p className="text-[10px] font-mono text-amber-400/90">{car.subtitle}</p>
-                </div>
-              </button>
-            )
-          })}
-        </div>
-      </div>
-
-      {/* ─── RANGÉE 3 (EN BAS) : L'ÉCHELLE MINIATURE (1:64, 1:43, 1:24, 1:18) ── */}
-      <div className="space-y-2.5">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-            3. Choisissez l'échelle
+          <span className="text-xs font-mono uppercase tracking-widest text-neutral-300 font-bold">
+            03 — Choisissez l&apos;échelle miniature
           </span>
           <span className="text-[10px] font-mono text-amber-400">1:18 Disponible</span>
         </div>

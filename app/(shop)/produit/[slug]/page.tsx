@@ -140,9 +140,14 @@ export default async function ProductPage({ params }: Props) {
                 {product.year || 'Collection'}
               </span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-serif text-white leading-tight">
-              {product.name}
-            </h1>
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-serif text-white leading-tight">
+                {product.name}
+              </h1>
+              <p className="text-[10px] font-mono tracking-[0.25em] text-neutral-400 uppercase mt-1">
+                3D ART FRAME · SCULPTURE MURALE
+              </p>
+            </div>
             {variant?.sku && (
               <p className="text-xs text-neutral-400 font-mono tracking-wider">SKU : {variant.sku}</p>
             )}

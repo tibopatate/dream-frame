@@ -81,7 +81,7 @@ export default async function HomePage() {
               className="relative w-full sm:w-auto px-8 py-4 bg-black/70 hover:bg-black/90 backdrop-blur-md border border-neutral-700 hover:border-amber-400/60 text-white text-xs tracking-wider uppercase rounded-xl transition-all duration-300 flex items-center justify-center gap-2 group"
             >
               <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>L&apos;Atelier Sur-Mesure</span>
+              <span>Créer mon Dream Frame</span>
             </Link>
           </div>
 

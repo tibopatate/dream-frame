@@ -237,19 +237,19 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
         <div className="grid grid-cols-2 gap-2.5 pt-4 border-t border-neutral-800 text-xs text-neutral-300">
           <div className="flex items-center gap-2">
             <Truck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-            <span>Colissimo 48h Offert</span>
+            <span>✓ Livraison suivie 48h</span>
           </div>
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-amber-400 flex-shrink-0" />
-            <span>Garantie Atelier 2 Ans</span>
+            <span>✓ Paiement 100% sécurisé</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Award className="w-4 h-4 text-amber-400 flex-shrink-0" />
+            <span>✓ Garantie d&apos;atelier 2 ans</span>
           </div>
           <div className="flex items-center gap-2">
             <RotateCcw className="w-4 h-4 text-amber-400 flex-shrink-0" />
-            <span>Retours 14 Jours</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-amber-400 flex-shrink-0" />
-            <span>LEDs 3000K &amp; Câble Inclus</span>
+            <span>✓ Retours 14 jours légaux</span>
           </div>
         </div>
 

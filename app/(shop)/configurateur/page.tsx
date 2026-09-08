@@ -100,9 +100,9 @@ export default function AtelierConfigurateurPage() {
   }
 
   return (
-    <main className="min-h-screen bg-obsidian text-porcelain selection:bg-champagne selection:text-obsidian">
+    <main className="min-h-screen bg-obsidian text-porcelain selection:bg-champagne selection:text-obsidian pb-24 sm:pb-28">
       {/* Navigation de retour galerie */}
-      <div className="max-w-7xl mx-auto px-6 py-6 border-b border-graphite/60 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 py-4 border-b border-graphite/60 flex items-center justify-between flex-wrap gap-3">
         <Link
           href="/catalogue"
           className="inline-flex items-center gap-2 text-[10px] font-mono tracking-museum uppercase text-ash hover:text-porcelain transition-colors"
@@ -110,16 +110,24 @@ export default function AtelierConfigurateurPage() {
           <ArrowLeft className="w-3.5 h-3.5" />
           Retour au Catalogue
         </Link>
-        <span className="text-[10px] font-mono tracking-museum uppercase text-champagne">
-          Atelier Sur-Mesure
-        </span>
+        <div className="flex items-center gap-2 text-[9px] font-mono uppercase text-ash">
+          <span className="text-champagne font-bold">01 Voiture</span>
+          <span>→</span>
+          <span className="text-champagne font-bold">02 Format</span>
+          <span>→</span>
+          <span className="text-champagne font-bold">03 Échelle</span>
+          <span>→</span>
+          <span className="text-ash/60">04 Visualisez</span>
+          <span>→</span>
+          <span className="text-ash/60">05 Achetez</span>
+        </div>
       </div>
 
       {/* Composition 60/40 Desktop */}
-      <div className="max-w-7xl mx-auto px-6 py-10 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div className="max-w-7xl mx-auto px-6 py-8 lg:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           {/* 60% : Prévisualisation vivante de la pièce */}
-          <div className="lg:col-span-6 xl:col-span-7 sticky top-28">
+          <div className="lg:col-span-6 xl:col-span-7 sticky top-24">
             <ConfigurationPreview
               dimension={currentDimension}
               finish={currentFinish}
@@ -128,17 +136,17 @@ export default function AtelierConfigurateurPage() {
             />
           </div>
 
-          {/* 40% : Les 4 Actes de création gestuelle */}
-          <div className="lg:col-span-6 xl:col-span-5 space-y-12">
+          {/* 40% : Les Actes de création */}
+          <div className="lg:col-span-6 xl:col-span-5 space-y-10">
             <div>
               <span className="text-[9px] font-mono tracking-museum uppercase text-champagne">
-                Architecture de l'Objet
+                Architecture de l&apos;Objet
               </span>
               <h1 className="font-gallery-title text-3xl sm:text-4xl text-porcelain mt-1">
                 Composez votre Dream Frame
               </h1>
               <p className="text-xs text-ash tracking-subtle mt-2 leading-relaxed">
-                Faites glisser les options pour façonner votre cadre. Chaque choix module la structure et l'équilibre visuel en temps réel.
+                Modifiez la supercar, le format et l&apos;échelle. Le cadre interactif et le tarif se recalculent en temps réel.
               </p>
             </div>
 
@@ -165,9 +173,39 @@ export default function AtelierConfigurateurPage() {
             {addedNotification && (
               <div className="p-4 bg-carbon border border-champagne text-porcelain flex items-center gap-3 text-xs font-mono">
                 <Check className="w-4 h-4 text-champagne" />
-                <span>Pièce enregistrée. Redirection vers votre collection...</span>
+                <span>Pièce enregistrée. Redirection vers votre panier...</span>
               </div>
             )}
+          </div>
+        </div>
+      </div>
+
+      {/* ─── RÉSUMÉ PERSISTANT FLOTTANT (Section 15 du Mega Prompt) ─── */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 bg-black/90 backdrop-blur-md border-t border-neutral-800 px-4 sm:px-6 py-3">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          <div className="min-w-0">
+            <span className="text-[9px] font-mono tracking-widest text-amber-400 uppercase block">
+              VOTRE DREAM FRAME
+            </span>
+            <p className="text-xs font-semibold text-white truncate">
+              {currentCar.name} · {currentDimension.subtitle} · {currentScale.name}
+            </p>
+          </div>
+          <div className="flex items-center gap-4 flex-shrink-0">
+            <div className="text-right">
+              <span className="text-[9px] text-neutral-400 block font-light">Prix actuel</span>
+              <span className="text-base sm:text-lg font-bold font-serif text-white">
+                {price.formattedTtc}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={handleAddToCart}
+              disabled={isAdding}
+              className="px-5 py-2.5 bg-white hover:bg-neutral-100 text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg active:scale-95 cursor-pointer disabled:opacity-50"
+            >
+              {isAdding ? 'En cours...' : 'Ajouter au Panier'}
+            </button>
           </div>
         </div>
       </div>
