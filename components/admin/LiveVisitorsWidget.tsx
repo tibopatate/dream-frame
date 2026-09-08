@@ -46,7 +46,9 @@ export function LiveVisitorsWidget({ variant = 'compact' }: LiveVisitorsWidgetPr
         </button>
 
         {showDetails && (
-          <div className="absolute top-full left-0 mt-2 w-64 p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 shadow-2xl z-50 text-xs space-y-3 animate-fade-in">
+          <>
+            <div className="fixed inset-0 z-40" onClick={() => setShowDetails(false)} />
+            <div className="absolute top-full left-0 mt-2 w-64 p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 shadow-2xl z-50 text-xs space-y-3 animate-fade-in">
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-neutral-800 pb-2">
               <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
                 <Activity className="w-3.5 h-3.5 text-emerald-500" />
@@ -81,7 +83,8 @@ export function LiveVisitorsWidget({ variant = 'compact' }: LiveVisitorsWidgetPr
               </p>
             </div>
           </div>
-        )}
+        </>
+      )}
       </div>
     )
   }

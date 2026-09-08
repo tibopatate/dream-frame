@@ -651,14 +651,23 @@ export function CustomizerClient({ initialSettings }: CustomizerClientProps) {
 
           {/* Cadre de simulation Viewport */}
           <div
-            className={`transition-all duration-300 bg-[#080807] overflow-y-auto shadow-2xl border border-neutral-800 relative select-text ${
+            className={`transition-all duration-300 bg-[#080807] overflow-y-auto shadow-2xl border border-neutral-800 relative select-text custom-scrollbar ${
               viewport === 'mobile'
-                ? 'w-[375px] h-[720px] rounded-[36px] ring-8 ring-neutral-900 shadow-2xl'
+                ? 'w-[375px] h-[720px] rounded-[38px] ring-8 ring-neutral-900 shadow-2xl'
                 : viewport === 'tablet'
                 ? 'w-[768px] h-[80vh] rounded-2xl ring-4 ring-neutral-900'
                 : 'w-full h-full max-w-6xl max-h-[85vh] rounded-2xl'
             }`}
           >
+            {/* Dynamic Island Notch pour mockup mobile */}
+            {viewport === 'mobile' && (
+              <div className="sticky top-0 z-40 w-full h-7 bg-black/90 backdrop-blur-md flex items-center justify-center pointer-events-none">
+                <div className="w-24 h-4 bg-neutral-900 rounded-full flex items-center justify-end px-2 shadow-inner">
+                  <div className="w-2 h-2 rounded-full bg-neutral-950 border border-neutral-800" />
+                </div>
+              </div>
+            )}
+
             {/* ─── BANDEAU D'ANNONCE INTERACTIF ─── */}
             {(settings.announcementBarEnabled ?? true) && (
               <div
