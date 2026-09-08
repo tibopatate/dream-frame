@@ -29,8 +29,8 @@ export default async function HomePage() {
         {/* Image de fond — zoom de sortie au chargement */}
         <div className="absolute inset-0 z-0 animate-hero-zoom">
           <Image
-            src="https://images.unsplash.com/photo-1592198084033-aade902d1aae?q=80&w=2000&auto=format&fit=crop"
-            alt="Ferrari — Art Automobile Dream Frame"
+            src="/atelier/WhatsApp Image 2026-09-08 at 13.47.07.jpeg"
+            alt="Bugatti Chiron — Art Automobile Dream Frame"
             fill
             priority
             className="object-cover object-center brightness-[0.4] contrast-[1.15]"
@@ -71,10 +71,10 @@ export default async function HomePage() {
           {/* Boutons d'Accès Direct — Visibles Immédiatement Sans Scroller */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 animate-fade-up delay-300 pt-2">
             <Link
-              href="/produit/porsche-911-gt3-rs-992-cadre-3d"
+              href="/produit/bugatti-chiron-2016-cadre-3d"
               className="relative w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-neutral-100 text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 shadow-2xl shadow-white/20 flex items-center justify-center gap-2 group active:scale-[0.98]"
             >
-              <span>{settings.heroCtaText || 'Découvrir la Porsche GT3 RS — 49,99 €'}</span>
+              <span>{settings.heroCtaText || 'Découvrir la Bugatti Chiron — 49,99 €'}</span>
               <ArrowRight className="w-4 h-4 text-black group-hover:translate-x-1 transition-transform" />
             </Link>
 
