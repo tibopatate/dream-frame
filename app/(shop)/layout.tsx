@@ -1,0 +1,279 @@
+import Image from 'next/image'
+import Link from 'next/link'
+import { ShieldCheck, Truck, Zap, Star, Sparkles } from 'lucide-react'
+import { CartIcon } from '@/components/cart-icon'
+import { MobileNavToggle, MobileNavDrawer } from '@/components/MobileNav'
+import { CartNotification } from '@/components/CartNotification'
+import { FlyToCart } from '@/components/FlyToCart'
+import { SearchModal } from '@/components/SearchModal'
+import { FloatingContactWidget } from '@/components/FloatingContactWidget'
+import { getSettings } from '@/lib/data-store'
+
+export const metadata = {
+  title: "Dream Frame — Cadres 3D d'Exception & Art Automobile",
+}
+
+export default async function ShopLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen bg-[#080807] text-white flex flex-col antialiased selection:bg-amber-400 selection:text-black">
+      <ShopHeader />
+      {/* Animation Projectile : Boule ronde blanche qui vole du bouton vers le panier */}
+      <FlyToCart />
+      {/* Notification Toast : Fond blanc, écriture noire, forme ronde */}
+      <CartNotification />
+      {/* Drawer mobile — rendu au niveau racine pour dépasser le header sticky */}
+      <MobileNavDrawer />
+      <div className="flex-1">{children}</div>
+      <ShopFooter />
+    </div>
+  )
+}
+
+// ─── Header ──────────────────────────────────────────────────────────────────
+
+function ShopHeader() {
+  let announcementText = 'LIVRAISON COLISSIMO SUIVIE 100% OFFERTE · EXPÉDITION 24/48H'
+  let announcementEnabled = true
+  let logoPosition: 'left' | 'center' | 'right' = 'left'
+  let announcementPosition: 'top' | 'below' = 'top'
+  let headerStyle: 'glass' | 'solid' | 'gold' = 'glass'
+
+  try {
+    const s = getSettings()
+    if (s.announcementBarText) announcementText = s.announcementBarText
+    if (s.announcementBarEnabled !== undefined) announcementEnabled = s.announcementBarEnabled
+    if (s.headerLogoPosition) logoPosition = s.headerLogoPosition
+    if (s.announcementBarPosition) announcementPosition = s.announcementBarPosition
+    if (s.headerStyle) headerStyle = s.headerStyle
+  } catch {}
+
+  const headerStyleClasses =
+    headerStyle === 'gold'
+      ? 'bg-[#080807]/95 backdrop-blur-md border-b border-amber-400/50 shadow-lg shadow-amber-400/5'
+      : headerStyle === 'solid'
+      ? 'bg-[#080807] border-b border-neutral-800'
+      : 'bg-[#080807]/92 backdrop-blur-md border-b border-neutral-800/70'
+
+  const AnnouncementComponent = announcementEnabled ? (
+    <div className="bg-neutral-950 border-b border-neutral-800/60 text-center py-2 px-4">
+      <p className="text-[10px] sm:text-xs tracking-[0.18em] uppercase text-amber-300/90 font-medium">
+        {announcementText}
+      </p>
+    </div>
+  ) : null
+
+  const LogoComponent = (
+    <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
+      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-neutral-800 overflow-hidden bg-neutral-900 relative shadow-md flex-shrink-0">
+        <Image
+          src="/logo.jpg"
+          alt="Dream Frame"
+          fill
+          className="object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+      </div>
+      <div>
+        <p className="text-sm sm:text-base font-black tracking-tight text-white leading-none uppercase">
+          Dream Frame
+        </p>
+        <p className="text-[8px] sm:text-[9px] text-amber-400 tracking-[0.2em] leading-none mt-0.5 font-bold">
+          ART AUTOMOBILE · 3D
+        </p>
+      </div>
+    </Link>
+  )
+
+  const NavComponent = (
+    <nav className="hidden md:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-neutral-400">
+      <Link href="/catalogue" className="hover:text-white transition-colors duration-200">
+        La Collection
+      </Link>
+      <Link
+        href="/configurateur"
+        className="text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1.5"
+      >
+        <Sparkles className="w-3.5 h-3.5" />
+        L&apos;Atelier
+      </Link>
+      <Link href="/catalogue?era=VINTAGE" className="hover:text-white transition-colors duration-200">
+        Vintage
+      </Link>
+      <Link href="/catalogue?era=MODERN" className="hover:text-white transition-colors duration-200">
+        Modern
+      </Link>
+    </nav>
+  )
+
+  const ActionsComponent = (
+    <div className="flex items-center gap-2 sm:gap-3">
+      {/* Recherche intelligente (Loupe) */}
+      <SearchModal />
+
+      {/* Admin — desktop uniquement */}
+      <Link
+        href="/admin/dashboard"
+        className="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-neutral-500 hover:text-amber-400 border border-neutral-800 hover:border-amber-400/40 bg-neutral-900 px-3 py-2 rounded-xl transition-all duration-200"
+      >
+        Admin
+      </Link>
+
+      {/* Panier */}
+      <CartIcon />
+
+      {/* Burger — mobile uniquement */}
+      <MobileNavToggle />
+    </div>
+  )
+
+  return (
+    <header className={`sticky top-0 z-40 transition-colors duration-200 ${headerStyleClasses}`}>
+      {/* Bandeau Annonce Position Haut */}
+      {announcementPosition === 'top' && AnnouncementComponent}
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-18 flex items-center justify-between gap-4">
+        {logoPosition === 'left' && (
+          <>
+            {LogoComponent}
+            {NavComponent}
+            {ActionsComponent}
+          </>
+        )}
+
+        {logoPosition === 'center' && (
+          <>
+            <div className="flex items-center flex-1">
+              {NavComponent}
+              <div className="md:hidden">
+                <MobileNavToggle />
+              </div>
+            </div>
+            <div className="mx-auto flex justify-center">
+              {LogoComponent}
+            </div>
+            <div className="flex items-center justify-end flex-1">
+              {ActionsComponent}
+            </div>
+          </>
+        )}
+
+        {logoPosition === 'right' && (
+          <>
+            <div className="flex items-center gap-4">
+              {NavComponent}
+              {ActionsComponent}
+            </div>
+            {LogoComponent}
+          </>
+        )}
+      </div>
+
+      {/* Bandeau Annonce Position Sous le Header */}
+      {announcementPosition === 'below' && AnnouncementComponent}
+    </header>
+  )
+}
+
+// ─── Footer ──────────────────────────────────────────────────────────────────
+
+function ShopFooter() {
+  const year = new Date().getFullYear()
+
+  const pillars = [
+    {
+      icon: Truck,
+      title: 'Livraison 100% Offerte',
+      desc: 'Colissimo Suivi en France sous 24/48h, sans minimum.',
+      color: 'text-emerald-400',
+    },
+    {
+      icon: ShieldCheck,
+      title: 'Satisfait ou Remboursé',
+      desc: 'Droit légal de rétractation 14 jours, retour simplifié.',
+      color: 'text-amber-400',
+    },
+    {
+      icon: Zap,
+      title: 'Éclairage LED Inclus',
+      desc: 'Chaque cadre intègre son bandeau micro-LED rétroéclairé.',
+      color: 'text-amber-400',
+    },
+    {
+      icon: Star,
+      title: 'Manufacture Française',
+      desc: 'Assemblage minutieux et contrôle qualité unitaire.',
+      color: 'text-amber-400',
+    },
+  ]
+
+  return (
+    <footer className="border-t border-neutral-800/60 bg-neutral-950/70 mt-20">
+      {/* Piliers de confiance */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-14">
+          {pillars.map(({ icon: Icon, title, desc, color }) => (
+            <div key={title} className="space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center">
+                <Icon className={`w-5 h-5 ${color}`} />
+              </div>
+              <p className="font-bold text-xs uppercase tracking-wider text-white">{title}</p>
+              <p className="text-neutral-500 text-xs leading-relaxed font-light">{desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Section Contact & Assistance Atelier */}
+        <div className="border-t border-neutral-800/60 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-1 text-center md:text-left">
+            <h4 className="font-bold text-xs uppercase tracking-wider text-white">Contactez-nous &amp; Assistance Atelier</h4>
+            <p className="text-neutral-400 text-xs font-light">Une question sur un modèle, un format ou votre commande ? Notre équipe vous répond rapidement.</p>
+          </div>
+          <div className="flex items-center gap-3 flex-wrap justify-center">
+            <a
+              href="mailto:contact@dreamframe.fr"
+              className="px-5 py-2.5 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition"
+            >
+              contact@dreamframe.fr
+            </a>
+            <a
+              href="https://wa.me/33600000000"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-2.5 rounded-xl border border-emerald-800/60 bg-emerald-950/40 hover:bg-emerald-900/50 text-emerald-300 font-semibold text-xs transition flex items-center gap-2"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Atelier WhatsApp Direct</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Bas de footer */}
+        <div className="border-t border-neutral-800/60 pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-neutral-500">
+          <div className="flex items-center gap-3">
+            <div className="w-6 h-6 rounded-lg border border-neutral-800 relative grayscale opacity-50">
+              <Image src="/logo.jpg" alt="Dream Frame" fill className="object-cover" />
+            </div>
+            <span className="font-light">© {year} DREAM FRAME. TOUS DROITS RÉSERVÉS.</span>
+          </div>
+
+          <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-[11px] font-semibold tracking-wider uppercase">
+            {[
+              ['Mentions légales', '/mentions-legales'],
+              ['CGV', '/cgv'],
+              ['Confidentialité', '/confidentialite'],
+              ['Cookies', '/cookies'],
+              ['Rétractation', '/retractation'],
+            ].map(([label, href]) => (
+              <Link key={href} href={href} className="hover:text-white transition-colors duration-200">
+                {label}
+              </Link>
+            ))}
+          </nav>
+
+          <p className="text-[10px] text-neutral-600 tracking-wider">
+            MÉDIATION : CM2C
+          </p>
+        </div>
+      </div>
+    </footer>
+  )
+}

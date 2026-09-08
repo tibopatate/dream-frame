@@ -1,0 +1,86 @@
+'use client'
+
+import { useCart } from '@/lib/store/cart'
+import { ShoppingBag, Check } from 'lucide-react'
+import { useState } from 'react'
+import { triggerFlyToCart } from '@/components/FlyToCart'
+
+interface AddToCartButtonProps {
+  variantId: string
+  productId: string
+  productName: string
+  slug: string
+  brand: string
+  image: string
+  price: number
+  stock: number
+  formatName?: string
+  formatSize?: string
+}
+
+export function AddToCartButton({
+  variantId,
+  productId,
+  productName,
+  slug,
+  brand,
+  image,
+  price = 49.99,
+  stock,
+  formatName,
+  formatSize,
+}: AddToCartButtonProps) {
+  const addItem = useCart((s) => s.addItem)
+  const [added, setAdded] = useState(false)
+
+  if (stock === 0) {
+    return (
+      <button
+        disabled
+        className="w-full py-4 bg-neutral-900 text-neutral-500 font-medium uppercase tracking-wider text-xs rounded-xl cursor-not-allowed border border-neutral-800"
+      >
+        Édition Épuisée
+      </button>
+    )
+  }
+
+  const handleAdd = (e: React.MouseEvent) => {
+    // 1. Déclencher le projectile volant vers le panier
+    triggerFlyToCart(e, { image, quantity: 1 })
+
+    // 2. Ajouter l'article dans le store Zustand
+    addItem({
+      variantId,
+      productId,
+      productName,
+      slug,
+      brand,
+      image,
+      price,
+      quantity: 1,
+      formatName,
+      formatSize,
+    })
+    setAdded(true)
+    setTimeout(() => setAdded(false), 2000)
+  }
+
+  return (
+    <button
+      onClick={handleAdd}
+      className="w-full py-4 bg-white hover:bg-neutral-100 text-black font-semibold uppercase tracking-wider text-xs rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-xl shadow-white/10 cursor-pointer"
+    >
+      {added ? (
+        <>
+          <Check className="w-4 h-4 text-emerald-600" />
+          Ajouté à la collection !
+        </>
+      ) : (
+        <>
+          <ShoppingBag className="w-4 h-4 text-black" />
+          Ajouter à ma collection — {price.toFixed(2).replace('.', ',')} €
+        </>
+      )}
+    </button>
+  )
+}

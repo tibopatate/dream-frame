@@ -1,0 +1,622 @@
+{
+  "products": [
+    {
+      "id": "mock-f40",
+      "slug": "ferrari-f40-1987-cadre-3d",
+      "name": "Ferrari F40 (1987)",
+      "brand": "Ferrari",
+      "description": "Le dernier chef-d’œuvre validé personnellement par Enzo Ferrari. V8 biturbo sauvage, aileron cathédrale légendaire, immortalisé en relief 3D sous vitrine d’exposition avec halo LED ambré.",
+      "price": 49.99,
+      "era": "VINTAGE",
+      "year": 1987,
+      "isActive": true,
+      "isFeatured": true,
+      "images": [
+        "https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop"
+      ],
+      "stock": 11,
+      "stockAlert": 2,
+      "sku": "DF-FERRAR-F40",
+      "stripePriceId": "",
+      "createdAt": "2026-08-09T10:56:40.802Z"
+    },
+    {
+      "id": "mock-250gto",
+      "slug": "ferrari-250-gto-1962-cadre-3d",
+      "name": "Ferrari 250 GTO (1962)",
+      "brand": "Ferrari",
+      "description": "L'automobile la plus convoitée et précieuse de l'histoire. Les courbes sculpturales de Sergio Scaglietti sublimées dans un cadre d'ébénisterie noir profond.",
+      "price": 49.99,
+      "era": "VINTAGE",
+      "year": 1962,
+      "isActive": true,
+      "isFeatured": true,
+      "images": [
+        "https://images.unsplash.com/photo-1592198084033-aade902d1aae?q=80&w=1200&auto=format&fit=crop"
+      ],
+      "stock": 4,
+      "stockAlert": 2,
+      "sku": "DF-FERRAR-250GTO",
+      "stripePriceId": "",
+      "createdAt": "2026-08-09T10:56:40.802Z"
+    },
+    {
+      "id": "mock-300sl",
+      "slug": "mercedes-300-sl-papillon-1954-cadre-3d",
+      "name": "Mercedes-Benz 300 SL Gullwing (1954)",
+      "brand": "Mercedes-Benz",
+      "description": "Les portes papillon mythiques de la première supercar moderne. Un bijou de technologie des années 50 reproduit avec une précision d’orfèvre.",
+      "price": 49.99,
+      "era": "VINTAGE",
+      "year": 1954,
+      "isActive": true,
+      "isFeatured": false,
+      "images": [
+        "https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1200&auto=format&fit=crop"
+      ],
+      "stock": 5,
+      "stockAlert": 2,
+      "sku": "DF-MERCED-300SL",
+      "stripePriceId": "",
+      "createdAt": "2026-08-09T10:56:40.802Z"
+    },
+    {
+      "id": "mock-930turbo",
+      "slug": "porsche-911-turbo-3-0-1975-cadre-3d",
+      "name": "Porsche 911 Turbo 3.0 « 930 » (1975)",
+      "brand": "Porsche",
+      "description": "L'aileron « queue de baleine », les ailes galbées et le sifflement du turbo. La naissance du mythe 911 Turbo mise en lumière.",
+      "price": 49.99,
+      "era": "VINTAGE",
+      "year": 1975,
+      "isActive": true,
+      "isFeatured": false,
+      "images": [
+        "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop"
+      ],
+      "stock": 7,
+      "stockAlert": 3,
+      "sku": "DF-PORSCH-930T",
+      "stripePriceId": "",
+      "createdAt": "2026-08-09T10:56:40.802Z"
+    },
+    {
+      "id": "mock-sf90",
+      "slug": "ferrari-sf90-xx-stradale-cadre-3d",
+      "name": "Ferrari SF90 XX Stradale",
+      "brand": "Ferrari",
+      "description": "1 030 chevaux. La première Ferrari homologuée route issue du programme expérimental XX. Aérodynamique extrême et feux arrière transversaux illuminés.",
+      "price": 49.99,
+      "era": "MODERN",
+      "year": 2024,
+      "isActive": true,
+      "isFeatured": true,
+      "images": [
+        "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop"
+      ],
+      "stock": 8,
+      "stockAlert": 3,
+      "sku": "DF-FERRAR-SF90",
+      "stripePriceId": "",
+      "createdAt": "2026-08-09T10:56:40.802Z"
+    },
+    {
+      "id": "mock-gt3rs",
+      "slug": "porsche-911-gt3-rs-992-cadre-3d",
+      "name": "Porsche 911 GT3 RS (992)",
+      "brand": "Porsche",
+      "description": "Aérodynamisme actif DRS et rupteur strident à 9 000 tr/min. La reine indiscutée de la Nordschleife immortalisée sous verre haute clarté.",
+      "price": 49.99,
+      "era": "MODERN",
+      "year": 2023,
+      "isActive": true,
+      "isFeatured": true,
+      "images": [
+        "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop"
+      ],
+      "stock": 9,
+      "stockAlert": 3,
+      "sku": "DF-PORSCH-GT3RS",
+      "stripePriceId": "",
+      "createdAt": "2026-08-09T10:56:40.802Z"
+    },
+    {
+      "id": "mock-revuelto",
+      "slug": "lamborghini-revuelto-cadre-3d",
+      "name": "Lamborghini Revuelto",
+      "brand": "Lamborghini",
+      "description": "Le hurlement du V12 atmosphérique couplé à trois moteurs électriques. Des arêtes furtives tranchantes sculptées dans le relief 3D.",
+      "price": 49.99,
+      "era": "MODERN",
+      "year": 2024,
+      "isActive": true,
+      "isFeatured": false,
+      "images": [
+        "https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=1200&auto=format&fit=crop"
+      ],
+      "stock": 5,
+      "stockAlert": 2,
+      "sku": "DF-LAMBOR-REVUEL",
+      "stripePriceId": "",
+      "createdAt": "2026-08-09T10:56:40.802Z"
+    },
+    {
+      "id": "mock-senna",
+      "slug": "mclaren-senna-cadre-3d",
+      "name": "McLaren Senna",
+      "brand": "McLaren",
+      "description": "Dédiée à la légende Ayrton Senna. L'appui aérodynamique sculpté par le vent dans la fibre de carbone, mise en scène sous vitrage anti-reflets.",
+      "price": 49.99,
+      "era": "MODERN",
+      "year": 2020,
+      "isActive": true,
+      "isFeatured": false,
+      "images": [
+        "https://images.unsplash.com/photo-1621135802920-133df287f89c?q=80&w=1200&auto=format&fit=crop"
+      ],
+      "stock": 3,
+      "stockAlert": 2,
+      "sku": "DF-MCLARE-SENNA",
+      "stripePriceId": "",
+      "createdAt": "2026-08-09T10:56:40.802Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord-today-1",
+      "orderNumber": "DF-2026-00042",
+      "status": "PAID",
+      "customerEmail": "lucas.bernard@gmail.com",
+      "customerFirstName": "Lucas",
+      "customerLastName": "Bernard",
+      "customerPhone": "06 14 22 33 44",
+      "shippingAddress": "15 Boulevard Haussmann",
+      "shippingCity": "Paris",
+      "shippingPostalCode": "75009",
+      "shippingCountry": "FR",
+      "subtotal": 49.99,
+      "shippingCost": 0,
+      "taxAmount": 8.33,
+      "total": 49.99,
+      "carrier": "Colissimo Suivi",
+      "invoiceNumber": "DF-2026-00042",
+      "createdAt": "2026-09-08T08:56:40.802Z",
+      "items": [
+        {
+          "id": "item-t1",
+          "productId": "mock-gt3rs",
+          "variantId": "var-gt3rs",
+          "productName": "Porsche 911 GT3 RS (992)",
+          "brand": "Porsche",
+          "era": "MODERN",
+          "sku": "DF-PORSCHE-001",
+          "unitPrice": 49.99,
+          "quantity": 1,
+          "total": 49.99
+        }
+      ]
+    },
+    {
+      "id": "ord-today-2",
+      "orderNumber": "DF-2026-00041",
+      "status": "PREPARING",
+      "customerEmail": "marc.durand@yahoo.fr",
+      "customerFirstName": "Marc",
+      "customerLastName": "Durand",
+      "customerPhone": "07 88 99 11 22",
+      "shippingAddress": "42 Avenue Jean Médecin",
+      "shippingCity": "Nice",
+      "shippingPostalCode": "06000",
+      "shippingCountry": "FR",
+      "subtotal": 99.98,
+      "shippingCost": 0,
+      "taxAmount": 16.66,
+      "total": 99.98,
+      "carrier": "Colissimo Suivi",
+      "invoiceNumber": "DF-2026-00041",
+      "createdAt": "2026-09-08T05:56:40.802Z",
+      "items": [
+        {
+          "id": "item-t2-1",
+          "productId": "mock-f40",
+          "variantId": "var-f40",
+          "productName": "Ferrari F40 (1987)",
+          "brand": "Ferrari",
+          "era": "VINTAGE",
+          "sku": "DF-FERRARI-001",
+          "unitPrice": 49.99,
+          "quantity": 1,
+          "total": 49.99
+        },
+        {
+          "id": "item-t2-2",
+          "productId": "mock-250gto",
+          "variantId": "var-250gto",
+          "productName": "Ferrari 250 GTO (1962)",
+          "brand": "Ferrari",
+          "era": "VINTAGE",
+          "sku": "DF-FERRARI-002",
+          "unitPrice": 49.99,
+          "quantity": 1,
+          "total": 49.99
+        }
+      ]
+    },
+    {
+      "id": "ord-j1-1",
+      "orderNumber": "DF-2026-00040",
+      "status": "SHIPPED",
+      "customerEmail": "julien.roux@outlook.fr",
+      "customerFirstName": "Julien",
+      "customerLastName": "Roux",
+      "customerPhone": "06 55 44 33 22",
+      "shippingAddress": "8 Rue Mercière",
+      "shippingCity": "Lyon",
+      "shippingPostalCode": "69002",
+      "shippingCountry": "FR",
+      "subtotal": 49.99,
+      "shippingCost": 0,
+      "taxAmount": 8.33,
+      "total": 49.99,
+      "carrier": "Colissimo Suivi",
+      "trackingNumber": "6A12398471928",
+      "invoiceNumber": "DF-2026-00040",
+      "createdAt": "2026-09-07T10:56:40.802Z",
+      "items": [
+        {
+          "id": "item-j1-1",
+          "productId": "mock-f40",
+          "variantId": "var-f40",
+          "productName": "Ferrari F40 (1987)",
+          "brand": "Ferrari",
+          "era": "VINTAGE",
+          "sku": "DF-FERRARI-001",
+          "unitPrice": 49.99,
+          "quantity": 1,
+          "total": 49.99
+        }
+      ]
+    },
+    {
+      "id": "ord-j2-1",
+      "orderNumber": "DF-2026-00039",
+      "status": "DELIVERED",
+      "customerEmail": "arthur.petit@gmail.com",
+      "customerFirstName": "Arthur",
+      "customerLastName": "Petit",
+      "customerPhone": "06 12 98 76 54",
+      "shippingAddress": "22 Cours dAlbret",
+      "shippingCity": "Bordeaux",
+      "shippingPostalCode": "33000",
+      "shippingCountry": "FR",
+      "subtotal": 49.99,
+      "shippingCost": 0,
+      "taxAmount": 8.33,
+      "total": 49.99,
+      "carrier": "Colissimo Suivi",
+      "trackingNumber": "6A88992233114",
+      "invoiceNumber": "DF-2026-00039",
+      "createdAt": "2026-09-06T10:56:40.802Z",
+      "items": [
+        {
+          "id": "item-j2-1",
+          "productId": "mock-gt3rs",
+          "variantId": "var-gt3rs",
+          "productName": "Porsche 911 GT3 RS (992)",
+          "brand": "Porsche",
+          "era": "MODERN",
+          "sku": "DF-PORSCHE-001",
+          "unitPrice": 49.99,
+          "quantity": 1,
+          "total": 49.99
+        }
+      ]
+    },
+    {
+      "id": "ord-j4-1",
+      "orderNumber": "DF-2026-00038",
+      "status": "DELIVERED",
+      "customerEmail": "stephane.girard@sfr.fr",
+      "customerFirstName": "Stéphane",
+      "customerLastName": "Girard",
+      "shippingAddress": "14 Allée de Tourny",
+      "shippingCity": "Bordeaux",
+      "shippingPostalCode": "33000",
+      "shippingCountry": "FR",
+      "subtotal": 49.99,
+      "shippingCost": 0,
+      "taxAmount": 8.33,
+      "total": 49.99,
+      "carrier": "Colissimo Suivi",
+      "invoiceNumber": "DF-2026-00038",
+      "createdAt": "2026-09-04T10:56:40.802Z",
+      "items": [
+        {
+          "id": "item-j4-1",
+          "productId": "mock-revuelto",
+          "variantId": "var-revuelto",
+          "productName": "Lamborghini Revuelto",
+          "brand": "Lamborghini",
+          "era": "MODERN",
+          "sku": "DF-LAMBO-001",
+          "unitPrice": 49.99,
+          "quantity": 1,
+          "total": 49.99
+        }
+      ]
+    },
+    {
+      "id": "ord-j6-1",
+      "orderNumber": "DF-2026-00037",
+      "status": "DELIVERED",
+      "customerEmail": "nicolas.faure@gmail.com",
+      "customerFirstName": "Nicolas",
+      "customerLastName": "Faure",
+      "shippingAddress": "5 Place Royale",
+      "shippingCity": "Nantes",
+      "shippingPostalCode": "44000",
+      "shippingCountry": "FR",
+      "subtotal": 99.98,
+      "shippingCost": 0,
+      "taxAmount": 16.66,
+      "total": 99.98,
+      "carrier": "Colissimo Suivi",
+      "invoiceNumber": "DF-2026-00037",
+      "createdAt": "2026-09-02T10:56:40.802Z",
+      "items": [
+        {
+          "id": "item-j6-1",
+          "productId": "mock-f40",
+          "variantId": "var-f40",
+          "productName": "Ferrari F40 (1987)",
+          "brand": "Ferrari",
+          "era": "VINTAGE",
+          "sku": "DF-FERRARI-001",
+          "unitPrice": 49.99,
+          "quantity": 2,
+          "total": 99.98
+        }
+      ]
+    },
+    {
+      "id": "ord-j12-1",
+      "orderNumber": "DF-2026-00036",
+      "status": "DELIVERED",
+      "customerEmail": "alexandre.lemoine@free.fr",
+      "customerFirstName": "Alexandre",
+      "customerLastName": "Lemoine",
+      "shippingAddress": "19 Rue du Taur",
+      "shippingCity": "Toulouse",
+      "shippingPostalCode": "31000",
+      "shippingCountry": "FR",
+      "subtotal": 49.99,
+      "shippingCost": 0,
+      "taxAmount": 8.33,
+      "total": 49.99,
+      "carrier": "Colissimo Suivi",
+      "invoiceNumber": "DF-2026-00036",
+      "createdAt": "2026-08-27T10:56:40.802Z",
+      "items": [
+        {
+          "id": "item-j12-1",
+          "productId": "mock-300sl",
+          "variantId": "var-300sl",
+          "productName": "Mercedes 300 SL Papillon",
+          "brand": "Mercedes",
+          "era": "VINTAGE",
+          "sku": "DF-MERCEDES-001",
+          "unitPrice": 49.99,
+          "quantity": 1,
+          "total": 49.99
+        }
+      ]
+    },
+    {
+      "id": "ord-j18-1",
+      "orderNumber": "DF-2026-00035",
+      "status": "DELIVERED",
+      "customerEmail": "hugo.caron@gmail.com",
+      "customerFirstName": "Hugo",
+      "customerLastName": "Caron",
+      "shippingAddress": "3 Quai des Bateliers",
+      "shippingCity": "Strasbourg",
+      "shippingPostalCode": "67000",
+      "shippingCountry": "FR",
+      "subtotal": 49.99,
+      "shippingCost": 0,
+      "taxAmount": 8.33,
+      "total": 49.99,
+      "carrier": "Colissimo Suivi",
+      "invoiceNumber": "DF-2026-00035",
+      "createdAt": "2026-08-21T10:56:40.802Z",
+      "items": [
+        {
+          "id": "item-j18-1",
+          "productId": "mock-gt3rs",
+          "variantId": "var-gt3rs",
+          "productName": "Porsche 911 GT3 RS (992)",
+          "brand": "Porsche",
+          "era": "MODERN",
+          "sku": "DF-PORSCHE-001",
+          "unitPrice": 49.99,
+          "quantity": 1,
+          "total": 49.99
+        }
+      ]
+    },
+    {
+      "id": "ord-j25-1",
+      "orderNumber": "DF-2026-00034",
+      "status": "DELIVERED",
+      "customerEmail": "valentin.g@gmail.com",
+      "customerFirstName": "Valentin",
+      "customerLastName": "Garnier",
+      "shippingAddress": "12 Rue Saint-Malo",
+      "shippingCity": "Rennes",
+      "shippingPostalCode": "35000",
+      "shippingCountry": "FR",
+      "subtotal": 149.97,
+      "shippingCost": 0,
+      "taxAmount": 24.99,
+      "total": 149.97,
+      "carrier": "Colissimo Suivi",
+      "invoiceNumber": "DF-2026-00034",
+      "createdAt": "2026-08-14T10:56:40.802Z",
+      "items": [
+        {
+          "id": "item-j25-1",
+          "productId": "mock-f40",
+          "variantId": "var-f40",
+          "productName": "Ferrari F40 (1987)",
+          "brand": "Ferrari",
+          "era": "VINTAGE",
+          "sku": "DF-FERRARI-001",
+          "unitPrice": 49.99,
+          "quantity": 2,
+          "total": 99.98
+        },
+        {
+          "id": "item-j25-2",
+          "productId": "mock-gt3rs",
+          "variantId": "var-gt3rs",
+          "productName": "Porsche 911 GT3 RS (992)",
+          "brand": "Porsche",
+          "era": "MODERN",
+          "sku": "DF-PORSCHE-001",
+          "unitPrice": 49.99,
+          "quantity": 1,
+          "total": 49.99
+        }
+      ]
+    }
+  ],
+  "movements": [
+    {
+      "id": "mov-1788865583548",
+      "variantId": "mock-f40",
+      "sku": "DF-FERRAR-F40",
+      "productName": "Ferrari F40 (1987)",
+      "brand": "Ferrari",
+      "quantity": 5,
+      "type": "RESTOCK",
+      "reason": "Réapprovisionnement atelier",
+      "createdAt": "2026-09-08T11:06:23.548Z"
+    },
+    {
+      "id": "mov-1",
+      "variantId": "var-gt3rs",
+      "sku": "DF-PORSCHE-001",
+      "productName": "Porsche 911 GT3 RS (992)",
+      "brand": "Porsche",
+      "quantity": -1,
+      "type": "SALE",
+      "reason": "Commande DF-2026-00042",
+      "createdAt": "2026-09-08T08:56:40.802Z"
+    },
+    {
+      "id": "mov-2",
+      "variantId": "var-f40",
+      "sku": "DF-FERRARI-001",
+      "productName": "Ferrari F40 (1987)",
+      "brand": "Ferrari",
+      "quantity": -1,
+      "type": "SALE",
+      "reason": "Commande DF-2026-00041",
+      "createdAt": "2026-09-08T05:56:40.802Z"
+    },
+    {
+      "id": "mov-3",
+      "variantId": "var-f40",
+      "sku": "DF-FERRARI-001",
+      "productName": "Ferrari F40 (1987)",
+      "brand": "Ferrari",
+      "quantity": 15,
+      "type": "RESTOCK",
+      "reason": "Arrivage atelier assemblage France",
+      "createdAt": "2026-09-01T10:56:40.802Z"
+    }
+  ],
+  "settings": {
+    "carrier": "Colissimo Suivi",
+    "shippingCost": 0,
+    "isShippingFree": true,
+    "headerLogoPosition": "left",
+    "headerStyle": "gold"
+  },
+  "collaborators": [
+    {
+      "id": "collab-1",
+      "name": "Morgan",
+      "email": "admin@dreamframe.fr",
+      "role": "ADMIN",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-08T11:57:42.393Z"
+    },
+    {
+      "id": "collab-2",
+      "name": "Frère (Associé)",
+      "email": "contact@dreamframe.fr",
+      "role": "ADMIN",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-08T11:57:42.393Z"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-1",
+      "productSlug": "porsche-911-gt3-rs-992-cadre-3d",
+      "productName": "Porsche 911 GT3 RS (992)",
+      "name": "Alexandre V.",
+      "location": "Paris (75)",
+      "rating": 5,
+      "title": "Une œuvre d’art dans mon salon",
+      "comment": "Reçu en 48h dans un emballage ultra-blindé. Le relief de l’aileron arrière et les LED ambrées 3000K créent une ambiance feutrée sublime dès que la nuit tombe.",
+      "formatPurchased": "Grand Format A3 Collector",
+      "isVerified": true,
+      "status": "APPROVED",
+      "createdAt": "2026-09-04T12:01:25.060Z"
+    },
+    {
+      "id": "rev-2",
+      "productSlug": "ferrari-f40-1987-cadre-3d",
+      "productName": "Ferrari F40 (1987)",
+      "name": "Marc-Antoine D.",
+      "location": "Lyon (69)",
+      "rating": 5,
+      "title": "Qualité d’ébénisterie et vitrage bluffants",
+      "comment": "Finition artisanale exemplaire. Le verre acrylique ne fait aucun reflet parasite. C’est la pièce maîtresse au-dessus de mon bureau d’architecte.",
+      "formatPurchased": "Format Standard A4",
+      "isVerified": true,
+      "status": "APPROVED",
+      "createdAt": "2026-08-30T12:01:25.060Z"
+    },
+    {
+      "id": "rev-3",
+      "productSlug": "lamborghini-revuelto-2023-cadre-3d",
+      "productName": "Lamborghini Revuelto (2023)",
+      "name": "Sébastien L.",
+      "location": "Bordeaux (33)",
+      "rating": 5,
+      "title": "Cadeau idéal pour un passionné",
+      "comment": "Offert pour les 30 ans de mon frère. Il est resté bouche bée devant la précision de la découpe laser et la ligne d’échappement en 3D. Bravo aux créateurs.",
+      "formatPurchased": "Prestige Galerie A2",
+      "isVerified": true,
+      "status": "APPROVED",
+      "createdAt": "2026-08-25T12:01:25.060Z"
+    },
+    {
+      "id": "rev-4",
+      "productSlug": "mercedes-300-sl-papillon-1954-cadre-3d",
+      "productName": "Mercedes-Benz 300 SL Gullwing",
+      "name": "Guillaume B.",
+      "location": "Genève (Suisse)",
+      "rating": 5,
+      "title": "Élégance intemporelle",
+      "comment": "Les portes papillon déployées en 3D sous l’éclairage doux apportent une touche vintage chic incomparable. Très satisfait de mon achat.",
+      "formatPurchased": "Format Standard A4",
+      "isVerified": true,
+      "status": "APPROVED",
+      "createdAt": "2026-08-18T12:01:25.060Z"
+    }
+  ]
+}

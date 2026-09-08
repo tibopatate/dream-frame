@@ -1,0 +1,362 @@
+@import "tailwindcss";
+
+/* ─── Design Tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --font-display: var(--font-poppins), 'Poppins', sans-serif;
+  --font-sans:    var(--font-poppins), 'Poppins', sans-serif;
+  --font-mono:    var(--font-poppins), 'Poppins', sans-serif;
+
+  --obsidian:   #080807;
+  --carbon:     #11110F;
+  --graphite:   #1D1C19;
+  --porcelain:  #F1EEE8;
+  --champagne:  #C7A77A;
+  --ash:        #8E8A82;
+}
+
+/* ─── Reset & Base ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  background-color: #080807;
+  color: #FFFFFF;
+}
+
+body {
+  background-color: #080807;
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Scrollbar personnalisée ───────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #080807; }
+::-webkit-scrollbar-thumb { background: #262624; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #FBBF24; }
+
+/* ─── Sélection de texte ────────────────────────────────────────────────────── */
+::selection { background: #FBBF24; color: #000000; }
+
+/* ─── No-scrollbar utilitaire ──────────────────────────────────────────────── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ─── Typographie utilitaires ───────────────────────────────────────────────── */
+.font-gallery-title {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+/* ─── Keyframes animations ──────────────────────────────────────────────────── */
+
+/* Entrée depuis le bas avec fondu */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Entrée depuis la gauche */
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-64px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Entrée depuis la droite */
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(64px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Fondu simple */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Zoom léger */
+@keyframes zoom-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Shimmer — brillance traversante sur les boutons */
+@keyframes shimmer {
+  0%   { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%) skewX(-20deg); }
+}
+
+/* Pulse doux pour les indicateurs LED */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px 2px rgba(251, 191, 36, 0.4); }
+  50%       { box-shadow: 0 0 20px 6px rgba(251, 191, 36, 0.7); }
+}
+
+/* Hero — zoom de départ cinématique */
+@keyframes hero-zoom {
+  from { transform: scale(1.08); }
+  to   { transform: scale(1.0); }
+}
+
+/* ─── Classes utilitaires animations ────────────────────────────────────────── */
+.animate-fade-up      { animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade-in      { animation: fade-in 0.6s ease-out both; }
+.animate-zoom-in      { animation: zoom-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-slide-left   { animation: slide-in-left 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-slide-right  { animation: slide-in-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-hero-zoom    { animation: hero-zoom 1.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Délais utilitaires */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; }
+
+/* ─── Accessibility ─────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  html { cursor: auto !important; }
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   SYSTÈME DE THÈMES UNIVERSEL ADMIN (STRICTEMENT ISOLÉ À L'ESPACE ADMIN)
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+/* ─── THÈME CLAIR (WHITE / STRIPE / SHOPIFY STYLE) ─── */
+[data-admin-theme="light"] {
+  --adm-bg: #f8fafc;
+  --adm-surface: #ffffff;
+  --adm-surface-subtle: #f1f5f9;
+  --adm-surface-hover: #f8fafc;
+  --adm-border: #e2e8f0;
+  --adm-border-subtle: #f1f5f9;
+  --adm-text-main: #0f172a;
+  --adm-text-sub: #334155;
+  --adm-text-muted: #64748b;
+  
+  --adm-btn-primary-bg: #0f172a;
+  --adm-btn-primary-text: #ffffff;
+  --adm-btn-primary-hover: #1e293b;
+  
+  --adm-btn-secondary-bg: #ffffff;
+  --adm-btn-secondary-text: #0f172a;
+  --adm-btn-secondary-border: #cbd5e1;
+  --adm-btn-secondary-hover: #f1f5f9;
+  
+  --adm-input-bg: #ffffff;
+  --adm-input-border: #cbd5e1;
+  --adm-input-text: #0f172a;
+  --adm-input-placeholder: #94a3b8;
+  
+  --adm-card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+}
+
+/* ─── THÈME SOMBRE (DARK OBSIDIAN / LUXURY COCKPIT) ─── */
+[data-admin-theme="dark"] {
+  --adm-bg: #09090b;
+  --adm-surface: #121215;
+  --adm-surface-subtle: #18181b;
+  --adm-surface-hover: #1f1f23;
+  --adm-border: #27272a;
+  --adm-border-subtle: #18181b;
+  --adm-text-main: #ffffff;
+  --adm-text-sub: #d4d4d8;
+  --adm-text-muted: #a1a1aa;
+  
+  --adm-btn-primary-bg: #ffffff;
+  --adm-btn-primary-text: #09090b;
+  --adm-btn-primary-hover: #f4f4f5;
+  
+  --adm-btn-secondary-bg: #18181b;
+  --adm-btn-secondary-text: #fafafa;
+  --adm-btn-secondary-border: #27272a;
+  --adm-btn-secondary-hover: #27272a;
+  
+  --adm-input-bg: #121215;
+  --adm-input-border: #27272a;
+  --adm-input-text: #ffffff;
+  --adm-input-placeholder: #71717a;
+  
+  --adm-card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+}
+
+/* Application universelle sur l'admin */
+[data-admin-theme] {
+  background-color: var(--adm-bg) !important;
+  color: var(--adm-text-main) !important;
+}
+
+[data-admin-theme] aside {
+  background-color: var(--adm-surface) !important;
+  border-color: var(--adm-border) !important;
+  color: var(--adm-text-main) !important;
+}
+
+/* Cartes, conteneurs, blocs et panneaux */
+[data-admin-theme] main div[class*="rounded-2xl"]:not([class*="bg-amber"]):not([class*="bg-emerald"]):not([class*="bg-rose"]):not([class*="bg-blue"]):not([class*="fixed"]),
+[data-admin-theme] main div[class*="rounded-3xl"]:not([class*="fixed"]),
+[data-admin-theme] main section,
+[data-admin-theme] main form {
+  background-color: var(--adm-surface) !important;
+  border-color: var(--adm-border) !important;
+  box-shadow: var(--adm-card-shadow) !important;
+}
+
+/* En-têtes */
+[data-admin-theme] main h1,
+[data-admin-theme] main h2,
+[data-admin-theme] main h3,
+[data-admin-theme] main h4 {
+  color: var(--adm-text-main) !important;
+}
+
+/* Paragraphes et labels */
+[data-admin-theme] main p.text-neutral-400,
+[data-admin-theme] main p.text-neutral-500,
+[data-admin-theme] main span.text-neutral-400,
+[data-admin-theme] main span.text-neutral-500 {
+  color: var(--adm-text-muted) !important;
+}
+
+[data-admin-theme] main p.text-neutral-300,
+[data-admin-theme] main span.text-neutral-300 {
+  color: var(--adm-text-sub) !important;
+}
+
+[data-admin-theme] main p.text-white:not([class*="bg-"]):not([class*="rounded-full"]),
+[data-admin-theme] main span.text-white:not([class*="bg-"]):not([class*="rounded-full"]) {
+  color: var(--adm-text-main) !important;
+}
+
+/* Bordures & diviseurs */
+[data-admin-theme] main .border-neutral-800,
+[data-admin-theme] main .border-neutral-700,
+[data-admin-theme] main .border-slate-200,
+[data-admin-theme] main .divide-neutral-800,
+[data-admin-theme] main .divide-neutral-800\/80 {
+  border-color: var(--adm-border) !important;
+}
+
+/* Blocs secondaires / encadrés intérieurs */
+[data-admin-theme] main .bg-black\/40,
+[data-admin-theme] main .bg-neutral-800\/30,
+[data-admin-theme] main .bg-neutral-800\/50,
+[data-admin-theme] main .bg-neutral-950 {
+  background-color: var(--adm-surface-subtle) !important;
+  border-color: var(--adm-border) !important;
+}
+
+/* Boutons principaux d'action (Ajouter, Sauvegarder, etc.) */
+[data-admin-theme] main button[class*="bg-white"],
+[data-admin-theme] main a[class*="bg-white"] {
+  background-color: var(--adm-btn-primary-bg) !important;
+  color: var(--adm-btn-primary-text) !important;
+}
+
+[data-admin-theme] main button[class*="bg-neutral-900"],
+[data-admin-theme] main a[class*="bg-neutral-900"] {
+  background-color: var(--adm-btn-secondary-bg) !important;
+  color: var(--adm-btn-secondary-text) !important;
+  border-color: var(--adm-btn-secondary-border) !important;
+}
+
+/* Inputs, selects, textareas */
+[data-admin-theme] main input:not([type="checkbox"]):not([type="radio"]),
+[data-admin-theme] main select,
+[data-admin-theme] main textarea {
+  background-color: var(--adm-input-bg) !important;
+  border-color: var(--adm-input-border) !important;
+  color: var(--adm-input-text) !important;
+}
+
+[data-admin-theme] main input::placeholder,
+[data-admin-theme] main textarea::placeholder {
+  color: var(--adm-input-placeholder) !important;
+}
+
+/* Tableaux */
+[data-admin-theme] main table thead {
+  background-color: var(--adm-surface-subtle) !important;
+  border-bottom: 1px solid var(--adm-border) !important;
+}
+
+[data-admin-theme] main table thead th {
+  color: var(--adm-text-muted) !important;
+}
+
+[data-admin-theme] main table tbody tr {
+  border-color: var(--adm-border) !important;
+}
+
+[data-admin-theme] main table tbody tr:hover {
+  background-color: var(--adm-surface-hover) !important;
+}
+
+[data-admin-theme] main table td {
+  color: var(--adm-text-main) !important;
+}
+
+/* ─── PONT UNIVERSEL SLATE & NEUTRAL POUR L'ADMIN (GARANTIE 100% CONTRASTE) ─── */
+[data-admin-theme="dark"] main .text-slate-900,
+[data-admin-theme="dark"] main .text-slate-800,
+[data-admin-theme="dark"] main .text-slate-700 {
+  color: #ffffff !important;
+}
+
+[data-admin-theme="dark"] main .text-slate-600,
+[data-admin-theme="dark"] main .text-slate-500 {
+  color: #a1a1aa !important;
+}
+
+[data-admin-theme="dark"] main .text-slate-400 {
+  color: #71717a !important;
+}
+
+[data-admin-theme="dark"] main .bg-white,
+[data-admin-theme="dark"] main .bg-slate-50,
+[data-admin-theme="dark"] main .bg-slate-100 {
+  background-color: var(--adm-surface) !important;
+  color: #ffffff !important;
+}
+
+[data-admin-theme="dark"] main .border-slate-100,
+[data-admin-theme="dark"] main .border-slate-200 {
+  border-color: var(--adm-border) !important;
+}
+
+[data-admin-theme="dark"] main .bg-slate-900 {
+  background-color: #ffffff !important;
+  color: #09090b !important;
+}
+
+[data-admin-theme="light"] main .text-slate-900,
+[data-admin-theme="light"] main .text-slate-800,
+[data-admin-theme="light"] main .text-slate-700 {
+  color: #0f172a !important;
+}
+
+[data-admin-theme="light"] main .text-slate-600,
+[data-admin-theme="light"] main .text-slate-500 {
+  color: #64748b !important;
+}
+
+[data-admin-theme="light"] main .bg-slate-900 {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
+
+
