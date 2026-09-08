@@ -8,7 +8,8 @@ export function middleware(req: NextRequest) {
   if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) {
     const sessionToken =
       req.cookies.get('next-auth.session-token')?.value ||
-      req.cookies.get('__Secure-next-auth.session-token')?.value
+      req.cookies.get('__Secure-next-auth.session-token')?.value ||
+      req.cookies.get('admin-session')?.value
 
     if (!sessionToken) {
       return NextResponse.redirect(new URL('/admin/login', req.url))

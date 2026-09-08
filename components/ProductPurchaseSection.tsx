@@ -55,9 +55,9 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
   const isLowStock = (selectedFormat.stock ?? 10) <= 5
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Bloc Tarif, Sélecteur de Formats & Panier */}
-      <div className="bg-neutral-900/90 border border-neutral-800 rounded-2xl p-6 sm:p-7 space-y-6 shadow-2xl">
+      <div className="bg-neutral-900/90 border border-neutral-800/90 rounded-xl p-4 sm:p-6 space-y-4 sm:space-y-6 shadow-xl">
         {/* Prix dynamique et Livraison */}
         <div className="flex items-baseline justify-between flex-wrap gap-2">
           <div>
@@ -100,7 +100,7 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
                   key={fmt.id}
                   type="button"
                   onClick={() => setSelectedFormat(fmt)}
-                  className={`w-full text-left p-3.5 rounded-xl border transition-all duration-200 cursor-pointer relative flex items-center justify-between gap-3 ${
+                  className={`w-full text-left p-3.5 rounded-lg border transition-all duration-200 cursor-pointer relative flex items-center justify-between gap-3 ${
                     isSelected
                       ? 'bg-neutral-800/90 border-amber-400/80 shadow-lg shadow-amber-400/5 ring-1 ring-amber-400/30'
                       : 'bg-black/50 border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900/60'

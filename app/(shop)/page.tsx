@@ -33,12 +33,12 @@ export default async function HomePage() {
             alt="Bugatti Chiron — Art Automobile Dream Frame"
             fill
             priority
-            className="object-cover object-center brightness-[0.4] contrast-[1.15]"
+            className="object-cover object-center brightness-[0.75] contrast-[1.1]"
             sizes="100vw"
           />
-          {/* Dégradés directionnels */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#080807] via-transparent to-[#080807]/70" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#080807]/60 via-transparent to-[#080807]/60" />
+          {/* Dégradés directionnels légers pour laisser éclater le visuel Bugatti Chiron */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#080807] via-[#080807]/20 to-[#080807]/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#080807]/40 via-transparent to-[#080807]/40" />
         </div>
 
         {/* Titre & CTA — entrée fade-up */}
