@@ -29,7 +29,7 @@ export default async function HomePage() {
         {/* Image de fond — zoom de sortie au chargement */}
         <div className="absolute inset-0 z-0 animate-hero-zoom">
           <Image
-            src="/atelier/WhatsApp Image 2026-09-08 at 13.47.07.jpeg"
+            src="/atelier/chiron-wall.jpg"
             alt="Bugatti Chiron — Art Automobile Dream Frame"
             fill
             priority

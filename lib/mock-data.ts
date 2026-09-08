@@ -32,8 +32,8 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     isActive: true,
     isFeatured: true,
     images: [
-      '/atelier/WhatsApp Image 2026-09-08 at 13.47.07.jpeg',
-      '/atelier/WhatsApp Image 2026-09-08 at 13.47.04.jpeg',
+      '/atelier/chiron-wall.jpg',
+      '/atelier/chiron-trunk.jpg',
     ],
     variants: [{ id: 'var-chiron', sku: 'DF-BUGATTI-CHIRON', stock: 5, stockAlert: 2 }],
   },
@@ -48,7 +48,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: true,
-    images: ['/atelier/WhatsApp Image 2026-09-08 at 13.47.09.jpeg'],
+    images: ['/atelier/huayra-real.jpg'],
     variants: [{ id: 'var-huayra', sku: 'DF-PAGANI-HUAYRA', stock: 4, stockAlert: 2 }],
   },
   {
@@ -62,7 +62,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: true,
-    images: ['/atelier/WhatsApp Image 2026-09-08 at 13.47.08 (1).jpeg'],
+    images: ['/atelier/r8v10-real.jpg'],
     variants: [{ id: 'var-r8v10', sku: 'DF-AUDI-R8V10', stock: 7, stockAlert: 3 }],
   },
   {
@@ -76,7 +76,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: true,
-    images: ['/atelier/WhatsApp Image 2026-09-08 at 13.47.10.jpeg'],
+    images: ['/atelier/m4comp-real.jpg'],
     variants: [{ id: 'var-m4comp', sku: 'DF-BMW-M4COMP', stock: 6, stockAlert: 2 }],
   },
   {
@@ -90,7 +90,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: true,
-    images: ['/atelier/WhatsApp Image 2026-09-08 at 13.47.05.jpeg'],
+    images: ['/atelier/huracan-real.jpg'],
     variants: [{ id: 'var-huracan', sku: 'DF-LAMBO-HURACAN', stock: 5, stockAlert: 2 }],
   },
   {
@@ -104,7 +104,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: false,
-    images: ['/atelier/WhatsApp Image 2026-09-08 at 13.46.44.jpeg'],
+    images: ['/atelier/amggtr-real.jpg'],
     variants: [{ id: 'var-amggtr', sku: 'DF-MERCEDES-AMGGTR', stock: 4, stockAlert: 2 }],
   },
   {
@@ -118,7 +118,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: false,
-    images: ['/atelier/WhatsApp Image 2026-09-08 at 13.46.41.jpeg'],
+    images: ['/atelier/mclarengt-real.jpg'],
     variants: [{ id: 'var-mclarengt', sku: 'DF-MCLAREN-GT', stock: 3, stockAlert: 2 }],
   },
   {
@@ -132,7 +132,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: false,
-    images: ['/atelier/WhatsApp Image 2026-09-08 at 13.46.59.jpeg'],
+    images: ['/atelier/porsche918-real.jpg'],
     variants: [{ id: 'var-porsche918', sku: 'DF-PORSCHE-918', stock: 4, stockAlert: 2 }],
   },
   {
@@ -146,7 +146,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: false,
-    images: ['/atelier/WhatsApp Image 2026-09-08 at 13.46.59.jpeg'],
+    images: ['/atelier/porsche918-real.jpg'],
     variants: [{ id: 'var-urus', sku: 'DF-LAMBO-URUS', stock: 3, stockAlert: 2 }],
   },
 ]

@@ -592,7 +592,7 @@ function getInitialDatabase(): DatabaseSchema {
     isShippingFree: true,
     announcementBarText: 'LIVRAISON COLISSIMO SUIVIE 100% OFFERTE · EXPÉDITION 24/48H',
     announcementBarEnabled: true,
-    craftSectionImage: '/atelier/WhatsApp Image 2026-09-08 at 13.47.09.jpeg',
+    craftSectionImage: '/atelier/huayra-real.jpg',
     adminTheme: 'light',
     realDataOnly: true,
   }
