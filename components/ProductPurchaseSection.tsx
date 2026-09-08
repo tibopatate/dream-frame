@@ -153,6 +153,60 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
             })}
           </div>
 
+          {/* Guide visuel des proportions murales */}
+          <div className="p-3 bg-neutral-950/60 border border-neutral-800/80 rounded-xl space-y-2">
+            <div className="flex items-center justify-between text-[10px] font-mono uppercase text-neutral-400">
+              <span>Proportions murales comparées</span>
+              <span className="text-amber-400 font-semibold">{selectedFormat.name} ({selectedFormat.size})</span>
+            </div>
+            <div className="h-16 bg-black/40 rounded-lg border border-neutral-900 flex items-end justify-center gap-8 px-4 pb-2 pt-2">
+              <button
+                type="button"
+                onClick={() => setSelectedFormat(formats[0])}
+                className={`flex flex-col items-center gap-1 transition-all cursor-pointer ${
+                  selectedFormat.id === formats[0]?.id ? 'opacity-100 scale-105' : 'opacity-40 hover:opacity-75'
+                }`}
+              >
+                <div className={`w-7 h-9 rounded border flex items-center justify-center text-[7px] font-mono font-bold ${
+                  selectedFormat.id === formats[0]?.id ? 'bg-amber-400/20 border-amber-400 text-amber-300' : 'bg-neutral-800 border-neutral-700 text-neutral-400'
+                }`}>
+                  A4
+                </div>
+                <span className="text-[7px] text-neutral-400 font-mono">Bureau</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setSelectedFormat(formats[1] || formats[0])}
+                className={`flex flex-col items-center gap-1 transition-all cursor-pointer ${
+                  selectedFormat.id === formats[1]?.id ? 'opacity-100 scale-105' : 'opacity-40 hover:opacity-75'
+                }`}
+              >
+                <div className={`w-9 h-12 rounded border flex items-center justify-center text-[8px] font-mono font-bold ${
+                  selectedFormat.id === formats[1]?.id ? 'bg-amber-400/20 border-amber-400 text-amber-300' : 'bg-neutral-800 border-neutral-700 text-neutral-400'
+                }`}>
+                  A3
+                </div>
+                <span className="text-[7px] text-neutral-400 font-mono">Salon / Bureau</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setSelectedFormat(formats[2] || formats[0])}
+                className={`flex flex-col items-center gap-1 transition-all cursor-pointer ${
+                  selectedFormat.id === formats[2]?.id ? 'opacity-100 scale-105' : 'opacity-40 hover:opacity-75'
+                }`}
+              >
+                <div className={`w-12 h-14 rounded border flex items-center justify-center text-[8px] font-mono font-bold ${
+                  selectedFormat.id === formats[2]?.id ? 'bg-amber-400/20 border-amber-400 text-amber-300' : 'bg-neutral-800 border-neutral-700 text-neutral-400'
+                }`}>
+                  A2
+                </div>
+                <span className="text-[7px] text-neutral-400 font-mono">Pièce Maîtresse</span>
+              </button>
+            </div>
+          </div>
+
           {/* Indicateur de disponibilité atelier */}
           <div className="flex items-center justify-between text-[11px] pt-1 px-1">
             <span className="text-neutral-400 flex items-center gap-1.5">
@@ -179,29 +233,29 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
           formatSize={selectedFormat.size}
         />
 
-        {/* Réassurance d'Atelier */}
-        <div className="space-y-3 pt-4 border-t border-neutral-800 text-xs text-neutral-300 font-light">
-          <div className="flex items-start gap-3">
-            <Truck className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-            <span>Colissimo Suivi 24/48h · <strong className="text-white font-medium">Offert sans minimum d'achat</strong></span>
+        {/* Réassurance d'Atelier sous le CTA */}
+        <div className="grid grid-cols-2 gap-2.5 pt-4 border-t border-neutral-800 text-xs text-neutral-300">
+          <div className="flex items-center gap-2">
+            <Truck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+            <span>Colissimo 48h Offert</span>
           </div>
-          <div className="flex items-start gap-3">
-            <RotateCcw className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-            <span>Droit de retour 14 jours (art. L221-18 Code Conso)</span>
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-amber-400 flex-shrink-0" />
+            <span>Garantie Atelier 2 Ans</span>
           </div>
-          <div className="flex items-start gap-3">
-            <ShieldCheck className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-            <span>Garantie légale de conformité de 2 ans incluse</span>
+          <div className="flex items-center gap-2">
+            <RotateCcw className="w-4 h-4 text-amber-400 flex-shrink-0" />
+            <span>Retours 14 Jours</span>
           </div>
-          <div className="flex items-start gap-3">
-            <Zap className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-            <span>Éclairage LED intégré inclus + alimentation et câble tressé</span>
+          <div className="flex items-center gap-2">
+            <Zap className="w-4 h-4 text-amber-400 flex-shrink-0" />
+            <span>LEDs 3000K &amp; Câble Inclus</span>
           </div>
         </div>
 
         {/* Mention DEEE */}
         <div className="pt-3 border-t border-neutral-800/60 text-[10px] text-neutral-400 leading-relaxed font-light">
-          Ce cadre d'exception intègre un système d'éclairage électrique basse consommation. L'éco-participation DEEE est comprise dans le tarif.
+          Ce cadre d'art intègre un système d'éclairage électrique basse consommation. L'éco-participation DEEE est comprise dans le tarif.
         </div>
       </div>
 

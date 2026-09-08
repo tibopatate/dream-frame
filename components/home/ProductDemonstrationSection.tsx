@@ -1,0 +1,313 @@
+'use client'
+
+import { useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Zap, Eye, ArrowRight, Layers, Maximize2, Sparkles, Check } from 'lucide-react'
+
+export function ProductDemonstrationSection() {
+  const [ledOn, setLedOn] = useState(true)
+  const [activeInterior, setActiveInterior] = useState<'bureau' | 'salon' | 'setup'>('bureau')
+  const [activeFormat, setActiveFormat] = useState<'a4' | 'a3' | 'a2'>('a3')
+
+  const interiorDescriptions = {
+    bureau: {
+      title: 'Bureau de Direction & Espace de Travail',
+      subtitle: 'Posé sur son chevalet ou fixé au mur',
+      desc: 'Le cadre capte immédiatement le regard lors de vos réunions ou appels vidéo. La finition biseautée et le verre anti-reflet confèrent une autorité naturelle à votre espace.',
+      image: '/atelier/chiron-wall.jpg',
+    },
+    salon: {
+      title: 'Salon Contemporain & Réception',
+      subtitle: 'Mise en valeur sur mur sombre ou boiserie',
+      desc: 'De jour, le relief sculpté joue avec la lumière naturelle de la pièce. De nuit, l’éclairage LED ambré 3000K diffuse une lueur d’ambiance feutrée sans jamais éblouir.',
+      image: '/atelier/huayra-real.jpg',
+    },
+    setup: {
+      title: 'Espace Passionné & Setup Moderne',
+      subtitle: 'L’accord parfait avec un éclairage tamisé',
+      desc: 'Pensé pour les passionnés d’automobile et d’ingénierie mécanique. Chaque écope, aileron et ligne de fuite ressort avec une précision chirurgicale.',
+      image: '/atelier/m4comp-real.jpg',
+    },
+  }
+
+  const currentInterior = interiorDescriptions[activeInterior]
+
+  return (
+    <section className="py-16 sm:py-28 border-t border-neutral-800/80 bg-[#0a0a09] relative overflow-hidden">
+      {/* Halo d'ambiance */}
+      {ledOn && (
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/10 blur-[130px] rounded-full pointer-events-none transition-opacity duration-700" />
+      )}
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-14 relative z-10">
+
+        {/* ─── EN-TÊTE : PROUVER LE PRODUIT ─── */}
+        <div className="max-w-2xl mx-auto text-center space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-amber-400 text-[10px] font-mono uppercase tracking-[0.2em]">
+            <Sparkles className="w-3 h-3 text-amber-400" />
+            Démonstration Interactive
+          </div>
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
+            Vivez l&apos;expérience Dream Frame
+          </h2>
+          <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+            Observez la différence entre la lumière du jour et l’illumination LED ambrée nocturne.
+          </p>
+        </div>
+
+        {/* ─── DÉMONSTRATION LED ON / LED OFF ─── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center bg-neutral-950/70 border border-neutral-800/90 rounded-3xl p-6 sm:p-10 shadow-2xl">
+          {/* Visuel du cadre avec rétroéclairage simulé */}
+          <div className="lg:col-span-7 relative flex flex-col items-center">
+            {/* Halo lumineux LED actif */}
+            <div
+              className={`absolute inset-0 bg-amber-400/20 blur-[60px] rounded-3xl transition-opacity duration-700 pointer-events-none ${
+                ledOn ? 'opacity-100 scale-105' : 'opacity-0 scale-95'
+              }`}
+            />
+
+            <div className="relative w-full max-w-lg aspect-[4/3] rounded-2xl overflow-hidden border border-neutral-800 bg-neutral-900 shadow-2xl group">
+              <Image
+                src="/atelier/chiron-wall.jpg"
+                alt="Démonstration du cadre 3D Bugatti Chiron"
+                fill
+                className={`object-cover transition-all duration-700 ${
+                  ledOn ? 'brightness-[0.95] contrast-[1.12]' : 'brightness-[0.6] contrast-[0.95]'
+                }`}
+                sizes="(max-width: 1024px) 100vw, 55vw"
+              />
+
+              {/* Liseré lumineux chaud sur les bords quand LED ON */}
+              {ledOn && (
+                <div className="absolute inset-0 ring-2 ring-inset ring-amber-400/30 rounded-2xl pointer-events-none animate-pulse" />
+              )}
+
+              {/* Badge d'état LED en superposition */}
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between p-3 rounded-xl bg-black/80 backdrop-blur-md border border-neutral-800 text-xs">
+                <span className="flex items-center gap-2 font-mono text-[11px] text-neutral-300">
+                  <span
+                    className={`w-2 h-2 rounded-full ${
+                      ledOn ? 'bg-amber-400 shadow-[0_0_8px_#f59e0b]' : 'bg-neutral-600'
+                    }`}
+                  />
+                  <span>Rétroéclairage 3000K : {ledOn ? 'ACTIVÉ' : 'ÉTEINT'}</span>
+                </span>
+                <span className="text-[10px] text-amber-400 font-mono font-bold uppercase">
+                  Bugatti Chiron (2016)
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Commandes et explications */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold block">
+                Contrôle d&apos;Éclairage
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold text-white">
+                {ledOn ? 'Lumière Feutrée Nocturne' : 'Lumière Naturelle Diurne'}
+              </h3>
+              <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                {ledOn
+                  ? 'De nuit, la lueur chaude 3000K découpe la silhouette de l’hypercar et fait ressortir chaque galbe de carrosserie dans l’obscurité sans fatiguer les yeux.'
+                  : 'En plein jour, appréciez la découpe micronique de précision, le passe-partout biseauté noir mat 45° et le grain texturé du papier d’art Canson 310g/m².'}
+              </p>
+            </div>
+
+            {/* Bouton basculeur LED */}
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setLedOn(!ledOn)}
+                className={`px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer shadow-md active:scale-95 ${
+                  ledOn
+                    ? 'bg-amber-400 hover:bg-amber-300 text-black border border-amber-400 shadow-amber-400/20'
+                    : 'bg-neutral-900 hover:bg-neutral-800 text-white border border-neutral-700'
+                }`}
+              >
+                <Zap className="w-3.5 h-3.5" />
+                <span>{ledOn ? 'Éteindre la LED' : 'Allumer la LED 3000K'}</span>
+              </button>
+
+              <span className="text-[11px] text-neutral-400 font-mono">
+                Interrupteur discret inclus
+              </span>
+            </div>
+
+            {/* 3 Caractéristiques clés de la démonstration */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-neutral-800/80 text-xs">
+              <div className="flex items-center gap-2 text-neutral-300">
+                <Check className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                <span>Alimentation USB &amp; Câble tressé</span>
+              </div>
+              <div className="flex items-center gap-2 text-neutral-300">
+                <Check className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                <span>Basse consommation 5W</span>
+              </div>
+              <div className="flex items-center gap-2 text-neutral-300">
+                <Check className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                <span>Verre acrylique optique anti-UV</span>
+              </div>
+              <div className="flex items-center gap-2 text-neutral-300">
+                <Check className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                <span>Durée de vie LED &gt; 50 000h</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ─── DANS VOTRE INTÉRIEUR : PROJECTION RÉALISTE ─── */}
+        <div className="space-y-6 pt-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold block mb-1">
+                Projection &amp; Décoration
+              </span>
+              <h3 className="text-xl sm:text-3xl font-black text-white">
+                Dans votre intérieur
+              </h3>
+            </div>
+            {/* Onglets d'ambiance */}
+            <div className="flex items-center gap-2 flex-wrap">
+              {(['bureau', 'salon', 'setup'] as const).map((key) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setActiveInterior(key)}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold capitalize transition-all cursor-pointer ${
+                    activeInterior === key
+                      ? 'bg-white text-black font-bold shadow-md'
+                      : 'bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white'
+                  }`}
+                >
+                  {key === 'bureau' ? 'Bureau' : key === 'salon' ? 'Salon' : 'Setup Gaming'}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center bg-neutral-900/40 border border-neutral-800/80 rounded-2xl p-6 sm:p-8">
+            <div className="md:col-span-6 relative aspect-[16/10] rounded-xl overflow-hidden bg-black border border-neutral-800">
+              <Image
+                src={currentInterior.image}
+                alt={currentInterior.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+
+            <div className="md:col-span-6 space-y-4">
+              <div>
+                <span className="text-xs text-amber-400 font-mono font-bold block">
+                  {currentInterior.subtitle}
+                </span>
+                <h4 className="text-lg sm:text-xl font-bold text-white mt-1">
+                  {currentInterior.title}
+                </h4>
+              </div>
+              <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+                {currentInterior.desc}
+              </p>
+              <div className="pt-2">
+                <Link
+                  href="/catalogue"
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white hover:text-amber-400 transition"
+                >
+                  <span>Choisir un cadre pour cet espace</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ─── COMPARATEUR VISUEL DES 3 FORMATS ─── */}
+        <div className="space-y-6 pt-6 border-t border-neutral-800/80">
+          <div className="max-w-2xl mx-auto text-center space-y-2">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold block">
+              Guide des Tailles Certifiées
+            </span>
+            <h3 className="text-xl sm:text-3xl font-black text-white">
+              Quel format pour votre mur ?
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-400 font-light">
+              Des proportions calibrées pour s’adapter aussi bien à une étagère de bureau qu&apos;à une pièce maîtresse de salon.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                id: 'a4',
+                name: 'Standard A4',
+                size: '21 × 29,7 cm',
+                price: '49,99 €',
+                usage: 'Bureau de travail, console d’entrée, étagère bibliothèque',
+                scale: 'Miniature 1:24 sous vitrage relief',
+                badge: 'Format Idéal Cadeau',
+              },
+              {
+                id: 'a3',
+                name: 'Grand Format A3 Collector',
+                size: '30 × 42 cm',
+                price: '150,00 €',
+                usage: 'Salon contemporain, chambre, bureau d’architecte',
+                scale: 'Miniature 1:18 Grand Relief d’atelier',
+                badge: 'Le Plus Équilibré',
+                highlight: true,
+              },
+              {
+                id: 'a2',
+                name: 'Prestige Galerie A2',
+                size: '50 × 70 cm',
+                price: '250,00 €',
+                usage: 'Pièce maîtresse au-dessus d’un canapé ou mur principal',
+                scale: 'Miniature 1:18 Grand Panorama de collection',
+                badge: 'Présence Muséale',
+              },
+            ].map((fmt) => (
+              <div
+                key={fmt.id}
+                className={`p-6 rounded-2xl border flex flex-col justify-between space-y-6 transition-all ${
+                  fmt.highlight
+                    ? 'bg-neutral-900/90 border-amber-400/80 shadow-xl shadow-amber-400/5 ring-1 ring-amber-400/30'
+                    : 'bg-neutral-950/60 border-neutral-800/80'
+                }`}
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-neutral-800 text-neutral-300">
+                      {fmt.badge}
+                    </span>
+                    <span className="text-xs font-mono text-amber-400 font-bold">
+                      {fmt.size}
+                    </span>
+                  </div>
+                  <div>
+                    <h4 className="text-base font-bold text-white">{fmt.name}</h4>
+                    <p className="text-2xl font-serif font-bold text-white mt-1">
+                      {fmt.price}{' '}
+                      <span className="text-xs text-neutral-400 font-normal font-sans">TTC</span>
+                    </p>
+                  </div>
+                  <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                    {fmt.usage}
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-neutral-800 text-xs text-neutral-300">
+                  <p className="font-mono text-[11px] text-amber-400">✓ {fmt.scale}</p>
+                  <p className="text-[11px] text-neutral-400 mt-1">✓ Livraison Colissimo 48h Offerte</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </section>
+  )
+}

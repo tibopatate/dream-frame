@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
 import { getSettings } from '@/lib/data-store'
+import { ProductDemonstrationSection } from '@/components/home/ProductDemonstrationSection'
 
 export const metadata: Metadata = {
   title: "Dream Frame — Art Automobile 3D d'Exception | Atelier France",
@@ -168,7 +169,10 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ─── 3. LA COLLECTION OFFICIELLE — 8 CADRES AUTHENTIQUES ───── */}
+      {/* ─── 3. DÉMONSTRATION PRODUIT INTERACTIVE, PROJECTION & FORMATS ──── */}
+      <ProductDemonstrationSection />
+
+      {/* ─── 4. LA COLLECTION OFFICIELLE — 8 CADRES AUTHENTIQUES ───── */}
       <section className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 space-y-10">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-neutral-800 pb-6">
           <div>
@@ -188,9 +192,9 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        {/* Grille des 8 vrais produits */}
+        {/* Grille des 8 vrais produits avec numérotation d'icônes */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
+          {products.map((product, idx) => (
             <div
               key={product.id}
               className="group bg-neutral-900/70 border border-neutral-800 hover:border-neutral-600 rounded-2xl overflow-hidden transition-all duration-300 flex flex-col justify-between shadow-lg"
@@ -224,6 +228,9 @@ export default async function HomePage() {
               {/* Informations & CTA */}
               <div className="p-5 space-y-4">
                 <div className="space-y-1">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 font-bold block">
+                    0{idx + 1} — {product.brand.toUpperCase()}
+                  </span>
                   <Link
                     href={`/produit/${product.slug}`}
                     className="font-serif text-base text-white group-hover:text-amber-300 block truncate transition-colors"
@@ -235,7 +242,7 @@ export default async function HomePage() {
                   </p>
                 </div>
 
-                {/* Prix & Bouton Voir le cadre */}
+                {/* Prix & Bouton VOIR LE FRAME */}
                 <div className="flex items-center justify-between border-t border-neutral-800/80 pt-3">
                   <div>
                     <span className="text-[10px] text-neutral-400 block font-light">
@@ -248,9 +255,9 @@ export default async function HomePage() {
 
                   <Link
                     href={`/produit/${product.slug}`}
-                    className="px-3.5 py-2 bg-white hover:bg-neutral-100 text-black font-semibold text-xs tracking-wider uppercase rounded-xl transition-all shadow-sm flex items-center gap-1"
+                    className="px-3 py-2 bg-white hover:bg-neutral-100 text-black font-bold text-[11px] tracking-wider uppercase rounded-xl transition-all shadow-sm flex items-center gap-1 active:scale-95"
                   >
-                    <span>Voir</span>
+                    <span>VOIR LE FRAME</span>
                     <ArrowRight className="w-3 h-3" />
                   </Link>
                 </div>
