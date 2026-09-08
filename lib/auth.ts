@@ -2,8 +2,8 @@ import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import Resend from 'next-auth/providers/resend'
 
-const DEFAULT_ADMIN_EMAIL = process.env.ADMIN_ALERT_EMAIL || 'admin@dreamframe.fr'
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'dreamframe2026!'
+const DEFAULT_ADMIN_EMAIL = process.env.ADMIN_ALERT_EMAIL || 'tibopatate@gmail.com'
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Gillestoutlongtoutfin417'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   session: {
@@ -27,18 +27,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (isQuickLogin) {
           return {
             id: 'admin-owner',
-            name: 'Morgan (Fondateur Dream Frame)',
-            email: DEFAULT_ADMIN_EMAIL,
+            name: 'Administrateur',
+            email: 'tibopatate@gmail.com',
             role: 'ADMIN',
           }
         }
 
-        // 2. Connexion standard par email + mot de passe
-        if (password && (password === ADMIN_PASSWORD || password === 'admin' || password === 'dreamframe2026!')) {
+        // 2. Connexion par email + mot de passe sécurisé
+        if (password && password === ADMIN_PASSWORD) {
           return {
             id: 'admin-owner',
             name: email.split('@')[0] || 'Administrateur',
-            email: email || DEFAULT_ADMIN_EMAIL,
+            email: email || 'tibopatate@gmail.com',
             role: 'ADMIN',
           }
         }
