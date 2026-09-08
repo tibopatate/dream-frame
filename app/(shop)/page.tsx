@@ -43,7 +43,7 @@ export default async function HomePage() {
           {/* Badge Atelier */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-neutral-800 text-amber-400 text-[10px] sm:text-xs font-mono uppercase tracking-[0.2em]">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-            Atelier Français · Cadres Décoratifs Supercars
+            {settings.heroBadgeText || 'Atelier Français · Cadres Décoratifs Supercars'}
           </div>
 
           {/* Titre Principal */}
@@ -60,28 +60,28 @@ export default async function HomePage() {
 
           {/* Sous-titre descriptif & honnête */}
           <p className="text-xs sm:text-base text-neutral-300 max-w-2xl mx-auto font-light leading-relaxed">
-            Cadres d’ébénisterie automobile sous vitrage optique anti-UV avec rétroéclairage LED ambré intégré.{' '}
+            {settings.heroSubtitle || "Cadres d’ébénisterie automobile sous vitrage optique anti-UV avec rétroéclairage LED ambré intégré."}{' '}
             <span className="text-white font-semibold block sm:inline mt-1 sm:mt-0">
-              À partir de 49,99 € · Livraison Colissimo 100% Offerte.
+              {settings.heroPriceText || "À partir de 49,99 € · Livraison Colissimo 100% Offerte."}
             </span>
           </p>
 
           {/* 2 CTA Principaux — DÉSIR & CHOIX */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2">
             <Link
-              href="/catalogue"
+              href={settings.heroCtaPrimaryLink || "/catalogue"}
               className="relative w-full sm:w-auto px-8 py-4 bg-white hover:bg-neutral-100 text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 shadow-2xl shadow-white/20 flex items-center justify-center gap-2 group active:scale-[0.98]"
             >
-              <span>Découvrir la Collection</span>
+              <span>{settings.heroCtaPrimaryText || "Découvrir la Collection"}</span>
               <ArrowRight className="w-4 h-4 text-black group-hover:translate-x-1 transition-transform" />
             </Link>
 
             <Link
-              href="/configurateur"
+              href={settings.heroCtaSecondaryLink || "/configurateur"}
               className="relative w-full sm:w-auto px-8 py-4 bg-black/70 hover:bg-black/90 backdrop-blur-md border border-neutral-700 hover:border-amber-400/60 text-white text-xs tracking-wider uppercase rounded-xl transition-all duration-300 flex items-center justify-center gap-2 group"
             >
               <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>Créer mon Dream Frame</span>
+              <span>{settings.heroCtaSecondaryText || "Créer mon Dream Frame"}</span>
             </Link>
           </div>
 
@@ -110,10 +110,10 @@ export default async function HomePage() {
               Architecture &amp; Conception
             </span>
             <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-              Pas un simple poster. Une véritable œuvre murale.
+              {settings.pillarsTitle || "Pas un simple poster. Une véritable œuvre murale."}
             </h2>
             <p className="text-xs sm:text-sm text-neutral-400 font-light">
-              Chaque cadre Dream Frame est une création autonome prête à accrocher ou poser, alliant profondeur physique et lumière chaleureuse.
+              {settings.pillarsSubtitle || "Chaque cadre Dream Frame est une création autonome prête à accrocher ou poser, alliant profondeur physique et lumière chaleureuse."}
             </p>
           </div>
 
@@ -125,12 +125,12 @@ export default async function HomePage() {
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] font-mono text-amber-400 uppercase tracking-widest block font-bold">
-                  25 mm de Profondeur
+                  {settings.pillar1Value || "25 mm de Profondeur"}
                 </span>
-                <h3 className="text-lg font-bold text-white">Relief Multi-Couches 3D</h3>
+                <h3 className="text-lg font-bold text-white">{settings.pillar1Title || "Relief Multi-Couches 3D"}</h3>
               </div>
               <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-                Le modèle est découpé avec une précision chirurgicale et mis en suspension au-dessus d’un passe-partout biseauté noir mat à 45°.
+                {settings.pillar1Desc || "Le modèle est découpé avec une précision chirurgicale et mis en suspension au-dessus d’un passe-partout biseauté noir mat à 45°."}
               </p>
             </div>
 
@@ -141,12 +141,12 @@ export default async function HomePage() {
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] font-mono text-amber-400 uppercase tracking-widest block font-bold">
-                  Blanc Chaud 3000K
+                  {settings.pillar2Value || "Blanc Chaud 3000K"}
                 </span>
-                <h3 className="text-lg font-bold text-white">Rétroéclairage LED Intégré</h3>
+                <h3 className="text-lg font-bold text-white">{settings.pillar2Title || "Rétroéclairage LED Intégré"}</h3>
               </div>
               <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-                Un ruban micro-LED haute fidélité baigne délicatement les arêtes de la carrosserie d’une lueur feutrée, parfaite pour tamiser vos soirées.
+                {settings.pillar2Desc || "Un ruban micro-LED haute fidélité baigne délicatement les arêtes de la carrosserie d’une lueur feutrée, parfaite pour tamiser vos soirées."}
               </p>
             </div>
 
@@ -157,12 +157,12 @@ export default async function HomePage() {
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] font-mono text-amber-400 uppercase tracking-widest block font-bold">
-                  Papier Canson 310g/m²
+                  {settings.pillar3Value || "Papier Canson 310g/m²"}
                 </span>
-                <h3 className="text-lg font-bold text-white">Finition Musée &amp; Acrylique HD</h3>
+                <h3 className="text-lg font-bold text-white">{settings.pillar3Title || "Finition Musée & Acrylique HD"}</h3>
               </div>
               <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-                Impression giclée pigmentaire inaltérable, châssis aluminium anodisé noir et vitrage acrylique haute transparence 99% anti-UV.
+                {settings.pillar3Desc || "Impression giclée pigmentaire inaltérable, châssis aluminium anodisé noir et vitrage acrylique haute transparence 99% anti-UV."}
               </p>
             </div>
           </div>
@@ -333,9 +333,9 @@ export default async function HomePage() {
           <div className="flex items-start gap-3 p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
             <Truck className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
             <div>
-              <h4 className="text-xs font-bold text-white">Livraison 100% Offerte</h4>
+              <h4 className="text-xs font-bold text-white">{settings.reassurance1Title || "Livraison 100% Offerte"}</h4>
               <p className="text-[11px] text-neutral-400 font-light mt-0.5">
-                Colissimo Suivi 48h en France avec emballage renforcé anti-choc.
+                {settings.reassurance1Desc || "Colissimo Suivi 48h en France avec emballage renforcé anti-choc."}
               </p>
             </div>
           </div>
@@ -343,9 +343,9 @@ export default async function HomePage() {
           <div className="flex items-start gap-3 p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
             <ShieldCheck className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
             <div>
-              <h4 className="text-xs font-bold text-white">Droit de Rétractation 14 Jours</h4>
+              <h4 className="text-xs font-bold text-white">{settings.reassurance2Title || "Droit de Rétractation 14 Jours"}</h4>
               <p className="text-[11px] text-neutral-400 font-light mt-0.5">
-                Retour simple et sécurisé conformément à la législation française.
+                {settings.reassurance2Desc || "Retour simple et sécurisé conformément à la législation française."}
               </p>
             </div>
           </div>
@@ -353,9 +353,9 @@ export default async function HomePage() {
           <div className="flex items-start gap-3 p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
             <Zap className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
             <div>
-              <h4 className="text-xs font-bold text-white">LED &amp; Fixations Incluses</h4>
+              <h4 className="text-xs font-bold text-white">{settings.reassurance3Title || "LED & Fixations Incluses"}</h4>
               <p className="text-[11px] text-neutral-400 font-light mt-0.5">
-                Chaque pièce arrive prête à poser sur un meuble ou à accrocher au mur.
+                {settings.reassurance3Desc || "Chaque pièce arrive prête à poser sur un meuble ou à accrocher au mur."}
               </p>
             </div>
           </div>
@@ -363,9 +363,9 @@ export default async function HomePage() {
           <div className="flex items-start gap-3 p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
             <Award className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
             <div>
-              <h4 className="text-xs font-bold text-white">Manufacture &amp; Contrôle Unitaire</h4>
+              <h4 className="text-xs font-bold text-white">{settings.reassurance4Title || "Manufacture & Contrôle Unitaire"}</h4>
               <p className="text-[11px] text-neutral-400 font-light mt-0.5">
-                Chaque cadre est inspecté individuellement avant son expédition.
+                {settings.reassurance4Desc || "Chaque cadre est inspecté individuellement avant son expédition."}
               </p>
             </div>
           </div>
@@ -380,18 +380,17 @@ export default async function HomePage() {
               Configuration Personnalisée
             </span>
             <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-              Un modèle précis ? Une échelle spécifique ?
+              {settings.configuratorCtaTitle || "Un modèle précis ? Une échelle spécifique ?"}
             </h2>
             <p className="text-xs sm:text-sm text-neutral-300 font-light max-w-xl mx-auto leading-relaxed">
-              Composez votre cadre idéal : dimensions (A4, A3, A2), modèle automobile et échelle miniature.
-              Notre configurateur live vous permet de visualiser votre projet instantanément.
+              {settings.configuratorCtaDesc || "Composez votre cadre idéal : dimensions (A4, A3, A2), modèle automobile et échelle miniature. Notre configurateur live vous permet de visualiser votre projet instantanément."}
             </p>
             <Link
               href="/configurateur"
               className="relative inline-flex items-center gap-2.5 px-10 py-4 bg-white hover:bg-neutral-100 text-black font-bold text-xs tracking-widest uppercase rounded-xl overflow-hidden transition-all shadow-2xl shadow-white/10 group active:scale-[0.98]"
             >
               <Sparkles className="w-4 h-4 text-amber-500" />
-              <span>Accéder à l&apos;Atelier Sur-Mesure</span>
+              <span>{settings.configuratorCtaButton || "Accéder à l'Atelier Sur-Mesure"}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

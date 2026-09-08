@@ -20,6 +20,7 @@ import {
   Star,
   Palette,
 } from 'lucide-react'
+import { LiveVisitorsWidget } from '@/components/admin/LiveVisitorsWidget'
 
 const NAV_ITEMS = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -144,6 +145,9 @@ export function AdminShell({
               </span>
             </button>
           </div>
+
+          {/* Widget Visiteurs en Direct (Trafic Réel Style Shopify) */}
+          <LiveVisitorsWidget variant="compact" />
 
           {/* Navigation Principale */}
           <nav className="px-3 space-y-1">

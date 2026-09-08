@@ -140,19 +140,62 @@ export interface StoredSettings {
   // Personnalisation Boutique Style Shopify
   headerLogoPosition?: 'left' | 'center' | 'right'
   headerStyle?: 'glass' | 'solid' | 'gold'
+  headerLogoText?: string
   announcementBarPosition?: 'top' | 'below'
   animationsType?: 'fade-up' | 'hero-zoom' | 'slide-in' | 'none'
   animationsSpeed?: 'slow' | 'normal' | 'fast'
   glowEffectsEnabled?: boolean
   // Hero & Accès direct
+  heroBadgeText?: string
   heroTitle?: string
   heroSubtitle?: string
-  heroCtaText?: string
-  // Section Conception & Fabrication
+  heroPriceText?: string
+  heroCtaPrimaryText?: string
+  heroCtaPrimaryLink?: string
+  heroCtaSecondaryText?: string
+  heroCtaSecondaryLink?: string
+  heroImage?: string
+  // Piliers de l'Objet (3 Piliers)
+  pillarsTitle?: string
+  pillarsSubtitle?: string
+  pillar1Title?: string
+  pillar1Value?: string
+  pillar1Desc?: string
+  pillar2Title?: string
+  pillar2Value?: string
+  pillar2Desc?: string
+  pillar3Title?: string
+  pillar3Value?: string
+  pillar3Desc?: string
+  // Démonstration Visuelle
+  demoTitle?: string
+  demoSubtitle?: string
+  // Collection & Catalogue
+  collectionTitle?: string
+  collectionSubtitle?: string
+  collectionStartingPrice?: string
+  collectionCtaText?: string
+  // Section Conception & Fabrication (5 Couches)
   craftSectionEnabled?: boolean
-  craftSectionTitle?: string
-  craftSectionSubtitle?: string
+  craftTitle?: string
+  craftSubtitle?: string
   craftSectionImage?: string
+  // Réassurance (4 Piliers)
+  reassurance1Title?: string
+  reassurance1Desc?: string
+  reassurance2Title?: string
+  reassurance2Desc?: string
+  reassurance3Title?: string
+  reassurance3Desc?: string
+  reassurance4Title?: string
+  reassurance4Desc?: string
+  // Invitation Atelier Sur-Mesure
+  configuratorCtaTitle?: string
+  configuratorCtaDesc?: string
+  configuratorCtaButton?: string
+  // Footer
+  footerNotice?: string
+  footerCopyright?: string
 }
 
 export interface StoredReview {

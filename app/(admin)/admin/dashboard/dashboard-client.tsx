@@ -23,6 +23,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { StoredOrder, StoredProduct } from '@/lib/data-store'
 import { formatPriceFromDecimal } from '@/lib/utils'
+import { LiveVisitorsWidget } from '@/components/admin/LiveVisitorsWidget'
 
 type TimePeriod = 'today' | '7d' | '30d' | 'month' | 'year' | 'all'
 type EraFilter = 'ALL' | 'VINTAGE' | 'MODERN'
@@ -437,6 +438,9 @@ export function DashboardClient({ initialOrders, products, isDbConnected }: Dash
           </p>
         </div>
       </div>
+
+      {/* ─── WIDGET TRAFIC ET VISITEURS EN DIRECT (SHOPIFY LIVE) ─── */}
+      <LiveVisitorsWidget variant="card" />
 
       {/* ─── GRAPHIQUE ÉVOLUTION DU CHIFFRE D'AFFAIRES (SVG RESPONSIVE) ─── */}
       <div className="bg-neutral-900/80 border border-neutral-800 rounded-2xl p-6 sm:p-8 space-y-4 shadow-xl">
