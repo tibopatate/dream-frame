@@ -86,6 +86,23 @@ export default async function HomePage() {
               <span>L&apos;Atelier Sur-Mesure</span>
             </Link>
           </div>
+
+          {/* Bandeau d'Accès Rapide aux 3 Supercars Phares sur Smartphone */}
+          <div className="pt-3 flex sm:hidden items-center justify-center gap-2 overflow-x-auto no-scrollbar py-1">
+            {[
+              { name: 'Bugatti Chiron', href: '/produit/bugatti-chiron-2016-cadre-3d' },
+              { name: 'Pagani Huayra', href: '/produit/pagani-huayra-v12-cadre-3d' },
+              { name: 'Audi R8 V10', href: '/produit/audi-r8-v10-performance-cadre-3d' },
+            ].map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="whitespace-nowrap px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono font-medium text-amber-400 hover:border-amber-400/50 transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

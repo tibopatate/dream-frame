@@ -7,26 +7,26 @@ import { ScrollReveal } from '@/components/ui/ScrollReveal'
 
 const COLLECTIONS = [
   {
-    id: 'vintage',
-    title: 'Légendes Vintage',
-    subtitle: 'Années 1950 – 1990',
+    id: 'bugatti',
+    title: 'Bugatti & Hypercars',
+    subtitle: 'Élite & Prestige W16',
     description:
-      'L&apos;âge d&apos;or mécanique. Des icônes intemporelles immortalisées avec authenticité : Ferrari 250 GTO, F40, Mercedes 300 SL Papillon.',
-    image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop',
-    tag: 'Classiques Mythiques',
-    count: '3 modèles d&apos;exception',
-    href: '/catalogue?era=VINTAGE',
+      'Châssis 3D relief sous vitrine d’exposition avec rétroéclairage LED ambré, immortalisé en situation réelle devant la véritable Bugatti Chiron.',
+    image: '/atelier/chiron-wall.jpg',
+    tag: 'Collection Royale',
+    count: 'Éditions Limitées',
+    href: '/produit/bugatti-chiron-2016-cadre-3d',
     badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
   },
   {
-    id: 'modern',
-    title: 'Supercars Modernes',
-    subtitle: 'Ère Contemporaine & GT',
+    id: 'pagani',
+    title: 'Pagani & Supercars Modernes',
+    subtitle: 'Artisanat & V12 Atmos',
     description:
-      'L&apos;aérodynamique de pointe et la furie des circuits : Porsche 911 GT3 RS (992), Lamborghini Revuelto V12, Ferrari SF90 Stradale.',
-    image: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop',
-    tag: 'Bêtes de Piste',
-    count: '4 modèles phares',
+      'L’aérodynamique de pointe et la furie des V12 d’exception : Pagani Huayra, Audi R8 V10, BMW M4 Competition.',
+    image: '/atelier/huayra-real.jpg',
+    tag: 'Haute Horlogerie',
+    count: 'Pièces d’Orfèvre',
     href: '/catalogue?era=MODERN',
     badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
   },
@@ -36,7 +36,7 @@ const COLLECTIONS = [
     subtitle: 'Création Unique 1:18 & 1:24',
     description:
       'Votre propre véhicule ou modèle de rêve configuré sur-mesure dans notre atelier avec rétroéclairage LED personnalisé et gravure de plaque.',
-    image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop',
+    image: '/atelier/m4comp-real.jpg',
     tag: 'Personnalisation Totale',
     count: 'Configuration 3D Live',
     href: '/configurateur',
@@ -46,7 +46,7 @@ const COLLECTIONS = [
 
 export function HomeCollectionsSection() {
   return (
-    <section className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6">
+    <section className="py-10 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6">
       <ScrollReveal direction="up" delay={0}>
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 sm:mb-14 gap-4">
           <div>

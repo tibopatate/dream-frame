@@ -263,7 +263,7 @@ export function AlternatingScrollFrames() {
   const headerInView = useInView(headerRef, { once: true, amount: 0.5 })
 
   return (
-    <section className="py-16 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 space-y-16 sm:space-y-32">
+    <section className="py-8 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-32">
       {/* En-tête */}
       <motion.div
         ref={headerRef}
