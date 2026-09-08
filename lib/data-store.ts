@@ -622,65 +622,7 @@ function getInitialDatabase(): DatabaseSchema {
 }
 
 export function getInitialReviews(): StoredReview[] {
-  const now = new Date()
-  return [
-    {
-      id: 'rev-1',
-      productSlug: 'porsche-911-gt3-rs-992-cadre-3d',
-      productName: 'Porsche 911 GT3 RS (992)',
-      name: 'Alexandre V.',
-      location: 'Paris (75)',
-      rating: 5,
-      title: 'Une œuvre d’art dans mon salon',
-      comment: 'Reçu en 48h dans un emballage ultra-blindé. Le relief de l’aileron arrière et les LED ambrées 3000K créent une ambiance feutrée sublime dès que la nuit tombe.',
-      formatPurchased: 'Grand Format A3 Collector',
-      isVerified: true,
-      status: 'APPROVED',
-      createdAt: new Date(now.getTime() - 86400000 * 4).toISOString(),
-    },
-    {
-      id: 'rev-2',
-      productSlug: 'ferrari-f40-1987-cadre-3d',
-      productName: 'Ferrari F40 (1987)',
-      name: 'Marc-Antoine D.',
-      location: 'Lyon (69)',
-      rating: 5,
-      title: 'Qualité d’ébénisterie et vitrage bluffants',
-      comment: 'Finition artisanale exemplaire. Le verre acrylique ne fait aucun reflet parasite. C’est la pièce maîtresse au-dessus de mon bureau d’architecte.',
-      formatPurchased: 'Format Standard A4',
-      isVerified: true,
-      status: 'APPROVED',
-      createdAt: new Date(now.getTime() - 86400000 * 9).toISOString(),
-    },
-    {
-      id: 'rev-3',
-      productSlug: 'lamborghini-revuelto-2023-cadre-3d',
-      productName: 'Lamborghini Revuelto (2023)',
-      name: 'Sébastien L.',
-      location: 'Bordeaux (33)',
-      rating: 5,
-      title: 'Cadeau idéal pour un passionné',
-      comment: 'Offert pour les 30 ans de mon frère. Il est resté bouche bée devant la précision de la découpe laser et la ligne d’échappement en 3D. Bravo aux créateurs.',
-      formatPurchased: 'Prestige Galerie A2',
-      isVerified: true,
-      status: 'APPROVED',
-      createdAt: new Date(now.getTime() - 86400000 * 14).toISOString(),
-    },
-    {
-      id: 'rev-4',
-      productSlug: 'mercedes-300-sl-papillon-1954-cadre-3d',
-      productName: 'Mercedes-Benz 300 SL Gullwing',
-      name: 'Guillaume B.',
-      location: 'Genève (Suisse)',
-      rating: 5,
-      title: 'Élégance intemporelle',
-      comment: 'Les portes papillon déployées en 3D sous l’éclairage doux apportent une touche vintage chic incomparable. Très satisfait de mon achat.',
-      formatPurchased: 'Format Standard A4',
-      isVerified: true,
-      status: 'APPROVED',
-      createdAt: new Date(now.getTime() - 86400000 * 21).toISOString(),
-    },
-  ]
+  return []
 }
 
 export function readDatabase(): DatabaseSchema {
@@ -688,13 +630,8 @@ export function readDatabase(): DatabaseSchema {
     if (fs.existsSync(DATA_FILE)) {
       const data = fs.readFileSync(DATA_FILE, 'utf-8')
       const parsed: DatabaseSchema = JSON.parse(data)
-      let needsWrite = false
-      if (!parsed.reviews || parsed.reviews.length === 0) {
-        parsed.reviews = getInitialReviews()
-        needsWrite = true
-      }
-      if (needsWrite) {
-        writeDatabase(parsed)
+      if (!parsed.reviews) {
+        parsed.reviews = []
       }
       return parsed
     }

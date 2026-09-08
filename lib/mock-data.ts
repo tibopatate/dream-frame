@@ -135,18 +135,4 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     images: ['/atelier/porsche918-real.jpg'],
     variants: [{ id: 'var-porsche918', sku: 'DF-PORSCHE-918', stock: 4, stockAlert: 2 }],
   },
-  {
-    id: 'real-lambo-urus',
-    slug: 'lamborghini-urus-cadre-3d',
-    name: 'Lamborghini Urus V8',
-    brand: 'Lamborghini',
-    era: 'MODERN',
-    year: 2021,
-    description: "Le premier Super SUV au monde. V8 Biturbo 650 ch en jaune Giallo Auge sculpté sous cadre d'art.",
-    price: 49.99,
-    isActive: true,
-    isFeatured: false,
-    images: ['/atelier/porsche918-real.jpg'],
-    variants: [{ id: 'var-urus', sku: 'DF-LAMBO-URUS', stock: 3, stockAlert: 2 }],
-  },
 ]

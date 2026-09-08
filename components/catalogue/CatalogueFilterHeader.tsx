@@ -140,26 +140,30 @@ export function CatalogueFilterHeader({
                 >
                   Tous ({totalCount})
                 </Link>
-                <Link
-                  href="/catalogue?era=VINTAGE"
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-                    activeEra === 'VINTAGE'
-                      ? 'bg-white text-black font-bold'
-                      : 'bg-black/60 text-neutral-300 border border-neutral-800 hover:border-neutral-700'
-                  }`}
-                >
-                  Légendes Vintage ({vintageCount})
-                </Link>
-                <Link
-                  href="/catalogue?era=MODERN"
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-                    activeEra === 'MODERN'
-                      ? 'bg-white text-black font-bold'
-                      : 'bg-black/60 text-neutral-300 border border-neutral-800 hover:border-neutral-700'
-                  }`}
-                >
-                  Supercars Modernes ({modernCount})
-                </Link>
+                {vintageCount > 0 && (
+                  <Link
+                    href="/catalogue?era=VINTAGE"
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
+                      activeEra === 'VINTAGE'
+                        ? 'bg-white text-black font-bold'
+                        : 'bg-black/60 text-neutral-300 border border-neutral-800 hover:border-neutral-700'
+                    }`}
+                  >
+                    Légendes Vintage ({vintageCount})
+                  </Link>
+                )}
+                {vintageCount > 0 && modernCount > 0 && (
+                  <Link
+                    href="/catalogue?era=MODERN"
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
+                      activeEra === 'MODERN'
+                        ? 'bg-white text-black font-bold'
+                        : 'bg-black/60 text-neutral-300 border border-neutral-800 hover:border-neutral-700'
+                    }`}
+                  >
+                    Supercars Modernes ({modernCount})
+                  </Link>
+                )}
                 <Link
                   href="/configurateur"
                   className="px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-400/10 border border-amber-400/30 text-amber-300 hover:bg-amber-400 hover:text-black transition flex items-center gap-1"

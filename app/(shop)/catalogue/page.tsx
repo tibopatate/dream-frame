@@ -1,13 +1,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Search, Sparkles, Zap, ShoppingBag, Truck } from 'lucide-react'
+import { ArrowRight, Zap, Truck } from 'lucide-react'
 import type { Metadata } from 'next'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
 import { CatalogueFilterHeader } from '@/components/catalogue/CatalogueFilterHeader'
 
 export const metadata: Metadata = {
   title: 'La Collection d’Art Automobile — Dream Frame',
-  description: 'Découvrez notre collection de cadres 3D de prestige. Voitures de légende et supercars contemporaines. 49,99 € TTC · Livraison 100% gratuite.',
+  description: 'Découvrez notre collection de 8 cadres 3D de supercars. Fait main en France. À partir de 49,99 € · Livraison Colissimo 100% offerte.',
 }
 
 export const dynamic = 'force-dynamic'
@@ -111,27 +111,27 @@ export default async function CataloguePage({ searchParams }: PageProps) {
                     >
                       {product.name}
                     </Link>
-                    <p className="text-xs text-neutral-400 font-light line-clamp-1">
+                    <p className="text-xs text-neutral-400 font-light line-clamp-2 leading-relaxed">
                       {product.description}
                     </p>
                   </div>
 
                   <div className="flex items-center justify-between border-t border-neutral-800 pt-3">
                     <div>
+                      <span className="text-[10px] text-neutral-400 block font-light">
+                        À partir de
+                      </span>
                       <p className="text-base font-bold text-white font-serif">
                         {product.price.toFixed(2).replace('.', ',')} €
                       </p>
-                      <span className="text-[10px] text-neutral-400 font-light flex items-center gap-1">
-                        <Truck className="w-3 h-3 text-amber-400" />
-                        Livraison 100% Offerte
-                      </span>
                     </div>
 
                     <Link
                       href={`/produit/${product.slug}`}
-                      className="px-4 py-2 bg-white hover:bg-neutral-100 text-black font-semibold text-xs tracking-wider uppercase rounded-xl transition-all shadow-sm"
+                      className="px-3.5 py-2 bg-white hover:bg-neutral-100 text-black font-semibold text-xs tracking-wider uppercase rounded-xl transition-all shadow-sm flex items-center gap-1"
                     >
-                      Voir
+                      <span>Voir</span>
+                      <ArrowRight className="w-3 h-3" />
                     </Link>
                   </div>
                 </div>

@@ -98,12 +98,6 @@ function ShopHeader() {
         <Sparkles className="w-3.5 h-3.5" />
         L&apos;Atelier
       </Link>
-      <Link href="/catalogue?era=VINTAGE" className="hover:text-white transition-colors duration-200">
-        Vintage
-      </Link>
-      <Link href="/catalogue?era=MODERN" className="hover:text-white transition-colors duration-200">
-        Modern
-      </Link>
     </nav>
   )
 
@@ -111,14 +105,6 @@ function ShopHeader() {
     <div className="flex items-center gap-2 sm:gap-3">
       {/* Recherche intelligente (Loupe) */}
       <SearchModal />
-
-      {/* Admin — desktop uniquement */}
-      <Link
-        href="/admin/dashboard"
-        className="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-neutral-500 hover:text-amber-400 border border-neutral-800 hover:border-amber-400/40 bg-neutral-900 px-3 py-2 rounded-xl transition-all duration-200"
-      >
-        Admin
-      </Link>
 
       {/* Panier */}
       <CartIcon />
@@ -236,15 +222,6 @@ function ShopFooter() {
               className="px-5 py-2.5 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition"
             >
               contact@dreamframe.fr
-            </a>
-            <a
-              href="https://wa.me/33600000000"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-5 py-2.5 rounded-xl border border-emerald-800/60 bg-emerald-950/40 hover:bg-emerald-900/50 text-emerald-300 font-semibold text-xs transition flex items-center gap-2"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Atelier WhatsApp Direct</span>
             </a>
           </div>
         </div>

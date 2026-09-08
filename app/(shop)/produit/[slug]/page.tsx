@@ -134,7 +134,7 @@ export default async function ProductPage({ params }: Props) {
           <div className="space-y-2 border-b border-neutral-800 pb-5">
             <div className="flex items-center justify-between">
               <span className="text-amber-400 text-xs font-mono uppercase tracking-widest">
-                {product.brand} · ÉDITION LIMITÉE
+                {product.brand} · ATELIER FRANCE
               </span>
               <span className="text-xs font-mono text-neutral-400 bg-neutral-900 border border-neutral-800 px-3 py-1 rounded-full">
                 {product.year || 'Collection'}

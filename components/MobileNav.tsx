@@ -6,10 +6,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, X, Menu, Truck, LayoutDashboard } from 'lucide-react'
 
 const NAV_ITEMS = [
-  { href: '/catalogue',          label: 'La Collection',       sub: 'Tous les cadres',       delay: 0 },
-  { href: '/catalogue?era=VINTAGE', label: 'Légendes Vintage',  sub: 'F40, 250 GTO, 930 Turbo…', delay: 0.05 },
-  { href: '/catalogue?era=MODERN',  label: 'Supercars Modernes', sub: 'SF90, GT3 RS, Revuelto…', delay: 0.10 },
-  { href: '/configurateur',      label: 'Atelier Sur-Mesure',  sub: 'Créer ma pièce unique', delay: 0.15, accent: true },
+  { href: '/catalogue',     label: 'La Collection',       sub: 'Toutes nos créations sous cadre', delay: 0 },
+  { href: '/configurateur', label: 'Atelier Sur-Mesure',  sub: 'Créer ma pièce personnalisée', delay: 0.05, accent: true },
+  { href: '/panier',        label: 'Mon Panier',          sub: 'Vérifier ma commande', delay: 0.10 },
 ]
 
 const itemVariants = {
@@ -199,15 +198,7 @@ export function MobileNavDrawer() {
 
             {/* Footer drawer */}
             <div className="px-4 py-5 border-t border-neutral-800 space-y-3">
-              <Link
-                href="/admin/dashboard"
-                onClick={close}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-neutral-800 hover:border-neutral-700 text-neutral-400 hover:text-white transition-all text-xs"
-              >
-                <LayoutDashboard className="w-3.5 h-3.5" />
-                Cockpit Admin
-              </Link>
-              <p className="text-[10px] text-neutral-600 px-4">
+              <p className="text-[10px] text-neutral-500 px-4 text-center">
                 © {new Date().getFullYear()} Dream Frame — Fait main en France
               </p>
             </div>

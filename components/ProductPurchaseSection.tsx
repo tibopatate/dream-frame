@@ -123,21 +123,21 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
                           {fmt.name}
                         </span>
                         {isCollectorA3 && (
-                          <span className="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-500/20 border border-amber-500/30 text-amber-300">
-                            ⭐ Recommandé · Best-Seller
+                          <span className="text-[9px] uppercase font-mono font-semibold tracking-wider px-2 py-0.5 rounded bg-amber-400/10 border border-amber-400/20 text-amber-400">
+                            Format Recommandé
                           </span>
                         )}
                         {isPrestigeA2 && (
-                          <span className="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-400/20 border border-amber-400/40 text-amber-200 font-serif">
-                            👑 Édition Maître d'Art
+                          <span className="text-[9px] uppercase font-mono font-semibold tracking-wider px-2 py-0.5 rounded bg-neutral-800 border border-neutral-700 text-neutral-300">
+                            Prestige Galerie
                           </span>
                         )}
                       </div>
                       <p className="text-[11px] text-neutral-400 font-light mt-0.5">
                         Dimensions : <strong className="text-neutral-300 font-medium">{fmt.size}</strong>
-                        {isCollectorA3 && ' · Miniature 1:18 Grand Relief & Coffret Luxe'}
-                        {isPrestigeA2 && ' · Pièce Maîtresse Galerie & Signature Atelier'}
-                        {!isCollectorA3 && !isPrestigeA2 && ' · Miniature 1:24 en relief vitré'}
+                        {isCollectorA3 && ' · Miniature 1:18 en relief sous vitrine'}
+                        {isPrestigeA2 && ' · Miniature 1:18 Grand Format d\'exposition'}
+                        {!isCollectorA3 && !isPrestigeA2 && ' · Miniature 1:24 sous vitrage HD'}
                       </p>
                     </div>
                   </div>
@@ -153,17 +153,15 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
             })}
           </div>
 
-          {/* Scarcity / Stock indicator */}
+          {/* Indicateur de disponibilité atelier */}
           <div className="flex items-center justify-between text-[11px] pt-1 px-1">
             <span className="text-neutral-400 flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Fabrication artisanale en stock</span>
+              <span>Pièce prête à expédier depuis notre atelier</span>
             </span>
-            {isLowStock && (
-              <span className="text-amber-400 font-mono text-[10px] uppercase tracking-wider">
-                ⚡ Plus que {selectedFormat.stock} ex. disponibles
-              </span>
-            )}
+            <span className="text-neutral-500 font-mono text-[10px]">
+              Expédition 24/48h
+            </span>
           </div>
         </div>
 
