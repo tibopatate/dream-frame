@@ -51,7 +51,7 @@ function dispatch(open: boolean) {
 
 // ─── Toggle Hamburger ─────────────────────────────────────────────────────────
 
-export function MobileNavToggle() {
+export function MobileNavToggle({ className }: { className?: string }) {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -69,31 +69,28 @@ export function MobileNavToggle() {
       type="button"
       onClick={toggle}
       aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
-      className="relative w-10 h-10 flex items-center justify-center rounded-xl border border-neutral-800 bg-neutral-900/80 hover:border-neutral-700 transition-all md:hidden"
+      className={
+        className ||
+        'p-2.5 -ml-2 text-white/90 hover:text-white transition-colors duration-200 group flex items-center justify-center cursor-pointer focus:outline-none'
+      }
     >
-      <AnimatePresence mode="wait" initial={false}>
-        {open ? (
-          <motion.span
-            key="close"
-            initial={{ rotate: -90, opacity: 0 }}
-            animate={{ rotate: 0, opacity: 1 }}
-            exit={{ rotate: 90, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <X className="w-4.5 h-4.5 text-white" />
-          </motion.span>
-        ) : (
-          <motion.span
-            key="menu"
-            initial={{ rotate: 90, opacity: 0 }}
-            animate={{ rotate: 0, opacity: 1 }}
-            exit={{ rotate: -90, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <Menu className="w-4.5 h-4.5 text-white" />
-          </motion.span>
-        )}
-      </AnimatePresence>
+      <div className="w-6 h-4 flex flex-col justify-between">
+        <span
+          className={`h-[2px] bg-white rounded-full transition-all duration-300 ${
+            open ? 'w-6 rotate-45 translate-y-[7px]' : 'w-6'
+          }`}
+        />
+        <span
+          className={`h-[2px] bg-white rounded-full transition-all duration-300 ${
+            open ? 'opacity-0' : 'w-4 group-hover:w-6'
+          }`}
+        />
+        <span
+          className={`h-[2px] bg-white rounded-full transition-all duration-300 ${
+            open ? 'w-6 -rotate-45 -translate-y-[7px]' : 'w-5 group-hover:w-6'
+          }`}
+        />
+      </div>
     </button>
   )
 }

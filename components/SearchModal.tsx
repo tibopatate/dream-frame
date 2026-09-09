@@ -10,7 +10,7 @@ import { triggerFlyToCart } from '@/components/FlyToCart'
 
 const POPULAR_SEARCHES = ['Porsche GT3 RS', 'Ferrari F40', 'Vintage', 'Lamborghini', 'Mercedes 300 SL']
 
-export function SearchModal() {
+export function SearchModal({ className }: { className?: string } = {}) {
   const [isOpen, setIsOpen] = useState(false)
   const [query, setQuery] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
@@ -76,17 +76,16 @@ export function SearchModal() {
 
   return (
     <>
-      {/* Bouton Loupe dans le Header */}
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        aria-label="Recherche intelligente"
-        className="relative p-2.5 rounded-xl text-neutral-400 hover:text-white bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800/80 hover:border-neutral-700 transition flex items-center gap-1.5 cursor-pointer"
+        aria-label="Recherche de modèles"
+        className={
+          className ||
+          'p-2 text-white/90 hover:text-white transition-colors duration-200 cursor-pointer focus:outline-none flex items-center justify-center'
+        }
       >
-        <Search className="w-4 h-4" />
-        <span className="hidden lg:inline text-[10px] font-mono text-neutral-500 bg-neutral-950 px-1.5 py-0.5 rounded border border-neutral-800">
-          ⌘K
-        </span>
+        <Search className="w-5 h-5 stroke-[1.75]" />
       </button>
 
       {/* Modal Overlay */}

@@ -38,8 +38,8 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
 
 function ShopHeader() {
   let announcementText = 'LIVRAISON COLISSIMO SUIVIE 100% OFFERTE · EXPÉDITION 24/48H'
-  let announcementEnabled = true
-  let logoPosition: 'left' | 'center' | 'right' = 'left'
+  let announcementEnabled = false
+  let logoPosition: 'left' | 'center' | 'right' = 'center'
   let announcementPosition: 'top' | 'below' = 'top'
   let headerStyle: 'glass' | 'solid' | 'gold' = 'glass'
 
@@ -54,66 +54,30 @@ function ShopHeader() {
 
   const headerStyleClasses =
     headerStyle === 'gold'
-      ? 'bg-[#080807]/95 backdrop-blur-md border-b border-amber-400/50 shadow-lg shadow-amber-400/5'
+      ? 'bg-[#080807]/95 backdrop-blur-md border-b border-amber-400/40 shadow-lg shadow-amber-400/5'
       : headerStyle === 'solid'
       ? 'bg-[#080807] border-b border-neutral-800'
-      : 'bg-[#080807]/92 backdrop-blur-md border-b border-neutral-800/70'
+      : 'bg-[#080807]/80 backdrop-blur-md border-b border-white/[0.05]'
 
   const AnnouncementComponent = announcementEnabled ? (
-    <div className="bg-neutral-950 border-b border-neutral-800/60 text-center py-2 px-4">
-      <p className="text-[10px] sm:text-xs tracking-[0.18em] uppercase text-amber-300/90 font-medium">
+    <div className="bg-neutral-950 border-b border-neutral-800/60 text-center py-1.5 px-4">
+      <p className="text-[10px] sm:text-xs tracking-[0.2em] uppercase text-amber-300/90 font-light">
         {announcementText}
       </p>
     </div>
   ) : null
 
   const LogoComponent = (
-    <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-neutral-800 overflow-hidden bg-neutral-900 relative shadow-md flex-shrink-0">
-        <Image
-          src="/logo.jpg"
-          alt="Dream Frame"
-          fill
-          className="object-cover group-hover:scale-110 transition-transform duration-500"
-        />
-      </div>
-      <div>
-        <p className="text-sm sm:text-base font-black tracking-tight text-white leading-none uppercase">
-          Dream Frame
-        </p>
-        <p className="text-[8px] sm:text-[9px] text-amber-400 tracking-[0.2em] leading-none mt-0.5 font-bold">
-          ART AUTOMOBILE · 3D
-        </p>
-      </div>
+    <Link href="/" className="group py-1 block focus:outline-none">
+      <Image
+        src="/images/dream-frame-luxury-logo.png"
+        alt="Dream Frame — Votre Passion Mérite Son Cadre"
+        width={160}
+        height={65}
+        priority
+        className="h-8 sm:h-11 w-auto object-contain brightness-110 transition-transform duration-300 group-hover:scale-105"
+      />
     </Link>
-  )
-
-  const NavComponent = (
-    <nav className="hidden md:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-neutral-400">
-      <Link href="/catalogue" className="hover:text-white transition-colors duration-200">
-        La Collection
-      </Link>
-      <Link
-        href="/configurateur"
-        className="text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1.5"
-      >
-        <Sparkles className="w-3.5 h-3.5" />
-        L&apos;Atelier
-      </Link>
-    </nav>
-  )
-
-  const ActionsComponent = (
-    <div className="flex items-center gap-2 sm:gap-3">
-      {/* Recherche intelligente (Loupe) */}
-      <SearchModal />
-
-      {/* Panier */}
-      <CartIcon />
-
-      {/* Burger — mobile uniquement */}
-      <MobileNavToggle />
-    </div>
   )
 
   return (
@@ -121,41 +85,22 @@ function ShopHeader() {
       {/* Bandeau Annonce Position Haut */}
       {announcementPosition === 'top' && AnnouncementComponent}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-18 flex items-center justify-between gap-4">
-        {logoPosition === 'left' && (
-          <>
-            {LogoComponent}
-            {NavComponent}
-            {ActionsComponent}
-          </>
-        )}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-18 flex items-center justify-between">
+        {/* Gauche : Menu Hamburger */}
+        <div className="flex items-center flex-1 justify-start">
+          <MobileNavToggle />
+        </div>
 
-        {logoPosition === 'center' && (
-          <>
-            <div className="flex items-center flex-1">
-              {NavComponent}
-              <div className="md:hidden">
-                <MobileNavToggle />
-              </div>
-            </div>
-            <div className="mx-auto flex justify-center">
-              {LogoComponent}
-            </div>
-            <div className="flex items-center justify-end flex-1">
-              {ActionsComponent}
-            </div>
-          </>
-        )}
+        {/* Centre : Logo Dream Frame centré et discret */}
+        <div className="flex items-center justify-center">
+          {LogoComponent}
+        </div>
 
-        {logoPosition === 'right' && (
-          <>
-            <div className="flex items-center gap-4">
-              {NavComponent}
-              {ActionsComponent}
-            </div>
-            {LogoComponent}
-          </>
-        )}
+        {/* Droite : Recherche à droite et Panier discret */}
+        <div className="flex items-center justify-end flex-1 gap-2 sm:gap-3">
+          <SearchModal />
+          <CartIcon />
+        </div>
       </div>
 
       {/* Bandeau Annonce Position Sous le Header */}

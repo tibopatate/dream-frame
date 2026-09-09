@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React from 'react'
 import Image from 'next/image'
@@ -77,6 +77,7 @@ export function SectionRenderer({
   }
 
   // ─── SECTION 1: HERO ───────────────────────────────────────────────────────
+  // ─── SECTION 1: HERO SHOWROOM BUGATTI CHIRON ──────────────────────────────
   if (section.type === 'hero') {
     return (
       <div
@@ -90,102 +91,82 @@ export function SectionRenderer({
             <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
               isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
             }`}>
-              HERO · {section.name}
+              HERO SHOWROOM · {section.name}
             </span>
           </div>
         )}
 
-        <section className="relative min-h-[72vh] sm:min-h-[88vh] flex flex-col justify-center items-center px-4 sm:px-6 py-12 sm:py-20 overflow-hidden bg-[#080807]">
-          {/* Photographie Réelle avec Animation Zoom */}
-          <div className="absolute inset-0 z-0 animate-hero-zoom">
+        <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-between items-center px-4 sm:px-6 pt-16 sm:pt-24 pb-8 sm:pb-12 overflow-hidden bg-[#080807]">
+          {/* Photographie Showroom Bugatti Chiron 2016 avec reflets réalistes */}
+          <div className="absolute inset-0 z-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={s.bgImage || '/atelier/chiron-wall.jpg'}
-              alt="Bugatti Chiron — Art Automobile Dream Frame"
-              className="w-full h-full object-cover object-center brightness-[0.75] contrast-[1.1]"
+              src={s.bgImage || '/images/hero-chiron-showroom.jpg'}
+              alt="Bugatti Chiron 2016 — Showroom Dream Frame"
+              className="w-full h-full object-cover object-top sm:object-center brightness-[0.92] contrast-[1.05]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#080807] via-[#080807]/30 to-[#080807]/60" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#080807]/50 via-transparent to-[#080807]/50" />
+            {/* Dégradé supérieur pour la lisibilité du header */}
+            <div className="absolute inset-x-0 top-0 h-32 sm:h-44 bg-gradient-to-b from-[#080807]/90 via-[#080807]/40 to-transparent pointer-events-none" />
+            
+            {/* Dégradé latéral cinéma / vignette */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40 pointer-events-none" />
+
+            {/* Dégradé noir progressif en bas du hero invitant naturellement au scroll */}
+            <div className="absolute inset-x-0 bottom-0 h-64 sm:h-80 bg-gradient-to-t from-[#080807] via-[#080807]/80 via-40% to-transparent pointer-events-none" />
           </div>
 
-          <div className="relative z-10 max-w-4xl mx-auto text-center space-y-4 sm:space-y-6 my-auto">
-            {/* Badge Atelier */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-neutral-800 text-amber-400 text-[10px] sm:text-xs font-mono uppercase tracking-[0.2em]">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-              {s.badgeText || 'Atelier Français · Cadres Décoratifs Supercars'}
-            </div>
+          {/* Espace négatif supérieur autour de la supercar */}
+          <div className="relative z-10 w-full flex-1 min-h-[30vh] sm:min-h-[42vh]" />
 
-            {/* Titre Principal */}
-            <h1 className="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.02] sm:leading-[0.94] text-white">
-              {s.title || "L'art de la supercar, sculpté en relief 3D."}
-            </h1>
-
-            {/* Sous-titre descriptif */}
-            <p className="text-xs sm:text-base text-neutral-300 max-w-2xl mx-auto font-light leading-relaxed">
-              {s.subtitle || "Cadres d’ébénisterie automobile sous vitrage optique anti-UV avec rétroéclairage LED ambré intégré."}{' '}
-              <span className="text-white font-semibold block sm:inline mt-1 sm:mt-0">
-                {s.priceText || "À partir de 49,99 € · Livraison Colissimo 100% Offerte."}
-              </span>
+          {/* Contenu Typographique & CTAs du Concept (Positionné avec élégance sous les reflets) */}
+          <div className="relative z-10 max-w-4xl mx-auto text-center space-y-4 sm:space-y-5 pb-2">
+            {/* Eyebrow minimalist */}
+            <p className="text-[10px] sm:text-xs font-light tracking-[0.35em] sm:tracking-[0.45em] uppercase text-neutral-300/90 font-sans">
+              {s.badgeText || "L'ART DE CAPTURER"}
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2">
+            {/* Titre Principal Majestueux Trajan / Serif */}
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-light font-serif tracking-[0.25em] sm:tracking-[0.35em] uppercase text-white leading-tight">
+              {s.title || "L'EXCEPTIONNEL"}
+            </h1>
+
+            {/* Ligne d'accent horizontale minimaliste */}
+            <div className="w-12 sm:w-16 h-[1px] bg-neutral-500/60 mx-auto" />
+
+            {/* Sous-titre descriptif */}
+            <p className="text-[11px] sm:text-xs text-neutral-400 font-light tracking-[0.2em] sm:tracking-[0.26em] uppercase max-w-lg mx-auto leading-relaxed">
+              {s.subtitle || "DES VOITURES DE LÉGENDE, ENCADRÉES POUR L'ÉTERNITÉ."}
+            </p>
+
+            {/* Les deux CTA du concept */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-3 sm:pt-4">
               <Link
-                href={isEditor ? '#' : (s.primaryBtnLink || '/catalogue')}
-                className="relative w-full sm:w-auto px-8 py-4 bg-white hover:bg-neutral-100 text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 shadow-2xl shadow-white/20 flex items-center justify-center gap-2 group active:scale-[0.98]"
+                href={isEditor ? '#' : (s.primaryBtnLink || '#collection')}
+                className="w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full border border-white/85 bg-white/10 hover:bg-white hover:text-black text-white text-[11px] sm:text-xs uppercase tracking-[0.22em] font-medium transition-all duration-300 backdrop-blur-md shadow-2xl active:scale-[0.98] text-center"
               >
-                <span>{s.primaryBtnText || 'Découvrir la Collection'}</span>
-                <ArrowRight className="w-4 h-4 text-black group-hover:translate-x-1 transition-transform" />
+                <span>{s.primaryBtnText || 'Visiter notre galerie'}</span>
               </Link>
 
               <Link
-                href={isEditor ? '#' : (s.secondaryBtnLink || '/configurateur')}
-                className="relative w-full sm:w-auto px-8 py-4 bg-black/70 hover:bg-black/90 backdrop-blur-md border border-neutral-700 hover:border-amber-400/60 text-white text-xs tracking-wider uppercase rounded-xl transition-all duration-300 flex items-center justify-center gap-2 group"
+                href={isEditor ? '#' : (s.secondaryBtnLink || '/catalogue')}
+                className="w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full border border-neutral-700/80 hover:border-amber-400/80 bg-black/40 hover:bg-black/70 text-neutral-300 hover:text-amber-300 text-[11px] sm:text-xs uppercase tracking-[0.22em] font-medium transition-all duration-300 backdrop-blur-md shadow-2xl active:scale-[0.98] text-center"
               >
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>{s.secondaryBtnText || 'Créer mon Dream Frame'}</span>
+                <span>{s.secondaryBtnText || 'Notre collection passionnée'}</span>
               </Link>
             </div>
 
-            {/* Marques */}
-            {s.showBrands !== false && (
-              <div className="pt-4 flex items-center justify-center gap-2 sm:gap-4 text-[10px] sm:text-xs text-neutral-400 uppercase tracking-widest font-mono flex-wrap">
-                <span>Bugatti</span>
-                <span className="text-neutral-700">·</span>
-                <span>Pagani</span>
-                <span className="text-neutral-700">·</span>
-                <span>Audi</span>
-                <span className="text-neutral-700">·</span>
-                <span>BMW</span>
-                <span className="text-neutral-700">·</span>
-                <span>Lamborghini</span>
-                <span className="text-neutral-700">·</span>
-                <span>Porsche</span>
-                <span className="text-neutral-700">·</span>
-                <span>Ferrari</span>
-                <span className="text-neutral-700">·</span>
-                <span>McLaren</span>
-              </div>
-            )}
+            {/* Flèche vers le bas incitant au scroll */}
+            <div className="pt-4 sm:pt-6 flex justify-center">
+              <a
+                href={isEditor ? '#' : '#collection'}
+                aria-label="Faire défiler vers la collection"
+                className="flex flex-col items-center gap-2 text-white/50 hover:text-white transition-colors duration-300 group cursor-pointer"
+              >
+                <div className="w-[1px] h-7 sm:h-9 bg-gradient-to-b from-white/10 via-white/40 to-white animate-pulse" />
+                <ChevronDown className="w-3.5 h-3.5 text-white/60 group-hover:translate-y-1 transition-transform" />
+              </a>
+            </div>
           </div>
-
-          {/* 3 Badges de réassurance sous le Hero */}
-          {s.showReassuranceBadges !== false && (
-            <div className="relative z-10 w-full max-w-4xl mx-auto mt-8 sm:mt-12 pt-6 border-t border-neutral-800/60 grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
-              <div className="flex items-center justify-center gap-2 text-xs text-neutral-300">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                <span>Fait Main en France · Atelier</span>
-              </div>
-              <div className="flex items-center justify-center gap-2 text-xs text-neutral-300">
-                <span className="w-2 h-2 rounded-full bg-amber-400" />
-                <span>Éclairage LED Ambré Intégré</span>
-              </div>
-              <div className="flex items-center justify-center gap-2 text-xs text-neutral-300">
-                <span className="w-2 h-2 rounded-full bg-blue-400" />
-                <span>Verre Optique Anti-Reflet</span>
-              </div>
-            </div>
-          )}
         </section>
       </div>
     )
@@ -214,16 +195,59 @@ export function SectionRenderer({
     )
   }
 
-  // ─── SECTION 3: COLLECTION ────────────────────────────────────────────────
+  // ─── SECTION 3: NOTRE COLLECTION (GALERIE D'ART HAUT DE GAMME) ─────────────
   if (section.type === 'collection') {
-    let products = [...MOCK_PRODUCTS]
-    if (s.category && s.category !== 'ALL') {
-      products = products.filter((p) => p.era === s.category)
-    }
-    products = products.slice(0, s.limit || 8)
+    // 4 cadres phares du concept (McLaren, Audi R8, Cayenne, Ferrari F40)
+    const FEATURED_CONCEPT_FRAMES = [
+      {
+        id: 'frame-mclaren-gt',
+        slug: 'mclaren-gt-2019-cadre-3d',
+        name: 'McLaren GT',
+        year: 2019,
+        brand: 'McLaren',
+        specs: 'V8 Biturbo · 620 CH',
+        tag: 'Édition Galerie',
+        image: '/images/frames/frame-mclaren-gt.jpg',
+        price: '49,99 €',
+      },
+      {
+        id: 'frame-audi-r8',
+        slug: 'audi-r8-v10-performance-cadre-3d',
+        name: 'Audi R8',
+        year: 2018,
+        brand: 'Audi',
+        specs: 'V10 Atmosphérique · 620 CH',
+        tag: 'Pièce Numérotée',
+        image: '/images/frames/frame-audi-r8.jpg',
+        price: '49,99 €',
+      },
+      {
+        id: 'frame-porsche-cayenne',
+        slug: 'porsche-cayenne-turbo-2016-cadre-3d',
+        name: 'Porsche Cayenne',
+        year: 2016,
+        brand: 'Porsche',
+        specs: 'V8 Biturbo · 570 CH',
+        tag: 'Collector 3D',
+        image: '/images/frames/frame-porsche-cayenne.jpg',
+        price: '49,99 €',
+      },
+      {
+        id: 'frame-ferrari-f40',
+        slug: 'ferrari-f40-1987-cadre-3d',
+        name: 'Ferrari F40',
+        year: 1987,
+        brand: 'Ferrari',
+        specs: 'V8 Twin-Turbo · 478 CH',
+        tag: 'Icône Éternelle',
+        image: '/images/frames/frame-ferrari-f40.jpg',
+        price: '49,99 €',
+      },
+    ]
 
     return (
       <div
+        id="collection"
         className={`${outlineClass} ${section.hidden ? 'opacity-40 grayscale' : ''}`}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
@@ -234,94 +258,119 @@ export function SectionRenderer({
             <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
               isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
             }`}>
-              CATALOGUE · {section.name}
+              GALERIE · {section.name}
             </span>
           </div>
         )}
 
-        <section className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 space-y-12 bg-[#080807]">
-          {/* En-tête Collection */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-neutral-800/80 pb-8">
-            <div className="space-y-3 max-w-2xl">
-              <span className="text-[10px] sm:text-xs tracking-[0.25em] uppercase text-amber-400 font-semibold font-mono">
-                {s.badge || 'Catalogue Collector 2026'}
-              </span>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
-                {s.title || "Nos Cadres 3D d'Art Automobile"}
-              </h2>
-              <p className="text-xs sm:text-sm text-neutral-400 font-light">
-                {s.desc || 'Chaque pièce est assemblée à la main dans notre atelier en France avec vitrage optique et rétroéclairage LED ambré.'}
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <span className="text-xs text-neutral-400 font-mono">
-                À partir de <strong className="text-white font-bold">{s.startingPrice || '49,99 €'}</strong>
-              </span>
-              <Link
-                href={isEditor ? '#' : '/catalogue'}
-                className="px-4 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-white text-xs font-semibold flex items-center gap-2 transition"
-              >
-                <span>Voir tout le catalogue</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
+        <section className="py-16 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 space-y-12 sm:space-y-16 bg-[#080807] transition-all duration-700">
+          {/* En-tête Collection Minimaliste avec Ligne Fine (Concept 100% Fidèle) */}
+          <div className="flex items-center justify-between gap-4 sm:gap-8">
+            <h2 className="text-xs sm:text-sm font-light tracking-[0.35em] sm:tracking-[0.45em] text-neutral-200 uppercase font-sans whitespace-nowrap">
+              {s.title || 'NOTRE COLLECTION'}
+            </h2>
+            <div className="flex-1 h-[1px] bg-gradient-to-r from-neutral-600 via-neutral-700/60 to-transparent" />
+            <Link
+              href={isEditor ? '#' : '/catalogue'}
+              className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-amber-300 transition-colors whitespace-nowrap hidden sm:inline-flex items-center gap-1.5"
+            >
+              <span>Voir tout le catalogue</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
 
-          {/* Grille des Supercars Réelles */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {products.map((product) => (
+          {/* Grille des 4 Cadres Verticaux A4 avec Éclairage Galerie Spot */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-6 lg:gap-8 items-start">
+            {FEATURED_CONCEPT_FRAMES.map((item) => (
               <div
-                key={product.id}
-                className="group flex flex-col rounded-2xl bg-neutral-900/50 border border-neutral-800 overflow-hidden hover:border-amber-400/60 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-black"
+                key={item.id}
+                className="group flex flex-col items-center space-y-4"
               >
-                {/* Image du Cadre 3D */}
-                <div className="relative aspect-[4/3] bg-neutral-950 overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-3 left-3 flex gap-1.5">
-                    <span className="px-2 py-0.5 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-amber-400 text-[10px] font-mono uppercase tracking-wider font-semibold">
-                      {product.brand}
-                    </span>
-                    <span className="px-2 py-0.5 rounded-full bg-amber-400/20 backdrop-blur-md border border-amber-400/30 text-amber-300 text-[10px] font-mono uppercase font-bold">
-                      {product.era === 'VINTAGE' ? 'Vintage' : 'Moderne'}
-                    </span>
-                  </div>
+                {/* Spot lumineux galerie haut de gamme au-dessus du cadre */}
+                <div className="w-full flex flex-col items-center pointer-events-none -mb-3 sm:-mb-4 z-10">
+                  {/* Luminaire rail */}
+                  <div className="w-2.5 h-1 bg-neutral-600 rounded-sm shadow-md" />
+                  {/* Source chaude */}
+                  <div className="w-1.5 h-1.5 rounded-full bg-amber-100 shadow-[0_0_16px_rgba(254,243,199,0.95)]" />
+                  {/* Faisceau lumineux conique descendant sur le cadre */}
+                  <div className="w-full h-12 bg-gradient-to-b from-amber-100/15 via-amber-200/5 to-transparent blur-sm" />
                 </div>
 
-                {/* Détails */}
-                <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
-                  <div>
-                    <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-amber-300 transition line-clamp-1">
-                      {product.name}
-                    </h3>
-                    <p className="text-xs text-neutral-400 line-clamp-2 mt-1 font-light leading-relaxed">
-                      {product.description}
-                    </p>
+                {/* Cadre d'Art Vertical Format A4 (aspect-[1/1.414]) */}
+                <Link
+                  href={isEditor ? '#' : `/produit/${item.slug}`}
+                  className="relative w-full aspect-[1/1.414] rounded-sm p-2 sm:p-2.5 bg-gradient-to-br from-[#2a2825] via-[#1c1b19] to-[#121110] ring-1 ring-neutral-700/60 shadow-[0_20px_50px_rgba(0,0,0,0.95),0_0_20px_rgba(251,191,36,0.03)] hover:shadow-[0_25px_60px_rgba(0,0,0,1),0_0_35px_rgba(251,191,36,0.12)] hover:ring-amber-400/40 transition-all duration-500 overflow-hidden block"
+                >
+                  {/* Passe-partout intérieur biseauté noir conservation */}
+                  <div className="relative w-full h-full bg-neutral-950 overflow-hidden ring-1 ring-black/90">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={item.image}
+                      alt={`${item.name} (${item.year}) — Cadre 3D Dream Frame`}
+                      className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                    />
+
+                    {/* Reflet verre optique subtil */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-transparent pointer-events-none" />
+
+                    {/* Badge édition discrète au survol */}
+                    <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span className="px-2 py-0.5 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-amber-300 text-[9px] font-mono uppercase tracking-wider">
+                        {item.tag}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+
+                {/* Fiche Descriptive & Boutons Minimalistes */}
+                <div className="w-full text-center space-y-1.5 pt-1">
+                  <div className="flex items-center justify-between text-neutral-400 text-[10px] font-mono uppercase tracking-widest px-1">
+                    <span>{item.brand} · {item.year}</span>
+                    <span className="text-amber-400/90 font-semibold">{item.price}</span>
                   </div>
 
-                  {/* Prix & CTA */}
-                  <div className="flex items-center justify-between border-t border-neutral-800/80 pt-3">
-                    <div>
-                      <span className="text-[10px] text-neutral-400 block font-light">À partir de</span>
-                      <p className="text-base font-bold text-white font-serif">49,99 €</p>
-                    </div>
+                  <h3 className="text-sm font-serif tracking-[0.2em] text-white uppercase group-hover:text-amber-300 transition-colors">
+                    {item.name}
+                  </h3>
 
+                  <p className="text-[11px] text-neutral-400 font-light">
+                    {item.specs}
+                  </p>
+
+                  <div className="pt-2 flex items-center justify-center gap-2">
                     <Link
-                      href={isEditor ? '#' : `/produit/${product.slug}`}
-                      className="px-3 py-2 bg-white hover:bg-neutral-100 text-black font-bold text-[11px] tracking-wider uppercase rounded-xl transition-all shadow-sm flex items-center gap-1 active:scale-95"
+                      href={isEditor ? '#' : `/produit/${item.slug}`}
+                      className="px-4 py-1.5 rounded-full border border-neutral-800 hover:border-neutral-600 bg-neutral-900/60 hover:bg-neutral-800 text-white text-[10px] font-medium uppercase tracking-wider transition-all"
                     >
-                      <span>VOIR LE FRAME</span>
-                      <ArrowRight className="w-3 h-3" />
+                      Voir le cadre
+                    </Link>
+                    <Link
+                      href={isEditor ? '#' : '/configurateur'}
+                      className="px-4 py-1.5 rounded-full border border-amber-400/40 hover:border-amber-400 bg-amber-400/10 hover:bg-amber-400/20 text-amber-300 text-[10px] font-medium uppercase tracking-wider transition-all"
+                    >
+                      Sur-mesure
                     </Link>
                   </div>
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Ambiance Salon & Assises Galerie au Premier Plan */}
+          <div className="pt-8 border-t border-neutral-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              <p className="text-xs text-neutral-400 font-light">
+                Chaque œuvre est fabriquée à l’unité sous vitrage optique avec éclairage LED ambré 3000K intégré.
+              </p>
+            </div>
+
+            <Link
+              href={isEditor ? '#' : '/catalogue'}
+              className="sm:hidden w-full px-6 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white text-xs font-medium uppercase tracking-wider text-center"
+            >
+              Voir tout le catalogue (8 cadres)
+            </Link>
           </div>
         </section>
       </div>
