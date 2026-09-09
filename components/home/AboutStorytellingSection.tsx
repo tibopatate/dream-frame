@@ -8,7 +8,7 @@ import {
   ShieldCheck,
   Truck,
   Zap,
-  Award,
+  CheckCircle,
   HeartHandshake,
   Layers,
   ArrowRight,
@@ -110,7 +110,7 @@ export function AboutStorytellingSection({
               </p>
             </div>
             <div className="flex items-center gap-1 text-amber-400 text-xs font-bold bg-amber-400/10 border border-amber-400/20 px-3 py-1.5 rounded-full">
-              <Award className="w-4 h-4" />
+              <CheckCircle className="w-4 h-4" />
               <span>Savoir-Faire Français</span>
             </div>
           </div>
@@ -136,7 +136,7 @@ export function AboutStorytellingSection({
                 </span>
                 <p className="text-xs font-bold text-white">Chaque cadre est vérifié et numéroté</p>
               </div>
-              <Award className="w-5 h-5 text-amber-400" />
+              <CheckCircle className="w-5 h-5 text-amber-400" />
             </div>
           </div>
         </ScrollReveal>
@@ -276,7 +276,7 @@ export function AboutStorytellingSection({
             desc: '30 jours pour changer d&apos;avis. Retour simple sans justification.',
           },
           {
-            icon: Award,
+            icon: CheckCircle,
             title: 'Garantie Atelier 2 Ans',
             desc: 'Électronique LED et cadre garantis 2 ans contre tout défaut.',
           },

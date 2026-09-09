@@ -138,20 +138,13 @@ export function SectionRenderer({
               {s.subtitle || "DES VOITURES DE LÉGENDE, ENCADRÉES POUR L'ÉTERNITÉ."}
             </p>
 
-            {/* Les deux CTA remontés */}
-            <div className="flex flex-row w-full items-center justify-center gap-2 sm:gap-4 pt-2 sm:pt-3">
+            {/* Le CTA remonté et centré */}
+            <div className="flex items-center justify-center pt-2 sm:pt-4 w-full">
               <Link
                 href={isEditor ? '#' : (s.primaryBtnLink === '#collection' ? '/catalogue' : s.primaryBtnLink || '/catalogue')}
-                className="flex-1 sm:flex-none sm:w-auto px-2 sm:px-8 py-3.5 sm:py-4 rounded-full border border-white/85 bg-white/10 hover:bg-white hover:text-black text-white text-[9px] sm:text-xs uppercase tracking-wider sm:tracking-[0.22em] font-medium transition-all duration-300 backdrop-blur-md shadow-2xl active:scale-[0.98] text-center"
+                className="w-auto px-8 sm:px-12 py-3.5 sm:py-4 rounded-full border border-white/85 bg-white/10 hover:bg-white hover:text-black text-white text-[10px] sm:text-xs uppercase tracking-widest sm:tracking-[0.22em] font-medium transition-all duration-300 backdrop-blur-md shadow-2xl active:scale-[0.98] text-center"
               >
                 <span>{s.primaryBtnText || 'Visiter notre galerie'}</span>
-              </Link>
-
-              <Link
-                href={isEditor ? '#' : (s.secondaryBtnLink || '#collection')}
-                className="flex-1 sm:flex-none sm:w-auto px-2 sm:px-8 py-3.5 sm:py-4 rounded-full border border-neutral-700/80 hover:border-amber-400/80 bg-black/50 hover:bg-black/80 text-neutral-300 hover:text-amber-300 text-[9px] sm:text-xs uppercase tracking-wider sm:tracking-[0.22em] font-medium transition-all duration-300 backdrop-blur-md shadow-2xl active:scale-[0.98] text-center"
-              >
-                <span>{s.secondaryBtnText || 'Notre collection'}</span>
               </Link>
             </div>
           </div>
@@ -251,45 +244,45 @@ export function SectionRenderer({
           </div>
         )}
 
-        <section className="py-12 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-14 transition-all duration-700">
+        <section className="py-12 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 space-y-8 sm:space-y-12 transition-all duration-700">
           {/* En-tête Collection Minimaliste avec Ligne Fine (Concept 100% Fidèle) */}
           <div className="flex items-center justify-between gap-4 sm:gap-8">
-            <h2 className="text-xs sm:text-sm font-light tracking-[0.35em] sm:tracking-[0.45em] text-neutral-200 uppercase font-sans whitespace-nowrap">
-              {s.title || 'NOTRE COLLECTION'}
+            <h2 className="text-[10px] sm:text-xs font-light tracking-[0.3em] sm:tracking-[0.4em] text-neutral-200 uppercase font-sans whitespace-nowrap">
+              {s.title || 'NOTRE COLLECTION PASSIONNÉE'}
             </h2>
             <div className="flex-1 h-[1px] bg-gradient-to-r from-neutral-600 via-neutral-700/60 to-transparent" />
             <Link
               href={isEditor ? '#' : '/catalogue'}
-              className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-amber-300 transition-colors whitespace-nowrap hidden sm:inline-flex items-center gap-1.5"
+              className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-neutral-400 hover:text-amber-300 transition-colors whitespace-nowrap inline-flex items-center gap-1.5"
             >
-              <span>Voir tout le catalogue</span>
+              <span>Tout voir</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
-          {/* Grille des 4 VRAIS Cadres de la Boutique avec Éclairage Galerie */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-6 lg:gap-8 items-start">
+          {/* Liste Horizontale des 4 VRAIS Cadres (Petits formats) */}
+          <div className="flex overflow-x-auto pb-8 -mx-4 px-4 sm:mx-0 sm:px-0 gap-4 sm:gap-6 snap-x snap-mandatory hide-scrollbar">
             {REAL_STORE_FRAMES.map((item) => (
               <div
                 key={item.id}
-                className="group flex flex-col items-center space-y-4"
+                className="snap-start shrink-0 w-[55vw] sm:w-[220px] lg:w-[240px] group flex flex-col items-center space-y-3"
               >
                 {/* Spot lumineux galerie haut de gamme au-dessus du cadre */}
-                <div className="w-full flex flex-col items-center pointer-events-none -mb-3 sm:-mb-4 z-10">
+                <div className="w-full flex flex-col items-center pointer-events-none -mb-3 z-10">
                   {/* Luminaire rail */}
-                  <div className="w-2.5 h-1 bg-neutral-600 rounded-sm shadow-md" />
+                  <div className="w-2 h-[3px] bg-neutral-600 rounded-sm shadow-md" />
                   {/* Source chaude */}
-                  <div className="w-1.5 h-1.5 rounded-full bg-amber-100 shadow-[0_0_16px_rgba(254,243,199,0.95)]" />
+                  <div className="w-1 h-1 rounded-full bg-amber-100 shadow-[0_0_12px_rgba(254,243,199,0.95)]" />
                   {/* Faisceau lumineux conique descendant sur le cadre */}
-                  <div className="w-full h-12 bg-gradient-to-b from-amber-100/15 via-amber-200/5 to-transparent blur-sm" />
+                  <div className="w-full h-8 bg-gradient-to-b from-amber-100/15 via-amber-200/5 to-transparent blur-sm" />
                 </div>
 
                 {/* Vrai Cadre d'Art de la Boutique (aspect-[3/4] élégant) */}
                 <Link
                   href={isEditor ? '#' : `/produit/${item.slug}`}
-                  className="relative w-full aspect-[3/4] rounded-2xl p-2 sm:p-2.5 bg-neutral-900/60 border border-neutral-800 ring-1 ring-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.95),0_0_20px_rgba(251,191,36,0.03)] hover:shadow-[0_25px_60px_rgba(0,0,0,1),0_0_35px_rgba(251,191,36,0.15)] hover:border-amber-400/60 transition-all duration-500 overflow-hidden block group/frame"
+                  className="relative w-full aspect-[3/4] rounded-xl p-1.5 sm:p-2 bg-neutral-900/60 border border-neutral-800 ring-1 ring-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.95),0_0_15px_rgba(251,191,36,0.03)] hover:shadow-[0_20px_45px_rgba(0,0,0,1),0_0_25px_rgba(251,191,36,0.15)] hover:border-amber-400/60 transition-all duration-500 overflow-hidden block group/frame"
                 >
-                  <div className="relative w-full h-full rounded-xl bg-neutral-950 overflow-hidden">
+                  <div className="relative w-full h-full rounded-lg bg-neutral-950 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={item.image}

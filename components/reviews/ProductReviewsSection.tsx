@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Star, CheckCircle, MessageSquarePlus, Award, ThumbsUp } from 'lucide-react'
+import { Star, CheckCircle, MessageSquarePlus, ThumbsUp } from 'lucide-react'
 import { LeaveReviewModal } from './LeaveReviewModal'
 import type { StoredReview } from '@/lib/data-store'
 
