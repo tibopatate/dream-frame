@@ -2,20 +2,26 @@
 import path from 'path'
 import { prisma, isPrismaConfigured } from '@/lib/db'
 import { PageTreeDocument, PageTreeSnapshot } from './types'
-import { DEFAULT_PAGE_TREE } from './default-tree'
+import { DEFAULT_PAGE_DOCUMENT } from './default-sections'
 
 const DATA_DIR = path.join(process.cwd(), 'data')
 const DRAFT_FILE = path.join(DATA_DIR, 'page-tree-draft.json')
 const PUBLISHED_FILE = path.join(DATA_DIR, 'page-tree-published.json')
 const SNAPSHOTS_FILE = path.join(DATA_DIR, 'page-tree-snapshots.json')
 
-// Helper to ensure data dir exists locally
 function ensureDir() {
   try {
     if (!fs.existsSync(DATA_DIR)) {
       fs.mkdirSync(DATA_DIR, { recursive: true })
     }
   } catch {}
+}
+
+function normalizeDocument(doc: any): PageTreeDocument {
+  if (doc && Array.isArray(doc.sections) && doc.sections.length > 0) {
+    return doc as PageTreeDocument
+  }
+  return DEFAULT_PAGE_DOCUMENT
 }
 
 // ─── 1. DRAFT TREE ──────────────────────────────────────────────────────────
@@ -28,7 +34,7 @@ export async function getDraftTree(): Promise<PageTreeDocument> {
         where: { key: 'page_tree_draft' },
       })
       if (record?.value) {
-        return record.value as unknown as PageTreeDocument
+        return normalizeDocument(record.value)
       }
     } catch (err) {
       console.warn('Postgres getDraftTree failed, using fallback:', err)
@@ -40,22 +46,18 @@ export async function getDraftTree(): Promise<PageTreeDocument> {
     if (fs.existsSync(DRAFT_FILE)) {
       const raw = fs.readFileSync(DRAFT_FILE, 'utf-8')
       const parsed = JSON.parse(raw)
-      if (parsed?.elements && Array.isArray(parsed.elements)) {
-        return parsed
-      }
+      return normalizeDocument(parsed)
     }
   } catch (err) {
     console.warn('Local draft read failed:', err)
   }
 
-  // 3. Try published tree or default
-  const published = await getPublishedTree()
-  return published || DEFAULT_PAGE_TREE
+  // 3. Fallback to default authentic page document
+  return DEFAULT_PAGE_DOCUMENT
 }
 
 export async function saveDraftTree(doc: PageTreeDocument): Promise<boolean> {
   doc.updatedAt = new Date().toISOString()
-
   let saved = false
 
   // 1. Try PostgreSQL
@@ -99,7 +101,7 @@ export async function getPublishedTree(): Promise<PageTreeDocument> {
         where: { key: 'page_tree_published' },
       })
       if (record?.value) {
-        return record.value as unknown as PageTreeDocument
+        return normalizeDocument(record.value)
       }
     } catch (err) {
       console.warn('Postgres getPublishedTree failed, using fallback:', err)
@@ -111,16 +113,13 @@ export async function getPublishedTree(): Promise<PageTreeDocument> {
     if (fs.existsSync(PUBLISHED_FILE)) {
       const raw = fs.readFileSync(PUBLISHED_FILE, 'utf-8')
       const parsed = JSON.parse(raw)
-      if (parsed?.elements && Array.isArray(parsed.elements)) {
-        return parsed
-      }
+      return normalizeDocument(parsed)
     }
   } catch (err) {
     console.warn('Local published read failed:', err)
   }
 
-  // 3. Fallback to default high-end tree
-  return DEFAULT_PAGE_TREE
+  return DEFAULT_PAGE_DOCUMENT
 }
 
 export async function publishTree(doc: PageTreeDocument): Promise<{ success: boolean; snapshotId: string }> {
@@ -167,7 +166,7 @@ export async function publishTree(doc: PageTreeDocument): Promise<{ success: boo
       minute: '2-digit',
     })}`,
     publishedAt: new Date().toISOString(),
-    elementCount: countElements(doc.elements),
+    elementCount: doc.sections.length,
     document: JSON.parse(JSON.stringify(doc)),
   }
 
@@ -239,18 +238,6 @@ export async function restoreSnapshot(snapshotId: string): Promise<PageTreeDocum
   const found = snapshots.find((s) => s.id === snapshotId)
   if (!found) return null
 
-  // Restore as current draft
   await saveDraftTree(found.document)
   return found.document
-}
-
-function countElements(elements: any[]): number {
-  let count = 0
-  for (const el of elements) {
-    count += 1
-    if (el.children && Array.isArray(el.children)) {
-      count += countElements(el.children)
-    }
-  }
-  return count
 }

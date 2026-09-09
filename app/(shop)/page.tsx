@@ -1,7 +1,7 @@
 ﻿import type { Metadata } from 'next'
 import { getPublishedTree } from '@/lib/page-builder/store'
-import { ElementRenderer } from '@/components/page-builder/ElementRenderer'
-import { DEFAULT_PAGE_TREE } from '@/lib/page-builder/default-tree'
+import { SectionRenderer } from '@/components/page-builder/SectionRenderer'
+import { DEFAULT_PAGE_DOCUMENT } from '@/lib/page-builder/default-sections'
 
 export const metadata: Metadata = {
   title: "Dream Frame — Art Automobile 3D d'Exception | Atelier France",
@@ -17,15 +17,15 @@ export default async function HomePage() {
     doc = await getPublishedTree()
   } catch (err) {
     console.error('Error fetching published tree, falling back:', err)
-    doc = DEFAULT_PAGE_TREE
+    doc = DEFAULT_PAGE_DOCUMENT
   }
 
-  const elements = doc?.elements && doc.elements.length > 0 ? doc.elements : DEFAULT_PAGE_TREE.elements
+  const sections = doc?.sections && doc.sections.length > 0 ? doc.sections : DEFAULT_PAGE_DOCUMENT.sections
 
   return (
     <main className="bg-[#080807] text-white selection:bg-amber-400 selection:text-black overflow-hidden">
-      {elements.map((el) => (
-        <ElementRenderer key={el.id} element={el} isEditor={false} />
+      {sections.map((sec) => (
+        <SectionRenderer key={sec.id} section={sec} isEditor={false} />
       ))}
     </main>
   )

@@ -1,4 +1,4 @@
-﻿export type ElementType =
+export type ElementType =
   | 'section'
   | 'container'
   | 'heading'
@@ -10,10 +10,20 @@
   | 'badge'
   | 'product-list'
 
+export type SectionType =
+  | 'hero'
+  | 'pillars'
+  | 'demo'
+  | 'collection'
+  | 'craft'
+  | 'reassurance'
+  | 'custom_atelier'
+  | 'banner'
+  | 'custom_text'
+
 export type DeviceMode = 'desktop' | 'tablet' | 'mobile'
 
 export interface ElementStyles {
-  // Typography
   fontFamily?: string
   fontSize?: string
   fontWeight?: string
@@ -24,7 +34,6 @@ export interface ElementStyles {
   color?: string
   fontStyle?: 'normal' | 'italic'
 
-  // Colors & Shape
   backgroundColor?: string
   backgroundImage?: string
   backgroundSize?: string
@@ -40,7 +49,6 @@ export interface ElementStyles {
   boxShadow?: string
   opacity?: number
 
-  // Spacing (4 sides)
   paddingTop?: string
   paddingRight?: string
   paddingBottom?: string
@@ -50,7 +58,6 @@ export interface ElementStyles {
   marginBottom?: string
   marginLeft?: string
 
-  // Dimensions & Positioning
   width?: string
   maxWidth?: string
   minWidth?: string
@@ -60,7 +67,6 @@ export interface ElementStyles {
   position?: 'static' | 'relative' | 'absolute'
   overflow?: 'visible' | 'hidden' | 'auto'
 
-  // Flexbox & Grid
   display?: 'flex' | 'block' | 'inline-block' | 'grid' | 'inline-flex'
   flexDirection?: 'row' | 'column' | 'row-reverse' | 'column-reverse'
   alignItems?: 'flex-start' | 'center' | 'flex-end' | 'stretch' | 'baseline'
@@ -69,7 +75,6 @@ export interface ElementStyles {
   flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse'
   gridTemplateColumns?: string
 
-  // Image Specific
   objectFit?: 'cover' | 'contain' | 'fill' | 'none'
   aspectRatio?: string
 }
@@ -99,9 +104,19 @@ export interface PageElement {
   children?: PageElement[]
 }
 
+export interface PageSection {
+  id: string
+  type: SectionType
+  name: string
+  hidden?: boolean
+  settings: Record<string, any>
+  elements?: PageElement[]
+}
+
 export interface PageTreeDocument {
   schemaVersion: number
   updatedAt: string
+  sections: PageSection[]
   elements: PageElement[]
 }
 

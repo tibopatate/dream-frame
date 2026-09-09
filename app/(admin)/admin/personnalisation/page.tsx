@@ -1,10 +1,10 @@
 ﻿import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { getDraftTree } from '@/lib/page-builder/store'
-import { WebflowEditor } from '@/components/page-builder/WebflowEditor'
+import { ShopifyThemeEditor } from '@/components/page-builder/ShopifyThemeEditor'
 
 export const metadata = {
-  title: 'Éditeur In-Page Webflow/Framer — Dream Frame Admin',
+  title: 'Personnalisation de la Boutique (Style Shopify) — Dream Frame Admin',
 }
 
 export default async function CustomizerPage() {
@@ -13,5 +13,5 @@ export default async function CustomizerPage() {
 
   const draftTree = await getDraftTree()
 
-  return <WebflowEditor initialDocument={draftTree} />
+  return <ShopifyThemeEditor initialDocument={draftTree} />
 }

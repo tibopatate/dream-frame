@@ -3,6 +3,7 @@ import { PageTreeDocument, PageElement } from './types'
 export const DEFAULT_PAGE_TREE: PageTreeDocument = {
   schemaVersion: 1,
   updatedAt: new Date().toISOString(),
+  sections: [],
   elements: [
     // ─── 1. HERO SECTION ───────────────────────────────────────────────────────
     {
