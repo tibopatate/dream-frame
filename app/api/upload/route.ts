@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
 
     // 2. File size validation
     if (file.size > MAX_FILE_SIZE) {
-      return NextResponse.json({ error: 'Fichier trop volumineux. La taille maximale autorisée est de 10 Mo.' }, { status: 400 })
+      return NextResponse.json({ error: 'Fichier trop volumineux. La taille maximale autorisée est de 50 Mo.' }, { status: 400 })
     }
 
     const arrayBuffer = await file.arrayBuffer()
@@ -92,6 +92,7 @@ export async function POST(req: NextRequest) {
     // 5. Storage handling (Vercel Blob in production, local storage in dev / fallback)
     const blobToken = process.env.BLOB_READ_WRITE_TOKEN
     const isBlobConfigured = blobToken && !blobToken.includes('CHANGE_ME')
+    const isVercel = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production'
 
     if (isBlobConfigured) {
       try {
@@ -101,11 +102,16 @@ export async function POST(req: NextRequest) {
         })
         return NextResponse.json({ url: blobResult.url, filename: safeFilename })
       } catch (blobErr: any) {
-        console.error('Vercel Blob upload failed, falling back to local:', blobErr)
+        console.error('Vercel Blob upload failed:', blobErr)
+        if (isVercel) {
+          return NextResponse.json({ error: 'Erreur Vercel Blob. Vérifiez la configuration (limites, token).' }, { status: 500 })
+        }
       }
+    } else if (isVercel) {
+      return NextResponse.json({ error: 'Vercel Blob n\'est pas configuré. Veuillez ajouter BLOB_READ_WRITE_TOKEN dans vos variables d\'environnement Vercel (Storage).' }, { status: 500 })
     }
 
-    // Fallback: Local filesystem storage under public/uploads/
+    // Fallback: Local filesystem storage under public/uploads/ (Local dev only)
     const uploadsDir = path.join(process.cwd(), 'public', 'uploads')
     if (!fs.existsSync(uploadsDir)) {
       fs.mkdirSync(uploadsDir, { recursive: true })
