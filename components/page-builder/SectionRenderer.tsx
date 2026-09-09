@@ -77,7 +77,7 @@ export function SectionRenderer({
   }
 
   // ─── SECTION 1: HERO ───────────────────────────────────────────────────────
-  // ─── SECTION 1: HERO SHOWROOM BUGATTI CHIRON ──────────────────────────────
+  // ─── SECTION 1: HERO SHOWROOM FERRARI F40 ─────────────────────────────────
   if (section.type === 'hero') {
     return (
       <div
@@ -96,37 +96,37 @@ export function SectionRenderer({
           </div>
         )}
 
-        <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-between items-center px-4 sm:px-6 pt-16 sm:pt-24 pb-8 sm:pb-12 overflow-hidden bg-[#080807]">
-          {/* Photographie Showroom Bugatti Chiron 2016 avec reflets réalistes */}
+        <section className="relative min-h-[62vh] sm:min-h-[70vh] lg:min-h-[76vh] flex flex-col justify-between items-center px-4 sm:px-6 pt-16 sm:pt-20 pb-16 sm:pb-28 overflow-hidden bg-[#080807]">
+          {/* Photographie Réelle Ferrari F40 3D Dream Frame */}
           <div className="absolute inset-0 z-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={s.bgImage || '/images/hero-chiron-showroom.jpg'}
-              alt="Bugatti Chiron 2016 — Showroom Dream Frame"
-              className="w-full h-full object-cover object-top sm:object-center brightness-[0.92] contrast-[1.05]"
+              src={s.bgImage || '/images/hero-f40-real.jpg'}
+              alt="Ferrari F40 1987 — Cadre 3D d'Art Automobile Dream Frame"
+              className="w-full h-full object-cover object-center brightness-[0.88] contrast-[1.08] scale-105"
             />
             {/* Dégradé supérieur pour la lisibilité du header */}
-            <div className="absolute inset-x-0 top-0 h-32 sm:h-44 bg-gradient-to-b from-[#080807]/90 via-[#080807]/40 to-transparent pointer-events-none" />
+            <div className="absolute inset-x-0 top-0 h-32 sm:h-40 bg-gradient-to-b from-[#080807]/90 via-[#080807]/40 to-transparent pointer-events-none" />
             
-            {/* Dégradé latéral cinéma / vignette */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40 pointer-events-none" />
+            {/* Dégradé latéral cinéma / vignette renforcé */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#080807]/85 via-transparent to-[#080807]/85 pointer-events-none" />
 
-            {/* Dégradé noir progressif en bas du hero invitant naturellement au scroll */}
-            <div className="absolute inset-x-0 bottom-0 h-64 sm:h-80 bg-gradient-to-t from-[#080807] via-[#080807]/80 via-40% to-transparent pointer-events-none" />
+            {/* Dégradé noir progressif accentué en bas du hero */}
+            <div className="absolute inset-x-0 bottom-0 h-72 sm:h-96 bg-gradient-to-t from-[#080807] via-[#080807]/95 via-45% to-transparent pointer-events-none" />
           </div>
 
-          {/* Espace négatif supérieur autour de la supercar */}
-          <div className="relative z-10 w-full flex-1 min-h-[30vh] sm:min-h-[42vh]" />
+          {/* Espace supérieur modéré pour remonter le contenu */}
+          <div className="relative z-10 w-full flex-1 min-h-[8vh] sm:min-h-[12vh]" />
 
-          {/* Contenu Typographique & CTAs du Concept (Positionné avec élégance sous les reflets) */}
-          <div className="relative z-10 max-w-4xl mx-auto text-center space-y-4 sm:space-y-5 pb-2">
+          {/* Contenu Typographique & CTAs du Concept (Remonté au premier plan) */}
+          <div className="relative z-10 max-w-4xl mx-auto text-center space-y-3.5 sm:space-y-4 pb-2">
             {/* Eyebrow minimalist */}
             <p className="text-[10px] sm:text-xs font-light tracking-[0.35em] sm:tracking-[0.45em] uppercase text-neutral-300/90 font-sans">
               {s.badgeText || "L'ART DE CAPTURER"}
             </p>
 
             {/* Titre Principal Majestueux Trajan / Serif */}
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-light font-serif tracking-[0.25em] sm:tracking-[0.35em] uppercase text-white leading-tight">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-light font-serif tracking-[0.25em] sm:tracking-[0.35em] uppercase text-white leading-tight drop-shadow-md">
               {s.title || "L'EXCEPTIONNEL"}
             </h1>
 
@@ -134,12 +134,12 @@ export function SectionRenderer({
             <div className="w-12 sm:w-16 h-[1px] bg-neutral-500/60 mx-auto" />
 
             {/* Sous-titre descriptif */}
-            <p className="text-[11px] sm:text-xs text-neutral-400 font-light tracking-[0.2em] sm:tracking-[0.26em] uppercase max-w-lg mx-auto leading-relaxed">
+            <p className="text-[11px] sm:text-xs text-neutral-300 font-light tracking-[0.2em] sm:tracking-[0.26em] uppercase max-w-lg mx-auto leading-relaxed drop-shadow-sm">
               {s.subtitle || "DES VOITURES DE LÉGENDE, ENCADRÉES POUR L'ÉTERNITÉ."}
             </p>
 
-            {/* Les deux CTA du concept */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-3 sm:pt-4">
+            {/* Les deux CTA remontés */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2 sm:pt-3">
               <Link
                 href={isEditor ? '#' : (s.primaryBtnLink || '#collection')}
                 className="w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full border border-white/85 bg-white/10 hover:bg-white hover:text-black text-white text-[11px] sm:text-xs uppercase tracking-[0.22em] font-medium transition-all duration-300 backdrop-blur-md shadow-2xl active:scale-[0.98] text-center"
@@ -149,22 +149,10 @@ export function SectionRenderer({
 
               <Link
                 href={isEditor ? '#' : (s.secondaryBtnLink || '/catalogue')}
-                className="w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full border border-neutral-700/80 hover:border-amber-400/80 bg-black/40 hover:bg-black/70 text-neutral-300 hover:text-amber-300 text-[11px] sm:text-xs uppercase tracking-[0.22em] font-medium transition-all duration-300 backdrop-blur-md shadow-2xl active:scale-[0.98] text-center"
+                className="w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full border border-neutral-700/80 hover:border-amber-400/80 bg-black/50 hover:bg-black/80 text-neutral-300 hover:text-amber-300 text-[11px] sm:text-xs uppercase tracking-[0.22em] font-medium transition-all duration-300 backdrop-blur-md shadow-2xl active:scale-[0.98] text-center"
               >
                 <span>{s.secondaryBtnText || 'Notre collection passionnée'}</span>
               </Link>
-            </div>
-
-            {/* Flèche vers le bas incitant au scroll */}
-            <div className="pt-4 sm:pt-6 flex justify-center">
-              <a
-                href={isEditor ? '#' : '#collection'}
-                aria-label="Faire défiler vers la collection"
-                className="flex flex-col items-center gap-2 text-white/50 hover:text-white transition-colors duration-300 group cursor-pointer"
-              >
-                <div className="w-[1px] h-7 sm:h-9 bg-gradient-to-b from-white/10 via-white/40 to-white animate-pulse" />
-                <ChevronDown className="w-3.5 h-3.5 text-white/60 group-hover:translate-y-1 transition-transform" />
-              </a>
             </div>
           </div>
         </section>
@@ -195,52 +183,52 @@ export function SectionRenderer({
     )
   }
 
-  // ─── SECTION 3: NOTRE COLLECTION (GALERIE D'ART HAUT DE GAMME) ─────────────
+  // ─── SECTION 3: NOTRE COLLECTION (4 VRAIS CADRES DE LA BOUTIQUE) ───────────
   if (section.type === 'collection') {
-    // 4 cadres phares du concept (McLaren, Audi R8, Cayenne, Ferrari F40)
-    const FEATURED_CONCEPT_FRAMES = [
+    // 4 véritables cadres de la boutique (Ferrari F40, Bugatti Chiron, Pagani Huayra, Audi R8)
+    const REAL_STORE_FRAMES = [
       {
-        id: 'frame-mclaren-gt',
-        slug: 'mclaren-gt-2019-cadre-3d',
-        name: 'McLaren GT',
-        year: 2019,
-        brand: 'McLaren',
-        specs: 'V8 Biturbo · 620 CH',
-        tag: 'Édition Galerie',
-        image: '/images/frames/frame-mclaren-gt.jpg',
-        price: '49,99 €',
-      },
-      {
-        id: 'frame-audi-r8',
-        slug: 'audi-r8-v10-performance-cadre-3d',
-        name: 'Audi R8',
-        year: 2018,
-        brand: 'Audi',
-        specs: 'V10 Atmosphérique · 620 CH',
-        tag: 'Pièce Numérotée',
-        image: '/images/frames/frame-audi-r8.jpg',
-        price: '49,99 €',
-      },
-      {
-        id: 'frame-porsche-cayenne',
-        slug: 'porsche-cayenne-turbo-2016-cadre-3d',
-        name: 'Porsche Cayenne',
-        year: 2016,
-        brand: 'Porsche',
-        specs: 'V8 Biturbo · 570 CH',
-        tag: 'Collector 3D',
-        image: '/images/frames/frame-porsche-cayenne.jpg',
-        price: '49,99 €',
-      },
-      {
-        id: 'frame-ferrari-f40',
+        id: 'real-ferrari-f40',
         slug: 'ferrari-f40-1987-cadre-3d',
-        name: 'Ferrari F40',
+        name: 'Ferrari F40 (1987)',
         year: 1987,
         brand: 'Ferrari',
         specs: 'V8 Twin-Turbo · 478 CH',
-        tag: 'Icône Éternelle',
-        image: '/images/frames/frame-ferrari-f40.jpg',
+        tag: 'Atelier France · Pièce Réelle',
+        image: '/atelier/f40-real.jpg',
+        price: '49,99 €',
+      },
+      {
+        id: 'real-bugatti-chiron',
+        slug: 'bugatti-chiron-2016-cadre-3d',
+        name: 'Bugatti Chiron (2016)',
+        year: 2016,
+        brand: 'Bugatti',
+        specs: 'W16 Quadri-Turbo · 1 500 CH',
+        tag: 'Ébénisterie & LED',
+        image: '/atelier/chiron-wall.jpg',
+        price: '49,99 €',
+      },
+      {
+        id: 'real-pagani-huayra',
+        slug: 'pagani-huayra-v12-cadre-3d',
+        name: 'Pagani Huayra V12',
+        year: 2023,
+        brand: 'Pagani',
+        specs: 'V12 Biturbo AMG · 730 CH',
+        tag: 'Carbo-Titane & Relief',
+        image: '/atelier/huayra-real.jpg',
+        price: '49,99 €',
+      },
+      {
+        id: 'real-audi-r8v10',
+        slug: 'audi-r8-v10-performance-cadre-3d',
+        name: 'Audi R8 V10',
+        year: 2018,
+        brand: 'Audi',
+        specs: 'V10 Atmosphérique · 620 CH',
+        tag: 'Vitrage HD & Module LED',
+        image: '/atelier/r8v10-real.jpg',
         price: '49,99 €',
       },
     ]
@@ -248,7 +236,7 @@ export function SectionRenderer({
     return (
       <div
         id="collection"
-        className={`${outlineClass} ${section.hidden ? 'opacity-40 grayscale' : ''}`}
+        className={`relative z-20 -mt-16 sm:-mt-24 lg:-mt-32 ${outlineClass} ${section.hidden ? 'opacity-40 grayscale' : ''}`}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -263,7 +251,7 @@ export function SectionRenderer({
           </div>
         )}
 
-        <section className="py-16 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 space-y-12 sm:space-y-16 bg-[#080807] transition-all duration-700">
+        <section className="py-12 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-14 transition-all duration-700">
           {/* En-tête Collection Minimaliste avec Ligne Fine (Concept 100% Fidèle) */}
           <div className="flex items-center justify-between gap-4 sm:gap-8">
             <h2 className="text-xs sm:text-sm font-light tracking-[0.35em] sm:tracking-[0.45em] text-neutral-200 uppercase font-sans whitespace-nowrap">
@@ -279,9 +267,9 @@ export function SectionRenderer({
             </Link>
           </div>
 
-          {/* Grille des 4 Cadres Verticaux A4 avec Éclairage Galerie Spot */}
+          {/* Grille des 4 VRAIS Cadres de la Boutique avec Éclairage Galerie */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-6 lg:gap-8 items-start">
-            {FEATURED_CONCEPT_FRAMES.map((item) => (
+            {REAL_STORE_FRAMES.map((item) => (
               <div
                 key={item.id}
                 className="group flex flex-col items-center space-y-4"
@@ -296,33 +284,32 @@ export function SectionRenderer({
                   <div className="w-full h-12 bg-gradient-to-b from-amber-100/15 via-amber-200/5 to-transparent blur-sm" />
                 </div>
 
-                {/* Cadre d'Art Vertical Format A4 (aspect-[1/1.414]) */}
+                {/* Vrai Cadre d'Art de la Boutique (aspect-[3/4] élégant) */}
                 <Link
                   href={isEditor ? '#' : `/produit/${item.slug}`}
-                  className="relative w-full aspect-[1/1.414] rounded-sm p-2 sm:p-2.5 bg-gradient-to-br from-[#2a2825] via-[#1c1b19] to-[#121110] ring-1 ring-neutral-700/60 shadow-[0_20px_50px_rgba(0,0,0,0.95),0_0_20px_rgba(251,191,36,0.03)] hover:shadow-[0_25px_60px_rgba(0,0,0,1),0_0_35px_rgba(251,191,36,0.12)] hover:ring-amber-400/40 transition-all duration-500 overflow-hidden block"
+                  className="relative w-full aspect-[3/4] rounded-2xl p-2 sm:p-2.5 bg-neutral-900/60 border border-neutral-800 ring-1 ring-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.95),0_0_20px_rgba(251,191,36,0.03)] hover:shadow-[0_25px_60px_rgba(0,0,0,1),0_0_35px_rgba(251,191,36,0.15)] hover:border-amber-400/60 transition-all duration-500 overflow-hidden block group/frame"
                 >
-                  {/* Passe-partout intérieur biseauté noir conservation */}
-                  <div className="relative w-full h-full bg-neutral-950 overflow-hidden ring-1 ring-black/90">
+                  <div className="relative w-full h-full rounded-xl bg-neutral-950 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={item.image}
-                      alt={`${item.name} (${item.year}) — Cadre 3D Dream Frame`}
-                      className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                      alt={`${item.name} — Véritable Cadre 3D Dream Frame`}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
 
-                    {/* Reflet verre optique subtil */}
+                    {/* Reflet de vitrage optique */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-transparent pointer-events-none" />
 
-                    {/* Badge édition discrète au survol */}
-                    <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="px-2 py-0.5 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-amber-300 text-[9px] font-mono uppercase tracking-wider">
+                    {/* Badge réel atelier */}
+                    <div className="absolute top-2.5 left-2.5">
+                      <span className="px-2.5 py-1 rounded-full bg-black/85 backdrop-blur-md border border-neutral-700 text-amber-300 text-[9px] font-mono uppercase tracking-wider font-semibold">
                         {item.tag}
                       </span>
                     </div>
                   </div>
                 </Link>
 
-                {/* Fiche Descriptive & Boutons Minimalistes */}
+                {/* Fiche Descriptive & Boutons */}
                 <div className="w-full text-center space-y-1.5 pt-1">
                   <div className="flex items-center justify-between text-neutral-400 text-[10px] font-mono uppercase tracking-widest px-1">
                     <span>{item.brand} · {item.year}</span>
@@ -340,7 +327,7 @@ export function SectionRenderer({
                   <div className="pt-2 flex items-center justify-center gap-2">
                     <Link
                       href={isEditor ? '#' : `/produit/${item.slug}`}
-                      className="px-4 py-1.5 rounded-full border border-neutral-800 hover:border-neutral-600 bg-neutral-900/60 hover:bg-neutral-800 text-white text-[10px] font-medium uppercase tracking-wider transition-all"
+                      className="px-4 py-1.5 rounded-full border border-neutral-800 hover:border-neutral-600 bg-neutral-900/80 hover:bg-neutral-800 text-white text-[10px] font-medium uppercase tracking-wider transition-all"
                     >
                       Voir le cadre
                     </Link>
@@ -356,12 +343,12 @@ export function SectionRenderer({
             ))}
           </div>
 
-          {/* Ambiance Salon & Assises Galerie au Premier Plan */}
+          {/* Ambiance Atelier & Savoir-faire */}
           <div className="pt-8 border-t border-neutral-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
               <p className="text-xs text-neutral-400 font-light">
-                Chaque œuvre est fabriquée à l’unité sous vitrage optique avec éclairage LED ambré 3000K intégré.
+                Chaque pièce est assemblée à la main en France sous vitrage optique avec éclairage LED ambré 3000K intégré.
               </p>
             </div>
 

@@ -12,8 +12,7 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "/atelier/chiron-wall.jpg",
-        "/atelier/chiron-trunk.jpg"
+        "/atelier/chiron-wall.jpg"
       ],
       "stock": 5,
       "stockAlert": 2,
@@ -53,7 +52,7 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "/images/frames/frame-audi-r8.jpg"
+        "/atelier/r8v10-real.jpg"
       ],
       "stock": 7,
       "stockAlert": 3,
@@ -133,7 +132,7 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "/images/frames/frame-mclaren-gt.jpg"
+        "/atelier/mclarengt-real.jpg"
       ],
       "stock": 5,
       "stockAlert": 2,
@@ -173,7 +172,7 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "/images/frames/frame-porsche-cayenne.jpg"
+        "/atelier/porsche918-real.jpg"
       ],
       "stock": 6,
       "stockAlert": 2,
@@ -193,7 +192,7 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "/images/frames/frame-ferrari-f40.jpg"
+        "/atelier/f40-real.jpg"
       ],
       "stock": 4,
       "stockAlert": 2,

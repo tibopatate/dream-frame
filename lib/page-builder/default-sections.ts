@@ -4,7 +4,7 @@ export const DEFAULT_PAGE_SECTIONS: PageSection[] = [
   {
     id: 'sec-hero',
     type: 'hero',
-    name: 'Hero Showroom Bugatti Chiron',
+    name: 'Hero Showroom Ferrari F40',
     settings: {
       badgeText: "L'ART DE CAPTURER",
       title: "L'EXCEPTIONNEL",
@@ -14,7 +14,7 @@ export const DEFAULT_PAGE_SECTIONS: PageSection[] = [
       primaryBtnLink: '#collection',
       secondaryBtnText: 'Notre collection passionnée',
       secondaryBtnLink: '/catalogue',
-      bgImage: '/images/hero-chiron-showroom.jpg',
+      bgImage: '/images/hero-f40-real.jpg',
       zoomAnimation: false,
       showBrands: false,
       showReassuranceBadges: false,
