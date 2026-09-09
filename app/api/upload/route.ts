@@ -5,8 +5,8 @@ import fs from 'fs'
 import path from 'path'
 import { put } from '@vercel/blob'
 
-// Max 10MB per file
-const MAX_FILE_SIZE = 10 * 1024 * 1024
+// Max 50MB per file
+const MAX_FILE_SIZE = 50 * 1024 * 1024
 
 function validateMagicBytes(buffer: Buffer): { valid: boolean; ext: string; mime: string } {
   if (buffer.length < 12) {
@@ -35,6 +35,16 @@ function validateMagicBytes(buffer: Buffer): { valid: boolean; ext: string; mime
     buffer[11] === 0x50
   ) {
     return { valid: true, ext: '.webp', mime: 'image/webp' }
+  }
+
+  // MP4 / QuickTime (ftyp)
+  if (buffer.length >= 8 && buffer[4] === 0x66 && buffer[5] === 0x74 && buffer[6] === 0x79 && buffer[7] === 0x70) {
+    return { valid: true, ext: '.mp4', mime: 'video/mp4' }
+  }
+
+  // WebM: 1A 45 DF A3
+  if (buffer[0] === 0x1a && buffer[1] === 0x45 && buffer[2] === 0xdf && buffer[3] === 0xa3) {
+    return { valid: true, ext: '.webm', mime: 'video/webm' }
   }
 
   return { valid: false, ext: '', mime: '' }
@@ -73,7 +83,7 @@ export async function POST(req: NextRequest) {
     // 3. Magic bytes validation (prevent malicious mime spoofing)
     const { valid, ext, mime } = validateMagicBytes(buffer)
     if (!valid) {
-      return NextResponse.json({ error: 'Format d’image non supporté ou invalide. Seuls JPEG, PNG et WebP sont autorisés.' }, { status: 400 })
+      return NextResponse.json({ error: 'Format non supporté. Seuls JPEG, PNG, WebP, MP4 et WebM sont autorisés.' }, { status: 400 })
     }
 
     // 4. Regenerate safe filename (prevents directory traversal attacks)

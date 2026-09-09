@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState, useRef, useCallback } from 'react'
 import {
@@ -38,13 +38,13 @@ export function ProductImageUploader({
       const validFiles: File[] = []
       for (let i = 0; i < files.length; i++) {
         const f = files[i]
-        if (f.type.startsWith('image/')) {
+        if (f.type.startsWith('image/') || f.type.startsWith('video/')) {
           validFiles.push(f)
         }
       }
 
       if (validFiles.length === 0) {
-        setUploadError('Veuillez sélectionner des images valides (JPEG, PNG ou WebP).')
+        setUploadError('Veuillez sélectionner des fichiers valides (Images ou Vidéos).')
         return
       }
 
@@ -212,7 +212,7 @@ export function ProductImageUploader({
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/jpeg,image/png,image/webp"
+          accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"
           multiple
           onChange={handleFileInputChange}
           className="hidden"
@@ -235,7 +235,7 @@ export function ProductImageUploader({
 
           <div className="space-y-1">
             <p className="text-xs font-bold text-white">
-              {isDragging ? 'Déposez vos images ici' : 'Glissez-déposez vos photos ici'}
+              {isDragging ? 'Déposez vos médias ici' : 'Glissez-déposez vos médias ici'}
             </p>
             <p className="text-[11px] text-neutral-400">
               ou sélectionnez directement sur votre appareil
@@ -256,13 +256,13 @@ export function ProductImageUploader({
             ) : (
               <>
                 <Plus className="w-3.5 h-3.5" />
-                <span>Choisir depuis l&apos;appareil / Photos récentes</span>
+                <span>Choisir depuis l&apos;appareil / Médias récents</span>
               </>
             )}
           </button>
 
           <p className="text-[10px] text-neutral-500 font-mono">
-            Formats acceptés : JPG, PNG, WebP · Max 10 Mo par photo
+            Formats acceptés : JPG, PNG, WebP, MP4, WebM · Max 50 Mo par fichier
           </p>
         </div>
       </div>
@@ -294,12 +294,24 @@ export function ProductImageUploader({
                       : 'border-neutral-800 hover:border-neutral-700'
                   }`}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={imgUrl}
-                    alt={`Visuel ${idx + 1}`}
-                    className="w-full h-full object-cover"
-                  />
+                  {/* Render Video or Image based on extension */}
+                  {imgUrl.match(/\.(mp4|webm|mov)$/i) ? (
+                    <video
+                      src={imgUrl}
+                      className="w-full h-full object-cover"
+                      muted
+                      loop
+                      playsInline
+                      autoPlay
+                    />
+                  ) : (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={imgUrl}
+                      alt={`Visuel ${idx + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
 
                   {/* Top Badges */}
                   <div className="absolute top-2 left-2 flex items-center gap-1">

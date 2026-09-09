@@ -10,7 +10,7 @@ import {
   ShieldCheck,
   Truck,
   Zap,
-  Award,
+  CheckCircle,
   Star,
   Layers,
   ChevronUp,
@@ -139,19 +139,19 @@ export function SectionRenderer({
             </p>
 
             {/* Les deux CTA remontés */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2 sm:pt-3">
+            <div className="flex flex-row w-full items-center justify-center gap-2 sm:gap-4 pt-2 sm:pt-3">
               <Link
-                href={isEditor ? '#' : (s.primaryBtnLink || '#collection')}
-                className="w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full border border-white/85 bg-white/10 hover:bg-white hover:text-black text-white text-[11px] sm:text-xs uppercase tracking-[0.22em] font-medium transition-all duration-300 backdrop-blur-md shadow-2xl active:scale-[0.98] text-center"
+                href={isEditor ? '#' : (s.primaryBtnLink === '#collection' ? '/catalogue' : s.primaryBtnLink || '/catalogue')}
+                className="flex-1 sm:flex-none sm:w-auto px-2 sm:px-8 py-3.5 sm:py-4 rounded-full border border-white/85 bg-white/10 hover:bg-white hover:text-black text-white text-[9px] sm:text-xs uppercase tracking-wider sm:tracking-[0.22em] font-medium transition-all duration-300 backdrop-blur-md shadow-2xl active:scale-[0.98] text-center"
               >
                 <span>{s.primaryBtnText || 'Visiter notre galerie'}</span>
               </Link>
 
               <Link
-                href={isEditor ? '#' : (s.secondaryBtnLink || '/catalogue')}
-                className="w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full border border-neutral-700/80 hover:border-amber-400/80 bg-black/50 hover:bg-black/80 text-neutral-300 hover:text-amber-300 text-[11px] sm:text-xs uppercase tracking-[0.22em] font-medium transition-all duration-300 backdrop-blur-md shadow-2xl active:scale-[0.98] text-center"
+                href={isEditor ? '#' : (s.secondaryBtnLink || '#collection')}
+                className="flex-1 sm:flex-none sm:w-auto px-2 sm:px-8 py-3.5 sm:py-4 rounded-full border border-neutral-700/80 hover:border-amber-400/80 bg-black/50 hover:bg-black/80 text-neutral-300 hover:text-amber-300 text-[9px] sm:text-xs uppercase tracking-wider sm:tracking-[0.22em] font-medium transition-all duration-300 backdrop-blur-md shadow-2xl active:scale-[0.98] text-center"
               >
-                <span>{s.secondaryBtnText || 'Notre collection passionnée'}</span>
+                <span>{s.secondaryBtnText || 'Notre collection'}</span>
               </Link>
             </div>
           </div>
@@ -475,7 +475,7 @@ export function SectionRenderer({
             </div>
 
             <div className="flex items-start gap-3 p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
-              <Award className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+              <CheckCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-xs font-bold text-white">{s.item4Title || 'Manufacture & Contrôle Unitaire'}</h4>
                 <p className="text-[11px] text-neutral-400 font-light mt-0.5">
