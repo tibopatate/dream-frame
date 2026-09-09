@@ -1,17 +1,17 @@
-import { auth } from '@/lib/auth'
+﻿import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
-import { getSettings } from '@/lib/data-store'
-import { CustomizerClient } from './customizer-client'
+import { getDraftTree } from '@/lib/page-builder/store'
+import { WebflowEditor } from '@/components/page-builder/WebflowEditor'
 
 export const metadata = {
-  title: 'Personnalisation du Site (Style Shopify) — Dream Frame Admin',
+  title: 'Éditeur In-Page Webflow/Framer — Dream Frame Admin',
 }
 
 export default async function CustomizerPage() {
   const session = await auth()
   if (!session?.user) redirect('/admin/login')
 
-  const settings = getSettings()
+  const draftTree = await getDraftTree()
 
-  return <CustomizerClient initialSettings={settings} />
+  return <WebflowEditor initialDocument={draftTree} />
 }

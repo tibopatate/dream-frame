@@ -16,6 +16,7 @@ import {
   Crop,
 } from 'lucide-react'
 import { ImageCropper, CropSettings } from '@/components/admin/ImageCropper'
+import { ProductImageUploader } from '@/components/admin/ProductImageUploader'
 
 interface FormatItem {
   id: string
@@ -289,76 +290,31 @@ export default function NouveauProduitPage() {
 
         {/* ─── SECTION IMAGES & STUDIO DE RECADRAGE ─── */}
         <div className="border-t border-neutral-800 pt-6 space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <label className="block text-xs font-bold text-white uppercase tracking-wider">
-                Visuels du cadre (URLs HD)
-              </label>
-              <p className="text-[11px] text-neutral-400 mt-0.5">
-                Ajoutez vos photos Unsplash ou Vercel Blob, puis recadrez la supercar selon le format d&apos;affichage désiré.
-              </p>
-            </div>
-            {images.length > 0 && (
+          <ProductImageUploader
+            images={images}
+            onChange={(newImages) => setImages(newImages)}
+          />
+
+          {images.length > 0 && (
+            <div className="pt-2">
               <button
                 type="button"
                 onClick={() => setShowCropper(!showCropper)}
-                className="px-3 py-1.5 rounded-xl bg-amber-400/15 hover:bg-amber-400/25 border border-amber-400/30 text-amber-300 text-xs font-bold flex items-center gap-1.5 transition cursor-pointer"
+                className="px-3.5 py-2 rounded-xl bg-amber-400/15 hover:bg-amber-400/25 border border-amber-400/30 text-amber-300 text-xs font-bold flex items-center gap-2 transition cursor-pointer"
               >
                 <Crop className="w-3.5 h-3.5" />
-                <span>{showCropper ? 'Masquer le recadrage' : 'Recadrer l&apos;image'}</span>
+                <span>{showCropper ? 'Fermer le studio de recadrage' : 'Ajuster le cadrage 3D de l’image principale'}</span>
               </button>
-            )}
-          </div>
 
-          <div className="flex gap-2.5">
-            <input
-              type="url"
-              value={imageUrlInput}
-              onChange={(e) => setImageUrlInput(e.target.value)}
-              placeholder="https://images.unsplash.com/photo-..."
-              className="flex-1 bg-black/60 border border-neutral-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400/80 transition"
-            />
-            <button
-              type="button"
-              onClick={addImage}
-              className="px-4 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer"
-            >
-              <Plus className="w-4 h-4" />
-              Ajouter
-            </button>
-          </div>
-
-          {/* Outil de recadrage interactif intégré */}
-          {showCropper && images.length > 0 && (
-            <ImageCropper
-              imageUrl={images[0]}
-              initialSettings={cropSettings}
-              onChange={(newSettings) => setCropSettings(newSettings)}
-            />
-          )}
-
-          {/* Vignettes d'aperçu */}
-          {images.length > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-              {images.map((img, idx) => (
-                <div
-                  key={idx}
-                  className="relative aspect-[4/3] rounded-xl overflow-hidden bg-neutral-950 border border-neutral-800 group"
-                >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                  <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/80 text-[9px] font-mono text-amber-400 font-bold">
-                    {idx === 0 ? 'Principale' : `#${idx + 1}`}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => removeImage(idx)}
-                    className="absolute top-2 right-2 p-1.5 bg-black/80 hover:bg-rose-600 text-white rounded-lg opacity-0 group-hover:opacity-100 transition cursor-pointer"
-                    title="Supprimer"
-                  >
-                    <Trash className="w-3.5 h-3.5" />
-                  </button>
+              {showCropper && (
+                <div className="mt-3">
+                  <ImageCropper
+                    imageUrl={images[0]}
+                    initialSettings={cropSettings}
+                    onChange={(newSettings) => setCropSettings(newSettings)}
+                  />
                 </div>
-              ))}
+              )}
             </div>
           )}
         </div>

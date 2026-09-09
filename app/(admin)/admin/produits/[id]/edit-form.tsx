@@ -4,6 +4,7 @@ import { updateProduct, deleteProduct } from '../actions'
 import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Loader2, Plus, Trash, Trash2 } from 'lucide-react'
+import { ProductImageUploader } from '@/components/admin/ProductImageUploader'
 
 interface EditProductFormProps {
   product: {
@@ -203,46 +204,11 @@ export function EditProductForm({ product }: EditProductFormProps) {
         </div>
 
         {/* Images */}
-        <div className="border-t border-neutral-800 pt-6 space-y-3">
-          <label className="block text-xs font-bold text-neutral-300 uppercase tracking-wider">
-            Images du produit (URLs)
-          </label>
-
-          <div className="flex gap-2.5">
-            <input
-              type="url"
-              value={imageUrlInput}
-              onChange={(e) => setImageUrlInput(e.target.value)}
-              placeholder="https://images.unsplash.com/photo-..."
-              className="flex-1 bg-black/60 border border-neutral-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400/80 transition"
-            />
-            <button
-              type="button"
-              onClick={addImage}
-              className="px-4 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer"
-            >
-              <Plus className="w-4 h-4" />
-              Ajouter
-            </button>
-          </div>
-
-          {images.length > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-              {images.map((img, idx) => (
-                <div key={idx} className="relative aspect-square rounded-xl overflow-hidden bg-neutral-950 border border-neutral-800 group">
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                  <button
-                    type="button"
-                    onClick={() => removeImage(idx)}
-                    className="absolute top-2 right-2 p-1.5 bg-black/80 hover:bg-rose-600 text-white rounded-lg opacity-0 group-hover:opacity-100 transition cursor-pointer"
-                    title="Supprimer"
-                  >
-                    <Trash className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
+        <div className="border-t border-neutral-800 pt-6">
+          <ProductImageUploader
+            images={images}
+            onChange={(newImages) => setImages(newImages)}
+          />
         </div>
 
         {/* Save Actions */}
