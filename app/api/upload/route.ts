@@ -4,6 +4,7 @@ import crypto from 'crypto'
 import fs from 'fs'
 import path from 'path'
 import { put } from '@vercel/blob'
+import { handleUpload, type HandleUploadBody } from '@vercel/blob/client'
 
 // Max 50MB per file
 const MAX_FILE_SIZE = 50 * 1024 * 1024
@@ -64,6 +65,34 @@ export async function POST(req: NextRequest) {
     if (!isAdmin) {
       return NextResponse.json({ error: 'Non autorisé. Veuillez vous connecter en tant qu’administrateur.' }, { status: 401 })
     }
+
+    const contentType = req.headers.get('content-type') || ''
+    
+    // --- VERCEL BLOB CLIENT UPLOAD ---
+    // (Bypasses 4.5MB server limit by uploading directly from browser)
+    if (contentType.includes('application/json')) {
+      const body = (await req.json()) as HandleUploadBody
+      try {
+        const jsonResponse = await handleUpload({
+          body,
+          request: req,
+          onBeforeGenerateToken: async (pathname) => {
+            return {
+              allowedContentTypes: ['image/jpeg', 'image/png', 'image/webp', 'video/mp4', 'video/webm'],
+              maximumSizeInBytes: MAX_FILE_SIZE,
+            }
+          },
+          onUploadCompleted: async ({ blob, tokenPayload }) => {
+            console.log('Upload completed:', blob.url)
+          },
+        })
+        return NextResponse.json(jsonResponse)
+      } catch (err: any) {
+        return NextResponse.json({ error: err.message }, { status: 400 })
+      }
+    }
+
+    // --- FALLBACK LOCAL/SERVER UPLOAD ---
 
     const formData = await req.formData()
     const file = formData.get('file') as File | null

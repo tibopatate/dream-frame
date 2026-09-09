@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useCallback } from 'react'
+import { upload } from '@vercel/blob/client'
 import {
   Upload,
   Image as ImageIcon,
@@ -59,22 +60,36 @@ export function ProductImageUploader({
       const uploadedUrls: string[] = []
 
       for (const file of validFiles) {
-        const formData = new FormData()
-        formData.append('file', file)
-
         try {
-          const res = await fetch('/api/upload', {
-            method: 'POST',
-            body: formData,
-          })
+          let finalUrl = ''
+          
+          try {
+            // 1. Essai Client Upload (Vercel Blob) - Bypasse la limite de 4.5 Mo de Vercel !
+            const newBlob = await upload(file.name, file, {
+              access: 'public',
+              handleUploadUrl: '/api/upload',
+            })
+            finalUrl = newBlob.url
+          } catch (clientErr: any) {
+            console.warn('Vercel Blob client upload échoué, essai fallback local/serveur:', clientErr)
+            // 2. Fallback FormData (Local dev sans Vercel Blob)
+            const formData = new FormData()
+            formData.append('file', file)
+            
+            const res = await fetch('/api/upload', {
+              method: 'POST',
+              body: formData,
+            })
 
-          const data = await res.json()
-          if (!res.ok || data.error) {
-            throw new Error(data.error || 'Erreur lors du téléversement')
+            const data = await res.json()
+            if (!res.ok || data.error) {
+              throw new Error(data.error || 'Erreur lors du téléversement')
+            }
+            finalUrl = data.url
           }
 
-          if (data.url) {
-            uploadedUrls.push(data.url)
+          if (finalUrl) {
+            uploadedUrls.push(finalUrl)
           }
         } catch (err: any) {
           setUploadError(err.message || 'Une erreur est survenue lors de l’envoi.')
