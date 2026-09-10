@@ -32,7 +32,7 @@ export default function PanierPage() {
           <ShoppingBag className="w-7 h-7 text-neutral-400" />
         </div>
         <div className="space-y-2">
-          <h1 className="text-2xl sm:text-3xl font-serif text-white">Votre collection est vide</h1>
+          <h1 className="text-2xl sm:text-3xl text-white">Votre collection est vide</h1>
           <p className="text-neutral-400 text-xs sm:text-sm max-w-sm mx-auto font-light leading-relaxed">
             Parcourez notre collection officielle ou créez une pièce sur-mesure dans notre atelier.
           </p>
@@ -59,7 +59,7 @@ export default function PanierPage() {
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12 space-y-10 bg-[#080807] text-white">
       <div className="border-b border-neutral-800 pb-4 flex items-baseline justify-between">
-        <h1 className="text-2xl sm:text-4xl font-serif text-white">Votre Panier</h1>
+        <h1 className="text-2xl sm:text-4xl text-white">Votre Panier</h1>
         <span className="text-xs text-neutral-400 uppercase tracking-wider font-mono">
           {count} Pièce{count > 1 ? 's' : ''}
         </span>
@@ -95,7 +95,7 @@ export default function PanierPage() {
                   </p>
                   <Link
                     href={`/produit/${item.slug}`}
-                    className="font-serif text-base sm:text-lg text-white hover:text-amber-300 block truncate transition-colors"
+                    className="text-base sm:text-lg text-white hover:text-amber-300 block truncate transition-colors"
                   >
                     {item.productName}
                   </Link>
@@ -181,7 +181,7 @@ export default function PanierPage() {
 
           <div className="flex justify-between items-baseline">
             <span className="text-xs uppercase tracking-wider text-neutral-400">Total TTC</span>
-            <span className="font-serif text-3xl font-bold text-white">{formatPrice(total * 100)}</span>
+            <span className="text-3xl font-bold text-white">{formatPrice(total * 100)}</span>
           </div>
 
           <Link

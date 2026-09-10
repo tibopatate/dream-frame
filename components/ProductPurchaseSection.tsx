@@ -61,7 +61,7 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
         {/* Prix dynamique et Livraison */}
         <div className="flex items-baseline justify-between flex-wrap gap-2">
           <div>
-            <span className="text-3xl sm:text-4xl font-bold font-serif text-white transition-all">
+            <span className="text-3xl sm:text-4xl font-bold text-white transition-all">
               {selectedFormat.price.toFixed(2).replace('.', ',')} €
             </span>
             <span className="text-neutral-400 text-xs font-sans pl-2">TTC</span>
@@ -143,7 +143,7 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
                   </div>
 
                   <div className="text-right flex-shrink-0">
-                    <span className={`text-sm font-serif font-bold ${isSelected ? 'text-amber-400' : 'text-white'}`}>
+                    <span className={`text-sm font-bold ${isSelected ? 'text-amber-400' : 'text-white'}`}>
                       {fmt.price.toFixed(2).replace('.', ',')} €
                     </span>
                     <span className="text-[10px] text-neutral-500 block font-light">TTC</span>

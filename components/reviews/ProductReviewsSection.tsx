@@ -45,7 +45,7 @@ export function ProductReviewsSection({
               {reviews.length} Témoignage{reviews.length > 1 ? 's' : ''} Vérifié{reviews.length > 1 ? 's' : ''}
             </span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-serif text-white">
+          <h2 className="text-2xl sm:text-3xl text-white">
             Avis & Témoignages d'Atelier
           </h2>
           <p className="text-xs sm:text-sm text-neutral-400 font-light max-w-xl">
@@ -68,7 +68,7 @@ export function ProductReviewsSection({
         {/* Note Globale */}
         <div className="md:col-span-4 text-center md:text-left border-b md:border-b-0 md:border-r border-neutral-800 pb-6 md:pb-0 md:pr-6 space-y-2">
           <div className="flex items-baseline justify-center md:justify-start gap-3">
-            <span className="text-5xl font-serif font-bold text-white">{averageRating}</span>
+            <span className="text-5xl font-bold text-white">{averageRating}</span>
             <span className="text-sm font-mono text-neutral-500">/ 5</span>
           </div>
           <div className="flex items-center justify-center md:justify-start text-amber-400 gap-1">
@@ -135,7 +135,7 @@ export function ProductReviewsSection({
 
               {/* Titre */}
               {rev.title && (
-                <h3 className="font-serif font-bold text-sm text-white leading-snug">
+                <h3 className="font-bold text-sm text-white leading-snug">
                   {rev.title}
                 </h3>
               )}

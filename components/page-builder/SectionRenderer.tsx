@@ -126,7 +126,7 @@ export function SectionRenderer({
             </p>
 
             {/* Titre Principal Majestueux Trajan / Serif */}
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-light font-serif tracking-[0.25em] sm:tracking-[0.35em] uppercase text-white leading-tight drop-shadow-md">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-[0.25em] sm:tracking-[0.35em] uppercase text-white leading-tight drop-shadow-md">
               {s.title || "L'EXCEPTIONNEL"}
             </h1>
 
@@ -309,7 +309,7 @@ export function SectionRenderer({
                     <span className="text-amber-400/90 font-semibold">{item.price}</span>
                   </div>
 
-                  <h3 className="text-sm font-serif tracking-[0.2em] text-white uppercase group-hover:text-amber-300 transition-colors">
+                  <h3 className="text-sm tracking-[0.2em] text-white uppercase group-hover:text-amber-300 transition-colors">
                     {item.name}
                   </h3>
 

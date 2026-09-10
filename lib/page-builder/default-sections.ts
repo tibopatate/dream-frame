@@ -53,21 +53,6 @@ export const DEFAULT_PAGE_SECTIONS: PageSection[] = [
     },
   },
   {
-    id: 'sec-reassurance',
-    type: 'reassurance',
-    name: 'Engagements & Réassurance',
-    settings: {
-      item1Title: 'Livraison 100% Offerte',
-      item1Desc: 'Colissimo Suivi 48h en France avec emballage renforcé anti-choc.',
-      item2Title: 'Droit de Rétractation 14 Jours',
-      item2Desc: 'Retour simple et sécurisé conformément à la législation française.',
-      item3Title: 'LED & Fixations Incluses',
-      item3Desc: 'Chaque pièce arrive prête à poser sur un meuble ou à accrocher au mur.',
-      item4Title: 'Manufacture & Contrôle Unitaire',
-      item4Desc: 'Chaque cadre est inspecté individuellement avant son expédition.',
-    },
-  },
-  {
     id: 'sec-custom',
     type: 'custom_atelier',
     name: 'Atelier Sur-Mesure (Invitation)',

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function RetractationPage() {
   return (
     <main className="max-w-3xl mx-auto px-6 py-16 space-y-10 text-neutral-600 text-xs sm:text-sm leading-relaxed bg-white">
-      <h1 className="text-4xl font-serif italic text-black mb-8">Droit de Rétractation</h1>
+      <h1 className="text-4xl italic text-black mb-8">Droit de Rétractation</h1>
 
       {/* Info box */}
       <div className="bg-neutral-50 border border-neutral-100 p-6 space-y-4">

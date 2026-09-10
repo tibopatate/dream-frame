@@ -108,7 +108,7 @@ export function QuickBuyDrawer({ product, onClose }: QuickBuyDrawerProps) {
                       {fmt.size} · {fmt.scale}
                     </span>
                   </div>
-                  <span className="text-sm font-serif font-bold text-amber-400">
+                  <span className="text-sm font-bold text-amber-400">
                     {fmt.price.toFixed(2).replace('.', ',')} €
                   </span>
                 </button>
@@ -142,7 +142,7 @@ export function QuickBuyDrawer({ product, onClose }: QuickBuyDrawerProps) {
 
           <div className="text-right">
             <span className="text-[10px] text-neutral-400 block font-light">Total TTC</span>
-            <span className="text-lg font-serif font-bold text-white">
+            <span className="text-lg font-bold text-white">
               {(selectedFormat.price * quantity).toFixed(2).replace('.', ',')} €
             </span>
           </div>

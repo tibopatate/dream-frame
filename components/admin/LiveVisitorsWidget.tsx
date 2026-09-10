@@ -68,7 +68,7 @@ export function LiveVisitorsWidget({ variant = 'card' }: { variant?: 'card' | 'c
       </div>
 
       <div className="flex items-baseline gap-2">
-        <span className="text-3xl font-black font-serif text-slate-900 dark:text-white">
+        <span className="text-3xl font-black text-slate-900 dark:text-white">
           {data.total}
         </span>
         <span className="text-xs text-slate-500 dark:text-neutral-400 font-sans">

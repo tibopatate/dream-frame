@@ -113,7 +113,7 @@ export function LeaveReviewModal({
                 <CheckCircle className="w-8 h-8" />
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl sm:text-2xl font-serif text-white">Merci pour votre avis d’exception !</h3>
+                <h3 className="text-xl sm:text-2xl text-white">Merci pour votre avis d’exception !</h3>
                 <p className="text-xs text-neutral-400 max-w-sm mx-auto font-light leading-relaxed">
                   Votre retour d’expérience valorise le travail artisanal de notre atelier et éclaire la communauté des passionnés.
                 </p>
@@ -134,7 +134,7 @@ export function LeaveReviewModal({
                   </span>
                   <span className="text-[10px] font-mono text-neutral-500">· Avis Vérifié</span>
                 </div>
-                <h2 className="text-xl sm:text-2xl font-serif text-white">
+                <h2 className="text-xl sm:text-2xl text-white">
                   Partager votre avis
                 </h2>
                 <p className="text-xs text-neutral-400 font-light truncate">

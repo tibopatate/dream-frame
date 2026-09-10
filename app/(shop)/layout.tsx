@@ -26,7 +26,7 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
       <CartNotification />
       {/* Drawer mobile — rendu au niveau racine pour dépasser le header sticky */}
       <MobileNavDrawer />
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 pt-[100px]">{children}</div>
       {/* Barre d'Achat Mobile Récurrente Flottante (1-Tap Mobile Conversion) */}
       <StickyMobileBuyBar />
       <ShopFooter />
@@ -81,7 +81,7 @@ function ShopHeader() {
   )
 
   return (
-    <header className={`sticky top-0 z-40 transition-colors duration-200 ${headerStyleClasses}`}>
+    <header className={`fixed top-0 left-0 right-0 w-full z-50 transition-colors duration-200 ${headerStyleClasses}`}>
       {/* Bandeau Annonce Position Haut */}
       {announcementPosition === 'top' && AnnouncementComponent}
 
@@ -114,51 +114,11 @@ function ShopHeader() {
 function ShopFooter() {
   const year = new Date().getFullYear()
 
-  const pillars = [
-    {
-      icon: Truck,
-      title: 'Livraison 100% Offerte',
-      desc: 'Colissimo Suivi en France sous 24/48h, sans minimum.',
-      color: 'text-emerald-400',
-    },
-    {
-      icon: ShieldCheck,
-      title: 'Satisfait ou Remboursé',
-      desc: 'Droit légal de rétractation 14 jours, retour simplifié.',
-      color: 'text-amber-400',
-    },
-    {
-      icon: Zap,
-      title: 'Éclairage LED Inclus',
-      desc: 'Chaque cadre intègre son bandeau micro-LED rétroéclairé.',
-      color: 'text-amber-400',
-    },
-    {
-      icon: Star,
-      title: 'Manufacture Française',
-      desc: 'Assemblage minutieux et contrôle qualité unitaire.',
-      color: 'text-amber-400',
-    },
-  ]
-
   return (
     <footer className="border-t border-neutral-800/60 bg-neutral-950/70 mt-20">
-      {/* Piliers de confiance */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-14">
-          {pillars.map(({ icon: Icon, title, desc, color }) => (
-            <div key={title} className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center">
-                <Icon className={`w-5 h-5 ${color}`} />
-              </div>
-              <p className="font-bold text-xs uppercase tracking-wider text-white">{title}</p>
-              <p className="text-neutral-500 text-xs leading-relaxed font-light">{desc}</p>
-            </div>
-          ))}
-        </div>
-
         {/* Section Contact & Assistance Atelier */}
-        <div className="border-t border-neutral-800/60 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="py-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center md:text-left">
             <h4 className="font-bold text-xs uppercase tracking-wider text-white">Contactez-nous &amp; Assistance Atelier</h4>
             <p className="text-neutral-400 text-xs font-light">Une question sur un modèle, un format ou votre commande ? Notre équipe vous répond rapidement.</p>

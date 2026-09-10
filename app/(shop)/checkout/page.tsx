@@ -42,7 +42,7 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div className="max-w-xl mx-auto px-6 py-24 text-center space-y-6 bg-[#080807] text-white">
-        <h1 className="text-2xl font-serif text-white">Votre panier est vide</h1>
+        <h1 className="text-2xl text-white">Votre panier est vide</h1>
         <Link href="/catalogue" className="text-xs uppercase tracking-wider text-amber-400 underline">
           Retourner au catalogue
         </Link>
@@ -103,7 +103,7 @@ export default function CheckoutPage() {
               <span className="text-[10px] font-mono tracking-widest uppercase text-amber-400">
                 Commande Sécurisée
               </span>
-              <h1 className="text-2xl sm:text-3xl font-serif text-white mt-1">Adresse de livraison</h1>
+              <h1 className="text-2xl sm:text-3xl text-white mt-1">Adresse de livraison</h1>
               <p className="text-neutral-400 text-xs mt-1 font-light">Achat immédiat invité — Sans création de mot de passe</p>
             </div>
 
@@ -281,7 +281,7 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[9px] font-mono font-bold text-amber-400 uppercase tracking-widest">{item.brand}</p>
-                  <p className="font-serif text-white text-sm truncate mt-0.5">{item.productName}</p>
+                  <p className="text-white text-sm truncate mt-0.5">{item.productName}</p>
                   <p className="text-[10px] text-neutral-400 font-light mt-0.5">
                     {item.formatName ? (
                       <span className="text-amber-400 font-medium">{item.formatName} {item.formatSize ? `(${item.formatSize})` : ''} · </span>
@@ -307,7 +307,7 @@ export default function CheckoutPage() {
 
           <div className="flex justify-between items-baseline border-t border-neutral-800 pt-4">
             <span className="text-xs uppercase tracking-wider text-neutral-400">Total TTC</span>
-            <span className="font-serif text-2xl font-bold text-white">{formatPrice(total * 100)}</span>
+            <span className="text-2xl font-bold text-white">{formatPrice(total * 100)}</span>
           </div>
 
           <div className="border border-neutral-800 rounded-xl bg-black/40 p-4 space-y-2 text-xs text-neutral-400 font-light">

@@ -442,7 +442,7 @@ export function ProductDemonstrationSection() {
                   </div>
                   <div>
                     <h4 className="text-base font-bold text-white">{fmt.name}</h4>
-                    <p className="text-2xl font-serif font-bold text-white mt-1">
+                    <p className="text-2xl font-bold text-white mt-1">
                       {fmt.price}{' '}
                       <span className="text-xs text-neutral-400 font-normal font-sans">TTC</span>
                     </p>

@@ -59,24 +59,16 @@ export function AdminShell({
     localStorage.setItem('dreamframe_admin_theme', next)
   }
 
-  const isLight = theme === 'light'
+  const isLight = true
 
   return (
     <div
-      data-admin-theme={theme}
-      className={`min-h-screen flex transition-colors duration-200 ${
-        isLight
-          ? 'bg-slate-100 text-slate-900'
-          : 'bg-[#080807] text-white'
-      }`}
+      data-admin-theme="light"
+      className="min-h-screen flex transition-colors duration-200 bg-slate-50 text-slate-900"
     >
       {/* ─── SIDEBAR ─── */}
       <aside
-        className={`w-64 flex-shrink-0 flex flex-col justify-between border-r transition-colors duration-200 ${
-          isLight
-            ? 'bg-white border-slate-200/90 shadow-sm'
-            : 'bg-[#0c0c0a] border-neutral-800'
-        }`}
+        className="w-64 flex-shrink-0 flex flex-col justify-between border-r transition-colors duration-200 bg-white border-slate-200/90 shadow-sm"
       >
         <div className="space-y-5">
           {/* Header Logo */}
@@ -136,23 +128,15 @@ export function AdminShell({
                 <Link
                   key={href}
                   href={href}
-                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all ${
                     isActive
-                      ? isLight
-                        ? 'bg-amber-50 text-amber-900 font-bold border border-amber-200/80 shadow-xs'
-                        : 'bg-amber-400/10 text-amber-300 font-bold border border-amber-400/20'
-                      : isLight
-                      ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 border border-transparent'
-                      : 'text-neutral-400 hover:text-white hover:bg-neutral-900 border border-transparent'
+                      ? 'bg-red-50 text-red-600 font-bold border border-red-100 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent'
                   }`}
                 >
                   <Icon
                     className={`w-4 h-4 flex-shrink-0 ${
-                      isActive
-                        ? 'text-amber-500'
-                        : isLight
-                        ? 'text-slate-400'
-                        : 'text-neutral-500'
+                      isActive ? 'text-red-600' : 'text-slate-400'
                     }`}
                   />
                   <span>{label}</span>
@@ -163,17 +147,13 @@ export function AdminShell({
         </div>
 
         {/* Profil & Déconnexion en bas */}
-        <div
-          className={`p-4 border-t space-y-3 ${
-            isLight ? 'border-slate-100 bg-slate-50/50' : 'border-neutral-800/80'
-          }`}
-        >
+        <div className="p-4 border-t border-slate-100 bg-slate-50/50 space-y-3">
           <div className="flex items-center gap-3 px-1">
-            <div className="w-8 h-8 rounded-full bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-xs font-black text-amber-600 flex-shrink-0">
+            <div className="w-8 h-8 rounded-full bg-red-100 border border-red-200 flex items-center justify-center text-xs font-black text-red-600 flex-shrink-0">
               {userName[0]?.toUpperCase() || 'A'}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold truncate">{userName}</p>
+              <p className="text-xs font-bold truncate text-slate-800">{userName}</p>
               <p className="text-[10px] text-slate-400 truncate font-mono">{userEmail}</p>
             </div>
           </div>
@@ -181,11 +161,7 @@ export function AdminShell({
           <form action="/api/auth/signout" method="POST">
             <button
               type="submit"
-              className={`w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer border ${
-                isLight
-                  ? 'text-slate-600 hover:text-rose-600 hover:bg-rose-50 border-slate-200 hover:border-rose-200'
-                  : 'text-neutral-400 hover:text-rose-400 hover:bg-rose-950/20 border-neutral-800/60 hover:border-rose-900/40'
-              }`}
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer border text-slate-600 hover:text-red-600 hover:bg-red-50 border-slate-200 hover:border-red-200 bg-white"
             >
               <LogOut className="w-3.5 h-3.5" />
               Déconnexion

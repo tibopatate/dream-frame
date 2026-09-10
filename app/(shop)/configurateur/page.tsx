@@ -194,7 +194,7 @@ export default function AtelierConfigurateurPage() {
           <div className="flex items-center gap-4 flex-shrink-0">
             <div className="text-right">
               <span className="text-[9px] text-neutral-400 block font-light">Prix actuel</span>
-              <span className="text-base sm:text-lg font-bold font-serif text-white">
+              <span className="text-base sm:text-lg font-bold text-white">
                 {price.formattedTtc}
               </span>
             </div>

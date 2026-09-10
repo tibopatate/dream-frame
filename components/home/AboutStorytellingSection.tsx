@@ -104,7 +104,7 @@ export function AboutStorytellingSection({
           {/* Signature & Valeurs */}
           <div className="pt-4 border-t border-neutral-800 flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p className="font-serif italic text-lg text-white font-bold">L&apos;Atelier Dream Frame</p>
+              <p className="italic text-lg text-white font-bold">L&apos;Atelier Dream Frame</p>
               <p className="text-[11px] font-mono text-neutral-400 uppercase tracking-widest">
                 Créateurs & Artisans d&apos;Art Automobile · France
               </p>

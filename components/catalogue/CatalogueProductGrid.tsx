@@ -89,7 +89,7 @@ export function CatalogueProductGrid({ products }: CatalogueProductGridProps) {
                   </span>
                   <Link
                     href={`/produit/${product.slug}`}
-                    className="font-serif text-base text-white group-hover:text-amber-300 block truncate transition-colors"
+                    className="text-base text-white group-hover:text-amber-300 block truncate transition-colors"
                   >
                     {product.name}
                   </Link>
@@ -104,7 +104,7 @@ export function CatalogueProductGrid({ products }: CatalogueProductGridProps) {
                     <span className="text-[10px] text-neutral-400 block font-light">
                       À partir de
                     </span>
-                    <p className="text-base font-bold text-white font-serif">
+                    <p className="text-base font-bold text-white ">
                       {product.price.toFixed(2).replace('.', ',')} €
                     </p>
                   </div>
