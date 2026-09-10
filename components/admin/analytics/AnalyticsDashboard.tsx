@@ -163,45 +163,64 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
         hasData={hasData}
       />
 
-      {/* ─── MAIN 2-COLUMN LAYOUT (Like Mockup) ─── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* LEFT COLUMN (8 cols on desktop) */}
-        <div className="lg:col-span-8 space-y-6">
-          {/* Traffic Chart */}
-          <TrafficChart chartData={data?.chartData || []} hasData={hasData} />
-
-          {/* Popular pages & Devices row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <PopularPagesTable pages={data?.topPages || []} hasData={hasData} />
-            <TrafficDonut
-              title="Appareils utilisés"
-              subtitle="Répartition des appareils"
-              items={data?.deviceStats || []}
-              totalLabel="sessions"
-              totalCount={data?.kpis?.uniqueVisitors || 0}
-              hasData={hasData}
-            />
+      {/* ─── MAIN LAYOUT MATCHING MOCKUP media_1789039343319.png ─── */}
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+        {/* LEFT COLUMN: MAIN CONTENT (9 cols on xl screens) */}
+        <div className="xl:col-span-9 space-y-6">
+          {/* ROW 2: Traffic Chart + Sources de trafic Donut side-by-side */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="lg:col-span-7 xl:col-span-8">
+              <TrafficChart chartData={data?.chartData || []} hasData={hasData} />
+            </div>
+            <div className="lg:col-span-5 xl:col-span-4">
+              <TrafficDonut
+                title="Sources de trafic"
+                subtitle="D'où viennent vos visiteurs ?"
+                items={data?.trafficSources || []}
+                totalLabel="uniques"
+                totalCount={data?.kpis?.uniqueVisitors || 0}
+                hasData={hasData}
+              />
+            </div>
           </div>
 
-          {/* Tech performance & Country stats row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <CountryStats countries={data?.countryStats || []} hasData={hasData} />
-            <TechPerformance
-              performance={
-                data?.techPerformance || {
-                  loadTimeSeconds: null,
-                  uptimePercent: 99.8,
-                  pageSpeedGrade: 'A+',
-                  hasRealData: false,
+          {/* ROW 3: 3-Column Subgrid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Subcolumn 1: Popular pages table */}
+            <div>
+              <PopularPagesTable pages={data?.topPages || []} hasData={hasData} />
+            </div>
+
+            {/* Subcolumn 2: Appareils utilisés + Performances techniques */}
+            <div className="space-y-6">
+              <TrafficDonut
+                title="Appareils utilisés"
+                subtitle="Répartition des appareils"
+                items={data?.deviceStats || []}
+                totalLabel="sessions"
+                totalCount={data?.kpis?.uniqueVisitors || 0}
+                hasData={hasData}
+              />
+              <TechPerformance
+                performance={
+                  data?.techPerformance || {
+                    loadTimeSeconds: null,
+                    uptimePercent: 99.8,
+                    pageSpeedGrade: 'A+',
+                    hasRealData: false,
+                  }
                 }
-              }
-            />
+              />
+            </div>
+
+            {/* Subcolumn 3: Utilisateurs par pays + Événements clés */}
+            <div className="space-y-6">
+              <CountryStats countries={data?.countryStats || []} hasData={hasData} />
+              <KeyEventsList events={data?.keyEvents || []} hasData={hasData} />
+            </div>
           </div>
 
-          {/* Key Events row */}
-          <KeyEventsList events={data?.keyEvents || []} hasData={hasData} />
-
-          {/* Conseil du jour box */}
+          {/* ROW 4: Conseil du jour Banner */}
           <div className="p-4 bg-white border border-slate-200/90 rounded-2xl shadow-2xs flex items-start gap-3">
             <div className="w-8 h-8 rounded-xl bg-red-50 text-red-600 flex items-center justify-center flex-shrink-0 mt-0.5">
               <Lightbulb className="w-4 h-4" />
@@ -210,29 +229,16 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
               <p className="text-xs font-bold text-slate-900">Conseil du jour</p>
               <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
                 {hasData
-                  ? 'Vos visiteurs passent en moyenne plus de 2 minutes sur votre configurateur d\'art. Veillez à maintenir une haute résolution sur les photographies de supercars pour maximiser les conversions.'
+                  ? 'Votre taux de rebond a diminué de 12.9% cette semaine. C\'est le signe que votre contenu et vos photographies de supercars captivent immédiatement vos visiteurs.'
                   : 'Partagez le lien de votre vitrine sur vos réseaux sociaux (Instagram, TikTok) pour commencer à récolter vos premières métriques réelles.'}
               </p>
             </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN (4 cols on desktop) */}
-        <div className="lg:col-span-4 space-y-6">
-          {/* Realtime Live Activity Feed */}
+        {/* RIGHT COLUMN: Realtime Activity + Sources de visiteurs Channels (3 cols on xl screens) */}
+        <div className="xl:col-span-3 space-y-6">
           <RealtimeFeed realtime={data?.realtime || { activeVisitors: 0, activeList: [] }} />
-
-          {/* Traffic Sources Donut */}
-          <TrafficDonut
-            title="Sources de trafic"
-            subtitle="D'où viennent vos visiteurs ?"
-            items={data?.trafficSources || []}
-            totalLabel="uniques"
-            totalCount={data?.kpis?.uniqueVisitors || 0}
-            hasData={hasData}
-          />
-
-          {/* Traffic Sources Channels List */}
           <TrafficSourcesList sources={data?.trafficSources || []} hasData={hasData} />
         </div>
       </div>
