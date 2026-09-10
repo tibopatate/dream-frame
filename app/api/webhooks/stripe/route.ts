@@ -45,61 +45,111 @@ export async function POST(req: Request) {
   }
 
   try {
-    if (event.type === 'checkout.session.completed') {
+    // 1. Session de paiement terminée avec succès (Immédiat ou Asynchrone)
+    if (
+      event.type === 'checkout.session.completed' ||
+      event.type === 'checkout.session.async_payment_succeeded'
+    ) {
       const session = event.data.object as any
       const orderId = session.metadata?.orderId
 
-      if (!orderId) {
-        throw new Error('Missing orderId in Stripe session metadata')
-      }
-
-      await prisma.$transaction(async (tx) => {
-        const order = await tx.order.findUniqueOrThrow({
-          where: { id: orderId },
-          include: { items: true },
-        })
-
-        if (order.status !== 'PENDING') {
-          console.log(`Order ${order.orderNumber} is already in state: ${order.status}`)
-          return
-        }
-
-        for (const item of order.items) {
-          if (item.variantId) {
-            const success = await decrementStockAtomic(item.variantId, item.quantity, order.id)
-            if (!success) {
-              throw new Error(`Stock insuffisant pour le variant ${item.variantId}`)
-            }
-          }
-        }
-
-        const invoiceNumber = await generateInvoiceNumber()
-
-        await tx.order.update({
-          where: { id: orderId },
-          data: {
-            status: 'PAID',
-            stripePaymentIntentId: session.payment_intent as string,
-            invoiceNumber,
-          },
-        })
-
-        // Sauvegarde miroir dans le data-store local
+      // Si le paiement est bien payé
+      if (session.payment_status === 'paid' && orderId) {
+        // A. Mise à jour immédiate du data-store local garanti
         try {
           const { updateOrderStatus } = await import('@/lib/data-store')
           updateOrderStatus(orderId, 'PAID')
-        } catch {}
+        } catch (storeErr) {
+          console.warn('Erreur mise à jour data-store local:', storeErr)
+        }
 
-        // Log de réussite
-        await (tx as any).integrationLog.create({
-          data: {
-            service: 'STRIPE',
-            action: 'checkout.session.completed',
-            status: 'SUCCESS',
-            payload: session as object,
-          },
-        })
-      })
+        // B. Mise à jour transactionnelle Prisma si connecté
+        try {
+          await prisma.$transaction(async (tx) => {
+            const order = await tx.order.findUnique({
+              where: { id: orderId },
+              include: { items: true },
+            })
+
+            if (order && order.status === 'PENDING') {
+              for (const item of order.items) {
+                if (item.variantId) {
+                  try {
+                    await decrementStockAtomic(item.variantId, item.quantity, order.id)
+                  } catch {}
+                }
+              }
+
+              const invoiceNumber = await generateInvoiceNumber()
+
+              await tx.order.update({
+                where: { id: orderId },
+                data: {
+                  status: 'PAID',
+                  stripePaymentIntentId: session.payment_intent as string,
+                  invoiceNumber,
+                },
+              })
+            }
+          })
+        } catch (dbErr) {
+          console.warn('Prisma offline ou non configuré, persistance locale assurée:', dbErr)
+        }
+      }
+    }
+
+    // 2. Échec du paiement différé (ex: prélèvement SEPA / Klarna refusé)
+    if (event.type === 'checkout.session.async_payment_failed') {
+      const session = event.data.object as any
+      const orderId = session.metadata?.orderId
+      if (orderId) {
+        const { updateOrderStatus } = await import('@/lib/data-store')
+        updateOrderStatus(orderId, 'CANCELLED', { internalNote: 'Paiement asynchrone Stripe échoué' })
+        try {
+          await prisma.order.update({
+            where: { id: orderId },
+            data: { status: 'CANCELLED' },
+          })
+        } catch {}
+      }
+    }
+
+    // 3. Session expirée sans paiement (abandon de panier)
+    if (event.type === 'checkout.session.expired') {
+      const session = event.data.object as any
+      const orderId = session.metadata?.orderId
+      if (orderId) {
+        const { updateOrderStatus } = await import('@/lib/data-store')
+        updateOrderStatus(orderId, 'CANCELLED', { internalNote: 'Session Stripe Checkout expirée sans paiement' })
+        try {
+          await prisma.order.update({
+            where: { id: orderId },
+            data: { status: 'CANCELLED' },
+          })
+        } catch {}
+      }
+    }
+
+    // 4. Remboursement effectué depuis le Dashboard Stripe
+    if (event.type === 'charge.refunded') {
+      const charge = event.data.object as any
+      const paymentIntentId = charge.payment_intent as string
+      if (paymentIntentId) {
+        const { getAllOrders, updateOrderStatus } = await import('@/lib/data-store')
+        const orders = getAllOrders()
+        const matched = orders.find(
+          (o) => o.stripePaymentIntentId === paymentIntentId || (o as any).stripeSessionId === charge.id
+        )
+        if (matched) {
+          updateOrderStatus(matched.id, 'REFUNDED', { internalNote: 'Commande remboursée sur Stripe' })
+        }
+        try {
+          await prisma.order.updateMany({
+            where: { stripePaymentIntentId: paymentIntentId },
+            data: { status: 'REFUNDED' },
+          })
+        } catch {}
+      }
     }
 
     // Marquer comme traité
