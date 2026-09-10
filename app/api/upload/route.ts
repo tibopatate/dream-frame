@@ -119,11 +119,7 @@ export async function POST(req: NextRequest) {
     const safeFilename = `${crypto.randomUUID()}${ext}`
 
     // 5. Storage handling (Vercel Blob in production, local storage in dev / fallback)
-    const blobToken = process.env.BLOB_READ_WRITE_TOKEN
-    const isBlobConfigured = blobToken && !blobToken.includes('CHANGE_ME')
-    const isVercel = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production'
-
-    if (isBlobConfigured) {
+    if (process.env.BLOB_READ_WRITE_TOKEN && !process.env.BLOB_READ_WRITE_TOKEN.includes('CHANGE_ME')) {
       try {
         const blobResult = await put(safeFilename, buffer, {
           access: 'public',
@@ -132,12 +128,13 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ url: blobResult.url, filename: safeFilename })
       } catch (blobErr: any) {
         console.error('Vercel Blob upload failed:', blobErr)
-        if (isVercel) {
-          return NextResponse.json({ error: 'Erreur Vercel Blob. Vérifiez la configuration (limites, token).' }, { status: 500 })
-        }
+        return NextResponse.json({ error: 'Erreur Vercel Blob. Assurez-vous d\'avoir redéployé sur Vercel après la création du Blob.' }, { status: 500 })
       }
-    } else if (isVercel) {
-      return NextResponse.json({ error: 'Vercel Blob n\'est pas configuré. Veuillez ajouter BLOB_READ_WRITE_TOKEN dans vos variables d\'environnement Vercel (Storage).' }, { status: 500 })
+    }
+
+    // Fallback: Local filesystem storage under public/uploads/ (Local dev only)
+    if (process.env.VERCEL === '1' || process.env.NODE_ENV === 'production') {
+      return NextResponse.json({ error: "Vercel Blob n'est pas configuré. Veuillez créer le Blob sur Vercel et REDÉPLOYER." }, { status: 500 })
     }
 
     // Fallback: Local filesystem storage under public/uploads/ (Local dev only)

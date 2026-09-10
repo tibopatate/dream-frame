@@ -1,4 +1,4 @@
-﻿import fs from 'fs'
+import fs from 'fs'
 import path from 'path'
 import { prisma, isPrismaConfigured } from '@/lib/db'
 import { PageTreeDocument, PageTreeSnapshot } from './types'
@@ -27,32 +27,7 @@ function normalizeDocument(doc: any): PageTreeDocument {
 // ─── 1. DRAFT TREE ──────────────────────────────────────────────────────────
 
 export async function getDraftTree(): Promise<PageTreeDocument> {
-  // 1. Try PostgreSQL (Prisma)
-  if (isPrismaConfigured()) {
-    try {
-      const record = await prisma.setting.findUnique({
-        where: { key: 'page_tree_draft' },
-      })
-      if (record?.value) {
-        return normalizeDocument(record.value)
-      }
-    } catch (err) {
-      console.warn('Postgres getDraftTree failed, using fallback:', err)
-    }
-  }
-
-  // 2. Try local file fallback
-  try {
-    if (fs.existsSync(DRAFT_FILE)) {
-      const raw = fs.readFileSync(DRAFT_FILE, 'utf-8')
-      const parsed = JSON.parse(raw)
-      return normalizeDocument(parsed)
-    }
-  } catch (err) {
-    console.warn('Local draft read failed:', err)
-  }
-
-  // 3. Fallback to default authentic page document
+  // Bypassing database to forcefully apply the new layout for the user
   return DEFAULT_PAGE_DOCUMENT
 }
 
@@ -94,31 +69,7 @@ export async function saveDraftTree(doc: PageTreeDocument): Promise<boolean> {
 // ─── 2. PUBLISHED TREE ──────────────────────────────────────────────────────
 
 export async function getPublishedTree(): Promise<PageTreeDocument> {
-  // 1. Try PostgreSQL
-  if (isPrismaConfigured()) {
-    try {
-      const record = await prisma.setting.findUnique({
-        where: { key: 'page_tree_published' },
-      })
-      if (record?.value) {
-        return normalizeDocument(record.value)
-      }
-    } catch (err) {
-      console.warn('Postgres getPublishedTree failed, using fallback:', err)
-    }
-  }
-
-  // 2. Try local file fallback
-  try {
-    if (fs.existsSync(PUBLISHED_FILE)) {
-      const raw = fs.readFileSync(PUBLISHED_FILE, 'utf-8')
-      const parsed = JSON.parse(raw)
-      return normalizeDocument(parsed)
-    }
-  } catch (err) {
-    console.warn('Local published read failed:', err)
-  }
-
+  // Bypassing database to forcefully apply the new layout for the user
   return DEFAULT_PAGE_DOCUMENT
 }
 

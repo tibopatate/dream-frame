@@ -125,24 +125,6 @@ export function AdminShell({
               <ExternalLink className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100" />
             </Link>
 
-            {/* Switcher Thème Clair (Blanc) / Sombre */}
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className={`w-full flex items-center justify-between px-3.5 py-2 rounded-xl border text-xs font-semibold transition cursor-pointer ${
-                isLight
-                  ? 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700'
-                  : 'bg-neutral-900 hover:bg-neutral-800 border-neutral-800 text-neutral-300'
-              }`}
-            >
-              <span className="flex items-center gap-2">
-                {isLight ? <Sun className="w-3.5 h-3.5 text-amber-500" /> : <Moon className="w-3.5 h-3.5 text-blue-400" />}
-                <span>{isLight ? 'Thème Blanc Pro' : 'Thème Sombre'}</span>
-              </span>
-              <span className="text-[10px] font-mono uppercase text-slate-400">
-                {isLight ? 'Clair' : 'Sombre'}
-              </span>
-            </button>
           </div>
 
           {/* Navigation Principale */}

@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
@@ -43,6 +43,9 @@ import {
   LayoutTemplate,
   X,
   UploadCloud,
+  ImageIcon,
+  Info,
+  MessageCircleQuestion,
 } from 'lucide-react'
 
 const SECTION_TYPE_ICONS: Record<string, any> = {
@@ -52,6 +55,9 @@ const SECTION_TYPE_ICONS: Record<string, any> = {
   craft: Layers,
   reassurance: ShieldCheck,
   custom_atelier: LayoutTemplate,
+  interiors: ImageIcon,
+  about: Info,
+  faq: MessageCircleQuestion,
 }
 
 const AVAILABLE_SECTIONS: { type: SectionType; name: string; desc: string; icon: any }[] = [
@@ -74,6 +80,12 @@ const AVAILABLE_SECTIONS: { type: SectionType; name: string; desc: string; icon:
     icon: Package,
   },
   {
+    type: 'interiors',
+    name: 'Galerie Intérieurs',
+    desc: 'Laissez-les sublimer votre pièce',
+    icon: ImageIcon,
+  },
+  {
     type: 'craft',
     name: 'Savoir-Faire (5 Couches)',
     desc: 'Présentation de l’ébénisterie, découpe laser et verre HD',
@@ -84,6 +96,18 @@ const AVAILABLE_SECTIONS: { type: SectionType; name: string; desc: string; icon:
     name: 'Engagements & Réassurance',
     desc: 'Livraison offerte, droit de rétractation et fabrication française',
     icon: ShieldCheck,
+  },
+  {
+    type: 'about',
+    name: 'Qui sommes-nous',
+    desc: 'Histoire de la marque',
+    icon: Info,
+  },
+  {
+    type: 'faq',
+    name: 'Foire Aux Questions',
+    desc: 'Section de questions réponses',
+    icon: MessageCircleQuestion,
   },
   {
     type: 'custom_atelier',

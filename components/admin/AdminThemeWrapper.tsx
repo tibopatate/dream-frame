@@ -5,25 +5,9 @@ import { Sun, Moon } from 'lucide-react'
 
 export function AdminThemeWrapper({
   children,
-  initialTheme = 'light',
 }: {
-  children: (theme: 'light' | 'dark', toggleTheme: () => void) => React.ReactNode
-  initialTheme?: 'light' | 'dark'
+  children: (theme: 'dark', toggleTheme: () => void) => React.ReactNode
 }) {
-  const [theme, setTheme] = useState<'light' | 'dark'>(initialTheme)
-
-  useEffect(() => {
-    const saved = localStorage.getItem('dreamframe_admin_theme') as 'light' | 'dark' | null
-    if (saved) {
-      setTheme(saved)
-    }
-  }, [])
-
-  const toggleTheme = () => {
-    const next = theme === 'light' ? 'dark' : 'light'
-    setTheme(next)
-    localStorage.setItem('dreamframe_admin_theme', next)
-  }
-
-  return children(theme, toggleTheme)
+  // Forced dark mode to match luxury brand identity and fix editor bugs
+  return children('dark', () => {})
 }
