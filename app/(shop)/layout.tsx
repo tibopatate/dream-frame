@@ -26,7 +26,7 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
       <CartNotification />
       {/* Drawer mobile — rendu au niveau racine pour dépasser le header sticky */}
       <MobileNavDrawer />
-      <div className="flex-1 pt-[100px]">{children}</div>
+      <div className="flex-1">{children}</div>
       {/* Barre d'Achat Mobile Récurrente Flottante (1-Tap Mobile Conversion) */}
       <StickyMobileBuyBar />
       <ShopFooter />

@@ -366,13 +366,13 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
   const activeSection = doc.sections.find((s) => s.id === activeSectionId)
 
   return (
-    <div className="min-h-screen bg-[#050504] text-white flex flex-col antialiased">
+    <div className="min-h-screen bg-slate-100 text-slate-900 flex flex-col antialiased">
       {/* ─── TOPBAR SHOPIFY THEME EDITOR ──────────────────────────────────────── */}
-      <header className="sticky top-0 z-50 h-14 bg-neutral-950 border-b border-neutral-800 px-4 flex items-center justify-between gap-4">
+      <header className="sticky top-0 z-50 h-14 bg-white border-b border-slate-200 px-4 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <Link
             href="/admin/dashboard"
-            className="p-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-neutral-400 hover:text-white transition flex items-center gap-1.5 text-xs font-semibold"
+            className="p-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-900 transition flex items-center gap-1.5 text-xs font-semibold"
           >
             <ChevronLeft className="w-4 h-4" />
             <span>Quitter</span>
@@ -381,7 +381,7 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
           <div className="h-4 w-px bg-neutral-800" />
 
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-white">Page d&apos;accueil</span>
+            <span className="text-xs font-bold text-slate-900">Page d&apos;accueil</span>
             <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
               Thème Actif
             </span>
@@ -389,14 +389,14 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
         </div>
 
         {/* Device Mode Switcher */}
-        <div className="flex items-center bg-neutral-900 border border-neutral-800 rounded-xl p-1 text-xs">
+        <div className="flex items-center bg-white border border-slate-200 rounded-xl p-1 text-xs">
           <button
             type="button"
             onClick={() => setActiveDevice('desktop')}
             className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 cursor-pointer ${
               activeDevice === 'desktop'
-                ? 'bg-amber-400 text-black font-bold shadow'
-                : 'text-neutral-400 hover:text-white'
+                ? 'bg-red-600 text-black font-bold shadow'
+                : 'text-slate-500 hover:text-slate-900'
             }`}
             title="Aperçu Ordinateur (Plein Écran)"
           >
@@ -409,8 +409,8 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
             onClick={() => setActiveDevice('mobile')}
             className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 cursor-pointer ${
               activeDevice === 'mobile'
-                ? 'bg-amber-400 text-black font-bold shadow'
-                : 'text-neutral-400 hover:text-white'
+                ? 'bg-red-600 text-black font-bold shadow'
+                : 'text-slate-500 hover:text-slate-900'
             }`}
             title="Aperçu Smartphone (390px)"
           >
@@ -421,12 +421,12 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
 
         {/* Right Actions */}
         <div className="flex items-center gap-2.5">
-          <div className="flex items-center gap-1 border-r border-neutral-800 pr-2">
+          <div className="flex items-center gap-1 border-r border-slate-200 pr-2">
             <button
               type="button"
               disabled={history.length === 0}
               onClick={handleUndo}
-              className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 disabled:opacity-30 transition cursor-pointer"
+              className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-50 disabled:opacity-30 transition cursor-pointer"
               title="Annuler (Ctrl+Z)"
             >
               <Undo2 className="w-4 h-4" />
@@ -435,7 +435,7 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
               type="button"
               disabled={redoStack.length === 0}
               onClick={handleRedo}
-              className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 disabled:opacity-30 transition cursor-pointer"
+              className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-50 disabled:opacity-30 transition cursor-pointer"
               title="Rétablir (Ctrl+Y)"
             >
               <Redo2 className="w-4 h-4" />
@@ -445,10 +445,10 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
           <button
             type="button"
             onClick={handleOpenSnapshots}
-            className="p-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-neutral-400 hover:text-white transition flex items-center gap-1.5 text-xs cursor-pointer"
+            className="p-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-900 transition flex items-center gap-1.5 text-xs cursor-pointer"
             title="Historique des sauvegardes"
           >
-            <History className="w-3.5 h-3.5 text-amber-400" />
+            <History className="w-3.5 h-3.5 text-red-600" />
             <span className="hidden md:inline text-[11px]">Historique</span>
           </button>
 
@@ -456,17 +456,17 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
             href="/"
             target="_blank"
             rel="noreferrer"
-            className="p-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-neutral-400 hover:text-white transition flex items-center gap-1.5 text-xs font-medium"
+            className="p-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-900 transition flex items-center gap-1.5 text-xs font-medium"
             title="Ouvrir la boutique dans un nouvel onglet"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span className="hidden lg:inline text-[11px]">Boutique</span>
           </Link>
 
-          <div className="hidden xl:flex items-center gap-1.5 text-[10px] font-mono text-neutral-400">
+          <div className="hidden xl:flex items-center gap-1.5 text-[10px] font-mono text-slate-500">
             {isSavingDraft ? (
               <>
-                <Loader2 className="w-3 h-3 animate-spin text-amber-400" />
+                <Loader2 className="w-3 h-3 animate-spin text-red-600" />
                 <span>Enregistrement...</span>
               </>
             ) : lastSavedTime ? (
@@ -517,28 +517,28 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
       {/* ─── BODY: PERSISTENT SIDEBAR + CANVAS ───────────────────────────────── */}
       <div className="flex-1 flex overflow-hidden">
         {/* ─── SIDEBAR GAUCHE PERMANENTE (STYLE SHOPIFY) ────────────────────── */}
-        <aside className="w-80 sm:w-96 flex-shrink-0 bg-neutral-950 border-r border-neutral-800 flex flex-col h-[calc(100vh-3.5rem)] sticky top-14 z-30">
+        <aside className="w-80 sm:w-96 flex-shrink-0 bg-white border-r border-slate-200 flex flex-col h-[calc(100vh-3.5rem)] sticky top-14 z-30">
           {activeSection ? (
             // ─── NIVEAU 2 : INSPECTEUR DE SECTION SÉLECTIONNÉE ───────────────
             <div className="flex-1 flex flex-col overflow-hidden animate-in slide-in-from-left-4 duration-200">
-              <div className="p-4 border-b border-neutral-800 flex items-center justify-between bg-neutral-900/50">
+              <div className="p-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
                 <button
                   type="button"
                   onClick={() => setActiveSectionId(null)}
-                  className="text-xs text-neutral-400 hover:text-white flex items-center gap-1 font-semibold transition cursor-pointer"
+                  className="text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1 font-semibold transition cursor-pointer"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   <span>Sections</span>
                 </button>
-                <span className="text-[10px] font-mono text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded-full uppercase font-bold">
+                <span className="text-[10px] font-mono text-red-600 bg-red-600/10 border border-red-600/20 px-2 py-0.5 rounded-full uppercase font-bold">
                   {activeSection.type}
                 </span>
               </div>
 
               <div className="flex-1 overflow-y-auto p-5 space-y-6 text-xs">
                 <div>
-                  <h3 className="text-sm font-bold text-white">{activeSection.name}</h3>
-                  <p className="text-[11px] text-neutral-400 mt-0.5">
+                  <h3 className="text-sm font-bold text-slate-900">{activeSection.name}</h3>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
                     Modifiez les options ci-dessous, le visuel s’actualise instantanément.
                   </p>
                 </div>
@@ -547,47 +547,47 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
                 {activeSection.type === 'hero' && (
                   <div className="space-y-4">
                     <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-mono text-neutral-400 font-bold">Badge en haut</label>
+                      <label className="text-[10px] uppercase font-mono text-slate-500 font-bold">Badge en haut</label>
                       <input
                         type="text"
                         value={activeSection.settings.badgeText || ''}
                         onChange={(e) => handleUpdateSectionSettings(activeSection.id, { badgeText: e.target.value })}
-                        className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-600"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-mono text-neutral-400 font-bold">Titre Principal</label>
+                      <label className="text-[10px] uppercase font-mono text-slate-500 font-bold">Titre Principal</label>
                       <textarea
                         rows={2}
                         value={activeSection.settings.title || ''}
                         onChange={(e) => handleUpdateSectionSettings(activeSection.id, { title: e.target.value })}
-                        className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-600"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-mono text-neutral-400 font-bold">Sous-titre descriptif</label>
+                      <label className="text-[10px] uppercase font-mono text-slate-500 font-bold">Sous-titre descriptif</label>
                       <textarea
                         rows={3}
                         value={activeSection.settings.subtitle || ''}
                         onChange={(e) => handleUpdateSectionSettings(activeSection.id, { subtitle: e.target.value })}
-                        className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-600"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-mono text-neutral-400 font-bold">Mention de prix &amp; livraison</label>
+                      <label className="text-[10px] uppercase font-mono text-slate-500 font-bold">Mention de prix &amp; livraison</label>
                       <input
                         type="text"
                         value={activeSection.settings.priceText || ''}
                         onChange={(e) => handleUpdateSectionSettings(activeSection.id, { priceText: e.target.value })}
-                        className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-600"
                       />
                     </div>
 
-                    <div className="pt-2 border-t border-neutral-800 space-y-2">
-                      <label className="text-[10px] uppercase font-mono text-neutral-400 font-bold block">Image de fond Hero</label>
+                    <div className="pt-2 border-t border-slate-200 space-y-2">
+                      <label className="text-[10px] uppercase font-mono text-slate-500 font-bold block">Image de fond Hero</label>
                       <ProductImageUploader
                         images={activeSection.settings.bgImage ? [activeSection.settings.bgImage] : []}
                         onChange={(imgs) => handleUpdateSectionSettings(activeSection.id, { bgImage: imgs[0] || '/atelier/chiron-wall.jpg' })}
@@ -595,46 +595,46 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
                       />
                     </div>
 
-                    <div className="pt-2 border-t border-neutral-800 space-y-3">
+                    <div className="pt-2 border-t border-slate-200 space-y-3">
                       <h4 className="text-[11px] font-bold text-neutral-200">Boutons d&apos;Action</h4>
                       <div className="grid grid-cols-2 gap-2">
                         <div>
-                          <label className="text-[10px] text-neutral-400 block mb-1">Bouton 1 Texte</label>
+                          <label className="text-[10px] text-slate-500 block mb-1">Bouton 1 Texte</label>
                           <input
                             type="text"
                             value={activeSection.settings.primaryBtnText || ''}
                             onChange={(e) => handleUpdateSectionSettings(activeSection.id, { primaryBtnText: e.target.value })}
-                            className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-2.5 py-1.5 text-xs text-white"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-900"
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] text-neutral-400 block mb-1">Bouton 1 Lien</label>
+                          <label className="text-[10px] text-slate-500 block mb-1">Bouton 1 Lien</label>
                           <input
                             type="text"
                             value={activeSection.settings.primaryBtnLink || ''}
                             onChange={(e) => handleUpdateSectionSettings(activeSection.id, { primaryBtnLink: e.target.value })}
-                            className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-mono"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-900 font-mono"
                           />
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-2">
                         <div>
-                          <label className="text-[10px] text-neutral-400 block mb-1">Bouton 2 Texte</label>
+                          <label className="text-[10px] text-slate-500 block mb-1">Bouton 2 Texte</label>
                           <input
                             type="text"
                             value={activeSection.settings.secondaryBtnText || ''}
                             onChange={(e) => handleUpdateSectionSettings(activeSection.id, { secondaryBtnText: e.target.value })}
-                            className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-2.5 py-1.5 text-xs text-white"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-900"
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] text-neutral-400 block mb-1">Bouton 2 Lien</label>
+                          <label className="text-[10px] text-slate-500 block mb-1">Bouton 2 Lien</label>
                           <input
                             type="text"
                             value={activeSection.settings.secondaryBtnLink || ''}
                             onChange={(e) => handleUpdateSectionSettings(activeSection.id, { secondaryBtnLink: e.target.value })}
-                            className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-mono"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-900 font-mono"
                           />
                         </div>
                       </div>
@@ -646,21 +646,21 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
                 {activeSection.type === 'collection' && (
                   <div className="space-y-4">
                     <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-mono text-neutral-400 font-bold">Titre Collection</label>
+                      <label className="text-[10px] uppercase font-mono text-slate-500 font-bold">Titre Collection</label>
                       <input
                         type="text"
                         value={activeSection.settings.title || ''}
                         onChange={(e) => handleUpdateSectionSettings(activeSection.id, { title: e.target.value })}
-                        className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-mono text-neutral-400 font-bold">Catégorie affichée</label>
+                      <label className="text-[10px] uppercase font-mono text-slate-500 font-bold">Catégorie affichée</label>
                       <select
                         value={activeSection.settings.category || 'ALL'}
                         onChange={(e) => handleUpdateSectionSettings(activeSection.id, { category: e.target.value })}
-                        className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
                       >
                         <option value="ALL">Toutes les époques (8 Supercars)</option>
                         <option value="VINTAGE">Légendes Vintage Uniquement</option>
@@ -669,11 +669,11 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-mono text-neutral-400 font-bold">Nombre de cadres affichés</label>
+                      <label className="text-[10px] uppercase font-mono text-slate-500 font-bold">Nombre de cadres affichés</label>
                       <select
                         value={activeSection.settings.limit || 8}
                         onChange={(e) => handleUpdateSectionSettings(activeSection.id, { limit: Number(e.target.value) })}
-                        className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white font-mono"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 font-mono"
                       >
                         <option value={4}>4 Cadres</option>
                         <option value={8}>8 Cadres (Recommandé)</option>
@@ -687,22 +687,22 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
                 {activeSection.type === 'craft' && (
                   <div className="space-y-4">
                     <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-mono text-neutral-400 font-bold">Titre de la section</label>
+                      <label className="text-[10px] uppercase font-mono text-slate-500 font-bold">Titre de la section</label>
                       <input
                         type="text"
                         value={activeSection.settings.title || ''}
                         onChange={(e) => handleUpdateSectionSettings(activeSection.id, { title: e.target.value })}
-                        className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-mono text-neutral-400 font-bold">Sous-titre</label>
+                      <label className="text-[10px] uppercase font-mono text-slate-500 font-bold">Sous-titre</label>
                       <textarea
                         rows={2}
                         value={activeSection.settings.desc || ''}
                         onChange={(e) => handleUpdateSectionSettings(activeSection.id, { desc: e.target.value })}
-                        className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
                       />
                     </div>
                   </div>
@@ -710,8 +710,8 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
 
                 {/* DEMO SETTINGS */}
                 {activeSection.type === 'demo' && (
-                  <div className="p-4 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-400 space-y-2">
-                    <p className="font-bold text-white">Module 3D Interactif</p>
+                  <div className="p-4 rounded-xl bg-white border border-slate-200 text-slate-500 space-y-2">
+                    <p className="font-bold text-slate-900">Module 3D Interactif</p>
                     <p className="text-[11px] leading-relaxed">
                       Ce module exclusif permet à vos visiteurs de tester en direct le rétroéclairage LED ambré, d’admirer les 3 angles sous vitrage et de visualiser le cadre dans 3 espaces d’intérieur (Bureau, Salon, Setup).
                     </p>
@@ -722,28 +722,28 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
                 {activeSection.type === 'custom_atelier' && (
                   <div className="space-y-4">
                     <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-mono text-neutral-400 font-bold">Titre de l&apos;invitation</label>
+                      <label className="text-[10px] uppercase font-mono text-slate-500 font-bold">Titre de l&apos;invitation</label>
                       <input
                         type="text"
                         value={activeSection.settings.title || ''}
                         onChange={(e) => handleUpdateSectionSettings(activeSection.id, { title: e.target.value })}
-                        className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-mono text-neutral-400 font-bold">Texte du bouton CTA</label>
+                      <label className="text-[10px] uppercase font-mono text-slate-500 font-bold">Texte du bouton CTA</label>
                       <input
                         type="text"
                         value={activeSection.settings.btnText || ''}
                         onChange={(e) => handleUpdateSectionSettings(activeSection.id, { btnText: e.target.value })}
-                        className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
                       />
                     </div>
                   </div>
                 )}
 
-                <div className="pt-6 border-t border-neutral-800">
+                <div className="pt-6 border-t border-slate-200">
                   <button
                     type="button"
                     onClick={() => handleDeleteSection(activeSection.id)}
@@ -758,14 +758,14 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
           ) : (
             // ─── NIVEAU 1 : LISTE DES SECTIONS AVEC GLISSER-DÉPOSER ───────────
             <div className="flex-1 flex flex-col overflow-hidden">
-              <div className="p-4 border-b border-neutral-800 flex items-center justify-between">
+              <div className="p-4 border-b border-slate-200 flex items-center justify-between">
                 <div>
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-white">Sections de la page</h3>
-                  <p className="text-[11px] text-neutral-400">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900">Sections de la page</h3>
+                  <p className="text-[11px] text-slate-500">
                     Attrapez la poignée pour déplacer une section plus haut ou plus bas
                   </p>
                 </div>
-                <span className="text-[10px] font-mono text-neutral-400 bg-neutral-900 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-mono text-slate-500 bg-white px-2 py-0.5 rounded">
                   {doc.sections.length}
                 </span>
               </div>
@@ -789,28 +789,28 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
                       onClick={() => setActiveSectionId(section.id)}
                       className={`group relative flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer select-none ${
                         isDragged
-                          ? 'opacity-30 border-dashed border-amber-400 bg-amber-400/10'
+                          ? 'opacity-30 border-dashed border-red-600 bg-red-600/10'
                           : isDragOver
-                          ? 'border-amber-400 bg-amber-400/20 scale-[1.02]'
+                          ? 'border-red-600 bg-red-600/20 scale-[1.02]'
                           : isHovered
-                          ? 'bg-neutral-900 border-neutral-700'
-                          : 'bg-neutral-900/60 border-neutral-800 hover:border-neutral-700'
+                          ? 'bg-white border-slate-300'
+                          : 'bg-white/60 border-slate-200 hover:border-slate-300'
                       }`}
                     >
                       <div className="flex items-center gap-2.5 overflow-hidden">
                         <div
-                          className="cursor-grab active:cursor-grabbing text-neutral-500 group-hover:text-amber-400 transition"
+                          className="cursor-grab active:cursor-grabbing text-neutral-500 group-hover:text-red-600 transition"
                           title="Cliquer pour attraper et déplacer la section"
                         >
                           <GripVertical className="w-4 h-4" />
                         </div>
 
-                        <div className="p-1.5 rounded-lg bg-neutral-800 text-amber-400">
+                        <div className="p-1.5 rounded-lg bg-neutral-800 text-red-600">
                           <Icon className="w-3.5 h-3.5" />
                         </div>
 
                         <div className="truncate">
-                          <h4 className="text-xs font-bold text-white group-hover:text-amber-300 transition truncate">
+                          <h4 className="text-xs font-bold text-slate-900 group-hover:text-amber-300 transition truncate">
                             {section.name}
                           </h4>
                           <span className="text-[9px] font-mono text-neutral-500 uppercase">
@@ -827,7 +827,7 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
                               e.stopPropagation()
                               handleMoveSection(idx, 'up')
                             }}
-                            className="p-1 text-neutral-400 hover:text-white rounded hover:bg-neutral-800 transition"
+                            className="p-1 text-slate-500 hover:text-slate-900 rounded hover:bg-slate-50 transition"
                             title="Monter"
                           >
                             <ArrowUp className="w-3 h-3" />
@@ -841,7 +841,7 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
                               e.stopPropagation()
                               handleMoveSection(idx, 'down')
                             }}
-                            className="p-1 text-neutral-400 hover:text-white rounded hover:bg-neutral-800 transition"
+                            className="p-1 text-slate-500 hover:text-slate-900 rounded hover:bg-slate-50 transition"
                             title="Descendre"
                           >
                             <ArrowDown className="w-3 h-3" />
@@ -851,11 +851,11 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
                         <button
                           type="button"
                           onClick={(e) => handleToggleHide(section.id, e)}
-                          className="p-1 text-neutral-400 hover:text-white rounded hover:bg-neutral-800 transition"
+                          className="p-1 text-slate-500 hover:text-slate-900 rounded hover:bg-slate-50 transition"
                           title={section.hidden ? 'Afficher' : 'Masquer'}
                         >
                           {section.hidden ? (
-                            <EyeOff className="w-3 h-3 text-amber-400" />
+                            <EyeOff className="w-3 h-3 text-red-600" />
                           ) : (
                             <Eye className="w-3 h-3" />
                           )}
@@ -866,13 +866,13 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
                 })}
               </div>
 
-              <div className="p-3 border-t border-neutral-800">
+              <div className="p-3 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setShowAddSectionModal(true)}
-                  className="w-full py-2.5 px-4 bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                  className="w-full py-2.5 px-4 bg-white hover:bg-slate-50 border border-slate-300 text-slate-900 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-sm"
                 >
-                  <Plus className="w-4 h-4 text-amber-400" />
+                  <Plus className="w-4 h-4 text-red-600" />
                   <span>Ajouter une section</span>
                 </button>
               </div>
@@ -881,11 +881,11 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
         </aside>
 
         {/* ─── 2. CANVAS / PREVIEW (LE VRAI SITE RÉEL ET IDENTIQUE) ─────────── */}
-        <main className="flex-1 overflow-y-auto bg-[#050504] flex justify-center p-0 relative">
+        <main className="flex-1 overflow-y-auto bg-slate-100 flex justify-center p-0 relative">
           <div
-            className={`transition-all duration-300 bg-[#080807] shadow-2xl ${
+            className={`transition-all duration-300 bg-[#080807] text-white shadow-2xl ${
               activeDevice === 'mobile'
-                ? 'max-w-[390px] border-x border-neutral-800 my-8 rounded-3xl overflow-hidden min-h-[844px] shadow-black'
+                ? 'max-w-[390px] border-x border-slate-200 my-8 rounded-3xl overflow-hidden min-h-[844px] shadow-black'
                 : 'w-full'
             }`}
           >
@@ -911,18 +911,18 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
       {showAddSectionModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="fixed inset-0" onClick={() => setShowAddSectionModal(false)} />
-          <div className="relative z-10 w-full max-w-lg bg-neutral-900 border border-neutral-700 rounded-2xl shadow-2xl p-6 text-white space-y-4">
-            <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
+          <div className="relative z-10 w-full max-w-lg bg-white border border-slate-300 rounded-2xl shadow-2xl p-6 text-slate-900 space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
               <div>
                 <h3 className="text-base font-bold">Ajouter une Section</h3>
-                <p className="text-xs text-neutral-400">
+                <p className="text-xs text-slate-500">
                   Choisissez la section à intégrer sur votre vitrine
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setShowAddSectionModal(false)}
-                className="p-1 rounded-lg hover:bg-neutral-800 text-neutral-400 hover:text-white"
+                className="p-1 rounded-lg hover:bg-slate-50 text-slate-500 hover:text-slate-900"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -936,16 +936,16 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
                     key={sec.type}
                     type="button"
                     onClick={() => handleAddSection(sec.type)}
-                    className="flex items-start gap-3 p-3.5 rounded-xl bg-neutral-950 border border-neutral-800 hover:border-amber-400/60 hover:bg-neutral-800/80 transition text-left cursor-pointer group"
+                    className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-slate-200 hover:border-red-600/60 hover:bg-slate-50/80 transition text-left cursor-pointer group"
                   >
-                    <div className="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 text-amber-400 group-hover:bg-amber-400 group-hover:text-black transition flex-shrink-0">
+                    <div className="p-2.5 rounded-lg bg-white border border-slate-200 text-red-600 group-hover:bg-red-600 group-hover:text-black transition flex-shrink-0">
                       <Icon className="w-5 h-5" />
                     </div>
                     <div className="space-y-0.5">
-                      <h4 className="text-xs font-bold text-white group-hover:text-amber-300 transition">
+                      <h4 className="text-xs font-bold text-slate-900 group-hover:text-amber-300 transition">
                         {sec.name}
                       </h4>
-                      <p className="text-[11px] text-neutral-400 leading-tight">{sec.desc}</p>
+                      <p className="text-[11px] text-slate-500 leading-tight">{sec.desc}</p>
                     </div>
                   </button>
                 )

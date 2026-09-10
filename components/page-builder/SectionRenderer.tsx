@@ -116,7 +116,7 @@ export function SectionRenderer({
           </div>
 
           {/* Espace supérieur modéré pour remonter le contenu */}
-          <div className="relative z-10 w-full flex-1 min-h-[8vh] sm:min-h-[12vh]" />
+          <div className="relative z-10 w-full flex-1 min-h-[12vh] sm:min-h-[16vh] lg:min-h-[20vh]" />
 
           {/* Contenu Typographique & CTAs du Concept (Remonté au premier plan) */}
           <div className="relative z-10 max-w-4xl mx-auto text-center space-y-3.5 sm:space-y-4 pb-2">
