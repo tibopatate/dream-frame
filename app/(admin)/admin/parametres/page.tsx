@@ -65,6 +65,12 @@ export default async function AdminParametresPage() {
     ),
   }
 
+  const initialStripePrices = {
+    priceA4: stored.stripePriceA4 || '',
+    priceA3: stored.stripePriceA3 || '',
+    priceA2: stored.stripePriceA2 || '',
+  }
+
   return (
     <div className="p-6 sm:p-10 space-y-6 max-w-5xl mx-auto">
       <div>
@@ -80,6 +86,7 @@ export default async function AdminParametresPage() {
         initialShipping={shipping}
         initialAnnouncement={initialAnnouncement}
         initialCustomizer={initialCustomizer}
+        initialStripePrices={initialStripePrices}
         envStatus={envStatus}
       />
     </div>

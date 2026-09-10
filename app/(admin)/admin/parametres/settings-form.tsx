@@ -1,6 +1,6 @@
 'use client'
 
-import { updateSettings, testAndSaveStripeKey, updateCustomizerAction } from './actions'
+import { updateSettings, testAndSaveStripeKey, updateCustomizerAction, updateStripePricesAction } from './actions'
 import { useState } from 'react'
 import Link from 'next/link'
 import {
@@ -23,6 +23,7 @@ import {
   Wand2,
   Palette,
   ArrowRight,
+  Tag,
 } from 'lucide-react'
 
 interface CustomizerSettings {
@@ -53,18 +54,50 @@ interface SettingsFormProps {
     hasDatabaseUrl: boolean
     hasAuthSecret: boolean
   }
+  initialStripePrices?: {
+    priceA4: string
+    priceA3: string
+    priceA2: string
+  }
 }
 
 export function SettingsForm({
   initialShipping,
   initialAnnouncement,
   initialCustomizer,
+  initialStripePrices,
   envStatus,
 }: SettingsFormProps) {
   const [shipping, setShipping] = useState(initialShipping)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
+
+  // Gestion des Tarifs Stripe (Price IDs)
+  const [stripePrices, setStripePrices] = useState(
+    initialStripePrices || { priceA4: '', priceA3: '', priceA2: '' }
+  )
+  const [savingPrices, setSavingPrices] = useState(false)
+  const [pricesMsg, setPricesMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+
+  const handleSavePrices = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSavingPrices(true)
+    setPricesMsg(null)
+    try {
+      const res = await updateStripePricesAction(stripePrices)
+      if (res.success) {
+        setPricesMsg({ type: 'success', text: 'Tarifs Stripe (Price IDs) associés avec succès !' })
+        setTimeout(() => setPricesMsg(null), 4000)
+      } else {
+        setPricesMsg({ type: 'error', text: res.error || 'Erreur de sauvegarde' })
+      }
+    } catch {
+      setPricesMsg({ type: 'error', text: 'Une erreur est survenue' })
+    } finally {
+      setSavingPrices(false)
+    }
+  }
 
   // Gestion Personnalisation Boutique (Style Shopify)
   const [customizer, setCustomizer] = useState<CustomizerSettings>(initialCustomizer)
@@ -631,6 +664,88 @@ export function SettingsForm({
           <p className="text-[11px] text-neutral-500 font-light">
             Événement à écouter : <code className="text-amber-300 font-mono">checkout.session.completed</code>
           </p>
+        </div>
+
+        {/* ── Liaison des 3 Formats aux Tarifs Stripe (Price IDs) ── */}
+        <div className="p-5 rounded-xl bg-neutral-950 border border-amber-500/20 space-y-4">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                <Tag className="w-3.5 h-3.5 text-amber-400" />
+                Liaison des Formats aux Produits Stripe (Price IDs)
+              </p>
+              <p className="text-[11px] text-neutral-400 mt-1">
+                Collez les identifiants de tarifs Stripe (<code className="text-amber-300 font-mono">price_...</code>) de vos 3 produits créés dans votre catalogue Stripe.
+              </p>
+            </div>
+            <span className="text-[10px] text-amber-400 font-mono bg-amber-400/10 px-2.5 py-1 rounded-full border border-amber-400/20 font-bold whitespace-nowrap">
+              Catalogue Stripe
+            </span>
+          </div>
+
+          <form onSubmit={handleSavePrices} className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase font-bold text-neutral-400 flex items-center justify-between">
+                  <span>Format 10×15cm</span>
+                  <span className="text-amber-400 font-mono">49,90 €</span>
+                </label>
+                <input
+                  type="text"
+                  value={stripePrices.priceA4}
+                  onChange={(e) => setStripePrices({ ...stripePrices, priceA4: e.target.value })}
+                  placeholder="price_1Q..."
+                  className="w-full bg-black/60 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white font-mono placeholder:text-neutral-600 focus:outline-none focus:border-amber-400/80 transition"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase font-bold text-neutral-400 flex items-center justify-between">
+                  <span>Format 30×40cm</span>
+                  <span className="text-amber-400 font-mono">149,90 €</span>
+                </label>
+                <input
+                  type="text"
+                  value={stripePrices.priceA3}
+                  onChange={(e) => setStripePrices({ ...stripePrices, priceA3: e.target.value })}
+                  placeholder="price_1Q..."
+                  className="w-full bg-black/60 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white font-mono placeholder:text-neutral-600 focus:outline-none focus:border-amber-400/80 transition"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase font-bold text-neutral-400 flex items-center justify-between">
+                  <span>Format 40×50cm</span>
+                  <span className="text-amber-400 font-mono">249,90 €</span>
+                </label>
+                <input
+                  type="text"
+                  value={stripePrices.priceA2}
+                  onChange={(e) => setStripePrices({ ...stripePrices, priceA2: e.target.value })}
+                  placeholder="price_1Q..."
+                  className="w-full bg-black/60 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white font-mono placeholder:text-neutral-600 focus:outline-none focus:border-amber-400/80 transition"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between pt-1">
+              <div className="text-[11px] text-neutral-400">
+                {pricesMsg && (
+                  <span className={pricesMsg.type === 'success' ? 'text-emerald-400 font-semibold' : 'text-rose-400 font-semibold'}>
+                    {pricesMsg.text}
+                  </span>
+                )}
+              </div>
+              <button
+                type="submit"
+                disabled={savingPrices}
+                className="px-5 py-2 bg-neutral-800 hover:bg-neutral-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              >
+                {savingPrices ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5 text-amber-400" />}
+                <span>Enregistrer les Price IDs</span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
 

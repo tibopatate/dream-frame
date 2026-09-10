@@ -162,3 +162,22 @@ export async function testAndSaveStripeKey(
     }
   }
 }
+
+export async function updateStripePricesAction(data: {
+  priceA4: string
+  priceA3: string
+  priceA2: string
+}): Promise<{ success: boolean; error?: string }> {
+  try {
+    await requireAdmin()
+    updateStoreSettings({
+      stripePriceA4: data.priceA4.trim(),
+      stripePriceA3: data.priceA3.trim(),
+      stripePriceA2: data.priceA2.trim(),
+    })
+    revalidatePath('/admin/parametres')
+    return { success: true }
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Erreur lors de la sauvegarde' }
+  }
+}

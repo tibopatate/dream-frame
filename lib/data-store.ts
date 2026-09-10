@@ -17,27 +17,30 @@ export interface ProductFormat {
 export const DEFAULT_FORMATS: ProductFormat[] = [
   {
     id: 'fmt-a4',
-    name: 'Standard A4',
-    size: '21 x 29.7 cm',
-    price: 49.99,
+    name: 'Cadre Format 10×15cm | Dream Frame Officiel',
+    size: '10 x 15 cm',
+    price: 49.90,
     stock: 10,
     isDefault: true,
+    stripePriceId: '',
   },
   {
     id: 'fmt-a3',
-    name: 'Grand Format A3 Collector',
-    size: '30 x 42 cm',
-    price: 150.00,
+    name: 'Cadre Format 30×40cm | Dream Frame Officiel',
+    size: '30 x 40 cm',
+    price: 149.90,
     stock: 5,
     isDefault: false,
+    stripePriceId: '',
   },
   {
     id: 'fmt-a2',
-    name: 'Prestige Galerie A2',
-    size: '50 x 70 cm',
-    price: 250.00,
+    name: 'Cadre format 40×50cm | Dream Frame Officiel',
+    size: '40 x 50 cm',
+    price: 249.90,
     stock: 2,
     isDefault: false,
+    stripePriceId: '',
   },
 ]
 
@@ -130,6 +133,9 @@ export interface StoredSettings {
   stripeSecretKey?: string
   stripeWebhookSecret?: string
   stripePublishableKey?: string
+  stripePriceA4?: string
+  stripePriceA3?: string
+  stripePriceA2?: string
   carrier: string
   shippingCost: number
   isShippingFree: boolean
