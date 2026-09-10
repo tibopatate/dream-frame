@@ -148,59 +148,65 @@ export function PageSectionsPanel({
                 </p>
               </div>
 
-              {/* Actions */}
-              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                {/* Toggle Visibility */}
+              {/* Actions Right matching reference mockup */}
+              <div className="flex items-center gap-2 flex-shrink-0">
+                {/* Visible Toggle Switch */}
                 <button
                   type="button"
-                  onClick={(e) => { e.stopPropagation(); onToggleSection(section.id) }}
-                  className="p-1.5 rounded-md hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition"
-                  title={section.hidden ? 'Afficher' : 'Masquer'}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onToggleSection(section.id)
+                  }}
+                  className={`relative w-8 h-4.5 rounded-full transition-colors cursor-pointer ${
+                    !section.hidden ? 'bg-red-600' : 'bg-slate-300'
+                  }`}
+                  title={section.hidden ? 'Activer cette section' : 'Masquer cette section'}
                 >
-                  {section.hidden ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                  <div
+                    className={`absolute top-0.5 w-3.5 h-3.5 rounded-full bg-white shadow-xs transition-transform ${
+                      !section.hidden ? 'translate-x-4' : 'translate-x-0.5'
+                    }`}
+                  />
                 </button>
 
-                {/* Edit */}
+                {/* Edit Button */}
                 <button
                   type="button"
-                  onClick={(e) => { e.stopPropagation(); onSelectSection(section.id) }}
-                  className="p-1.5 rounded-md hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onSelectSection(section.id)
+                  }}
+                  className="p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer"
                   title="Modifier"
                 >
                   <Pencil className="w-3.5 h-3.5" />
                 </button>
 
-                {/* Delete */}
+                {/* Delete Button */}
                 <button
                   type="button"
-                  onClick={(e) => { e.stopPropagation(); onDeleteSection(section.id) }}
-                  className="p-1.5 rounded-md hover:bg-red-50 text-slate-400 hover:text-red-600 transition"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onDeleteSection(section.id)
+                  }}
+                  className="p-1 rounded-md text-slate-300 hover:text-red-600 hover:bg-red-50 transition cursor-pointer"
                   title="Supprimer"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
 
-                {/* Move up/down */}
-                {idx > 0 && (
-                  <button
-                    type="button"
-                    onClick={(e) => { e.stopPropagation(); onMoveSection(idx, 'up') }}
-                    className="p-1.5 rounded-md hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition"
-                    title="Monter"
-                  >
-                    <ChevronUp className="w-3.5 h-3.5" />
-                  </button>
-                )}
-                {idx < sections.length - 1 && (
-                  <button
-                    type="button"
-                    onClick={(e) => { e.stopPropagation(); onMoveSection(idx, 'down') }}
-                    className="p-1.5 rounded-md hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition"
-                    title="Descendre"
-                  >
-                    <ChevronDown className="w-3.5 h-3.5" />
-                  </button>
-                )}
+                {/* Open/Inspector arrow */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onSelectSection(section.id)
+                  }}
+                  className="p-0.5 text-slate-400 hover:text-slate-600 transition cursor-pointer"
+                  title="Ouvrir l'inspecteur"
+                >
+                  <ChevronDown className="w-3.5 h-3.5" />
+                </button>
               </div>
             </div>
           )

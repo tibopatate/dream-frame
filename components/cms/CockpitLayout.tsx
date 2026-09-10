@@ -8,6 +8,16 @@ import { PageSectionsPanel } from './panels/PageSectionsPanel'
 import { SectionInspectorPanel } from './panels/SectionInspectorPanel'
 import { GlobalStylePanel } from './panels/GlobalStylePanel'
 import { DashboardPanel } from './panels/DashboardPanel'
+import { CataloguePanel } from './panels/CataloguePanel'
+import { ProductsPanel } from './panels/ProductsPanel'
+import { PagesPanel } from './panels/PagesPanel'
+import { NavigationPanel } from './panels/NavigationPanel'
+import { FontsPanel } from './panels/FontsPanel'
+import { SEOPanel } from './panels/SEOPanel'
+import { SettingsPanel } from './panels/SettingsPanel'
+import { DomainPanel } from './panels/DomainPanel'
+import { IntegrationsPanel } from './panels/IntegrationsPanel'
+import { HelpPanel } from './panels/HelpPanel'
 import { SnapshotsModal } from '@/components/page-builder/SnapshotsModal'
 import {
   saveDraftAction,
@@ -30,39 +40,20 @@ import {
   LayoutTemplate,
   X,
   Plus,
-  Compass,
-  Search,
-  Settings,
-  Globe,
-  Plug,
-  Type as TypeIcon,
 } from 'lucide-react'
 
 const AVAILABLE_SECTIONS: { type: SectionType; name: string; desc: string; icon: any }[] = [
-  { type: 'hero', name: 'Hero / Bannière', desc: 'Image plein écran avec titre et bouton', icon: ImageIcon },
-  { type: 'collection', name: 'Collection', desc: 'Grille de produits / cadres', icon: Grid3X3 },
-  { type: 'craft', name: 'Savoir-Faire', desc: 'Processus de fabrication en étapes', icon: Layers },
-  { type: 'custom_atelier', name: 'Atelier Sur-Mesure', desc: 'Invitation vers le configurateur', icon: Settings2 },
-  { type: 'interiors', name: 'Mise en situation', desc: 'Photos en intérieur', icon: Home },
-  { type: 'about', name: 'Qui sommes-nous', desc: 'Présentation de la marque', icon: FileText },
-  { type: 'faq', name: 'FAQ', desc: 'Questions fréquentes', icon: HelpCircle },
-  { type: 'banner', name: 'Bannière texte', desc: 'Bannière avec message', icon: LayoutTemplate },
+  { type: 'hero', name: 'Hero / Bannière Principale', desc: 'Image plein écran avec titre, sous-titre et boutons', icon: ImageIcon },
+  { type: 'collection', name: 'Collection de Cadres', desc: 'Grille interactive de supercars avec prix et finitions', icon: Grid3X3 },
+  { type: 'craft', name: 'Savoir-Faire & Anatomie', desc: 'Décomposition en 5 couches de fabrication d\'art', icon: Layers },
+  { type: 'custom_atelier', name: 'Atelier Sur-Mesure', desc: 'Invitation vers le configurateur live A4 / A3 / A2', icon: Settings2 },
+  { type: 'interiors', name: 'Mises en Situation', desc: 'Photographies d\'ambiance dans des intérieurs d\'exception', icon: Home },
+  { type: 'about', name: 'Qui sommes-nous', desc: 'Histoire de la marque et ethos de l\'atelier', icon: FileText },
+  { type: 'reassurance', name: 'Engagements & Garanties', desc: 'Livraison sécurisée, fabrication artisanale et support', icon: Sparkles },
+  { type: 'demo', name: 'Module 3D Interactif', desc: 'Présentation de la technologie et des effets LED', icon: Sparkles },
+  { type: 'faq', name: 'Foire Aux Questions', desc: 'Questions récurrentes sur les délais, les LED et la pose', icon: HelpCircle },
+  { type: 'banner', name: 'Bannière de Réassurance', desc: 'Bandeau textuel avec message d\'annonce', icon: LayoutTemplate },
 ]
-
-// ─── Placeholder Panels ───────────────────────────────────────────────
-function PlaceholderPanel({ title, desc }: { title: string; desc: string }) {
-  return (
-    <div className="flex-1 overflow-y-auto p-6 space-y-4">
-      <div>
-        <h2 className="text-lg font-bold text-slate-900">{title}</h2>
-        <p className="text-sm text-slate-500 mt-1">{desc}</p>
-      </div>
-      <div className="p-8 bg-white rounded-xl border border-slate-200 text-center">
-        <p className="text-sm text-slate-400">Cette fonctionnalité sera disponible prochainement.</p>
-      </div>
-    </div>
-  )
-}
 
 // ═════════════════════════════════════════════════════════════════════
 // MAIN COCKPIT LAYOUT
@@ -78,13 +69,17 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
   const [history, setHistory] = useState<PageTreeDocument[]>([])
   const [redoStack, setRedoStack] = useState<PageTreeDocument[]>([])
 
-  // ─── Navigation ─────────────────────────────────────────────────────
+  // ─── Navigation & Panneau State ─────────────────────────────────────
   const [activeCategory, setActiveCategory] = useState('homepage')
   const [activeSectionId, setActiveSectionId] = useState<string | null>(null)
   const [hoveredSectionId, setHoveredSectionId] = useState<string | null>(null)
   const [showGlobalStyle, setShowGlobalStyle] = useState(false)
 
-  // ─── Preview ────────────────────────────────────────────────────────
+  // ─── Layout Folding / Collapsible Sidebars ──────────────────────────
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+  const [isCenterPanelCollapsed, setIsCenterPanelCollapsed] = useState(false)
+
+  // ─── Preview Device ─────────────────────────────────────────────────
   const [activeDevice, setActiveDevice] = useState<'desktop' | 'mobile'>('desktop')
 
   // ─── Persistence ────────────────────────────────────────────────────
@@ -115,7 +110,7 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
     setDoc(newDoc)
     setIsDirty(true)
 
-    // Autosave debounce
+    // Autosave debounce 1.5s
     if (autosaveTimerRef.current) clearTimeout(autosaveTimerRef.current)
     autosaveTimerRef.current = setTimeout(async () => {
       try {
@@ -228,7 +223,7 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
     }
   }, [doc])
 
-  // ─── Snapshots ──────────────────────────────────────────────────────
+  // ─── Snapshots History ──────────────────────────────────────────────
   const handleShowHistory = useCallback(async () => {
     setLoadingSnapshots(true)
     setShowSnapshots(true)
@@ -261,10 +256,10 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
   const handleCategoryChange = useCallback((category: string) => {
     setActiveCategory(category)
     setActiveSectionId(null)
-    setShowGlobalStyle(category === 'design')
-  }, [])
+    if (isCenterPanelCollapsed) setIsCenterPanelCollapsed(false)
+  }, [isCenterPanelCollapsed])
 
-  // ─── Beforeunload ───────────────────────────────────────────────────
+  // ─── Beforeunload Warning ───────────────────────────────────────────
   useEffect(() => {
     const handler = (e: BeforeUnloadEvent) => {
       if (isDirty) {
@@ -276,10 +271,10 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
     return () => window.removeEventListener('beforeunload', handler)
   }, [isDirty])
 
-  // ─── Render Center Panel ────────────────────────────────────────────
+  // ─── Render Center Panel (Every single category is functional) ───────
   const renderCenterPanel = () => {
-    // If a section is selected, show the inspector
-    if (activeSection && (activeCategory === 'homepage' || activeCategory === 'catalogue' || activeCategory === 'products')) {
+    // If a section is selected, show inspector directly
+    if (activeSection && activeCategory === 'homepage') {
       return (
         <SectionInspectorPanel
           section={activeSection}
@@ -292,7 +287,12 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
 
     switch (activeCategory) {
       case 'dashboard':
-        return <DashboardPanel />
+        return (
+          <DashboardPanel
+            onNavigate={handleCategoryChange}
+            lastSavedTime={lastSavedTime}
+          />
+        )
       case 'homepage':
         return (
           <PageSectionsPanel
@@ -311,37 +311,64 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
           />
         )
       case 'catalogue':
-        return <PlaceholderPanel title="Catalogue / Collection" desc="Gérez vos collections et catégories de cadres." />
+        return (
+          <CataloguePanel
+            onSelectCollectionSection={() => {
+              const colSec = doc.sections.find((s) => s.type === 'collection')
+              if (colSec) {
+                setActiveCategory('homepage')
+                setActiveSectionId(colSec.id)
+              }
+            }}
+          />
+        )
       case 'products':
-        return <PlaceholderPanel title="Produits / Articles" desc="Ajoutez et modifiez vos produits." />
+        return <ProductsPanel />
       case 'pages':
-        return <PlaceholderPanel title="Pages statiques" desc="Gérez les pages secondaires de votre site." />
+        return <PagesPanel />
       case 'design':
-        return <PlaceholderPanel title="Design & Apparence" desc="Personnalisez le style global de votre site. Utilisez le panneau Style global à droite." />
+        return <GlobalStylePanel />
       case 'navigation':
-        return <PlaceholderPanel title="Navigation & Menu" desc="Configurez la navigation de votre site." />
+        return <NavigationPanel />
       case 'fonts':
-        return <PlaceholderPanel title="Polices & Typographies" desc="Choisissez les polices de votre site." />
+        return <FontsPanel />
       case 'seo':
-        return <PlaceholderPanel title="SEO & Référencement" desc="Optimisez votre site pour les moteurs de recherche." />
+        return <SEOPanel />
       case 'settings':
-        return <PlaceholderPanel title="Paramètres de base" desc="Nom, logo, coordonnées et paramètres généraux." />
+        return <SettingsPanel />
       case 'domain':
-        return <PlaceholderPanel title="Domaine & Hébergement" desc="Gérez votre nom de domaine et hébergement." />
+        return <DomainPanel />
       case 'integrations':
-        return <PlaceholderPanel title="Intégrations" desc="Connectez des outils externes à votre site." />
+        return <IntegrationsPanel />
       case 'help':
-        return <PlaceholderPanel title="Aide & Support" desc="Documentation et guides d'utilisation." />
+        return <HelpPanel />
       default:
-        return <DashboardPanel />
+        return <DashboardPanel onNavigate={handleCategoryChange} lastSavedTime={lastSavedTime} />
     }
+  }
+
+  // Current page label
+  const pageLabels: Record<string, string> = {
+    dashboard: 'Tableau de bord',
+    homepage: 'Page d\'accueil',
+    catalogue: 'Catalogue / Collection',
+    products: 'Produits / Articles',
+    pages: 'Pages statiques',
+    design: 'Design & Apparence',
+    navigation: 'Navigation & Menu',
+    fonts: 'Polices & Typographies',
+    seo: 'SEO & Référencement',
+    settings: 'Paramètres de base',
+    domain: 'Domaine & Hébergement',
+    integrations: 'Intégrations',
+    help: 'Aide & Support',
   }
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col antialiased">
       {/* ─── TOP BAR ─── */}
       <CockpitTopBar
-        currentPage="Page d'accueil"
+        currentPage={pageLabels[activeCategory] || 'Page d\'accueil'}
         activeDevice={activeDevice}
         onDeviceChange={setActiveDevice}
         onUndo={handleUndo}
@@ -353,22 +380,30 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
         isPublishing={isPublishing}
         isDirty={isDirty}
         lastSavedTime={lastSavedTime}
+        isSidebarCollapsed={isSidebarCollapsed}
+        onToggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+        isCenterPanelCollapsed={isCenterPanelCollapsed}
+        onToggleCenterPanel={() => setIsCenterPanelCollapsed(!isCenterPanelCollapsed)}
       />
 
       {/* ─── BODY ─── */}
       <div className="flex-1 flex overflow-hidden">
-        {/* 1. SIDEBAR */}
+        {/* 1. SIDEBAR (Collapsible w-64 <-> w-16) */}
         <CockpitSidebar
           activeCategory={activeCategory}
           onCategoryChange={handleCategoryChange}
+          isCollapsed={isSidebarCollapsed}
+          onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
         />
 
-        {/* 2. CENTER PANEL */}
-        <div className="w-[420px] flex-shrink-0 bg-white border-r border-slate-200 flex flex-col overflow-hidden">
-          {renderCenterPanel()}
-        </div>
+        {/* 2. CENTER PANEL (Collapsible for 100% full screen preview) */}
+        {!isCenterPanelCollapsed && (
+          <div className="w-[420px] flex-shrink-0 bg-white border-r border-slate-200 flex flex-col overflow-hidden transition-all duration-300">
+            {renderCenterPanel()}
+          </div>
+        )}
 
-        {/* 3. PREVIEW */}
+        {/* 3. PREVIEW (Takes remaining space or full width) */}
         <CockpitPreview
           sections={doc.sections}
           activeDevice={activeDevice}
@@ -377,34 +412,32 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
           onSelectSection={(id) => {
             setActiveSectionId(id)
             setActiveCategory('homepage')
+            if (isCenterPanelCollapsed) setIsCenterPanelCollapsed(false)
           }}
           onHoverSection={setHoveredSectionId}
         />
-
-        {/* 4. GLOBAL STYLE (conditional) */}
-        {showGlobalStyle && <GlobalStylePanel onClose={() => setShowGlobalStyle(false)} />}
       </div>
 
       {/* ─── ADD SECTION MODAL ─── */}
       {showAddSection && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
           <div className="fixed inset-0" onClick={() => setShowAddSection(false)} />
-          <div className="relative z-10 w-full max-w-lg bg-white rounded-2xl shadow-xl p-6 space-y-4">
+          <div className="relative z-10 w-full max-w-lg bg-white rounded-2xl shadow-2xl p-6 space-y-4 border border-slate-100 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
-                <h3 className="text-base font-bold text-slate-900">Ajouter une section</h3>
-                <p className="text-xs text-slate-500 mt-0.5">Choisissez un type de section à ajouter.</p>
+                <h3 className="text-sm font-bold text-slate-900">Ajouter une section à la page</h3>
+                <p className="text-xs text-slate-500 mt-0.5">Sélectionnez un bloc pour enrichir votre vitrine automobile.</p>
               </div>
               <button
                 type="button"
                 onClick={() => setShowAddSection(false)}
-                className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 cursor-pointer"
+                className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition cursor-pointer"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="grid grid-cols-1 gap-2 max-h-[400px] overflow-y-auto">
+            <div className="grid grid-cols-1 gap-2 max-h-[420px] overflow-y-auto pr-1">
               {AVAILABLE_SECTIONS.map((sec) => {
                 const Icon = sec.icon
                 return (
@@ -412,14 +445,14 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
                     key={sec.type}
                     type="button"
                     onClick={() => handleAddSection(sec.type)}
-                    className="flex items-center gap-3 p-3.5 rounded-xl bg-white border border-slate-200 hover:border-red-300 hover:bg-red-50/30 transition text-left cursor-pointer group"
+                    className="flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-200 hover:border-red-300 hover:bg-red-50/30 transition text-left cursor-pointer group shadow-2xs"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-red-50 border border-red-100 flex items-center justify-center text-red-600 group-hover:bg-red-600 group-hover:text-white transition flex-shrink-0">
-                      <Icon className="w-5 h-5" />
+                    <div className="w-9 h-9 rounded-lg bg-red-50 border border-red-100 flex items-center justify-center text-red-600 group-hover:bg-red-600 group-hover:text-white transition flex-shrink-0">
+                      <Icon className="w-4 h-4" />
                     </div>
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800">{sec.name}</p>
-                      <p className="text-xs text-slate-400">{sec.desc}</p>
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold text-slate-800">{sec.name}</p>
+                      <p className="text-[11px] text-slate-400 truncate">{sec.desc}</p>
                     </div>
                   </button>
                 )
