@@ -527,5 +527,134 @@ export function SectionRenderer({
     )
   }
 
+  // ─── SECTION: INTERIORS ────────────────────────────────────────────────────
+  if (section.type === 'interiors') {
+    return (
+      <div
+        className={`${outlineClass} ${section.hidden ? 'opacity-40 grayscale' : ''}`}
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {isEditor && (
+          <div className="absolute top-4 left-6 z-30 flex items-center gap-2">
+            <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
+              isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
+            }`}>
+              INTÉRIEURS · {section.name}
+            </span>
+          </div>
+        )}
+
+        <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-neutral-950/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
+            <div className="max-w-2xl mx-auto text-center space-y-4">
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                {s.title || 'Laissez les sublimer votre pièce'}
+              </h2>
+              <p className="text-neutral-400 font-light text-sm sm:text-base">
+                {s.desc || 'Découvrez comment nos cadres d’exception s’intègrent parfaitement dans tout type d’intérieur.'}
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden group">
+                <img src="/interiors/lamborghini.jpg" alt="Interior Lamborghini" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+              </div>
+              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden group md:translate-y-8">
+                <img src="/interiors/ferrari.jpg" alt="Interior Ferrari" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+              </div>
+              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden group">
+                <img src="/interiors/porsche.jpg" alt="Interior Porsche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    )
+  }
+
+  // ─── SECTION: ABOUT ────────────────────────────────────────────────────────
+  if (section.type === 'about') {
+    return (
+      <div
+        className={`${outlineClass} ${section.hidden ? 'opacity-40 grayscale' : ''}`}
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {isEditor && (
+          <div className="absolute top-4 left-6 z-30 flex items-center gap-2">
+            <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
+              isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
+            }`}>
+              À PROPOS · {section.name}
+            </span>
+          </div>
+        )}
+
+        <section className="py-20 sm:py-32 border-t border-neutral-800/80 bg-[#080807]">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-8">
+            <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+              {s.title || 'Qui sommes-nous ?'}
+            </h2>
+            <div className="w-16 h-1 bg-amber-400 mx-auto rounded-full" />
+            <p className="text-base sm:text-lg text-neutral-300 font-light leading-relaxed max-w-2xl mx-auto">
+              {s.desc || 'Dream Frame est né d\'une passion commune pour l\'automobile et l\'artisanat français. Nous concevons et assemblons chaque cadre à la main dans notre atelier, avec une exigence de qualité absolue.'}
+            </p>
+          </div>
+        </section>
+      </div>
+    )
+  }
+
+  // ─── SECTION: FAQ ──────────────────────────────────────────────────────────
+  if (section.type === 'faq') {
+    return (
+      <div
+        className={`${outlineClass} ${section.hidden ? 'opacity-40 grayscale' : ''}`}
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {isEditor && (
+          <div className="absolute top-4 left-6 z-30 flex items-center gap-2">
+            <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
+              isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
+            }`}>
+              FAQ · {section.name}
+            </span>
+          </div>
+        )}
+
+        <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-neutral-950/30">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-12">
+            <h2 className="text-2xl sm:text-4xl font-black text-center text-white tracking-tight">
+              {s.title || 'Questions Fréquentes'}
+            </h2>
+            
+            <div className="space-y-6">
+              {[1, 2, 3].map((i) => {
+                const q = s[`q${i}`]
+                const a = s[`a${i}`]
+                if (!q && !a && i > 3) return null
+                
+                return (
+                  <div key={i} className="p-6 rounded-2xl bg-neutral-900/60 border border-neutral-800">
+                    <h3 className="text-lg font-bold text-white mb-2">{q || `Question ${i}?`}</h3>
+                    <p className="text-sm text-neutral-400 leading-relaxed">{a || `Réponse détaillée à la question ${i}.`}</p>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      </div>
+    )
+  }
+
   return null
 }

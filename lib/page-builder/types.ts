@@ -20,6 +20,9 @@ export type SectionType =
   | 'custom_atelier'
   | 'banner'
   | 'custom_text'
+  | 'interiors'
+  | 'faq'
+  | 'about'
 
 export type DeviceMode = 'desktop' | 'tablet' | 'mobile'
 

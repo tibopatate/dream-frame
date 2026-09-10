@@ -20,8 +20,8 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://dreamframe.fr'),
   title: {
-    default: 'Dream Frame — Cadres 3D Art Automobile | 49,99 €',
-    template: '%s | Dream Frame',
+    default: 'Dream Frame | Site Officiel',
+    template: '%s | Dream Frame | Site Officiel',
   },
   description:
     'Cadres 3D décoratifs premium avec miniature automobile, éclairage LED intégré et vitrine en verre. Assemblés à la main en France. Livraison 100% offerte. 49,99 € TTC.',
