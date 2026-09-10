@@ -8,6 +8,7 @@ import { PageSectionsPanel } from './panels/PageSectionsPanel'
 import { SectionInspectorPanel } from './panels/SectionInspectorPanel'
 import { GlobalStylePanel } from './panels/GlobalStylePanel'
 import { DashboardPanel } from './panels/DashboardPanel'
+import { AnalyticsDashboard } from '@/components/admin/analytics/AnalyticsDashboard'
 import { CataloguePanel } from './panels/CataloguePanel'
 import { ProductsPanel } from './panels/ProductsPanel'
 import { PagesPanel } from './panels/PagesPanel'
@@ -396,26 +397,33 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
           onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
         />
 
-        {/* 2. CENTER PANEL (Collapsible for 100% full screen preview) */}
-        {!isCenterPanelCollapsed && (
-          <div className="w-[420px] flex-shrink-0 bg-white border-r border-slate-200 flex flex-col overflow-hidden transition-all duration-300">
-            {renderCenterPanel()}
-          </div>
-        )}
+        {/* ─── CONDITIONAL VIEW: DASHBOARD (FULL) VS SITE BUILDER (3-COLUMNS) ─── */}
+        {activeCategory === 'dashboard' ? (
+          <AnalyticsDashboard />
+        ) : (
+          <>
+            {/* 2. CENTER PANEL (Collapsible for 100% full screen preview) */}
+            {!isCenterPanelCollapsed && (
+              <div className="w-[420px] flex-shrink-0 bg-white border-r border-slate-200 flex flex-col overflow-hidden transition-all duration-300">
+                {renderCenterPanel()}
+              </div>
+            )}
 
-        {/* 3. PREVIEW (Takes remaining space or full width) */}
-        <CockpitPreview
-          sections={doc.sections}
-          activeDevice={activeDevice}
-          activeSectionId={activeSectionId}
-          hoveredSectionId={hoveredSectionId}
-          onSelectSection={(id) => {
-            setActiveSectionId(id)
-            setActiveCategory('homepage')
-            if (isCenterPanelCollapsed) setIsCenterPanelCollapsed(false)
-          }}
-          onHoverSection={setHoveredSectionId}
-        />
+            {/* 3. PREVIEW (Takes remaining space or full width) */}
+            <CockpitPreview
+              sections={doc.sections}
+              activeDevice={activeDevice}
+              activeSectionId={activeSectionId}
+              hoveredSectionId={hoveredSectionId}
+              onSelectSection={(id) => {
+                setActiveSectionId(id)
+                setActiveCategory('homepage')
+                if (isCenterPanelCollapsed) setIsCenterPanelCollapsed(false)
+              }}
+              onHoverSection={setHoveredSectionId}
+            />
+          </>
+        )}
       </div>
 
       {/* ─── ADD SECTION MODAL ─── */}

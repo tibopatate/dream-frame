@@ -2,6 +2,7 @@ import { auth } from '@/lib/auth'
 import { prisma, isPrismaConfigured } from '@/lib/db'
 import { getAllOrders, getAllProducts, StoredOrder, StoredProduct } from '@/lib/data-store'
 import { DashboardClient } from './dashboard-client'
+import { AnalyticsDashboard } from '@/components/admin/analytics/AnalyticsDashboard'
 import Link from 'next/link'
 import { ArrowRight, Truck } from 'lucide-react'
 import { formatPriceFromDecimal } from '@/lib/utils'
@@ -91,7 +92,12 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="space-y-8 pb-16">
-      {/* Composant interactif avec sélection d'unités de temps et graphiques */}
+      {/* ─── NOUVELLE SUITE ANALYTICS RÉELLES (Maquette officielle) ─── */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-4">
+        <AnalyticsDashboard />
+      </div>
+
+      {/* Composant interactif avec sélection d'unités de temps et graphiques de ventes */}
       <DashboardClient
         initialOrders={orders}
         products={products}
