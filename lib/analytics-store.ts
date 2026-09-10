@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import crypto from 'crypto'
+import { getAllOrders } from './data-store'
 
 export interface TrackedEvent {
   id: string
@@ -41,6 +42,11 @@ export interface TrackedSession {
 export interface AnalyticsSummary {
   period: string
   hasData: boolean
+  revenue: {
+    totalCA: number
+    ordersCount: number
+    avgBasket: number
+  }
   kpis: {
     uniqueVisitors: number
     uniqueVisitorsDiffPercent: number | null
@@ -452,9 +458,30 @@ export function getAggregatedAnalytics(periodStr: string = '7d'): AnalyticsSumma
     minutesAgo: Math.max(1, Math.round((now - s.lastSeen) / (60 * 1000))),
   }))
 
+  // 12. Real Revenue from boutique orders
+  let totalCA = 0
+  let ordersCount = 0
+  let avgBasket = 0
+  try {
+    const orders = getAllOrders() || []
+    const validOrders = orders.filter(
+      (o) => o.status !== 'CANCELLED' && o.status !== 'REFUNDED'
+    )
+    ordersCount = validOrders.length
+    totalCA = validOrders.reduce((acc, o) => acc + (Number(o.total) || 0), 0)
+    avgBasket = ordersCount > 0 ? totalCA / ordersCount : 0
+  } catch (err) {
+    console.warn('Error reading store revenue in analytics-store:', err)
+  }
+
   return {
     period: periodStr,
     hasData,
+    revenue: {
+      totalCA,
+      ordersCount,
+      avgBasket,
+    },
     kpis: {
       uniqueVisitors: currentVisitors,
       uniqueVisitorsDiffPercent: visitorsDiff,

@@ -11,6 +11,7 @@ import { CountryStats } from './CountryStats'
 import { KeyEventsList } from './KeyEventsList'
 import { TechPerformance } from './TechPerformance'
 import { TrafficSourcesList } from './TrafficSourcesList'
+import { ProfitCalculator } from './ProfitCalculator'
 import type { AnalyticsSummary } from '@/lib/analytics-store'
 
 interface AnalyticsDashboardProps {
@@ -31,6 +32,7 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
   const [data, setData] = useState<AnalyticsSummary | null>(initialData || null)
   const [loading, setLoading] = useState<boolean>(!initialData)
   const [showPeriodMenu, setShowPeriodMenu] = useState(false)
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(true)
 
   // Fetch real analytics data from /api/track
   const fetchAnalytics = useCallback(async (selectedPeriod: string) => {
@@ -145,7 +147,7 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
         </div>
       </div>
 
-      {/* ─── ROW 1: 4 TOP KPI CARDS ─── */}
+      {/* ─── ROW 1: 5 TOP KPI CARDS (INCLUDING CA) ─── */}
       <KPICards
         kpis={
           data?.kpis || {
@@ -160,7 +162,24 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
             bounceRateDiffPercent: null,
           }
         }
+        revenue={
+          data?.revenue || {
+            totalCA: 0,
+            ordersCount: 0,
+            avgBasket: 0,
+          }
+        }
         hasData={hasData}
+        onToggleCalculator={() => setIsCalculatorOpen((prev) => !prev)}
+        isCalculatorOpen={isCalculatorOpen}
+      />
+
+      {/* ─── ROW 1.5: CALCULATEUR DE BÉNÉFICE INTELLIGENT ─── */}
+      <ProfitCalculator
+        realCA={data?.revenue?.totalCA || 0}
+        realOrdersCount={data?.revenue?.ordersCount || 0}
+        isOpen={isCalculatorOpen}
+        onToggleOpen={() => setIsCalculatorOpen((prev) => !prev)}
       />
 
       {/* ─── MAIN LAYOUT MATCHING MOCKUP media_1789039343319.png ─── */}

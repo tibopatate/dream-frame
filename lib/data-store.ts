@@ -773,7 +773,7 @@ export function getAllMovements(): StoredStockMovement[] {
 
 export function getAllOrders(): StoredOrder[] {
   const db = readDatabase()
-  return db.orders
+  return db.orders || []
 }
 
 export function createOrder(orderData: Omit<StoredOrder, 'id' | 'createdAt'>): StoredOrder {
