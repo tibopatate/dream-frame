@@ -1,10 +1,10 @@
-﻿import { auth } from '@/lib/auth'
+import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { getDraftTree } from '@/lib/page-builder/store'
-import { ShopifyThemeEditor } from '@/components/page-builder/ShopifyThemeEditor'
+import { CockpitLayout } from '@/components/cms/CockpitLayout'
 
 export const metadata = {
-  title: 'Personnalisation de la Boutique (Style Shopify) — Dream Frame Admin',
+  title: 'Personnalisation du Site — Dream Frame Admin',
 }
 
 export default async function CustomizerPage() {
@@ -13,5 +13,5 @@ export default async function CustomizerPage() {
 
   const draftTree = await getDraftTree()
 
-  return <ShopifyThemeEditor initialDocument={draftTree} />
+  return <CockpitLayout initialDocument={draftTree} />
 }

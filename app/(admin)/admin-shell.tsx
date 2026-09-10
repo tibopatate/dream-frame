@@ -61,6 +61,10 @@ export function AdminShell({
 
   const isLight = true
 
+  if (pathname?.startsWith('/admin/personnalisation')) {
+    return <>{children}</>
+  }
+
   return (
     <div
       data-admin-theme="light"
