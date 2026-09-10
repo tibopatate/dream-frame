@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, X, Menu, Truck, LayoutDashboard } from 'lucide-react'
+import { Sparkles, X, Menu, Truck, LayoutDashboard, Instagram } from 'lucide-react'
+import { TikTokIcon } from '@/components/icons/TikTokIcon'
 
 const NAV_ITEMS = [
   { href: '/catalogue',     label: 'La Collection',       sub: 'Toutes nos créations sous cadre', delay: 0 },
@@ -193,8 +194,28 @@ export function MobileNavDrawer() {
               </AnimatePresence>
             </div>
 
-            {/* Footer drawer */}
+            {/* Réseaux sociaux & Footer drawer */}
             <div className="px-4 py-5 border-t border-neutral-800 space-y-3">
+              <div className="flex items-center justify-center gap-2">
+                <a
+                  href="https://www.instagram.com/dreamframe996?stkn=cW9yb2NxOG8wOXFw"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 py-2 px-3 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-pink-500/40 text-neutral-300 hover:text-pink-400 text-xs font-semibold flex items-center justify-center gap-2 transition"
+                >
+                  <Instagram className="w-3.5 h-3.5 text-pink-400" />
+                  <span>Instagram</span>
+                </a>
+                <a
+                  href="https://www.tiktok.com/@dreamframe_officiel"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 py-2 px-3 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-cyan-500/40 text-neutral-300 hover:text-cyan-400 text-xs font-semibold flex items-center justify-center gap-2 transition"
+                >
+                  <TikTokIcon className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>TikTok</span>
+                </a>
+              </div>
               <p className="text-[10px] text-neutral-500 px-4 text-center">
                 © {new Date().getFullYear()} Dream Frame — Fait main en France
               </p>

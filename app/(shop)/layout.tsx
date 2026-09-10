@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShieldCheck, Truck, Zap, Star, Sparkles } from 'lucide-react'
+import { ShieldCheck, Truck, Zap, Star, Sparkles, Instagram } from 'lucide-react'
+import { TikTokIcon } from '@/components/icons/TikTokIcon'
 import { CartIcon } from '@/components/cart-icon'
 import { MobileNavToggle, MobileNavDrawer } from '@/components/MobileNav'
 import { CartNotification } from '@/components/CartNotification'
@@ -113,22 +114,50 @@ function ShopHeader() {
 
 function ShopFooter() {
   const year = new Date().getFullYear()
+  let instagramUrl = 'https://www.instagram.com/dreamframe996?stkn=cW9yb2NxOG8wOXFw'
+  let tiktokUrl = 'https://www.tiktok.com/@dreamframe_officiel'
+
+  try {
+    const s = getSettings()
+    if (s.instagramUrl) instagramUrl = s.instagramUrl
+    if (s.tiktokUrl) tiktokUrl = s.tiktokUrl
+  } catch {}
 
   return (
     <footer className="border-t border-neutral-800/60 bg-neutral-950/70 mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
-        {/* Section Contact & Assistance Atelier */}
+        {/* Section Contact, Assistance & Réseaux Sociaux */}
         <div className="py-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center md:text-left">
-            <h4 className="font-bold text-xs uppercase tracking-wider text-white">Contactez-nous &amp; Assistance Atelier</h4>
-            <p className="text-neutral-400 text-xs font-light">Une question sur un modèle, un format ou votre commande ? Notre équipe vous répond rapidement.</p>
+            <h4 className="font-bold text-xs uppercase tracking-wider text-white">Contactez-nous &amp; Suivez l&apos;Atelier</h4>
+            <p className="text-neutral-400 text-xs font-light">Une question sur un modèle, un format ou votre commande ? Suivez nos coulisses et créations 3D.</p>
           </div>
           <div className="flex items-center gap-3 flex-wrap justify-center">
             <a
               href="mailto:contact@dreamframe.fr"
-              className="px-5 py-2.5 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition"
+              className="px-4 py-2.5 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition flex items-center gap-2"
             >
-              contact@dreamframe.fr
+              <span>contact@dreamframe.fr</span>
+            </a>
+            <a
+              href={instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2.5 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 hover:border-pink-500/40 text-neutral-300 hover:text-pink-400 font-semibold text-xs transition flex items-center gap-2 group"
+              aria-label="Instagram Dream Frame"
+            >
+              <Instagram className="w-4 h-4 text-pink-400 group-hover:scale-110 transition-transform" />
+              <span>Instagram</span>
+            </a>
+            <a
+              href={tiktokUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2.5 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 hover:border-cyan-500/40 text-neutral-300 hover:text-cyan-400 font-semibold text-xs transition flex items-center gap-2 group"
+              aria-label="TikTok Dream Frame"
+            >
+              <TikTokIcon className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
+              <span>TikTok</span>
             </a>
           </div>
         </div>

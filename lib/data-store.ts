@@ -199,9 +199,12 @@ export interface StoredSettings {
   configuratorCtaTitle?: string
   configuratorCtaDesc?: string
   configuratorCtaButton?: string
-  // Footer
+  // Footer & Réseaux Sociaux
   footerNotice?: string
   footerCopyright?: string
+  instagramUrl?: string
+  tiktokUrl?: string
+  heroVideo?: string
 }
 
 export interface StoredReview {
@@ -644,6 +647,9 @@ function getInitialDatabase(): DatabaseSchema {
     craftSectionImage: '/atelier/huayra-real.jpg',
     adminTheme: 'light',
     realDataOnly: true,
+    instagramUrl: 'https://www.instagram.com/dreamframe996?stkn=cW9yb2NxOG8wOXFw',
+    tiktokUrl: 'https://www.tiktok.com/@dreamframe_officiel',
+    heroVideo: '/videos/hero-bg.mp4',
   }
 
   const collaborators: StoredCollaborator[] = [

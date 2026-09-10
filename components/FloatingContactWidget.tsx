@@ -11,7 +11,9 @@ import {
   Clock,
   Sparkles,
   ChevronDown,
+  Instagram,
 } from 'lucide-react'
+import { TikTokIcon } from '@/components/icons/TikTokIcon'
 
 const FAQ_ITEMS = [
   {
@@ -132,6 +134,28 @@ export function FloatingContactWidget() {
                   </p>
                   <p className="text-[10px] text-neutral-400 font-mono">contact@dreamframe.fr</p>
                 </div>
+              </a>
+            </div>
+
+            {/* Suivez l'Atelier sur les Réseaux */}
+            <div className="flex items-center gap-2">
+              <a
+                href="https://www.instagram.com/dreamframe996?stkn=cW9yb2NxOG8wOXFw"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 hover:border-pink-500/40 text-neutral-300 hover:text-pink-400 text-xs font-semibold flex items-center justify-center gap-2 transition"
+              >
+                <Instagram className="w-4 h-4 text-pink-400" />
+                <span>Instagram @dreamframe996</span>
+              </a>
+              <a
+                href="https://www.tiktok.com/@dreamframe_officiel"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 hover:border-cyan-500/40 text-neutral-300 hover:text-cyan-400 text-xs font-semibold flex items-center justify-center gap-2 transition"
+              >
+                <TikTokIcon className="w-4 h-4 text-cyan-400" />
+                <span>TikTok @dreamframe_officiel</span>
               </a>
             </div>
 

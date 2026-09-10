@@ -211,7 +211,10 @@
     "announcementBarEnabled": true,
     "craftSectionImage": "/atelier/huayra-real.jpg",
     "adminTheme": "light",
-    "realDataOnly": true
+    "realDataOnly": true,
+    "instagramUrl": "https://www.instagram.com/dreamframe996?stkn=cW9yb2NxOG8wOXFw",
+    "tiktokUrl": "https://www.tiktok.com/@dreamframe_officiel",
+    "heroVideo": "/videos/hero-bg.mp4"
   },
   "collaborators": [
     {

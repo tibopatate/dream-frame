@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Settings, Mail, Phone, MapPin, Instagram, Youtube, CreditCard, ArrowRight } from 'lucide-react'
+import { TikTokIcon } from '@/components/icons/TikTokIcon'
 
 interface SettingsPanelProps {
   onNavigateToIntegrations?: () => void
@@ -13,8 +14,8 @@ export function SettingsPanel({ onNavigateToIntegrations }: SettingsPanelProps) 
   const [email, setEmail] = useState('contact@dreamframe.fr')
   const [phone, setPhone] = useState('+33 6 00 00 00 00')
   const [address, setAddress] = useState('Atelier Dream Frame, 75008 Paris, France')
-  const [instagram, setInstagram] = useState('https://instagram.com/dreamframe')
-  const [tiktok, setTiktok] = useState('https://tiktok.com/@dreamframe')
+  const [instagram, setInstagram] = useState('https://www.instagram.com/dreamframe996?stkn=cW9yb2NxOG8wOXFw')
+  const [tiktok, setTiktok] = useState('https://www.tiktok.com/@dreamframe_officiel')
 
   return (
     <div className="flex-1 overflow-y-auto p-5 space-y-6">
@@ -121,7 +122,7 @@ export function SettingsPanel({ onNavigateToIntegrations }: SettingsPanelProps) 
 
           <div className="space-y-1">
             <label className="text-[10px] uppercase font-bold text-slate-500 flex items-center gap-1.5">
-              <span className="text-[10px] font-bold text-slate-700">TikTok</span>
+              <TikTokIcon className="w-3 h-3 text-slate-800" />
               Lien TikTok
             </label>
             <input

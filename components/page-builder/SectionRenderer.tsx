@@ -97,14 +97,27 @@ export function SectionRenderer({
         )}
 
         <section className="relative min-h-[62vh] sm:min-h-[70vh] lg:min-h-[76vh] flex flex-col justify-between items-center px-4 sm:px-6 pt-16 sm:pt-20 pb-16 sm:pb-28 overflow-hidden bg-[#080807]">
-          {/* Photographie Réelle Ferrari F40 3D Dream Frame */}
-          <div className="absolute inset-0 z-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={s.bgImage || '/images/hero-f40-real.jpg'}
-              alt="Ferrari F40 1987 — Cadre 3D d'Art Automobile Dream Frame"
-              className="w-full h-full object-cover object-center brightness-[0.88] contrast-[1.08] scale-105"
-            />
+          {/* Vidéo Réelle d'Art Automobile en Fond ou Photographie d'Exception */}
+          <div className="absolute inset-0 z-0 overflow-hidden">
+            {s.bgVideo !== '' ? (
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                poster={s.bgImage || '/images/hero-f40-real.jpg'}
+                className="w-full h-full object-cover object-center brightness-[0.78] contrast-[1.08] scale-105 pointer-events-none"
+              >
+                <source src={s.bgVideo || '/videos/hero-bg.mp4'} type="video/mp4" />
+              </video>
+            ) : (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={s.bgImage || '/images/hero-f40-real.jpg'}
+                alt="Ferrari F40 1987 — Cadre 3D d'Art Automobile Dream Frame"
+                className="w-full h-full object-cover object-center brightness-[0.88] contrast-[1.08] scale-105"
+              />
+            )}
             {/* Dégradé supérieur pour la lisibilité du header */}
             <div className="absolute inset-x-0 top-0 h-32 sm:h-40 bg-gradient-to-b from-[#080807]/90 via-[#080807]/40 to-transparent pointer-events-none" />
             
