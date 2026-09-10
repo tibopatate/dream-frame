@@ -667,71 +667,71 @@ export function SettingsForm({
         </div>
 
         {/* ── Liaison des 3 Formats aux Tarifs Stripe (Price IDs) ── */}
-        <div className="p-5 rounded-xl bg-neutral-950 border border-amber-500/20 space-y-4">
+        <div className="p-5 rounded-2xl bg-slate-50 border-2 border-red-200 space-y-4">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-                <Tag className="w-3.5 h-3.5 text-amber-400" />
+              <p className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                <Tag className="w-4 h-4 text-red-600" />
                 Liaison des Formats aux Produits Stripe (Price IDs)
               </p>
-              <p className="text-[11px] text-neutral-400 mt-1">
-                Collez les identifiants de tarifs Stripe (<code className="text-amber-300 font-mono">price_...</code>) de vos 3 produits créés dans votre catalogue Stripe.
+              <p className="text-[11px] text-slate-600 mt-1">
+                Collez les identifiants de tarifs Stripe (<code className="text-red-700 font-mono font-bold">price_...</code>) de vos 3 produits créés dans votre catalogue Stripe.
               </p>
             </div>
-            <span className="text-[10px] text-amber-400 font-mono bg-amber-400/10 px-2.5 py-1 rounded-full border border-amber-400/20 font-bold whitespace-nowrap">
+            <span className="text-[10px] text-red-700 font-mono bg-red-100 px-2.5 py-1 rounded-full border border-red-200 font-bold whitespace-nowrap">
               Catalogue Stripe
             </span>
           </div>
 
           <form onSubmit={handleSavePrices} className="space-y-3">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="space-y-1">
-                <label className="text-[10px] uppercase font-bold text-neutral-400 flex items-center justify-between">
+              <div className="space-y-1 bg-white p-3 rounded-xl border border-slate-200">
+                <label className="text-[10px] uppercase font-bold text-slate-700 flex items-center justify-between">
                   <span>Format 10×15cm</span>
-                  <span className="text-amber-400 font-mono">49,90 €</span>
+                  <span className="text-red-600 font-mono font-bold">49,90 €</span>
                 </label>
                 <input
                   type="text"
                   value={stripePrices.priceA4}
                   onChange={(e) => setStripePrices({ ...stripePrices, priceA4: e.target.value })}
                   placeholder="price_1Q..."
-                  className="w-full bg-black/60 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white font-mono placeholder:text-neutral-600 focus:outline-none focus:border-amber-400/80 transition"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-900 font-mono placeholder:text-slate-400 focus:outline-none focus:border-red-500 transition"
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[10px] uppercase font-bold text-neutral-400 flex items-center justify-between">
+              <div className="space-y-1 bg-white p-3 rounded-xl border border-slate-200">
+                <label className="text-[10px] uppercase font-bold text-slate-700 flex items-center justify-between">
                   <span>Format 30×40cm</span>
-                  <span className="text-amber-400 font-mono">149,90 €</span>
+                  <span className="text-red-600 font-mono font-bold">149,90 €</span>
                 </label>
                 <input
                   type="text"
                   value={stripePrices.priceA3}
                   onChange={(e) => setStripePrices({ ...stripePrices, priceA3: e.target.value })}
                   placeholder="price_1Q..."
-                  className="w-full bg-black/60 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white font-mono placeholder:text-neutral-600 focus:outline-none focus:border-amber-400/80 transition"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-900 font-mono placeholder:text-slate-400 focus:outline-none focus:border-red-500 transition"
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[10px] uppercase font-bold text-neutral-400 flex items-center justify-between">
+              <div className="space-y-1 bg-white p-3 rounded-xl border border-slate-200">
+                <label className="text-[10px] uppercase font-bold text-slate-700 flex items-center justify-between">
                   <span>Format 40×50cm</span>
-                  <span className="text-amber-400 font-mono">249,90 €</span>
+                  <span className="text-red-600 font-mono font-bold">249,90 €</span>
                 </label>
                 <input
                   type="text"
                   value={stripePrices.priceA2}
                   onChange={(e) => setStripePrices({ ...stripePrices, priceA2: e.target.value })}
                   placeholder="price_1Q..."
-                  className="w-full bg-black/60 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white font-mono placeholder:text-neutral-600 focus:outline-none focus:border-amber-400/80 transition"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-900 font-mono placeholder:text-slate-400 focus:outline-none focus:border-red-500 transition"
                 />
               </div>
             </div>
 
             <div className="flex items-center justify-between pt-1">
-              <div className="text-[11px] text-neutral-400">
+              <div className="text-xs">
                 {pricesMsg && (
-                  <span className={pricesMsg.type === 'success' ? 'text-emerald-400 font-semibold' : 'text-rose-400 font-semibold'}>
+                  <span className={pricesMsg.type === 'success' ? 'text-emerald-600 font-bold' : 'text-rose-600 font-bold'}>
                     {pricesMsg.text}
                   </span>
                 )}
@@ -739,9 +739,9 @@ export function SettingsForm({
               <button
                 type="submit"
                 disabled={savingPrices}
-                className="px-5 py-2 bg-neutral-800 hover:bg-neutral-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition flex items-center gap-2 cursor-pointer disabled:opacity-50 shadow-sm"
               >
-                {savingPrices ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5 text-amber-400" />}
+                {savingPrices ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5 text-red-500" />}
                 <span>Enregistrer les Price IDs</span>
               </button>
             </div>

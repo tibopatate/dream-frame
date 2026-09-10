@@ -2,6 +2,8 @@ import { prisma, isPrismaConfigured } from '@/lib/db'
 import { SettingsForm } from './settings-form'
 
 export const metadata = { title: 'Paramètres & Intégrations — Dream Frame Admin' }
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function AdminParametresPage() {
   let shippingSetting: any = null
