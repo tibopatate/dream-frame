@@ -181,3 +181,45 @@ export async function updateStripePricesAction(data: {
     return { success: false, error: err.message || 'Erreur lors de la sauvegarde' }
   }
 }
+
+export async function getStripeSettingsAction(): Promise<{
+  hasStripeSecret: boolean
+  hasStripeWebhook: boolean
+  hasStripePublishable: boolean
+  priceA4: string
+  priceA3: string
+  priceA2: string
+}> {
+  try {
+    const settings = getSettings()
+    const hasStripeSecret = Boolean(
+      (process.env.STRIPE_SECRET_KEY && !process.env.STRIPE_SECRET_KEY.includes('CHANGE_ME')) ||
+      (settings.stripeSecretKey && settings.stripeSecretKey.startsWith('sk_'))
+    )
+    const hasStripeWebhook = Boolean(
+      process.env.STRIPE_WEBHOOK_SECRET && !process.env.STRIPE_WEBHOOK_SECRET.includes('CHANGE_ME')
+    )
+    const hasStripePublishable = Boolean(
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY &&
+      !process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY.includes('CHANGE_ME')
+    )
+
+    return {
+      hasStripeSecret,
+      hasStripeWebhook,
+      hasStripePublishable,
+      priceA4: settings.stripePriceA4 || '',
+      priceA3: settings.stripePriceA3 || '',
+      priceA2: settings.stripePriceA2 || '',
+    }
+  } catch {
+    return {
+      hasStripeSecret: false,
+      hasStripeWebhook: false,
+      hasStripePublishable: false,
+      priceA4: '',
+      priceA3: '',
+      priceA2: '',
+    }
+  }
+}
