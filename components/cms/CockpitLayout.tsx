@@ -336,7 +336,7 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
       case 'seo':
         return <SEOPanel />
       case 'settings':
-        return <SettingsPanel />
+        return <SettingsPanel onNavigateToIntegrations={() => setActiveCategory('integrations')} />
       case 'domain':
         return <DomainPanel />
       case 'integrations':

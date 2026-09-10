@@ -1,9 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { Settings, Mail, Phone, MapPin, Instagram, Youtube } from 'lucide-react'
+import { Settings, Mail, Phone, MapPin, Instagram, Youtube, CreditCard, ArrowRight } from 'lucide-react'
 
-export function SettingsPanel() {
+interface SettingsPanelProps {
+  onNavigateToIntegrations?: () => void
+}
+
+export function SettingsPanel({ onNavigateToIntegrations }: SettingsPanelProps) {
   const [storeName, setStoreName] = useState('Dream Frame')
   const [slogan, setSlogan] = useState('L\'Art de Capturer l\'Exceptionnel')
   const [email, setEmail] = useState('contact@dreamframe.fr')
@@ -128,6 +132,30 @@ export function SettingsPanel() {
             />
           </div>
         </div>
+      </div>
+
+      {/* Stripe & Price IDs Shortcut */}
+      <div className="p-4 bg-red-50/50 border border-red-200 rounded-xl space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <CreditCard className="w-4 h-4 text-red-600" />
+            <span className="text-xs font-bold text-slate-900">Passerelle Stripe &amp; Tarifs (Price IDs)</span>
+          </div>
+          <span className="text-[10px] font-bold text-red-700 bg-red-100 px-2 py-0.5 rounded-full">3 Formats</span>
+        </div>
+        <p className="text-[11px] text-slate-500 leading-relaxed">
+          Associez vos 3 identifiants de tarifs Stripe (<code className="font-mono text-red-700">price_...</code>) pour le 10×15cm, 30×40cm et 40×50cm.
+        </p>
+        {onNavigateToIntegrations && (
+          <button
+            type="button"
+            onClick={onNavigateToIntegrations}
+            className="mt-1 w-full py-2 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-lg transition flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs"
+          >
+            <span>Ouvrir la Configuration Stripe &amp; Price IDs</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        )}
       </div>
     </div>
   )
