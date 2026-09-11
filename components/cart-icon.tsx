@@ -44,7 +44,7 @@ export function CartIcon() {
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.5, opacity: 0 }}
-              className="w-5 h-5 rounded-full bg-red-600 text-white text-[10px] font-black flex items-center justify-center -ml-1 shadow-sm"
+              className="w-5 h-5 rounded-full bg-amber-400 text-black text-[10px] font-black flex items-center justify-center -ml-1 shadow-[0_0_12px_rgba(251,191,36,0.6)]"
             >
               {count}
             </motion.span>

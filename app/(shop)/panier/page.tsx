@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Trash2, ShoppingBag, ArrowRight, Minus, Plus, RefreshCw, Truck, ShieldCheck, Sparkles, Gift, Tag, Check, PlusCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const UPSELL_PRODUCTS = [
   {
@@ -40,10 +41,34 @@ export default function PanierPage() {
   const [discountPercent, setDiscountPercent] = useState(0)
   const [promoError, setPromoError] = useState('')
   const [promoSuccess, setPromoSuccess] = useState('')
+  const [showStickyCheckout, setShowStickyCheckout] = useState(false)
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // Observer pour détecter quand le bouton principal sort du champ de vision
+  useEffect(() => {
+    if (!mounted || items.length === 0) return
+
+    const timer = setTimeout(() => {
+      const target = document.getElementById('main-checkout-btn')
+      if (!target) return
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          // Si le bouton principal n'est PAS visible à l'écran, afficher la barre flottante en fondu
+          setShowStickyCheckout(!entry.isIntersecting)
+        },
+        { threshold: 0.1 }
+      )
+
+      observer.observe(target)
+      return () => observer.disconnect()
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [mounted, items.length])
 
   if (!mounted) {
     return (
@@ -118,7 +143,7 @@ export default function PanierPage() {
   }
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-16 bg-[#080807] text-white">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-36 sm:pt-44 pb-24 bg-[#080807] text-white">
       <div className="flex items-center justify-between border-b border-neutral-800 pb-6 mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Mon Panier</h1>
         <span className="text-xs text-neutral-400 uppercase tracking-wider font-mono">
@@ -163,7 +188,7 @@ export default function PanierPage() {
                   {item.formatName ? (
                     <div className="flex items-center gap-1.5 flex-wrap justify-center sm:justify-start">
                       <span className="text-xs font-medium text-amber-400">
-                        {item.formatName}
+                        {item.formatName.includes('|') ? item.formatName.split('|')[0].trim() : item.formatName}
                       </span>
                       {item.formatSize && (
                         <span className="text-[11px] text-neutral-400 font-mono">
@@ -385,6 +410,7 @@ export default function PanierPage() {
           </div>
 
           <Link
+            id="main-checkout-btn"
             href="/checkout"
             className="w-full py-4 bg-white hover:bg-neutral-100 text-black font-semibold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-xl shadow-white/10 active:scale-98"
           >
@@ -408,6 +434,43 @@ export default function PanierPage() {
           </div>
         </div>
       </div>
+
+      {/* Barre Flottante : Apparaît en fondu quand le bouton principal sort du champ de vision */}
+      <AnimatePresence>
+        {showStickyCheckout && (
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 28 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed bottom-0 left-0 right-0 z-50 bg-[#0C0C0A]/95 backdrop-blur-xl border-t border-neutral-800 py-3 sm:py-4 px-4 sm:px-8 shadow-[0_-12px_40px_rgba(0,0,0,0.9)]"
+          >
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+              <div className="min-w-0">
+                <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block">
+                  Total ({finalCount} pièce{finalCount > 1 ? 's' : ''})
+                </span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-xl sm:text-2xl font-bold font-mono text-white">
+                    {formatPrice(finalTotal * 100)}
+                  </span>
+                  <span className="text-[11px] text-emerald-400 font-medium hidden sm:inline">
+                    · Livraison Colissimo Offerte
+                  </span>
+                </div>
+              </div>
+
+              <Link
+                href="/checkout"
+                className="px-6 sm:px-8 py-3.5 bg-white hover:bg-neutral-100 text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center gap-2 shadow-xl shadow-white/10 active:scale-95 shrink-0"
+              >
+                <span>Passer la commande</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   )
 }
