@@ -6,10 +6,18 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, X, Menu, Truck, LayoutDashboard, Instagram } from 'lucide-react'
 import { TikTokIcon } from '@/components/icons/TikTokIcon'
 
-const NAV_ITEMS = [
-  { href: '/catalogue',     label: 'La Collection',       sub: 'Toutes nos créations sous cadre', delay: 0 },
-  { href: '/configurateur', label: 'Atelier Sur-Mesure',  sub: 'Créer ma pièce personnalisée', delay: 0.05, accent: true },
-  { href: '/panier',        label: 'Mon Panier',          sub: 'Vérifier ma commande', delay: 0.10 },
+interface NavItem {
+  href: string
+  label: string
+  sub: string
+  delay: number
+  accent?: boolean
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { href: '/',          label: 'Accueil',             sub: 'Page d’accueil de la boutique', delay: 0 },
+  { href: '/catalogue', label: 'La Collection',       sub: 'Toutes nos créations sous cadre', delay: 0.05 },
+  { href: '/panier',    label: 'Mon Panier',          sub: 'Vérifier ma commande', delay: 0.10 },
 ]
 
 const itemVariants = {
@@ -196,23 +204,26 @@ export function MobileNavDrawer() {
 
             {/* Réseaux sociaux & Footer drawer */}
             <div className="px-4 py-5 border-t border-neutral-800 space-y-3">
+              <p className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider text-center">
+                Suivez-nous :
+              </p>
               <div className="flex items-center justify-center gap-2">
                 <a
                   href="https://www.instagram.com/dreamframe996?stkn=cW9yb2NxOG8wOXFw"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 py-2 px-3 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-pink-500/40 text-neutral-300 hover:text-pink-400 text-xs font-semibold flex items-center justify-center gap-2 transition"
+                  className="flex-1 py-2.5 px-3 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-neutral-600 text-white text-xs font-semibold flex items-center justify-center gap-2 transition hover:bg-neutral-800"
                 >
-                  <Instagram className="w-3.5 h-3.5 text-pink-400" />
+                  <Instagram className="w-3.5 h-3.5 text-white" />
                   <span>Instagram</span>
                 </a>
                 <a
                   href="https://www.tiktok.com/@dreamframe_officiel"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 py-2 px-3 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-cyan-500/40 text-neutral-300 hover:text-cyan-400 text-xs font-semibold flex items-center justify-center gap-2 transition"
+                  className="flex-1 py-2.5 px-3 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-neutral-600 text-white text-xs font-semibold flex items-center justify-center gap-2 transition hover:bg-neutral-800"
                 >
-                  <TikTokIcon className="w-3.5 h-3.5 text-cyan-400" />
+                  <TikTokIcon className="w-3.5 h-3.5 text-white" />
                   <span>TikTok</span>
                 </a>
               </div>

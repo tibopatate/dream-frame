@@ -106,7 +106,7 @@ export function SectionRenderer({
                 muted
                 playsInline
                 poster={s.bgImage || '/images/hero-f40-real.jpg'}
-                className="w-full h-full object-cover object-center brightness-[0.80] contrast-[1.05] pointer-events-none"
+                className="w-full h-full object-cover object-center brightness-[1.05] contrast-[1.02] pointer-events-none"
               >
                 <source src={s.bgVideo || '/videos/hero-bg.mp4'} type="video/mp4" />
               </video>
@@ -115,17 +115,17 @@ export function SectionRenderer({
               <img
                 src={s.bgImage || '/images/hero-f40-real.jpg'}
                 alt="Ferrari F40 1987 — Cadre 3D d'Art Automobile Dream Frame"
-                className="w-full h-full object-cover object-center brightness-[0.88] contrast-[1.08] scale-105"
+                className="w-full h-full object-cover object-center brightness-[1.0] contrast-[1.05] scale-105"
               />
             )}
-            {/* Dégradé supérieur pour la lisibilité du header */}
-            <div className="absolute inset-x-0 top-0 h-32 sm:h-40 bg-gradient-to-b from-[#080807]/90 via-[#080807]/40 to-transparent pointer-events-none" />
+            {/* Dégradé supérieur léger pour la lisibilité du header */}
+            <div className="absolute inset-x-0 top-0 h-24 sm:h-32 bg-gradient-to-b from-[#080807]/70 via-[#080807]/20 to-transparent pointer-events-none" />
             
-            {/* Dégradé latéral cinéma / vignette renforcé */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#080807]/85 via-transparent to-[#080807]/85 pointer-events-none" />
+            {/* Dégradé latéral subtil cinéma */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#080807]/30 via-transparent to-[#080807]/30 pointer-events-none" />
 
-            {/* Dégradé noir progressif accentué en bas du hero */}
-            <div className="absolute inset-x-0 bottom-0 h-72 sm:h-96 bg-gradient-to-t from-[#080807] via-[#080807]/95 via-45% to-transparent pointer-events-none" />
+            {/* Dégradé noir doux en bas du hero */}
+            <div className="absolute inset-x-0 bottom-0 h-44 sm:h-56 bg-gradient-to-t from-[#080807] via-[#080807]/60 to-transparent pointer-events-none" />
           </div>
 
           {/* Espace supérieur modéré pour remonter le contenu */}
@@ -237,6 +237,17 @@ export function SectionRenderer({
         image: '/atelier/r8v10-real.jpg',
         price: '49,99 €',
       },
+      {
+        id: 'real-bmw-m4comp',
+        slug: 'bmw-m4-competition-isle-of-man-cadre-3d',
+        name: 'BMW M4 Competition',
+        year: 2023,
+        brand: 'BMW',
+        specs: '6 Cyl. Biturbo · 510 CH',
+        tag: 'Atelier France · Pièce Réelle',
+        image: '/atelier/m4comp-real.jpg',
+        price: '49,99 €',
+      },
     ]
 
     return (
@@ -273,12 +284,14 @@ export function SectionRenderer({
             </Link>
           </div>
 
-          {/* Liste Horizontale des 4 VRAIS Cadres (Petits formats) */}
-          <div className="flex overflow-x-auto pb-8 -mx-4 px-4 sm:mx-0 sm:px-0 gap-4 sm:gap-6 snap-x snap-mandatory hide-scrollbar">
-            {REAL_STORE_FRAMES.map((item) => (
+          {/* Liste Horizontale des Cadres : 4 sur mobile, 5 sur PC */}
+          <div className="flex overflow-x-auto pb-8 -mx-4 px-4 sm:mx-0 sm:px-0 gap-4 sm:gap-5 lg:gap-6 snap-x snap-mandatory hide-scrollbar sm:justify-center">
+            {REAL_STORE_FRAMES.map((item, idx) => (
               <div
                 key={item.id}
-                className="snap-start shrink-0 w-[55vw] sm:w-[220px] lg:w-[240px] group flex flex-col items-center space-y-3"
+                className={`snap-start shrink-0 w-[55vw] sm:w-[190px] md:w-[210px] lg:w-[230px] group flex-col items-center space-y-3 ${
+                  idx >= 4 ? 'hidden sm:flex' : 'flex'
+                }`}
               >
                 {/* Vrai Cadre d'Art de la Boutique (aspect-[3/4] élégant) */}
                 <Link
@@ -320,18 +333,12 @@ export function SectionRenderer({
                     {item.specs}
                   </p>
 
-                  <div className="pt-2 flex items-center justify-center gap-2">
+                  <div className="pt-2 flex items-center justify-center">
                     <Link
                       href={isEditor ? '#' : `/produit/${item.slug}`}
-                      className="px-4 py-1.5 rounded-full border border-neutral-800 hover:border-neutral-600 bg-neutral-900/80 hover:bg-neutral-800 text-white text-[10px] font-medium uppercase tracking-wider transition-all"
+                      className="px-5 py-2 rounded-full border border-neutral-700 hover:border-amber-400/80 bg-neutral-900/90 hover:bg-neutral-800 text-white text-[11px] font-semibold uppercase tracking-wider transition-all shadow-sm"
                     >
-                      Voir le cadre
-                    </Link>
-                    <Link
-                      href={isEditor ? '#' : '/configurateur'}
-                      className="px-4 py-1.5 rounded-full border border-amber-400/40 hover:border-amber-400 bg-amber-400/10 hover:bg-amber-400/20 text-amber-300 text-[10px] font-medium uppercase tracking-wider transition-all"
-                    >
-                      Sur-mesure
+                      Découvrir le cadre
                     </Link>
                   </div>
                 </div>

@@ -139,26 +139,29 @@ function ShopFooter() {
             >
               <span>contact@dreamframe.fr</span>
             </a>
-            <a
-              href={instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2.5 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 hover:border-pink-500/40 text-neutral-300 hover:text-pink-400 font-semibold text-xs transition flex items-center gap-2 group"
-              aria-label="Instagram Dream Frame"
-            >
-              <Instagram className="w-4 h-4 text-pink-400 group-hover:scale-110 transition-transform" />
-              <span>Instagram</span>
-            </a>
-            <a
-              href={tiktokUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2.5 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 hover:border-cyan-500/40 text-neutral-300 hover:text-cyan-400 font-semibold text-xs transition flex items-center gap-2 group"
-              aria-label="TikTok Dream Frame"
-            >
-              <TikTokIcon className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
-              <span>TikTok</span>
-            </a>
+            <div className="flex items-center gap-2 pl-2 sm:border-l sm:border-neutral-800">
+              <span className="text-xs font-medium text-neutral-400">Suivez-nous :</span>
+              <a
+                href={instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3.5 py-2.5 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 hover:border-neutral-600 text-white font-semibold text-xs transition flex items-center gap-2 group"
+                aria-label="Instagram Dream Frame"
+              >
+                <Instagram className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
+                <span>Instagram</span>
+              </a>
+              <a
+                href={tiktokUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3.5 py-2.5 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 hover:border-neutral-600 text-white font-semibold text-xs transition flex items-center gap-2 group"
+                aria-label="TikTok Dream Frame"
+              >
+                <TikTokIcon className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
+                <span>TikTok</span>
+              </a>
+            </div>
           </div>
         </div>
 

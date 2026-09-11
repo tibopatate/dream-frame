@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function RetractationPage() {
   return (
-    <main className="min-h-screen bg-[#080807] text-white selection:bg-amber-400 selection:text-black py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto space-y-12">
+    <main className="min-h-screen bg-[#080807] text-white selection:bg-amber-400 selection:text-black py-16 px-4 sm:px-6 lg:px-8 overflow-x-hidden">
+      <div className="max-w-4xl mx-auto space-y-12 w-full overflow-hidden">
         {/* En-tête */}
         <div className="space-y-4 border-b border-neutral-800 pb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-amber-400 text-xs font-mono uppercase tracking-wider">
@@ -49,17 +49,57 @@ export default function RetractationPage() {
             Copiez le texte ci-dessous et adressez-le par e-mail à notre atelier à <a href="mailto:contact@dreamframe.fr" className="text-amber-400 font-semibold hover:underline">contact@dreamframe.fr</a> :
           </p>
 
-          <div className="bg-neutral-950 p-5 sm:p-6 rounded-xl border border-neutral-800 font-mono text-neutral-300 text-xs sm:text-sm leading-relaxed select-all">
-            <p className="text-amber-400 font-bold mb-3">// Formulaire de rétractation officiel Dream Frame</p>
-            <p className="text-neutral-400">À l&apos;attention de : Dream Frame Atelier SASU — contact@dreamframe.fr</p>
-            <p className="mt-3">Je vous notifie par la présente ma rétractation du contrat portant sur la vente du produit ci-dessous :</p>
-            <p className="mt-3 text-neutral-200">▪ Produit commandé : _______________________________________________</p>
-            <p className="text-neutral-200">▪ Numéro de commande : DF-_____________________________________</p>
-            <p className="text-neutral-200">▪ Commandé le : [__/__/____]  /  Reçu le : [__/__/____]</p>
-            <p className="mt-3 text-neutral-200">▪ Nom &amp; Prénom du client : _________________________________________</p>
-            <p className="text-neutral-200">▪ Adresse postale de livraison : ____________________________________</p>
-            <p className="mt-3 text-neutral-400">Date et Signature (en cas d&apos;envoi papier) :</p>
-            <p className="mt-2 text-neutral-400">Fait à ______________________, le [__/__/____]</p>
+          <div className="bg-neutral-950 p-4 sm:p-6 rounded-xl border border-neutral-800 font-mono text-neutral-300 text-xs sm:text-sm leading-relaxed overflow-hidden">
+            <div className="flex items-center justify-between gap-2 border-b border-neutral-800/80 pb-3 mb-4">
+              <p className="text-amber-400 font-bold text-xs">// Formulaire de rétractation officiel</p>
+              <span className="text-[10px] text-neutral-500 uppercase font-mono">Art. L. 221-18</span>
+            </div>
+
+            <p className="text-neutral-400 text-xs">
+              À l&apos;attention de : <strong className="text-white">Dream Frame Atelier SASU</strong> — contact@dreamframe.fr
+            </p>
+            <p className="mt-3 text-neutral-300 text-xs">
+              Je vous notifie par la présente ma rétractation du contrat portant sur la vente du produit ci-dessous :
+            </p>
+
+            <div className="space-y-3.5 mt-4 text-xs">
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5">
+                <span className="text-neutral-300 font-medium shrink-0">▪ Produit commandé :</span>
+                <span className="flex-1 border-b border-dashed border-neutral-700/80 text-neutral-500 italic text-[11px] pb-0.5">
+                  Nom du cadre d&apos;art (ex: Ferrari F40 1987)
+                </span>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5">
+                <span className="text-neutral-300 font-medium shrink-0">▪ Numéro de commande :</span>
+                <span className="flex-1 border-b border-dashed border-neutral-700/80 text-neutral-500 italic text-[11px] pb-0.5">
+                  DF-XXXXX
+                </span>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5">
+                <span className="text-neutral-300 font-medium shrink-0">▪ Commandé le / Reçu le :</span>
+                <span className="flex-1 border-b border-dashed border-neutral-700/80 text-neutral-500 italic text-[11px] pb-0.5">
+                  [JJ / MM / AAAA]
+                </span>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5">
+                <span className="text-neutral-300 font-medium shrink-0">▪ Nom &amp; Prénom du client :</span>
+                <span className="flex-1 border-b border-dashed border-neutral-700/80 text-neutral-500 italic text-[11px] pb-0.5">
+                  Nom et prénom complets
+                </span>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5">
+                <span className="text-neutral-300 font-medium shrink-0">▪ Adresse postale de livraison :</span>
+                <span className="flex-1 border-b border-dashed border-neutral-700/80 text-neutral-500 italic text-[11px] pb-0.5">
+                  Adresse postale complète
+                </span>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5 pt-2">
+                <span className="text-neutral-400 shrink-0">▪ Date et Signature :</span>
+                <span className="flex-1 border-b border-dashed border-neutral-700/80 text-neutral-500 italic text-[11px] pb-0.5">
+                  Fait à _______________, le [JJ / MM / AAAA]
+                </span>
+              </div>
+            </div>
           </div>
         </section>
 

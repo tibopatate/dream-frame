@@ -53,18 +53,7 @@ export const DEFAULT_PAGE_SECTIONS: PageSection[] = [
       layer5Desc: 'Transmittance optique 99,2% et cadre aluminium anodisé noir.',
     },
   },
-  {
-    id: 'sec-custom',
-    type: 'custom_atelier',
-    name: 'Atelier Sur-Mesure (Invitation)',
-    settings: {
-      badge: 'Configuration Personnalisée',
-      title: 'Un modèle précis ? Une échelle spécifique ?',
-      desc: 'Composez votre cadre idéal : dimensions (A4, A3, A2), modèle automobile et échelle miniature. Notre configurateur live vous permet de visualiser votre projet instantanément.',
-      btnText: "Accéder à l'Atelier Sur-Mesure",
-      btnLink: '/configurateur',
-    },
-  },
+
   {
     id: 'sec-interiors',
     type: 'interiors',

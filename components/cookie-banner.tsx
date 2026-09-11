@@ -2,23 +2,36 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShieldCheck, X } from 'lucide-react'
 
 /**
  * CookieBanner — Bannière RGPD harmonisée avec le design system Dream Frame.
- * Palette : noir/neutre + bouton principal blanc, pas de doré discordant.
+ * Accessible sur mobile et PC, désactivée dans l'administration.
  */
 export function CookieBanner() {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
+    // Ne jamais afficher dans l'interface admin
+    if (pathname?.startsWith('/admin')) {
+      setIsOpen(false)
+      return
+    }
+
     const consent = localStorage.getItem('dream-frame-cookie-consent')
     if (!consent) {
-      const timer = setTimeout(() => setIsOpen(true), 1800)
+      const timer = setTimeout(() => setIsOpen(true), 800)
       return () => clearTimeout(timer)
     }
-  }, [])
+  }, [pathname])
+
+  // Sécurité absolue : pas de bannière dans l'admin
+  if (pathname?.startsWith('/admin')) {
+    return null
+  }
 
   const accept = () => {
     localStorage.setItem('dream-frame-cookie-consent', 'accepted')
@@ -34,11 +47,11 @@ export function CookieBanner() {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: 24, scale: 0.98 }}
+          initial={{ opacity: 0, y: 30, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 16, scale: 0.97 }}
-          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:max-w-sm bg-[#0C0C0A] border border-neutral-800 rounded-2xl p-5 shadow-2xl z-[100]"
+          exit={{ opacity: 0, y: 20, scale: 0.96 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className="fixed bottom-3 sm:bottom-6 left-3 right-3 sm:left-auto sm:right-6 sm:max-w-sm bg-[#0C0C0A]/95 backdrop-blur-xl border border-neutral-800 rounded-2xl p-4 sm:p-5 shadow-[0_20px_60px_rgba(0,0,0,0.9)] z-[9999]"
         >
           <div className="flex items-start gap-3">
             {/* Icône */}

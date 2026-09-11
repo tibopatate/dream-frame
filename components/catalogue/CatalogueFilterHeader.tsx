@@ -164,13 +164,6 @@ export function CatalogueFilterHeader({
                     Supercars Modernes ({modernCount})
                   </Link>
                 )}
-                <Link
-                  href="/configurateur"
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-400/10 border border-amber-400/30 text-amber-300 hover:bg-amber-400 hover:text-black transition flex items-center gap-1"
-                >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Sur-Mesure
-                </Link>
               </div>
             </div>
 

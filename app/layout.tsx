@@ -3,6 +3,7 @@ import { Poppins } from 'next/font/google'
 import { ViewTransition } from 'react'
 import './globals.css'
 import { CookieBanner } from '@/components/cookie-banner'
+import { ScrollToTop } from '@/components/ScrollToTop'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -120,6 +121,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-[#080807] text-white antialiased min-h-screen selection:bg-amber-400 selection:text-black">
+        <ScrollToTop />
         {/* ViewTransition — crossfade natif entre les pages */}
         <ViewTransition>
           {children}

@@ -38,22 +38,15 @@ export default function PanierPage() {
         <div className="space-y-2">
           <h1 className="text-2xl sm:text-3xl text-white">Votre collection est vide</h1>
           <p className="text-neutral-400 text-xs sm:text-sm max-w-sm mx-auto font-light leading-relaxed">
-            Parcourez notre collection officielle ou créez une pièce sur-mesure dans notre atelier.
+            Parcourez notre collection officielle de cadres 3D d&apos;art automobile.
           </p>
         </div>
-        <div className="flex flex-col sm:flex-row justify-center gap-3 pt-2">
+        <div className="flex justify-center pt-2">
           <Link
             href="/catalogue"
             className="inline-flex items-center justify-center bg-white hover:bg-neutral-100 text-black font-semibold text-xs uppercase tracking-wider px-8 py-3.5 rounded-xl transition-all shadow-lg"
           >
             Explorer la Collection
-          </Link>
-          <Link
-            href="/configurateur"
-            className="inline-flex items-center justify-center border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 text-white font-mono text-xs uppercase tracking-wider px-8 py-3.5 rounded-xl transition-all"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400 mr-2" />
-            L'Atelier Sur-Mesure
           </Link>
         </div>
       </div>

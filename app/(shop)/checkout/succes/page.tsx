@@ -136,11 +136,10 @@ export default function SuccesPage() {
             <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
-            href="/configurateur"
-            className="w-full sm:w-auto px-7 py-3.5 border border-neutral-800 hover:border-amber-400/50 bg-neutral-900 text-neutral-300 hover:text-white text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2"
+            href="/"
+            className="w-full sm:w-auto px-7 py-3.5 border border-neutral-800 hover:border-neutral-700 bg-neutral-900 text-neutral-300 hover:text-white text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2"
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            Créer Une Autre Pièce
+            <span>Retour à l&apos;Accueil</span>
           </Link>
         </motion.div>
       </div>
