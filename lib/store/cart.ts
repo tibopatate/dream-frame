@@ -33,22 +33,36 @@ export interface CartNotificationData {
   formatName?: string
 }
 
+function computeTotals(items: CartItem[]) {
+  const count = items.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0)
+  const subtotal = items.reduce((sum, item) => {
+    const p = Number(item.price) || 0
+    const q = Number(item.quantity) || 1
+    return sum + (p * q)
+  }, 0)
+  return { count, subtotal: Math.round(subtotal * 100) / 100 }
+}
+
 interface CartStore {
   items: CartItem[]
+  subtotal: number
+  count: number
   lastNotification: CartNotificationData | null
   clearNotification: () => void
   addItem: (item: CartItem) => void
   removeItem: (variantId: string) => void
   updateQuantity: (variantId: string, quantity: number) => void
   clearCart: () => void
-  get subtotal(): number
-  get count(): number
+  getSubtotal: () => number
+  getCount: () => number
 }
 
 export const useCart = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
+      subtotal: 0,
+      count: 0,
       lastNotification: null,
 
       clearNotification: () => set({ lastNotification: null }),
@@ -69,10 +83,12 @@ export const useCart = create<CartStore>()(
             updatedItems = [...state.items, newItem]
           }
 
-          const totalCount = updatedItems.reduce((sum, item) => sum + item.quantity, 0)
+          const { count, subtotal } = computeTotals(updatedItems)
 
           return {
             items: updatedItems,
+            count,
+            subtotal,
             lastNotification: {
               id: `${Date.now()}-${Math.random()}`,
               message: newItem.formatName ? `+${newItem.quantity} ${newItem.formatName} ajouté` : `+${newItem.quantity} ajouté au panier`,
@@ -80,7 +96,7 @@ export const useCart = create<CartStore>()(
               brand: newItem.brand,
               image: newItem.image,
               quantity: newItem.quantity,
-              totalCount,
+              totalCount: count,
               formatName: newItem.formatName,
             },
           }
@@ -88,9 +104,15 @@ export const useCart = create<CartStore>()(
       },
 
       removeItem: (variantId) => {
-        set((state) => ({
-          items: state.items.filter((i) => i.variantId !== variantId),
-        }))
+        set((state) => {
+          const updatedItems = state.items.filter((i) => i.variantId !== variantId)
+          const { count, subtotal } = computeTotals(updatedItems)
+          return {
+            items: updatedItems,
+            count,
+            subtotal,
+          }
+        })
       },
 
       updateQuantity: (variantId, quantity) => {
@@ -104,7 +126,7 @@ export const useCart = create<CartStore>()(
           const updatedItems = state.items.map((i) =>
             i.variantId === variantId ? { ...i, quantity } : i
           )
-          const totalCount = updatedItems.reduce((sum, item) => sum + item.quantity, 0)
+          const { count, subtotal } = computeTotals(updatedItems)
 
           let notification = state.lastNotification
           if (diff > 0 && currentItem) {
@@ -115,30 +137,41 @@ export const useCart = create<CartStore>()(
               brand: currentItem.brand,
               image: currentItem.image,
               quantity: diff,
-              totalCount,
+              totalCount: count,
             }
           }
 
           return {
             items: updatedItems,
+            count,
+            subtotal,
             lastNotification: notification,
           }
         })
       },
 
-      clearCart: () => set({ items: [], lastNotification: null }),
+      clearCart: () => set({ items: [], count: 0, subtotal: 0, lastNotification: null }),
 
-      get subtotal() {
-        return get().items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+      getSubtotal: () => {
+        const { subtotal } = computeTotals(get().items)
+        return subtotal
       },
 
-      get count() {
-        return get().items.reduce((sum, item) => sum + item.quantity, 0)
+      getCount: () => {
+        const { count } = computeTotals(get().items)
+        return count
       },
     }),
     {
       name: 'dream-frame-cart',
-      partialize: (state) => ({ items: state.items }), // Ne pas persister la notification temporaire
+      partialize: (state) => ({ items: state.items }),
+      onRehydrateStorage: () => (state) => {
+        if (state && Array.isArray(state.items)) {
+          const { count, subtotal } = computeTotals(state.items)
+          state.count = count
+          state.subtotal = subtotal
+        }
+      },
     }
   )
 )

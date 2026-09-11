@@ -106,7 +106,7 @@ export function SectionRenderer({
                 muted
                 playsInline
                 poster={s.bgImage || '/images/hero-f40-real.jpg'}
-                className="w-full h-full object-cover object-center brightness-[0.78] contrast-[1.08] scale-105 pointer-events-none"
+                className="w-full h-full object-cover object-center brightness-[0.80] contrast-[1.05] pointer-events-none"
               >
                 <source src={s.bgVideo || '/videos/hero-bg.mp4'} type="video/mp4" />
               </video>

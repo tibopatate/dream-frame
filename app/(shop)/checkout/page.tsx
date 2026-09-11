@@ -50,7 +50,11 @@ export default function CheckoutPage() {
     )
   }
 
-  const total = subtotal
+  const computedSubtotal = items.reduce((sum, item) => sum + (Number(item.price) || 0) * (Number(item.quantity) || 1), 0)
+  const computedCount = items.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0)
+  const finalSubtotal = subtotal > 0 ? subtotal : computedSubtotal
+  const finalCount = count > 0 ? count : computedCount
+  const total = finalSubtotal
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -269,7 +273,7 @@ export default function CheckoutPage() {
               Articles commandés
             </h2>
             <span className="text-xs text-neutral-400">
-              {count} article{count > 1 ? 's' : ''}
+              {finalCount} article{finalCount > 1 ? 's' : ''}
             </span>
           </div>
 
@@ -280,13 +284,9 @@ export default function CheckoutPage() {
                   <Image src={item.image} alt={item.productName} fill className="object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[9px] font-mono font-bold text-amber-400 uppercase tracking-widest">{item.brand}</p>
-                  <p className="text-white text-sm truncate mt-0.5">{item.productName}</p>
-                  <p className="text-[10px] text-neutral-400 font-light mt-0.5">
-                    {item.formatName ? (
-                      <span className="text-amber-400 font-medium">{item.formatName} {item.formatSize ? `(${item.formatSize})` : ''} · </span>
-                    ) : null}
-                    Quantité : {item.quantity}
+                  <p className="text-white text-xs font-semibold truncate">{item.productName}</p>
+                  <p className="text-neutral-400 text-[10px] font-mono">
+                    Qté : {item.quantity} · {formatPrice(item.price * 100)}
                   </p>
                 </div>
                 <p className="font-bold text-white text-xs">{formatPrice(item.price * item.quantity * 100)}</p>
@@ -297,7 +297,7 @@ export default function CheckoutPage() {
           <div className="space-y-2.5 text-xs border-t border-neutral-800 pt-4">
             <div className="flex justify-between text-neutral-300">
               <span>Sous-total</span>
-              <span className="text-white font-semibold">{formatPrice(subtotal * 100)}</span>
+              <span className="text-white font-semibold">{formatPrice(finalSubtotal * 100)}</span>
             </div>
             <div className="flex justify-between text-neutral-300">
               <span>Livraison Colissimo</span>

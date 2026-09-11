@@ -23,7 +23,11 @@ export default function PanierPage() {
     )
   }
 
-  const total = subtotal
+  const computedSubtotal = items.reduce((sum, item) => sum + (Number(item.price) || 0) * (Number(item.quantity) || 1), 0)
+  const computedCount = items.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0)
+  const finalSubtotal = subtotal > 0 ? subtotal : computedSubtotal
+  const finalCount = count > 0 ? count : computedCount
+  const total = finalSubtotal
 
   if (items.length === 0) {
     return (
@@ -61,7 +65,7 @@ export default function PanierPage() {
       <div className="border-b border-neutral-800 pb-4 flex items-baseline justify-between">
         <h1 className="text-2xl sm:text-4xl text-white">Votre Panier</h1>
         <span className="text-xs text-neutral-400 uppercase tracking-wider font-mono">
-          {count} Pièce{count > 1 ? 's' : ''}
+          {finalCount} Pièce{finalCount > 1 ? 's' : ''}
         </span>
       </div>
 
@@ -166,8 +170,8 @@ export default function PanierPage() {
 
           <div className="space-y-3 text-xs border-b border-neutral-800 pb-4">
             <div className="flex justify-between text-neutral-300">
-              <span>Sous-total ({count} article{count > 1 ? 's' : ''})</span>
-              <span className="text-white font-semibold">{formatPrice(subtotal * 100)}</span>
+              <span>Sous-total ({finalCount} article{finalCount > 1 ? 's' : ''})</span>
+              <span className="text-white font-semibold">{formatPrice(finalSubtotal * 100)}</span>
             </div>
             <div className="flex justify-between text-neutral-300">
               <span>Livraison Colissimo</span>
@@ -175,7 +179,7 @@ export default function PanierPage() {
             </div>
             <div className="flex justify-between text-[11px] text-neutral-400 pt-1">
               <span>TVA incluse (20%)</span>
-              <span>{formatPrice((subtotal - subtotal / 1.2) * 100)}</span>
+              <span>{formatPrice((finalSubtotal - finalSubtotal / 1.2) * 100)}</span>
             </div>
           </div>
 
