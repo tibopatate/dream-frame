@@ -94,8 +94,37 @@ export default async function ProductPage({ params }: Props) {
   const variant = product.variants?.[0]
   const isVintage = product.era === 'VINTAGE' || product.year < 2000
 
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    image: product.images || [],
+    description: product.description,
+    sku: variant?.sku || product.slug,
+    brand: {
+      '@type': 'Brand',
+      name: product.brand || 'Dream Frame',
+    },
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'EUR',
+      lowPrice: '49.90',
+      highPrice: '249.90',
+      offerCount: productFormats.length,
+      availability: (variant?.stock ?? 10) > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'Dream Frame',
+      },
+    },
+  }
+
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 bg-[#080807] text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       {/* Fil d'Ariane Moderne */}
       <nav className="flex items-center gap-2 text-xs text-neutral-400 mb-8 font-light">
         <Link href="/" className="hover:text-white transition-colors">Accueil</Link>

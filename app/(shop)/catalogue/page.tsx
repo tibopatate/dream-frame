@@ -4,8 +4,11 @@ import { CatalogueFilterHeader } from '@/components/catalogue/CatalogueFilterHea
 import { CatalogueProductGrid } from '@/components/catalogue/CatalogueProductGrid'
 
 export const metadata: Metadata = {
-  title: 'La Collection d’Art Automobile — Dream Frame',
-  description: 'Découvrez notre collection de 8 cadres 3D de supercars. Fait main en France. À partir de 49,99 € · Livraison Colissimo 100% offerte.',
+  title: 'La Collection d’Art Automobile — Dream Frame Officiel',
+  description: 'Explorez la collection officielle de cadres 3D d’art automobile Dream Frame : Ferrari F40, Porsche GT3 RS, Bugatti Chiron, Pagani. Fait main en France avec rétroéclairage LED.',
+  alternates: {
+    canonical: 'https://dreamframeofficiel.com/catalogue',
+  },
 }
 
 export const dynamic = 'force-dynamic'

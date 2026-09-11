@@ -31,6 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
     '',
     '/catalogue',
+    '/configurateur',
     '/cgv',
     '/mentions-legales',
     '/confidentialite',
@@ -40,7 +41,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
-    priority: route === '' ? 1.0 : route === '/catalogue' ? 0.9 : 0.3,
+    priority: route === '' ? 1.0 : route === '/catalogue' || route === '/configurateur' ? 0.9 : 0.3,
   }))
 
   return [...staticRoutes, ...productEntries]
