@@ -154,55 +154,57 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
           </div>
 
           {/* Guide visuel des proportions murales */}
-          <div className="p-3 bg-neutral-950/60 border border-neutral-800/80 rounded-xl space-y-2">
-            <div className="flex items-center justify-between text-[10px] font-mono uppercase text-neutral-400">
-              <span>Proportions murales comparées</span>
-              <span className="text-amber-400 font-semibold">{selectedFormat.name} ({selectedFormat.size})</span>
+          <div className="p-3.5 bg-neutral-950/60 border border-neutral-800/80 rounded-xl space-y-2.5">
+            <div className="flex flex-wrap items-center justify-between gap-1 text-[10px] font-mono uppercase text-neutral-400">
+              <span className="tracking-wider">Proportions murales</span>
+              <span className="text-amber-400 font-semibold truncate max-w-[240px]">
+                {selectedFormat.name.includes('|') ? selectedFormat.name.split('|')[0].trim() : selectedFormat.name} · {selectedFormat.size}
+              </span>
             </div>
-            <div className="h-16 bg-black/40 rounded-lg border border-neutral-900 flex items-end justify-center gap-8 px-4 pb-2 pt-2">
+            <div className="min-h-[96px] bg-black/50 rounded-xl border border-neutral-800/80 flex items-end justify-center gap-6 sm:gap-10 px-4 pt-4 pb-3">
               <button
                 type="button"
                 onClick={() => setSelectedFormat(formats[0])}
-                className={`flex flex-col items-center gap-1 transition-all cursor-pointer ${
+                className={`flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
                   selectedFormat.id === formats[0]?.id ? 'opacity-100 scale-105' : 'opacity-40 hover:opacity-75'
                 }`}
               >
                 <div className={`w-7 h-9 rounded border flex items-center justify-center text-[7px] font-mono font-bold ${
-                  selectedFormat.id === formats[0]?.id ? 'bg-amber-400/20 border-amber-400 text-amber-300' : 'bg-neutral-800 border-neutral-700 text-neutral-400'
+                  selectedFormat.id === formats[0]?.id ? 'bg-amber-400/20 border-amber-400 text-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.3)]' : 'bg-neutral-800 border-neutral-700 text-neutral-400'
                 }`}>
                   A4
                 </div>
-                <span className="text-[7px] text-neutral-400 font-mono">Bureau</span>
+                <span className="text-[8px] text-neutral-400 font-mono">Bureau</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setSelectedFormat(formats[1] || formats[0])}
-                className={`flex flex-col items-center gap-1 transition-all cursor-pointer ${
+                className={`flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
                   selectedFormat.id === formats[1]?.id ? 'opacity-100 scale-105' : 'opacity-40 hover:opacity-75'
                 }`}
               >
                 <div className={`w-9 h-12 rounded border flex items-center justify-center text-[8px] font-mono font-bold ${
-                  selectedFormat.id === formats[1]?.id ? 'bg-amber-400/20 border-amber-400 text-amber-300' : 'bg-neutral-800 border-neutral-700 text-neutral-400'
+                  selectedFormat.id === formats[1]?.id ? 'bg-amber-400/20 border-amber-400 text-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.3)]' : 'bg-neutral-800 border-neutral-700 text-neutral-400'
                 }`}>
                   A3
                 </div>
-                <span className="text-[7px] text-neutral-400 font-mono">Salon / Bureau</span>
+                <span className="text-[8px] text-neutral-400 font-mono">Salon / Bureau</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setSelectedFormat(formats[2] || formats[0])}
-                className={`flex flex-col items-center gap-1 transition-all cursor-pointer ${
+                className={`flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
                   selectedFormat.id === formats[2]?.id ? 'opacity-100 scale-105' : 'opacity-40 hover:opacity-75'
                 }`}
               >
-                <div className={`w-12 h-14 rounded border flex items-center justify-center text-[8px] font-mono font-bold ${
-                  selectedFormat.id === formats[2]?.id ? 'bg-amber-400/20 border-amber-400 text-amber-300' : 'bg-neutral-800 border-neutral-700 text-neutral-400'
+                <div className={`w-11 h-14 rounded border flex items-center justify-center text-[8px] font-mono font-bold ${
+                  selectedFormat.id === formats[2]?.id ? 'bg-amber-400/20 border-amber-400 text-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.3)]' : 'bg-neutral-800 border-neutral-700 text-neutral-400'
                 }`}>
                   A2
                 </div>
-                <span className="text-[7px] text-neutral-400 font-mono">Pièce Maîtresse</span>
+                <span className="text-[8px] text-neutral-400 font-mono">Pièce Maîtresse</span>
               </button>
             </div>
           </div>

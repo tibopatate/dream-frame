@@ -93,30 +93,32 @@ export default function PanierPage() {
 
   if (items.length === 0) {
     return (
-      <div className="max-w-xl mx-auto px-6 py-24 text-center space-y-6 bg-[#080807] text-white">
-        <div className="w-16 h-16 rounded-2xl bg-neutral-900 border border-neutral-800 flex items-center justify-center mx-auto shadow-inner">
-          <ShoppingBag className="w-7 h-7 text-neutral-400" />
+      <main className="min-h-[75vh] flex flex-col items-center justify-center pt-32 sm:pt-44 pb-20 px-6 text-center bg-[#080807] text-white">
+        <div className="max-w-md mx-auto space-y-6">
+          <div className="w-16 h-16 rounded-2xl bg-neutral-900 border border-neutral-800 flex items-center justify-center mx-auto shadow-inner">
+            <ShoppingBag className="w-7 h-7 text-neutral-400" />
+          </div>
+          <div className="space-y-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-white">Votre panier est vide</h1>
+            <p className="text-neutral-400 text-xs sm:text-sm max-w-sm mx-auto font-light leading-relaxed">
+              Parcourez notre collection officielle de cadres 3D d&apos;art automobile et ajoutez votre pièce favorite.
+            </p>
+          </div>
+          <div className="flex justify-center pt-2">
+            <Link
+              href="/catalogue"
+              className="inline-flex items-center justify-center bg-white hover:bg-neutral-100 text-black font-semibold text-xs uppercase tracking-wider px-8 py-3.5 rounded-xl transition-all shadow-lg active:scale-95"
+            >
+              Explorer la Collection
+            </Link>
+          </div>
         </div>
-        <div className="space-y-2">
-          <h1 className="text-2xl sm:text-3xl text-white">Votre collection est vide</h1>
-          <p className="text-neutral-400 text-xs sm:text-sm max-w-sm mx-auto font-light leading-relaxed">
-            Parcourez notre collection officielle de cadres 3D d&apos;art automobile.
-          </p>
-        </div>
-        <div className="flex justify-center pt-2">
-          <Link
-            href="/catalogue"
-            className="inline-flex items-center justify-center bg-white hover:bg-neutral-100 text-black font-semibold text-xs uppercase tracking-wider px-8 py-3.5 rounded-xl transition-all shadow-lg"
-          >
-            Explorer la Collection
-          </Link>
-        </div>
-      </div>
+      </main>
     )
   }
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 bg-[#080807] text-white">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-16 bg-[#080807] text-white">
       <div className="flex items-center justify-between border-b border-neutral-800 pb-6 mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Mon Panier</h1>
         <span className="text-xs text-neutral-400 uppercase tracking-wider font-mono">

@@ -188,10 +188,6 @@ function ShopFooter() {
               </Link>
             ))}
           </nav>
-
-          <p className="text-[10px] text-neutral-600 tracking-wider">
-            MÉDIATION : CM2C
-          </p>
         </div>
       </div>
     </footer>

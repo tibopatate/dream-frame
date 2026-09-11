@@ -138,17 +138,17 @@ export function MobileNavDrawer() {
             animate="visible"
             exit="exit"
             onClick={close}
-            className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 z-[99998] bg-black/75 backdrop-blur-sm"
           />
 
-          {/* Drawer */}
+          {/* Drawer Navigation (Mobile & Desktop) */}
           <motion.nav
             key="drawer"
             variants={drawerVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed left-0 top-0 bottom-0 z-50 w-[300px] bg-[#0C0C0A] border-r border-neutral-800 flex flex-col md:hidden overflow-y-auto"
+            className="fixed left-0 top-0 bottom-0 z-[99999] w-[320px] max-w-[85vw] bg-[#0C0C0A] border-r border-neutral-800 flex flex-col overflow-y-auto shadow-2xl"
           >
             {/* En-tête du drawer */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-neutral-800">
