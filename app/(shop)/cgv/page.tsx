@@ -1,108 +1,178 @@
 import type { Metadata } from 'next'
+import { FileCheck, ShieldAlert, CreditCard, Truck, RotateCcw, Scale, HelpCircle } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Conditions Générales de Vente (CGV) — Dream Frame',
-  description: 'Conditions générales de vente réglementant les achats sur la boutique Dream Frame.',
+  title: 'Conditions Générales de Vente (CGV) — Dream Frame Officiel',
+  description: 'Conditions générales de vente réglementant les achats sur la boutique officielle Dream Frame.',
 }
 
 export default function CGVPage() {
   return (
-    <main className="max-w-3xl mx-auto px-6 py-16 space-y-10 text-neutral-600 text-xs sm:text-sm leading-relaxed bg-white">
-      <h1 className="text-4xl italic text-black mb-8">Conditions Générales de Vente</h1>
+    <main className="min-h-screen bg-[#080807] text-white selection:bg-amber-400 selection:text-black py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto space-y-12">
+        {/* En-tête */}
+        <div className="space-y-4 border-b border-neutral-800 pb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-amber-400 text-xs font-mono uppercase tracking-wider">
+            <FileCheck className="w-3.5 h-3.5" />
+            <span>Cadre Contractuel</span>
+          </div>
+          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            Conditions Générales de Vente
+          </h1>
+          <p className="text-neutral-400 text-sm sm:text-base leading-relaxed">
+            Les présentes Conditions Générales de Vente régissent l&apos;ensemble des relations contractuelles entre la boutique officielle Dream Frame et ses clients.
+          </p>
+        </div>
 
-      <section className="space-y-4">
-        <h2 className="text-xs font-bold text-black uppercase tracking-wider">1. Objet & Champ d'application</h2>
-        <p>
-          Les présentes Conditions Générales de Vente (CGV) régissent de manière exclusive les relations contractuelles entre la boutique en ligne <strong className="text-black">Dream Frame</strong> (ci-après l'« Éditeur » ou le « Vendeur ») et toute personne effectuant un achat sur le site internet (ci-après l'« Acheteur » ou le « Client »).
-        </p>
-        <p>
-          Le fait de valider une commande implique l'adhésion entière et sans réserve du Client aux présentes CGV. Le Vendeur livre exclusivement la <strong className="text-black">France métropolitaine</strong> en v1.
-        </p>
-      </section>
+        {/* 1. Objet & Champ d'application */}
+        <section className="bg-neutral-900/40 border border-neutral-800/80 rounded-2xl p-6 sm:p-8 space-y-4">
+          <h2 className="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <span className="text-amber-400 font-mono text-sm">01.</span> Objet &amp; Champ d&apos;application
+          </h2>
+          <div className="space-y-3 text-sm text-neutral-300 leading-relaxed">
+            <p>
+              Les présentes Conditions Générales de Vente (CGV) régissent de manière exclusive les relations contractuelles entre la boutique en ligne <strong className="text-white">Dream Frame</strong> (exploitée par la société <strong className="text-white">Dream Frame Atelier SASU</strong>, ci-après « le Vendeur ») et toute personne physique ou morale effectuant un achat sur le site officiel <strong className="text-white">dreamframeofficiel.com</strong> (ci-après « le Client » ou « l&apos;Acheteur »).
+            </p>
+            <p>
+              Toute commande passée sur le site implique l&apos;adhésion pleine, entière et sans réserve du Client aux présentes conditions. La livraison s&apos;effectue en France métropolitaine, Corse et pays de l&apos;Union Européenne éligibles.
+            </p>
+          </div>
+        </section>
 
-      <section className="space-y-4 border-t border-neutral-100 pt-8">
-        <h2 className="text-xs font-bold text-black uppercase tracking-wider">2. Caractéristiques des Produits</h2>
-        <p>
-          Les produits proposés sont des cadres décoratifs au format A4 contenant une voiture miniature à l'échelle 1:24 et un système d'éclairage rétroéclairé LED (ci-après les « Cadres 3D » ou les « Produits »).
-        </p>
-        <p>
-          Les photos et visuels du catalogue sont les plus fidèles possible mais n'engagent pas le Vendeur en cas d'infime variation de nuances de teintes ou de détails d'assemblage manuel.
-        </p>
-        <p>
-          <strong className="text-black">Marquage CE :</strong> Les cadres comportant des éléments d'éclairage électrique par LED, ils sont conformes aux exigences de sécurité européennes applicables (directive compatibilité électromagnétique et basse tension).
-        </p>
-      </section>
+        {/* 2. Caractéristiques des Produits */}
+        <section className="bg-neutral-900/40 border border-neutral-800/80 rounded-2xl p-6 sm:p-8 space-y-4">
+          <h2 className="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <span className="text-amber-400 font-mono text-sm">02.</span> Caractéristiques des Produits &amp; Conformité
+          </h2>
+          <div className="space-y-3 text-sm text-neutral-300 leading-relaxed">
+            <p>
+              Les produits proposés sont des cadres décoratifs 3D d&apos;art automobile au format galerie, intégrant une miniature de collection minutieusement fixée, un éclairage rétroéclairé LED basse tension et une vitre de protection.
+            </p>
+            <p>
+              Chaque pièce étant confectionnée et vérifiée à la main dans notre atelier, d&apos;infimes variations de texture ou de nuances de colorimétrie peuvent exister par rapport aux photographies d&apos;illustration, attestant de l&apos;authenticité artisanale du produit.
+            </p>
+            <div className="bg-neutral-950/60 p-4 rounded-xl border border-neutral-800/60 flex items-start gap-3">
+              <ShieldAlert className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+              <p className="text-xs text-neutral-300">
+                <strong className="text-white">Conformité Européenne (Norme CE) :</strong> Les cadres équipés de modules électroniques respectent rigoureusement les directives européennes de sécurité basse tension (LVD) et de compatibilité électromagnétique (EMC).
+              </p>
+            </div>
+          </div>
+        </section>
 
-      <section className="space-y-4 border-t border-neutral-100 pt-8">
-        <h2 className="text-xs font-bold text-black uppercase tracking-wider">3. Prix & Facturation</h2>
-        <p>
-          Les prix sont indiqués en Euros et s'entendent toutes taxes comprises (TTC), au taux de TVA français de 20% applicable au jour de la commande.
-        </p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Le prix de vente unitaire d'un cadre est fixé à <strong className="text-black font-semibold">40,00 € TTC</strong>.</li>
-          <li>Les frais d'expédition via Colissimo suivi s'élèvent à <strong className="text-black font-semibold">5,90 € TTC</strong>.</li>
-          <li>Les frais d'expédition sont offerts pour toute commande atteignant ou dépassant <strong className="text-black font-semibold">80,00 € TTC</strong> (soit 2 cadres).</li>
-        </ul>
-        <p>
-          Chaque paiement validé donne lieu à l'émission d'une facture au format conforme envoyée automatiquement par courrier électronique.
-        </p>
-      </section>
+        {/* 3. Prix & Facturation */}
+        <section className="bg-neutral-900/40 border border-neutral-800/80 rounded-2xl p-6 sm:p-8 space-y-4">
+          <h2 className="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <span className="text-amber-400 font-mono text-sm">03.</span> Tarifs &amp; Modalités de Facturation
+          </h2>
+          <div className="space-y-3 text-sm text-neutral-300 leading-relaxed">
+            <p>
+              Les tarifs applicables sont ceux affichés sur le site au moment de la passation de la commande. Tous les prix sont stipulés en Euros (€) Toutes Taxes Comprises (TTC), au taux de TVA en vigueur au jour de la validation d&apos;achat.
+            </p>
+            <ul className="space-y-2 bg-neutral-950/60 p-5 rounded-xl border border-neutral-800/60">
+              <li className="flex items-center justify-between text-neutral-300">
+                <span>Prix unitaire catalogue standard :</span>
+                <span className="font-semibold text-white">49,90 € TTC</span>
+              </li>
+              <li className="flex items-center justify-between text-neutral-300">
+                <span>Frais de livraison Colissimo Suivie :</span>
+                <span className="font-semibold text-emerald-400">100% Offerte (0,00 €)</span>
+              </li>
+              <li className="flex items-center justify-between text-neutral-300">
+                <span>Facture d&apos;achat officielle :</span>
+                <span className="text-neutral-400">Générée et adressée immédiatement par e-mail</span>
+              </li>
+            </ul>
+          </div>
+        </section>
 
-      <section className="space-y-4 border-t border-neutral-100 pt-8">
-        <h2 className="text-xs font-bold text-black uppercase tracking-wider">4. Commande & Sécurisation du Paiement</h2>
-        <p>
-          Les commandes s'effectuent sous le statut d'invité (guest checkout). Le paiement s'effectue par carte bancaire sur l'infrastructure de paiement sécurisée de notre partenaire <strong className="text-black">Stripe</strong>. Les transactions sont chiffrées selon le protocole SSL/TLS.
-        </p>
-        <p>
-          Le contrat de vente est formé dès la validation définitive du paiement de la commande par notre processeur Stripe. Le débit de la carte bancaire est concomitant à la validation de la commande.
-        </p>
-      </section>
+        {/* 4. Commande & Paiement Sécurisé */}
+        <section className="bg-neutral-900/40 border border-neutral-800/80 rounded-2xl p-6 sm:p-8 space-y-4">
+          <h2 className="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <CreditCard className="w-5 h-5 text-amber-400" />
+            <span className="text-amber-400 font-mono text-sm">04.</span> Commande &amp; Sécurisation Bancaire
+          </h2>
+          <div className="space-y-3 text-sm text-neutral-300 leading-relaxed">
+            <p>
+              Les achats s&apos;effectuent de façon fluide sous le mode invité sécurisé (Guest Checkout). La validation définitive de la commande intervient lors du débit effectif du compte bancaire de l&apos;Acheteur.
+            </p>
+            <p>
+              Les transactions sont opérées via l&apos;infrastructure certifiée PCI-DSS niveau 1 de notre partenaire financier <strong className="text-white">Stripe</strong>. Les coordonnées bancaires sont chiffrées selon le protocole de chiffrement TLS 256 bits et ne transitent à aucun moment sur les serveurs de Dream Frame.
+            </p>
+          </div>
+        </section>
 
-      <section className="space-y-4 border-t border-neutral-100 pt-8">
-        <h2 className="text-xs font-bold text-black uppercase tracking-wider">5. Livraison & Stocks</h2>
-        <p>
-          Les livraisons sont limitées à la France métropolitaine. L'expédition a lieu sous 24/48h ouvrées par Colissimo Suivi de La Poste.
-        </p>
-        <p>
-          L'assemblage des cadres étant manuel, le stock est décrémenté de façon atomique dès la confirmation de la transaction financière. En cas de rupture de stock exceptionnelle, le Client sera immédiatement contacté pour être remboursé sous 5 jours.
-        </p>
-      </section>
+        {/* 5. Livraison & Délais */}
+        <section className="bg-neutral-900/40 border border-neutral-800/80 rounded-2xl p-6 sm:p-8 space-y-4">
+          <h2 className="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <Truck className="w-5 h-5 text-amber-400" />
+            <span className="text-amber-400 font-mono text-sm">05.</span> Expédition &amp; Livraison Colissimo
+          </h2>
+          <div className="space-y-3 text-sm text-neutral-300 leading-relaxed">
+            <p>
+              Toutes les commandes sont préparées, contrôlées et expédiées sous 24 à 48 heures ouvrées. L&apos;acheminement s&apos;effectue par le service Colissimo avec numéro de suivi transmis en temps réel.
+            </p>
+            <p>
+              En cas de colis endommagé lors du transport, le Client est invité à notifier ses réserves auprès du transporteur et à contacter le support sous 48 heures à <span className="text-amber-400 font-mono">contact@dreamframe.fr</span> avec photographies du colis.
+            </p>
+          </div>
+        </section>
 
-      <section className="space-y-4 border-t border-neutral-100 pt-8">
-        <h2 className="text-xs font-bold text-black uppercase tracking-wider">6. Droit de rétractation (14 jours)</h2>
-        <p>
-          Conformément à l'article L. 221-18 du Code de la consommation, le Client dispose d'un délai de <strong className="text-black font-semibold">14 jours calendaires</strong> à compter de la réception de son produit pour exercer son droit de rétractation sans avoir à justifier de motifs ni à payer de pénalités.
-        </p>
-        <p>
-          Le Client doit renvoyer le produit intact, dans son emballage d'origine, à ses frais exclusifs. Pour exercer ce droit, le Client peut utiliser le formulaire disponible sur la page de rétractation ou adresser sa demande explicite par e-mail à <span className="text-black">contact@dreamframe.fr</span>.
-        </p>
-      </section>
+        {/* 6. Droit de Rétractation */}
+        <section className="bg-neutral-900/40 border border-neutral-800/80 rounded-2xl p-6 sm:p-8 space-y-4">
+          <h2 className="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <RotateCcw className="w-5 h-5 text-amber-400" />
+            <span className="text-amber-400 font-mono text-sm">06.</span> Droit de Rétractation de 14 Jours
+          </h2>
+          <div className="space-y-3 text-sm text-neutral-300 leading-relaxed">
+            <p>
+              Conformément à l&apos;article L. 221-18 du Code de la consommation, le Client dispose d&apos;un délai légal de <strong className="text-white">14 jours calendaires</strong> à compter du jour de la réception du colis pour notifier sa volonté de se rétracter sans avoir à motiver sa décision.
+            </p>
+            <p>
+              Les articles doivent être retournés complets, dans leur emballage d&apos;origine intact et en parfait état de revente. Le remboursement intégral est exécuté dans un délai maximal de 14 jours suivant la réception et le contrôle de conformité en atelier.
+            </p>
+          </div>
+        </section>
 
-      <section className="space-y-4 border-t border-neutral-100 pt-8">
-        <h2 className="text-xs font-bold text-black uppercase tracking-wider">7. Garanties Légales</h2>
-        <p>
-          Nos produits bénéficient de la garantie légale de conformité (articles L. 217-3 et suivants du Code de la consommation) et de la garantie contre les vices cachés (articles 1641 et suivants du Code civil).
-        </p>
-      </section>
+        {/* 7. Garanties Légales */}
+        <section className="bg-neutral-900/40 border border-neutral-800/80 rounded-2xl p-6 sm:p-8 space-y-4">
+          <h2 className="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <Scale className="w-5 h-5 text-amber-400" />
+            <span className="text-amber-400 font-mono text-sm">07.</span> Garanties Légales de Conformité &amp; Vices Cachés
+          </h2>
+          <div className="space-y-3 text-sm text-neutral-300 leading-relaxed">
+            <p>
+              Le Vendeur est garant de la conformité du produit vendu selon les articles L. 217-4 et suivants du Code de la consommation, ainsi que des défauts cachés de la chose vendue conformément aux articles 1641 et suivants du Code civil.
+            </p>
+            <p>
+              En cas de non-conformité avérée ou de défectuosité du système d&apos;éclairage LED sous garantie légale de 2 ans, le produit est remplacé ou réparé sans aucuns frais pour le Client.
+            </p>
+          </div>
+        </section>
 
-      <section className="space-y-4 border-t border-neutral-100 pt-8">
-        <h2 className="text-xs font-bold text-black uppercase tracking-wider">8. Médiation de la consommation</h2>
-        <p>
-          Conformément aux dispositions du Code de la consommation concernant le règlement amiable des litiges, le Client consommateur a le droit de recourir gratuitement à un médiateur de la consommation agréé.
-        </p>
-        <p>
-          Le médiateur de la consommation désigné par Dream Frame est le médiateur de la consommation :
-        </p>
-        <p className="font-bold text-black pl-4 border-l border-black">
-          CM2C (Centre de la Médiation de la Consommation de Conciliateurs de Justice)<br />
-          Site internet : https://www.cm2c.net/<br />
-          Adresse : 49 Rue de Ponthieu, 75008 Paris
-        </p>
-      </section>
+        {/* 8. Litiges & Médiation */}
+        <section className="bg-neutral-900/40 border border-neutral-800/80 rounded-2xl p-6 sm:p-8 space-y-4">
+          <h2 className="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <HelpCircle className="w-5 h-5 text-amber-400" />
+            <span className="text-amber-400 font-mono text-sm">08.</span> Règlement Amiable des Litiges &amp; Médiation
+          </h2>
+          <div className="space-y-3 text-sm text-neutral-300 leading-relaxed">
+            <p>
+              En cas de réclamation, le Client s&apos;adresse en priorité au service client de Dream Frame par e-mail à <span className="text-amber-400 font-mono">contact@dreamframe.fr</span>.
+            </p>
+            <p>
+              À défaut d&apos;accord amiable sous un délai de 30 jours, le consommateur peut s&apos;adresser gratuitement au médiateur de la consommation : CM2C (Centre de la Médiation de la Consommation de Conciliateurs de Justice), 49 Rue de Ponthieu, 75008 Paris (<a href="https://www.cm2c.net/" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:underline">www.cm2c.net</a>).
+            </p>
+          </div>
+        </section>
 
-      <p className="text-[10px] text-neutral-400 mt-12 pt-4 border-t border-neutral-150">
-        Dernière mise à jour : 22 août 2026.
-      </p>
+        {/* Bas de page */}
+        <div className="pt-8 border-t border-neutral-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-neutral-400">
+          <p>Dernière révision : 11 septembre 2026</p>
+          <p className="font-mono text-neutral-400">Dream Frame Atelier SASU — Document Contractuel Officiel</p>
+        </div>
+      </div>
     </main>
   )
 }
+

@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 },
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'google-site-verification-token',
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '81e1cbc714b9d36c',
   },
   icons: {
     icon: [

@@ -280,16 +280,6 @@ export function SectionRenderer({
                 key={item.id}
                 className="snap-start shrink-0 w-[55vw] sm:w-[220px] lg:w-[240px] group flex flex-col items-center space-y-3"
               >
-                {/* Spot lumineux galerie haut de gamme au-dessus du cadre */}
-                <div className="w-full flex flex-col items-center pointer-events-none -mb-3 z-10">
-                  {/* Luminaire rail */}
-                  <div className="w-2 h-[3px] bg-neutral-600 rounded-sm shadow-md" />
-                  {/* Source chaude */}
-                  <div className="w-1 h-1 rounded-full bg-amber-100 shadow-[0_0_12px_rgba(254,243,199,0.95)]" />
-                  {/* Faisceau lumineux conique descendant sur le cadre */}
-                  <div className="w-full h-8 bg-gradient-to-b from-amber-100/15 via-amber-200/5 to-transparent blur-sm" />
-                </div>
-
                 {/* Vrai Cadre d'Art de la Boutique (aspect-[3/4] élégant) */}
                 <Link
                   href={isEditor ? '#' : `/produit/${item.slug}`}
