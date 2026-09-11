@@ -26,7 +26,7 @@ const envSchema = z.object({
   // App
   NEXT_PUBLIC_APP_URL: z.string().url(),
   ADMIN_ALERT_EMAIL: z.string().email(),
-  CRON_SECRET: z.string().min(1, 'CRON_SECRET manquant'),
+  CRON_SECRET: z.string().optional(),
 
   // Optional
   NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().optional(),
