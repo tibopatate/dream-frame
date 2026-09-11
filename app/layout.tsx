@@ -18,7 +18,7 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://dreamframe.fr'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://dreamframeofficiel.com'),
   title: {
     default: 'Dream Frame | Site Officiel',
     template: '%s | Dream Frame | Site Officiel',
@@ -62,8 +62,8 @@ const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'Dream Frame',
-  url: 'https://dreamframe.fr',
-  logo: 'https://dreamframe.fr/logo.jpg',
+  url: 'https://dreamframeofficiel.com',
+  logo: 'https://dreamframeofficiel.com/logo.jpg',
   contactPoint: {
     '@type': 'ContactPoint',
     email: 'contact@dreamframe.fr',

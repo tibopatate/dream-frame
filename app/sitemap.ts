@@ -3,7 +3,7 @@ import { prisma, isPrismaConfigured } from '@/lib/db'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://dreamframe.fr'
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://dreamframeofficiel.com'
 
   // Récupérer tous les slugs de produits actifs
   let products: { slug: string; updatedAt?: Date }[] = []
