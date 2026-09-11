@@ -16,6 +16,7 @@ import {
   PanelLeftOpen,
   Maximize2,
   Minimize2,
+  Menu,
 } from 'lucide-react'
 
 interface CockpitTopBarProps {
@@ -35,6 +36,9 @@ interface CockpitTopBarProps {
   onToggleSidebar?: () => void
   isCenterPanelCollapsed?: boolean
   onToggleCenterPanel?: () => void
+  mobileView?: 'editor' | 'preview'
+  onMobileViewChange?: (view: 'editor' | 'preview') => void
+  onOpenMobileSidebar?: () => void
 }
 
 export function CockpitTopBar({
@@ -54,11 +58,87 @@ export function CockpitTopBar({
   onToggleSidebar,
   isCenterPanelCollapsed = false,
   onToggleCenterPanel,
+  mobileView = 'editor',
+  onMobileViewChange,
+  onOpenMobileSidebar,
 }: CockpitTopBarProps) {
   return (
-    <div className="sticky top-0 z-50 h-14 bg-white border-b border-slate-200 px-4 flex items-center justify-between">
-      {/* Left group */}
-      <div className="flex items-center gap-3">
+    <div className="sticky top-0 z-50 h-14 bg-white border-b border-slate-200 px-3 sm:px-4 flex items-center justify-between">
+      {/* ══════════════════════════════════════════════════════════════
+          1. VERSION MOBILE (< md)
+          ══════════════════════════════════════════════════════════════ */}
+      <div className="flex md:hidden items-center justify-between w-full gap-2">
+        {/* Gauche : Menu drawer + Bouton Quitter */}
+        <div className="flex items-center gap-1.5">
+          {onOpenMobileSidebar && (
+            <button
+              type="button"
+              onClick={onOpenMobileSidebar}
+              className="p-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition cursor-pointer"
+              aria-label="Menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+          )}
+
+          <Link
+            href="/admin/dashboard"
+            className="flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-slate-900 p-1 rounded-md"
+            title="Quitter l'éditeur"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span className="hidden xs:inline">Quitter</span>
+          </Link>
+        </div>
+
+        {/* Centre : Sélecteur vue Éditeur / Aperçu */}
+        <div className="flex items-center bg-slate-100 rounded-full p-0.5 border border-slate-200/80">
+          <button
+            type="button"
+            onClick={() => onMobileViewChange?.('editor')}
+            className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              mobileView === 'editor'
+                ? 'bg-white text-slate-900 shadow-2xs'
+                : 'text-slate-500 hover:text-slate-700'
+            }`}
+          >
+            Éditeur
+          </button>
+          <button
+            type="button"
+            onClick={() => onMobileViewChange?.('preview')}
+            className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              mobileView === 'preview'
+                ? 'bg-red-600 text-white shadow-2xs'
+                : 'text-slate-500 hover:text-slate-700'
+            }`}
+          >
+            Aperçu
+          </button>
+        </div>
+
+        {/* Droite : Bouton Publier compact */}
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={onSavePublish}
+            disabled={isPublishing}
+            className="flex items-center gap-1.5 bg-red-600 hover:bg-red-700 active:scale-95 text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow-sm transition-all disabled:opacity-60 cursor-pointer"
+          >
+            {isPublishing ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            ) : null}
+            <span>Publier</span>
+          </button>
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════════════════════════════
+          2. VERSION DESKTOP (md:)
+          ══════════════════════════════════════════════════════════════ */}
+      <div className="hidden md:flex items-center justify-between w-full">
+        {/* Left group */}
+        <div className="flex items-center gap-3">
         {onToggleSidebar && (
           <button
             type="button"
@@ -228,5 +308,6 @@ export function CockpitTopBar({
         </div>
       </div>
     </div>
-  )
+  </div>
+)
 }

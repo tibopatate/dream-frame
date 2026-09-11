@@ -83,10 +83,10 @@ export default async function AdminCommandesPage({ searchParams }: PageProps) {
   return (
     <div className="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">
+        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight uppercase">
           Suivi des Commandes
         </h1>
-        <p className="text-neutral-400 text-xs mt-1">
+        <p className="text-slate-500 text-xs mt-1">
           {orders.length} commande{orders.length > 1 ? 's' : ''} répertoriée{orders.length > 1 ? 's' : ''} · Expéditions et étiquettes Colissimo
         </p>
       </div>
@@ -95,13 +95,13 @@ export default async function AdminCommandesPage({ searchParams }: PageProps) {
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
         <form method="GET" action="/admin/commandes" className="w-full md:max-w-xs relative">
           {activeStatus && <input type="hidden" name="status" value={activeStatus} />}
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input
             type="search"
             name="search"
             defaultValue={searchQuery}
             placeholder="Rechercher email, nom, numéro..."
-            className="w-full bg-neutral-900 border border-neutral-800 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-400/80 transition"
+            className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition shadow-2xs"
           />
         </form>
 
@@ -109,10 +109,10 @@ export default async function AdminCommandesPage({ searchParams }: PageProps) {
         <div className="flex flex-wrap items-center gap-1.5 w-full md:w-auto">
           <Link
             href="/admin/commandes"
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition cursor-pointer ${
               !activeStatus
-                ? 'bg-white text-black border-white shadow-sm'
-                : 'bg-neutral-900 border-neutral-800 text-neutral-400 hover:text-white'
+                ? 'bg-red-50 text-red-600 border-red-200 shadow-2xs'
+                : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
             Toutes
@@ -124,10 +124,10 @@ export default async function AdminCommandesPage({ searchParams }: PageProps) {
               <Link
                 key={status}
                 href={url}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition cursor-pointer ${
                   isActive
-                    ? 'bg-white text-black border-white shadow-sm'
-                    : 'bg-neutral-900 border-neutral-800 text-neutral-400 hover:text-white'
+                    ? 'bg-red-50 text-red-600 border-red-200 font-bold shadow-2xs'
+                    : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
                 {label}
@@ -138,10 +138,10 @@ export default async function AdminCommandesPage({ searchParams }: PageProps) {
       </div>
 
       {/* Tableau des Commandes */}
-      <div className="bg-neutral-900/80 border border-neutral-800 rounded-2xl overflow-hidden shadow-xl">
+      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-neutral-400">
-            <thead className="bg-neutral-950 text-neutral-400 uppercase tracking-wider font-semibold border-b border-neutral-800">
+          <table className="w-full text-left text-xs text-slate-600">
+            <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-100">
               <tr>
                 <th className="px-6 py-4">Numéro Commande</th>
                 <th className="px-6 py-4">Date</th>
@@ -152,31 +152,31 @@ export default async function AdminCommandesPage({ searchParams }: PageProps) {
                 <th className="px-6 py-4 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-neutral-800/80">
+            <tbody className="divide-y divide-slate-100">
               {orders.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-12 text-center text-neutral-500">
+                  <td colSpan={7} className="px-6 py-12 text-center text-slate-400">
                     Aucune commande trouvée
                   </td>
                 </tr>
               ) : (
                 orders.map((order) => (
-                  <tr key={order.id} className="hover:bg-neutral-800/30 transition-colors">
+                  <tr key={order.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="px-6 py-4">
                       <Link
                         href={`/admin/commandes/${order.id}`}
-                        className="font-mono font-bold text-white hover:text-amber-400 transition"
+                        className="font-mono font-bold text-slate-900 hover:text-red-600 transition"
                       >
                         {order.orderNumber}
                       </Link>
                     </td>
-                    <td className="px-6 py-4 text-neutral-400">{formatDate(order.createdAt)}</td>
+                    <td className="px-6 py-4 text-slate-500">{formatDate(order.createdAt)}</td>
                     <td className="px-6 py-4">
                       <div>
-                        <p className="font-bold text-white">
+                        <p className="font-bold text-slate-900">
                           {order.customerFirstName} {order.customerLastName}
                         </p>
-                        <p className="text-neutral-500 text-[10px]">{order.customerEmail}</p>
+                        <p className="text-slate-400 text-[10px]">{order.customerEmail}</p>
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -186,21 +186,21 @@ export default async function AdminCommandesPage({ searchParams }: PageProps) {
                     </td>
                     <td className="px-6 py-4">
                       {order.trackingNumber ? (
-                        <span className="font-mono text-[11px] text-neutral-300 flex items-center gap-1">
-                          <Truck className="w-3 h-3 text-amber-400" />
+                        <span className="font-mono text-[11px] text-slate-700 flex items-center gap-1">
+                          <Truck className="w-3 h-3 text-red-600" />
                           {order.trackingNumber}
                         </span>
                       ) : (
-                        <span className="text-[10px] text-neutral-600 italic">Non renseigné</span>
+                        <span className="text-[10px] text-slate-400 italic">Non renseigné</span>
                       )}
                     </td>
-                    <td className="px-6 py-4 text-right font-bold text-white font-mono">
+                    <td className="px-6 py-4 text-right font-bold text-slate-900 font-mono">
                       {formatPriceFromDecimal(Number(order.total))}
                     </td>
                     <td className="px-6 py-4 text-right">
                       <Link
                         href={`/admin/commandes/${order.id}`}
-                        className="inline-flex items-center gap-1 text-xs font-bold text-neutral-300 hover:text-white bg-neutral-800 hover:bg-neutral-700 px-3 py-1.5 rounded-xl transition"
+                        className="inline-flex items-center gap-1 text-xs font-bold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-xl transition cursor-pointer"
                       >
                         Gérer
                         <ArrowRight className="w-3 h-3" />

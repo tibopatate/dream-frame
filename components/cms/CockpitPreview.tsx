@@ -21,11 +21,11 @@ export function CockpitPreview({
   onHoverSection,
 }: CockpitPreviewProps) {
   return (
-    <div className="flex-1 overflow-y-auto bg-slate-100 flex justify-center relative">
+    <div className="flex-1 w-full overflow-y-auto bg-slate-100 flex justify-center relative">
       <div
         className={`transition-all duration-300 bg-[#080807] text-white shadow-2xl ${
           activeDevice === 'mobile'
-            ? 'max-w-[390px] border-x border-slate-300 my-6 rounded-[2rem] overflow-hidden min-h-[844px] shadow-xl'
+            ? 'w-full md:max-w-[390px] md:border-x md:border-slate-300 md:my-6 md:rounded-[2rem] overflow-hidden min-h-full md:min-h-[844px] md:shadow-xl'
             : 'w-full'
         }`}
       >

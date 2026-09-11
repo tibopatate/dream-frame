@@ -37,19 +37,19 @@ export default async function AdminProduitsPage() {
   }
 
   return (
-    <div className="p-6 sm:p-10 space-y-8 max-w-7xl mx-auto">
+    <div className="p-4 sm:p-8 space-y-6 sm:space-y-8 max-w-7xl mx-auto">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight uppercase">
             Catalogue des Cadres
           </h1>
-          <p className="text-neutral-400 text-xs mt-1">
+          <p className="text-slate-500 text-xs mt-1">
             {products.length} modèle{products.length > 1 ? 's' : ''} sous vitrage acrylique et rétroéclairage LED
           </p>
         </div>
         <Link
           href="/admin/produits/nouveau"
-          className="px-5 py-3 bg-white hover:bg-neutral-100 text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-xl shadow-white/10 flex items-center gap-2 self-start sm:self-auto"
+          className="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm shadow-red-600/20 flex items-center gap-2 self-start sm:self-auto cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           Ajouter un Cadre 3D
@@ -57,7 +57,7 @@ export default async function AdminProduitsPage() {
       </div>
 
       {/* Grille Produits */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
         {products.map((product) => {
           const variant = product.variants?.[0]
           const stock = variant?.stock ?? 5
@@ -69,10 +69,10 @@ export default async function AdminProduitsPage() {
           return (
             <div
               key={product.id}
-              className="bg-neutral-900/80 border border-neutral-800 rounded-2xl overflow-hidden hover:border-neutral-700 transition-all duration-300 flex flex-col justify-between shadow-lg group"
+              className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-slate-300 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-2xs group"
             >
               {/* Image & Badges */}
-              <div className="relative aspect-[4/3] bg-black overflow-hidden">
+              <div className="relative aspect-[4/3] bg-slate-900 overflow-hidden">
                 {product.images?.[0] ? (
                   <Image
                     src={product.images[0]}
@@ -82,7 +82,7 @@ export default async function AdminProduitsPage() {
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 ) : (
-                  <div className="absolute inset-0 flex items-center justify-center text-neutral-700 bg-neutral-950">
+                  <div className="absolute inset-0 flex items-center justify-center text-slate-600 bg-slate-950">
                     <Package className="w-8 h-8" />
                   </div>
                 )}
@@ -109,29 +109,29 @@ export default async function AdminProduitsPage() {
               </div>
 
               {/* Contenu & Prix */}
-              <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
+              <div className="p-4 sm:p-5 space-y-4 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-bold text-white text-sm leading-snug line-clamp-1 group-hover:text-amber-300 transition">
+                  <h3 className="font-bold text-slate-900 text-sm leading-snug line-clamp-1 group-hover:text-red-600 transition">
                     {product.name}
                   </h3>
-                  <p className="text-neutral-400 text-xs line-clamp-2 mt-1 font-light leading-relaxed">
+                  <p className="text-slate-500 text-xs line-clamp-2 mt-1 font-light leading-relaxed">
                     {product.description}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-neutral-800 flex items-center justify-between">
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                   <div>
-                    <span className="text-base font-bold text-white">49,99 €</span>
-                    <span className="text-[10px] text-emerald-400 block font-medium">Livraison offerte</span>
+                    <span className="text-base font-bold text-slate-900">49,99 €</span>
+                    <span className="text-[10px] text-emerald-600 block font-medium">Livraison offerte</span>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-neutral-400 font-mono">
-                      Stock : <strong className="text-white">{stock}</strong>
+                    <span className="text-xs text-slate-500 font-mono">
+                      Stock : <strong className="text-slate-800">{stock}</strong>
                     </span>
                     <Link
                       href={`/admin/produits/${product.id}`}
-                      className="p-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white transition"
+                      className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 transition"
                       title="Modifier"
                     >
                       <Edit2 className="w-3.5 h-3.5" />

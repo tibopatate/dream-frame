@@ -80,8 +80,10 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const [isCenterPanelCollapsed, setIsCenterPanelCollapsed] = useState(false)
 
-  // ─── Preview Device ─────────────────────────────────────────────────
+  // ─── Preview Device & Mobile Responsiveness ─────────────────────────
   const [activeDevice, setActiveDevice] = useState<'desktop' | 'mobile'>('desktop')
+  const [mobileView, setMobileView] = useState<'editor' | 'preview'>('editor')
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
 
   // ─── Persistence ────────────────────────────────────────────────────
   const [isDirty, setIsDirty] = useState(false)
@@ -257,6 +259,8 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
   const handleCategoryChange = useCallback((category: string) => {
     setActiveCategory(category)
     setActiveSectionId(null)
+    setMobileView('editor')
+    setIsMobileSidebarOpen(false)
     if (isCenterPanelCollapsed) setIsCenterPanelCollapsed(false)
   }, [isCenterPanelCollapsed])
 
@@ -385,43 +389,61 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
         onToggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
         isCenterPanelCollapsed={isCenterPanelCollapsed}
         onToggleCenterPanel={() => setIsCenterPanelCollapsed(!isCenterPanelCollapsed)}
+        mobileView={mobileView}
+        onMobileViewChange={setMobileView}
+        onOpenMobileSidebar={() => setIsMobileSidebarOpen(true)}
       />
 
       {/* ─── BODY ─── */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* 1. SIDEBAR (Collapsible w-64 <-> w-16) */}
+      <div className="flex-1 flex overflow-hidden relative">
+        {/* 1. SIDEBAR (Collapsible w-64 <-> w-16 sur desktop, drawer slide-over sur mobile) */}
         <CockpitSidebar
           activeCategory={activeCategory}
           onCategoryChange={handleCategoryChange}
           isCollapsed={isSidebarCollapsed}
           onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+          isMobileOpen={isMobileSidebarOpen}
+          onCloseMobile={() => setIsMobileSidebarOpen(false)}
         />
 
         {/* ─── CONDITIONAL VIEW: DASHBOARD (FULL) VS SITE BUILDER (3-COLUMNS) ─── */}
         {activeCategory === 'dashboard' ? (
-          <AnalyticsDashboard />
+          <div className="flex-1 w-full min-w-0 overflow-y-auto">
+            <AnalyticsDashboard />
+          </div>
         ) : (
           <>
-            {/* 2. CENTER PANEL (Collapsible for 100% full screen preview) */}
-            {!isCenterPanelCollapsed && (
-              <div className="w-[420px] flex-shrink-0 bg-white border-r border-slate-200 flex flex-col overflow-hidden transition-all duration-300">
-                {renderCenterPanel()}
-              </div>
-            )}
+            {/* 2. CENTER PANEL (Pleine largeur sur mobile si vue Éditeur, w-[420px] sur desktop) */}
+            <div
+              className={`flex-col bg-white border-r border-slate-200 overflow-hidden transition-all duration-300 ${
+                mobileView === 'editor'
+                  ? 'flex w-full md:w-[420px]'
+                  : 'hidden md:flex md:w-[420px]'
+              } ${isCenterPanelCollapsed ? 'md:hidden' : ''} flex-shrink-0`}
+            >
+              {renderCenterPanel()}
+            </div>
 
-            {/* 3. PREVIEW (Takes remaining space or full width) */}
-            <CockpitPreview
-              sections={doc.sections}
-              activeDevice={activeDevice}
-              activeSectionId={activeSectionId}
-              hoveredSectionId={hoveredSectionId}
-              onSelectSection={(id) => {
-                setActiveSectionId(id)
-                setActiveCategory('homepage')
-                if (isCenterPanelCollapsed) setIsCenterPanelCollapsed(false)
-              }}
-              onHoverSection={setHoveredSectionId}
-            />
+            {/* 3. PREVIEW (Pleine largeur sur mobile si vue Aperçu, flex-1 sur desktop) */}
+            <div
+              className={`flex-1 w-full min-w-0 overflow-y-auto ${
+                mobileView === 'preview' ? 'flex' : 'hidden md:flex'
+              }`}
+            >
+              <CockpitPreview
+                sections={doc.sections}
+                activeDevice={activeDevice}
+                activeSectionId={activeSectionId}
+                hoveredSectionId={hoveredSectionId}
+                onSelectSection={(id) => {
+                  setActiveSectionId(id)
+                  setActiveCategory('homepage')
+                  setMobileView('editor')
+                  if (isCenterPanelCollapsed) setIsCenterPanelCollapsed(false)
+                }}
+                onHoverSection={setHoveredSectionId}
+              />
+            </div>
           </>
         )}
       </div>
