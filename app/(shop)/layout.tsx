@@ -176,6 +176,7 @@ function ShopFooter() {
 
           <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-[11px] font-semibold tracking-wider uppercase">
             {[
+              ['Suivi de commande', '/suivi'],
               ['Mentions légales', '/mentions-legales'],
               ['CGV', '/cgv'],
               ['Confidentialité', '/confidentialite'],

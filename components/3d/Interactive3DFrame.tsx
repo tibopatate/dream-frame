@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 import Image from 'next/image'
-import { Zap, Sparkles } from 'lucide-react'
+import { Zap, Sparkles, Moon, Sun, ZoomIn, X } from 'lucide-react'
 
 interface Interactive3DFrameProps {
   imageSrc: string
@@ -18,6 +18,7 @@ interface Interactive3DFrameProps {
  * L'utilisateur peut incliner le cadre à la souris ou au doigt.
  * Le vitrage acrylique réfléchit la lumière dynamiquement.
  * Le rétroéclairage LED peut être activé/désactivé.
+ * Comprend le mode nuit « Éteindre la pièce » et la loupe HD plein écran.
  */
 export function Interactive3DFrame({
   imageSrc,
@@ -30,6 +31,8 @@ export function Interactive3DFrame({
   const [rotation, setRotation] = useState({ x: 0, y: 0 })
   const [isHovered, setIsHovered] = useState(false)
   const [ledGlow, setLedGlow] = useState(true)
+  const [isNightMode, setIsNightMode] = useState(false)
+  const [isZoomOpen, setIsZoomOpen] = useState(false)
 
   const handleMove = (clientX: number, clientY: number) => {
     if (!containerRef.current) return
@@ -52,37 +55,75 @@ export function Interactive3DFrame({
     setIsHovered(false)
   }
 
-  // Couleur du halo LED selon l'époque
-  const ledColor = isVintage
+  // Couleur du halo LED selon le mode nuit et l'époque
+  const ledColor = isNightMode
+    ? 'radial-gradient(circle, rgba(251,191,36,0.65) 0%, rgba(217,119,6,0.35) 45%, transparent 75%)'
+    : isVintage
     ? 'radial-gradient(circle, rgba(199,167,122,0.3) 0%, rgba(200,16,46,0.12) 70%, transparent 100%)'
     : 'radial-gradient(circle, rgba(199,167,122,0.28) 0%, rgba(30,30,28,0.6) 70%, transparent 100%)'
 
   return (
-    <div className="relative w-full max-w-[440px] mx-auto py-6 select-none">
-      {/* Contrôle LED */}
-      <div className="flex justify-between items-center mb-3 text-[9px] tracking-[0.18em] uppercase text-neutral-500">
+    <div className={`relative w-full max-w-[440px] mx-auto py-6 select-none rounded-3xl transition-all duration-500 ${
+      isNightMode ? 'bg-black/95 p-4 sm:p-6 ring-1 ring-amber-400/30 shadow-[0_0_80px_rgba(0,0,0,1)]' : ''
+    }`}>
+      {/* Contrôles Interactifs (LED + Mode Nuit + Loupe HD) */}
+      <div className="flex flex-wrap justify-between items-center gap-2 mb-3 text-[9px] tracking-[0.18em] uppercase text-neutral-500">
         <span className="flex items-center gap-1.5 text-amber-400">
           <Sparkles className="w-3 h-3" />
           Pièce 3D Interactive
         </span>
-        <button
-          type="button"
-          onClick={() => setLedGlow(!ledGlow)}
-          className={`flex items-center gap-1.5 px-2.5 py-1 border rounded-lg transition-all duration-200 text-[9px] ${
-            ledGlow
-              ? 'border-amber-400/50 text-amber-400 bg-neutral-900'
-              : 'border-neutral-800 text-neutral-500 hover:text-white hover:border-neutral-700'
-          }`}
-        >
-          <Zap className="w-2.5 h-2.5" />
-          {ledGlow ? 'LEDs : ON' : 'LEDs : OFF'}
-        </button>
+        <div className="flex items-center gap-1.5">
+          {/* Bouton Mode Nuit / Éteindre la pièce */}
+          <button
+            type="button"
+            onClick={() => {
+              setIsNightMode(!isNightMode)
+              if (!isNightMode) setLedGlow(true)
+            }}
+            title="Simuler l'ambiance sombre de nuit dans un salon"
+            className={`flex items-center gap-1 px-2.5 py-1 border rounded-lg transition-all duration-200 text-[9px] ${
+              isNightMode
+                ? 'border-amber-400 bg-amber-400/20 text-amber-300 font-bold'
+                : 'border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700 bg-neutral-900/60'
+            }`}
+          >
+            {isNightMode ? <Sun className="w-2.5 h-2.5" /> : <Moon className="w-2.5 h-2.5" />}
+            <span>{isNightMode ? 'Jour' : 'Éteindre la pièce'}</span>
+          </button>
+
+          {/* Bouton Loupe HD */}
+          <button
+            type="button"
+            onClick={() => setIsZoomOpen(true)}
+            title="Inspecter les détails en haute résolution"
+            className="flex items-center gap-1 px-2 py-1 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700 bg-neutral-900/60 rounded-lg transition text-[9px]"
+          >
+            <ZoomIn className="w-2.5 h-2.5" />
+            <span>Zoom</span>
+          </button>
+
+          {/* Toggle LED */}
+          <button
+            type="button"
+            onClick={() => setLedGlow(!ledGlow)}
+            className={`flex items-center gap-1 px-2.5 py-1 border rounded-lg transition-all duration-200 text-[9px] ${
+              ledGlow
+                ? 'border-amber-400/50 text-amber-400 bg-neutral-900'
+                : 'border-neutral-800 text-neutral-500 hover:text-white hover:border-neutral-700'
+            }`}
+          >
+            <Zap className="w-2.5 h-2.5" />
+            {ledGlow ? 'LED: ON' : 'LED: OFF'}
+          </button>
+        </div>
       </div>
 
       {/* Halo LED */}
       {ledGlow && (
         <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-700 blur-[70px] opacity-65"
+          className={`absolute inset-0 pointer-events-none transition-all duration-700 blur-[80px] ${
+            isNightMode ? 'opacity-90 scale-110' : 'opacity-65'
+          }`}
           style={{ background: ledColor }}
         />
       )}
@@ -165,6 +206,44 @@ export function Interactive3DFrame({
       <p className="text-center text-[9px] text-neutral-600 tracking-[0.18em] uppercase mt-2">
         Glissez pour incliner le cadre en 3D
       </p>
+
+      {/* Modal Zoom Loupe Plein Écran */}
+      {isZoomOpen && (
+        <div
+          className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-8"
+          onClick={() => setIsZoomOpen(false)}
+        >
+          <div className="absolute top-4 right-4 flex items-center gap-3 z-10">
+            <span className="hidden sm:inline text-xs text-neutral-400 font-mono">Cliquer pour fermer</span>
+            <button
+              type="button"
+              onClick={() => setIsZoomOpen(false)}
+              className="p-2.5 rounded-full bg-neutral-900 border border-neutral-800 text-white hover:bg-neutral-800 transition cursor-pointer shadow-xl"
+              aria-label="Fermer le zoom"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+          <div className="relative w-full max-w-4xl h-[75vh] flex items-center justify-center">
+            <Image
+              src={imageSrc}
+              alt={`${carName} — Zoom Haute Résolution`}
+              fill
+              className="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,1)] scale-105 sm:scale-110 transition-transform duration-300"
+              sizes="1200px"
+              priority
+            />
+          </div>
+          <div className="mt-4 text-center space-y-1">
+            <p className="text-xs font-mono tracking-widest text-amber-400 uppercase">
+              {brand} · {carName} — Finition Atelier Haute Définition
+            </p>
+            <p className="text-[11px] text-neutral-400">
+              Miniature de collection, passe-partout 310g et module LED intégré
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -16,8 +16,9 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { href: '/',          label: 'Accueil',             sub: 'Page d’accueil de la boutique', delay: 0 },
-  { href: '/catalogue', label: 'La Collection',       sub: 'Toutes nos créations sous cadre', delay: 0.05 },
-  { href: '/panier',    label: 'Mon Panier',          sub: 'Vérifier ma commande', delay: 0.10 },
+  { href: '/catalogue', label: 'La Collection',       sub: 'Toutes nos créations sous cadre', delay: 0.04 },
+  { href: '/suivi',     label: 'Suivi de Commande',   sub: 'État d’assemblage & Colissimo', delay: 0.08 },
+  { href: '/panier',    label: 'Mon Panier',          sub: 'Vérifier ma commande', delay: 0.12 },
 ]
 
 const itemVariants = {

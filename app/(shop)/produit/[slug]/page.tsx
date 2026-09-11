@@ -7,6 +7,7 @@ import { MOCK_PRODUCTS } from '@/lib/mock-data'
 import { Interactive3DFrame } from '@/components/3d/Interactive3DFrame'
 import { ProductPurchaseSection } from '@/components/ProductPurchaseSection'
 import { ProductReviewsSection } from '@/components/reviews/ProductReviewsSection'
+import { ProductFAQSection } from '@/components/product/ProductFAQSection'
 import { getProductById, DEFAULT_FORMATS, getAllReviews } from '@/lib/data-store'
 
 interface Props {
@@ -117,6 +118,13 @@ export default async function ProductPage({ params }: Props) {
         name: 'Dream Frame',
       },
     },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '48',
+      bestRating: '5',
+      worstRating: '1',
+    },
   }
 
   return (
@@ -217,6 +225,9 @@ export default async function ProductPage({ params }: Props) {
             : getAllReviews({ status: 'APPROVED' })
         }
       />
+
+      {/* ─── Foire Aux Questions (FAQ Spécifique au Produit) ─── */}
+      <ProductFAQSection />
     </main>
   )
 }
