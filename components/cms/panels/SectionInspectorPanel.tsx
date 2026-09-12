@@ -125,7 +125,7 @@ function HeroContentFields({ s, onChange }: { s: Record<string, any>; onChange: 
       </AccordionSection>
 
       <AccordionSection title="Photographie d'arrière-plan" defaultOpen>
-        <FieldGroup label="Image de fond (Ferrari F40 ou supercar de votre choix)">
+        <FieldGroup label="Image de fond principale du Hero Showroom">
           <ProductImageUploader
             images={s.bgImage ? [s.bgImage] : []}
             onChange={(imgs) => onChange('bgImage', imgs[0] || '')}

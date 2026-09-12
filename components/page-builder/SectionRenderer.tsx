@@ -78,9 +78,10 @@ export function SectionRenderer({
     if (isEditor && onHover) onHover(false)
   }
 
-  // ─── SECTION 1: HERO ───────────────────────────────────────────────────────
-  // ─── SECTION 1: HERO SHOWROOM FERRARI F40 ─────────────────────────────────
+  // ─── SECTION 1: HERO SHOWROOM D'EXCEPTION ─────────────────────────────────
   if (section.type === 'hero') {
+    const heroImage = s.bgImage || liveProducts?.[0]?.images?.[0] || 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop'
+
     return (
       <div
         className={`${outlineClass} ${section.hidden ? 'opacity-40 grayscale' : ''}`}
@@ -107,7 +108,7 @@ export function SectionRenderer({
                 loop
                 muted
                 playsInline
-                poster={s.bgImage || '/images/hero-f40-real.jpg'}
+                poster={heroImage}
                 className="w-full h-full object-cover object-center brightness-[1.05] contrast-[1.02] pointer-events-none"
               >
                 <source src={s.bgVideo} type="video/mp4" />
@@ -115,8 +116,8 @@ export function SectionRenderer({
             ) : (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
-                src={s.bgImage || '/images/hero-f40-real.jpg'}
-                alt="Ferrari F40 1987 — Cadre 3D d'Art Automobile Dream Frame"
+                src={heroImage}
+                alt={s.title ? `${s.title} — Cadre 3D d'Art Automobile Dream Frame` : "Art Automobile d'Exception — Cadre 3D Dream Frame"}
                 className="w-full h-full object-cover object-center brightness-[1.0] contrast-[1.05] scale-105"
               />
             )}
