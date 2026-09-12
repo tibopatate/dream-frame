@@ -15,6 +15,9 @@ export function getStripeSecretKey(): string {
   return 'sk_test_placeholder'
 }
 
+let cachedStripe: Stripe | null = null
+let cachedKey: string = ''
+
 export function createStripeClient(customKey?: string): Stripe {
   return new Stripe(customKey || getStripeSecretKey(), {
     apiVersion: '2025-08-27.basil' as any,
@@ -22,4 +25,24 @@ export function createStripeClient(customKey?: string): Stripe {
   })
 }
 
-export const stripe = createStripeClient()
+export function getStripe(): Stripe {
+  const currentKey = getStripeSecretKey()
+  if (!cachedStripe || cachedKey !== currentKey) {
+    cachedKey = currentKey
+    cachedStripe = createStripeClient(currentKey)
+  }
+  return cachedStripe
+}
+
+// Proxy dynamique permettant d'utiliser `stripe.xxx` avec toujours la dernière clé valide
+export const stripe = new Proxy({} as Stripe, {
+  get(_target, prop) {
+    const client = getStripe()
+    const value = (client as any)[prop]
+    if (typeof value === 'function') {
+      return value.bind(client)
+    }
+    return value
+  },
+})
+

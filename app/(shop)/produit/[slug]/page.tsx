@@ -9,7 +9,9 @@ import { ProductGallery } from '@/components/product/ProductGallery'
 import { ProductPurchaseSection } from '@/components/ProductPurchaseSection'
 import { ProductReviewsSection } from '@/components/reviews/ProductReviewsSection'
 import { ProductFAQSection } from '@/components/product/ProductFAQSection'
-import { getProductById, DEFAULT_FORMATS, getAllReviews } from '@/lib/data-store'
+import { getProductById, DEFAULT_FORMATS, getAllReviews, syncDatabaseWithCloud } from '@/lib/data-store'
+
+export const dynamic = 'force-dynamic'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -17,6 +19,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
+  await syncDatabaseWithCloud()
   let product = null
 
   if (isPrismaConfigured()) {
@@ -26,10 +29,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         select: { name: true, description: true, images: true },
       })
     } catch (error) {
-      product = MOCK_PRODUCTS.find((p) => p.slug === slug) || null
+      product = null
     }
-  } else {
-    product = MOCK_PRODUCTS.find((p) => p.slug === slug) || null
+  }
+
+  if (!product) {
+    const stored = getProductById(slug)
+    product = stored || MOCK_PRODUCTS.find((p) => p.slug === slug) || null
   }
 
   if (!product) return {}
@@ -40,28 +46,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: product.name,
       description: product.description.slice(0, 160),
-      images: product.images[0] ? [{ url: product.images[0] }] : [],
+      images: product.images?.[0] ? [{ url: product.images[0] }] : [],
     },
   }
 }
 
-export async function generateStaticParams() {
-  if (isPrismaConfigured()) {
-    try {
-      const products = await prisma.product.findMany({
-        where: { isActive: true },
-        select: { slug: true },
-      })
-      return products.map((p) => ({ slug: p.slug }))
-    } catch (error) {
-      return MOCK_PRODUCTS.map((p) => ({ slug: p.slug }))
-    }
-  }
-  return MOCK_PRODUCTS.map((p) => ({ slug: p.slug }))
-}
-
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params
+  await syncDatabaseWithCloud()
   let product: any = null
 
   if (isPrismaConfigured()) {

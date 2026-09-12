@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { getPublishedTree } from '@/lib/page-builder/store'
 import { SectionRenderer } from '@/components/page-builder/SectionRenderer'
 import { DEFAULT_PAGE_DOCUMENT } from '@/lib/page-builder/default-sections'
-import { getAllProducts } from '@/lib/data-store'
+import { getAllProducts, syncDatabaseWithCloud } from '@/lib/data-store'
 import { isPrismaConfigured, prisma } from '@/lib/db'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
 
@@ -15,6 +15,8 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
+  await syncDatabaseWithCloud()
+
   let doc
   try {
     doc = await getPublishedTree()

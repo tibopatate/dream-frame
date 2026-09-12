@@ -63,6 +63,17 @@ export function AdminShell({
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
+  const handleSignOut = async () => {
+    try {
+      document.cookie = 'next-auth.session-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      document.cookie = '__Secure-next-auth.session-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      document.cookie = 'admin-session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      const { signOut } = await import('next-auth/react')
+      await signOut({ redirect: false })
+    } catch {}
+    window.location.href = '/admin/login'
+  }
+
   // Fermer le menu mobile lors d'un changement de page
   useEffect(() => {
     setMobileMenuOpen(false)
@@ -216,15 +227,14 @@ export function AdminShell({
             </div>
           </div>
 
-          <form action="/api/auth/signout" method="POST">
-            <button
-              type="submit"
-              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer border text-slate-600 hover:text-red-600 hover:bg-red-50 border-slate-200 hover:border-red-200 bg-white"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              Déconnexion
-            </button>
-          </form>
+          <button
+            type="button"
+            onClick={handleSignOut}
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer border text-slate-600 hover:text-red-600 hover:bg-red-50 border-slate-200 hover:border-red-200 bg-white"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            Déconnexion
+          </button>
         </div>
       </aside>
 
@@ -309,15 +319,14 @@ export function AdminShell({
             </div>
           </div>
 
-          <form action="/api/auth/signout" method="POST">
-            <button
-              type="submit"
-              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer border text-slate-600 hover:text-red-600 hover:bg-red-50 border-slate-200 hover:border-red-200 bg-white"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              Déconnexion
-            </button>
-          </form>
+          <button
+            type="button"
+            onClick={handleSignOut}
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer border text-slate-600 hover:text-red-600 hover:bg-red-50 border-slate-200 hover:border-red-200 bg-white"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            Déconnexion
+          </button>
         </div>
       </aside>
 

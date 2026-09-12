@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
-import { getAllProducts } from '@/lib/data-store'
+import { getAllProducts, syncDatabaseWithCloud } from '@/lib/data-store'
 import { prisma, isPrismaConfigured } from '@/lib/db'
 import { CatalogueFilterHeader } from '@/components/catalogue/CatalogueFilterHeader'
 import { CatalogueProductGrid } from '@/components/catalogue/CatalogueProductGrid'
@@ -24,6 +24,8 @@ export default async function CataloguePage({ searchParams }: PageProps) {
   const activeBrand = params.brand || ''
   const activeEra = params.era || ''
   const searchQuery = params.search || ''
+
+  await syncDatabaseWithCloud()
 
   // 1. Récupération des vrais produits dynamiques de la boutique
   let baseProducts: any[] = []

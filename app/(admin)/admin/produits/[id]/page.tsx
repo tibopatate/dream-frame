@@ -3,7 +3,7 @@ import { EditProductForm } from './edit-form'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
-import { getProductById } from '@/lib/data-store'
+import { getProductById, syncDatabaseWithCloud } from '@/lib/data-store'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
 
 interface Props {
@@ -11,9 +11,11 @@ interface Props {
 }
 
 export const metadata = { title: 'Modifier le Cadre — Dream Frame Admin' }
+export const dynamic = 'force-dynamic'
 
 export default async function ModifierProduitPage({ params }: Props) {
   const { id } = await params
+  await syncDatabaseWithCloud()
 
   let product: any = null
 

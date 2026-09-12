@@ -7,6 +7,9 @@ import {
   addProduct as addStoreProduct,
   updateProduct as updateStoreProduct,
   deleteProduct as deleteStoreProduct,
+  addProductAsync,
+  updateProductAsync,
+  deleteProductAsync,
 } from '@/lib/data-store'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
@@ -133,8 +136,8 @@ export async function createProduct(
       },
     })
   } catch {
-    // 2. Si PostgreSQL n'est pas encore en ligne, enregistrer dans le store persistant local
-    addStoreProduct({
+    // 2. Si PostgreSQL n'est pas encore en ligne, enregistrer dans le store persistant Vercel Blob
+    await addProductAsync({
       slug: baseSlug,
       name: data.name,
       brand: data.brand,
@@ -158,6 +161,7 @@ export async function createProduct(
   revalidatePath('/admin/produits')
   revalidatePath('/catalogue')
   revalidatePath('/')
+  revalidatePath('/', 'layout')
   redirect('/admin/produits')
 }
 
@@ -266,7 +270,7 @@ export async function updateProduct(
         : []),
     ])
   } catch {
-    updateStoreProduct(id, {
+    await updateProductAsync(id, {
       name: data.name,
       brand: data.brand,
       description: data.description,
@@ -281,8 +285,10 @@ export async function updateProduct(
   }
 
   revalidatePath('/admin/produits')
-  revalidatePath(`/produit/${slugify(data.name)}`)
+  revalidatePath('/catalogue')
   revalidatePath('/')
+  revalidatePath('/', 'layout')
+  revalidatePath(`/produit/${slugify(data.name)}`)
   redirect('/admin/produits')
 }
 
@@ -291,10 +297,12 @@ export async function deleteProduct(id: string): Promise<void> {
   try {
     await prisma.product.delete({ where: { id } })
   } catch {
-    deleteStoreProduct(id)
+    await deleteProductAsync(id)
   }
   revalidatePath('/admin/produits')
+  revalidatePath('/catalogue')
   revalidatePath('/')
+  revalidatePath('/', 'layout')
 }
 
 export async function toggleProductActive(id: string, isActive: boolean): Promise<void> {
@@ -302,8 +310,10 @@ export async function toggleProductActive(id: string, isActive: boolean): Promis
   try {
     await prisma.product.update({ where: { id }, data: { isActive } })
   } catch {
-    updateStoreProduct(id, { isActive })
+    await updateProductAsync(id, { isActive })
   }
   revalidatePath('/admin/produits')
+  revalidatePath('/catalogue')
   revalidatePath('/')
+  revalidatePath('/', 'layout')
 }

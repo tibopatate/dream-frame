@@ -2,12 +2,14 @@ import { prisma, isPrismaConfigured } from '@/lib/db'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Plus, Edit2, Package, AlertTriangle, Sparkles, Truck } from 'lucide-react'
-import { getAllProducts } from '@/lib/data-store'
+import { getAllProducts, syncDatabaseWithCloud } from '@/lib/data-store'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
 
 export const metadata = { title: 'Catalogue Cadres — Dream Frame Admin' }
+export const dynamic = 'force-dynamic'
 
 export default async function AdminProduitsPage() {
+  await syncDatabaseWithCloud()
   let products: any[] = []
 
   if (isPrismaConfigured()) {

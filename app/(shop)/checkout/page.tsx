@@ -85,7 +85,7 @@ export default function CheckoutPage() {
       setError(result.error)
       setLoading(false)
     } else if (result.url) {
-      router.push(result.url)
+      window.location.href = result.url
     }
   }
 

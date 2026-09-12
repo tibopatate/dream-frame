@@ -725,6 +725,47 @@ export function readDatabase(): DatabaseSchema {
   return initial
 }
 
+const LIVE_BLOB_DB_URL = 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/dreamframe-db-live.json'
+
+export async function syncDatabaseWithCloud(): Promise<DatabaseSchema> {
+  const blobToken = process.env.BLOB_READ_WRITE_TOKEN
+  if (blobToken && !blobToken.includes('CHANGE_ME')) {
+    try {
+      const res = await fetch(LIVE_BLOB_DB_URL, { cache: 'no-store' })
+      if (res.ok) {
+        const parsed = await res.json()
+        if (parsed && Array.isArray(parsed.products) && parsed.products.length > 0) {
+          if (!parsed.reviews) parsed.reviews = []
+          globalForDb.dreamFrameDb = parsed
+          try {
+            fs.writeFileSync(TMP_FILE, JSON.stringify(parsed, null, 2), 'utf-8')
+          } catch {}
+          return parsed
+        }
+      }
+    } catch (err: any) {
+      console.warn('Could not sync DB from Vercel Blob:', err.message)
+    }
+  }
+  return readDatabase()
+}
+
+export async function writeDatabaseAsync(db: DatabaseSchema): Promise<void> {
+  writeDatabase(db)
+  const blobToken = process.env.BLOB_READ_WRITE_TOKEN
+  if (blobToken && !blobToken.includes('CHANGE_ME')) {
+    try {
+      const { put } = await import('@vercel/blob')
+      await put('dreamframe-db-live.json', JSON.stringify(db, null, 2), {
+        access: 'public',
+        addRandomSuffix: false,
+      })
+    } catch (err: any) {
+      console.warn('writeDatabaseAsync Blob error:', err.message)
+    }
+  }
+}
+
 export function writeDatabase(db: DatabaseSchema): void {
   // 1. Mettre à jour le cache mémoire global
   globalForDb.dreamFrameDb = db
@@ -745,6 +786,17 @@ export function writeDatabase(db: DatabaseSchema): void {
     fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2), 'utf-8')
   } catch (err) {
     // ignore EROFS en production serverless
+  }
+
+  // 4. Synchronisation Vercel Blob en arrière-plan
+  const blobToken = process.env.BLOB_READ_WRITE_TOKEN
+  if (blobToken && !blobToken.includes('CHANGE_ME')) {
+    import('@vercel/blob').then(({ put }) => {
+      put('dreamframe-db-live.json', JSON.stringify(db, null, 2), {
+        access: 'public',
+        addRandomSuffix: false,
+      }).catch((e) => console.warn('Background Blob put error:', e.message))
+    }).catch(() => {})
   }
 }
 
@@ -816,6 +868,28 @@ export function deleteProduct(id: string): boolean {
   db.products = db.products.filter((p) => p.id !== id && p.slug !== id)
   writeDatabase(db)
   return db.products.length < initialLen
+}
+
+export async function addProductAsync(product: Omit<StoredProduct, 'id' | 'createdAt'>): Promise<StoredProduct> {
+  const added = addProduct(product)
+  await writeDatabaseAsync(readDatabase())
+  return added
+}
+
+export async function updateProductAsync(id: string, updates: Partial<StoredProduct>): Promise<StoredProduct | null> {
+  const updated = updateProduct(id, updates)
+  if (updated) {
+    await writeDatabaseAsync(readDatabase())
+  }
+  return updated
+}
+
+export async function deleteProductAsync(id: string): Promise<boolean> {
+  const deleted = deleteProduct(id)
+  if (deleted) {
+    await writeDatabaseAsync(readDatabase())
+  }
+  return deleted
 }
 
 export function adjustProductStock(productIdOrVariantId: string, delta: number, note?: string): number {
