@@ -9,6 +9,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, Loader2, CreditCard, ShieldCheck, Truck } from 'lucide-react'
 
+function isVideoUrl(url?: string): boolean {
+  if (!url) return false
+  return /\.(mp4|webm|mov|ogg)(\?.*)?$/i.test(url)
+}
+
 export default function CheckoutPage() {
   const { items, subtotal, count } = useCart()
   const [mounted, setMounted] = useState(false)
@@ -280,8 +285,28 @@ export default function CheckoutPage() {
           <div className="divide-y divide-neutral-800/80 max-h-[320px] overflow-y-auto no-scrollbar">
             {items.map((item) => (
               <div key={item.variantId} className="py-3.5 flex gap-3.5 items-center">
-                <div className="relative w-12 h-12 rounded-lg bg-black border border-neutral-800 overflow-hidden flex-shrink-0">
-                  <Image src={item.image} alt={item.productName} fill className="object-cover" />
+                <div className="relative w-12 h-12 rounded-lg bg-neutral-950 border border-neutral-800 overflow-hidden flex-shrink-0">
+                  {isVideoUrl(item.image) ? (
+                    <video
+                      src={item.image}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={
+                        item.image ||
+                        'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop'
+                      }
+                      alt={item.productName}
+                      fill
+                      className="object-cover"
+                      sizes="48px"
+                    />
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-white text-xs font-semibold truncate">{item.productName}</p>
@@ -289,7 +314,7 @@ export default function CheckoutPage() {
                     Qté : {item.quantity} · {formatPrice(item.price * 100)}
                   </p>
                 </div>
-                <p className="font-bold text-white text-xs">{formatPrice(item.price * item.quantity * 100)}</p>
+                <p className="font-bold text-white text-xs font-mono">{formatPrice(item.price * item.quantity * 100)}</p>
               </div>
             ))}
           </div>

@@ -142,9 +142,9 @@ export function EditProductForm({ product }: EditProductFormProps) {
               type="number"
               name="price"
               step="0.01"
-              defaultValue={Number(product.price) || 49.99}
+              defaultValue={Number(product.price) || 49.90}
               required
-              min={1}
+              min={0}
               className="w-full bg-black/60 border border-neutral-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-amber-400/80 font-mono transition"
             />
           </div>

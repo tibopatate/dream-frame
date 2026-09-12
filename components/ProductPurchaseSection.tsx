@@ -16,6 +16,8 @@ interface ProductPurchaseSectionProps {
     price: number
     sku?: string
     stock?: number
+    formatName?: string
+    formatSize?: string
     formats?: ProductFormat[]
   }
 }
@@ -48,29 +50,56 @@ const FALLBACK_FORMATS: ProductFormat[] = [
 ]
 
 export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps) {
-  const formats = product.formats && product.formats.length > 0 ? product.formats : FALLBACK_FORMATS
-  const defaultFormat = formats.find((f) => f.isDefault) || formats[0]
-  const [selectedFormat, setSelectedFormat] = useState<ProductFormat>(defaultFormat)
+  const price = Number(product.price) || 49.90
+  const stock = product.stock ?? 10
+  const [quantity, setQuantity] = useState(1)
 
-  const isLowStock = (selectedFormat.stock ?? 10) <= 5
+  // Format unique et dédié à chaque cadre (non sélectionnable côté client)
+  const formatName =
+    product.formatName ||
+    (price >= 200
+      ? 'Grand Cadre Prestige'
+      : price >= 100
+      ? 'Cadre Moyen Collector'
+      : 'Petit Cadre Standard')
+
+  const formatSize =
+    product.formatSize ||
+    (price >= 200
+      ? '50 × 70 cm'
+      : price >= 100
+      ? '30 × 42 cm'
+      : '21 × 29.7 cm')
+
+  const formatScale =
+    price >= 200
+      ? "Miniature 1:18 Grand Format d'exposition sous vitrine"
+      : price >= 100
+      ? "Miniature 1:18 en relief sous vitrine d'artisanat"
+      : "Miniature 1:24 en relief sous vitrage acrylique HD"
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      {/* Bloc Tarif, Sélecteur de Formats & Panier */}
+      {/* Bloc Tarif, Format Unique & Panier */}
       <div className="bg-neutral-900/90 border border-neutral-800/90 rounded-xl p-4 sm:p-6 space-y-4 sm:space-y-6 shadow-xl">
         {/* Prix dynamique et Livraison */}
         <div className="flex items-baseline justify-between flex-wrap gap-2">
           <div>
             <span className="text-3xl sm:text-4xl font-bold text-white transition-all">
-              {selectedFormat.price.toFixed(2).replace('.', ',')} €
+              {price.toFixed(2).replace('.', ',')} €
             </span>
             <span className="text-neutral-400 text-xs font-sans pl-2">TTC</span>
-            {selectedFormat.price > 49.99 && (
+            {price >= 200 ? (
               <span className="ml-2.5 inline-flex items-center gap-1 text-[11px] font-mono text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 rounded-full">
                 <Sparkles className="w-3 h-3 text-amber-400" />
                 Édition Grand Format
               </span>
-            )}
+            ) : price >= 100 ? (
+              <span className="ml-2.5 inline-flex items-center gap-1 text-[11px] font-mono text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 rounded-full">
+                <Sparkles className="w-3 h-3 text-amber-400" />
+                Format Moyen Collector
+              </span>
+            ) : null}
           </div>
           <span className="text-xs font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-3 py-1 rounded-full flex items-center gap-1.5">
             <Truck className="w-3.5 h-3.5" />
@@ -78,133 +107,48 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
           </span>
         </div>
 
-        {/* ─── Sélecteur de Formats de Cadres (A4, Grand A3 150€, Prestige A2 250€) ─── */}
+        {/* ─── Format d'Art Unique Certifié (Non modifiable côté client) ─── */}
         <div className="space-y-3 pt-2">
-          <div className="flex items-center justify-between text-xs">
-            <label className="font-mono uppercase tracking-wider text-neutral-300 font-semibold flex items-center gap-1.5">
-              <span>Choisir le format d'art</span>
-            </label>
-            <span className="text-[11px] text-amber-400 font-medium">
-              Dimensions réelles certifiées
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 gap-2.5">
-            {formats.map((fmt) => {
-              const isSelected = selectedFormat.id === fmt.id
-              const isCollectorA3 = fmt.id.includes('a3') || fmt.name.includes('A3') || fmt.price === 150
-              const isPrestigeA2 = fmt.id.includes('a2') || fmt.name.includes('A2') || fmt.price === 250
-
-              return (
-                <button
-                  key={fmt.id}
-                  type="button"
-                  onClick={() => setSelectedFormat(fmt)}
-                  className={`w-full text-left p-3.5 rounded-lg border transition-all duration-200 cursor-pointer relative flex items-center justify-between gap-3 ${
-                    isSelected
-                      ? 'bg-neutral-800/90 border-amber-400/80 shadow-lg shadow-amber-400/5 ring-1 ring-amber-400/30'
-                      : 'bg-black/50 border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900/60'
-                  }`}
-                >
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div
-                      className={`w-4 h-4 rounded-full border flex items-center justify-center flex-shrink-0 transition-colors ${
-                        isSelected
-                          ? 'border-amber-400 bg-amber-400 text-black'
-                          : 'border-neutral-600 bg-transparent'
-                      }`}
-                    >
-                      {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-black" />}
-                    </div>
-
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className={`text-xs font-semibold ${isSelected ? 'text-white' : 'text-neutral-200'}`}>
-                          {fmt.name}
-                        </span>
-                        {isCollectorA3 && (
-                          <span className="text-[9px] uppercase font-mono font-semibold tracking-wider px-2 py-0.5 rounded bg-amber-400/10 border border-amber-400/20 text-amber-400">
-                            Format Recommandé
-                          </span>
-                        )}
-                        {isPrestigeA2 && (
-                          <span className="text-[9px] uppercase font-mono font-semibold tracking-wider px-2 py-0.5 rounded bg-neutral-800 border border-neutral-700 text-neutral-300">
-                            Prestige Galerie
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-[11px] text-neutral-400 font-light mt-0.5">
-                        Dimensions : <strong className="text-neutral-300 font-medium">{fmt.size}</strong>
-                        {isCollectorA3 && ' · Miniature 1:18 en relief sous vitrine'}
-                        {isPrestigeA2 && ' · Miniature 1:18 Grand Format d\'exposition'}
-                        {!isCollectorA3 && !isPrestigeA2 && ' · Miniature 1:24 sous vitrage HD'}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="text-right flex-shrink-0">
-                    <span className={`text-sm font-bold ${isSelected ? 'text-amber-400' : 'text-white'}`}>
-                      {fmt.price.toFixed(2).replace('.', ',')} €
-                    </span>
-                    <span className="text-[10px] text-neutral-500 block font-light">TTC</span>
-                  </div>
-                </button>
-              )
-            })}
-          </div>
-
-          {/* Guide visuel des proportions murales */}
-          <div className="p-3.5 bg-neutral-950/60 border border-neutral-800/80 rounded-xl space-y-2.5">
-            <div className="flex flex-wrap items-center justify-between gap-1 text-[10px] font-mono uppercase text-neutral-400">
-              <span className="tracking-wider">Proportions murales</span>
-              <span className="text-amber-400 font-semibold truncate max-w-[240px]">
-                {selectedFormat.name.includes('|') ? selectedFormat.name.split('|')[0].trim() : selectedFormat.name} · {selectedFormat.size}
+          <div className="p-4 bg-black/60 border border-neutral-800 rounded-xl space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold flex items-center gap-1.5">
+                <Award className="w-3.5 h-3.5 text-amber-400" />
+                Format d'Art Unique Certifié
+              </span>
+              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2 py-0.5 rounded-full">
+                Pièce Exclusive Atelier
               </span>
             </div>
-            <div className="min-h-[96px] bg-black/50 rounded-xl border border-neutral-800/80 flex items-end justify-center gap-6 sm:gap-10 px-4 pt-4 pb-3">
-              <button
-                type="button"
-                onClick={() => setSelectedFormat(formats[0])}
-                className={`flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
-                  selectedFormat.id === formats[0]?.id ? 'opacity-100 scale-105' : 'opacity-40 hover:opacity-75'
-                }`}
-              >
-                <div className={`w-7 h-9 rounded border flex items-center justify-center text-[7px] font-mono font-bold ${
-                  selectedFormat.id === formats[0]?.id ? 'bg-amber-400/20 border-amber-400 text-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.3)]' : 'bg-neutral-800 border-neutral-700 text-neutral-400'
-                }`}>
-                  A4
-                </div>
-                <span className="text-[8px] text-neutral-400 font-mono">Bureau</span>
-              </button>
+            <div className="pt-1">
+              <p className="text-sm font-bold text-white">{formatName}</p>
+              <p className="text-xs text-neutral-400 font-light mt-0.5">
+                Dimensions réelles : <strong className="text-neutral-200 font-medium">{formatSize}</strong> · {formatScale}
+              </p>
+            </div>
+          </div>
 
+          {/* Sélecteur de Quantité */}
+          <div className="flex items-center justify-between p-3.5 bg-black/40 border border-neutral-800 rounded-xl">
+            <span className="text-xs font-mono uppercase tracking-wider text-neutral-300 font-semibold">
+              Quantité
+            </span>
+            <div className="flex items-center gap-2 bg-neutral-900 border border-neutral-700 rounded-lg p-1">
               <button
                 type="button"
-                onClick={() => setSelectedFormat(formats[1] || formats[0])}
-                className={`flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
-                  selectedFormat.id === formats[1]?.id ? 'opacity-100 scale-105' : 'opacity-40 hover:opacity-75'
-                }`}
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="w-8 h-8 rounded flex items-center justify-center hover:bg-neutral-800 text-neutral-300 hover:text-white transition cursor-pointer text-sm font-bold"
+                title="Diminuer la quantité"
               >
-                <div className={`w-9 h-12 rounded border flex items-center justify-center text-[8px] font-mono font-bold ${
-                  selectedFormat.id === formats[1]?.id ? 'bg-amber-400/20 border-amber-400 text-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.3)]' : 'bg-neutral-800 border-neutral-700 text-neutral-400'
-                }`}>
-                  A3
-                </div>
-                <span className="text-[8px] text-neutral-400 font-mono">Salon / Bureau</span>
+                −
               </button>
-
+              <span className="w-8 text-center text-xs font-mono font-bold text-white">{quantity}</span>
               <button
                 type="button"
-                onClick={() => setSelectedFormat(formats[2] || formats[0])}
-                className={`flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
-                  selectedFormat.id === formats[2]?.id ? 'opacity-100 scale-105' : 'opacity-40 hover:opacity-75'
-                }`}
+                onClick={() => setQuantity(Math.min(stock, quantity + 1))}
+                className="w-8 h-8 rounded flex items-center justify-center hover:bg-neutral-800 text-neutral-300 hover:text-white transition cursor-pointer text-sm font-bold"
+                title="Augmenter la quantité"
               >
-                <div className={`w-11 h-14 rounded border flex items-center justify-center text-[8px] font-mono font-bold ${
-                  selectedFormat.id === formats[2]?.id ? 'bg-amber-400/20 border-amber-400 text-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.3)]' : 'bg-neutral-800 border-neutral-700 text-neutral-400'
-                }`}>
-                  A2
-                </div>
-                <span className="text-[8px] text-neutral-400 font-mono">Pièce Maîtresse</span>
+                +
               </button>
             </div>
           </div>
@@ -213,7 +157,7 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
           <div className="flex items-center justify-between text-[11px] pt-1 px-1">
             <span className="text-neutral-400 flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Pièce prête à expédier depuis notre atelier</span>
+              <span>En stock ({stock} pièces disponibles) · Prêt à expédier</span>
             </span>
             <span className="text-neutral-500 font-mono text-[10px]">
               Expédition 24/48h
@@ -221,18 +165,19 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
           </div>
         </div>
 
-        {/* Bouton Ajouter au Panier avec Prix et Format dynamiques */}
+        {/* Bouton Ajouter au Panier avec Prix et Quantité */}
         <AddToCartButton
-          variantId={`${product.id}-${selectedFormat.id}`}
+          variantId={`${product.id}-unique`}
           productId={product.id}
           productName={product.name}
           slug={product.slug}
           brand={product.brand}
           image={product.images[0] ?? ''}
-          price={selectedFormat.price}
-          stock={selectedFormat.stock ?? 5}
-          formatName={selectedFormat.name}
-          formatSize={selectedFormat.size}
+          price={price}
+          stock={stock}
+          formatName={formatName}
+          formatSize={formatSize}
+          quantity={quantity}
         />
 
         {/* Réassurance d'Atelier sous le CTA */}
@@ -247,11 +192,11 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
           </div>
           <div className="flex items-center gap-2">
             <Award className="w-4 h-4 text-amber-400 flex-shrink-0" />
-            <span>✓ Garantie d&apos;atelier 2 ans</span>
+            <span>✓ Garantie atelier 2 ans</span>
           </div>
           <div className="flex items-center gap-2">
-            <RotateCcw className="w-4 h-4 text-amber-400 flex-shrink-0" />
-            <span>✓ Retours 14 jours légaux</span>
+            <Sparkles className="w-4 h-4 text-amber-400 flex-shrink-0" />
+            <span>✓ Fait Main en France</span>
           </div>
         </div>
 
@@ -261,23 +206,16 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
         </div>
       </div>
 
-      {/* Caractéristiques d'Atelier adaptées en temps réel au Format choisi */}
+      {/* Caractéristiques d'Atelier adaptées au Format */}
       <div className="space-y-3 border-t border-neutral-800 pt-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs font-mono uppercase tracking-wider text-neutral-400">Spécifications du format choisi</h2>
-          <span className="text-xs font-mono text-amber-400">{selectedFormat.name}</span>
+          <h2 className="text-xs font-mono uppercase tracking-wider text-neutral-400">Spécifications du format d'art</h2>
+          <span className="text-xs font-mono text-amber-400">{formatName}</span>
         </div>
         <div className="grid grid-cols-2 gap-2.5 text-xs">
           {[
-            ['Dimensions', selectedFormat.size],
-            [
-              'Miniature',
-              selectedFormat.price >= 250
-                ? 'Échelle 1:18 Chef-d\'œuvre en relief 3D'
-                : selectedFormat.price >= 150
-                ? 'Échelle 1:18 Grand Relief 3D'
-                : 'Échelle 1:24 en relief 3D',
-            ],
+            ['Dimensions', formatSize],
+            ['Miniature', formatScale],
             ['Châssis', 'Ébénisterie Noir Profond Atelier'],
             ['Vitrage', 'Verre acrylique HD anti-rayures & anti-poussière'],
             ['Éclairage', 'Micro-LEDs ambrées intégrées + variateur'],

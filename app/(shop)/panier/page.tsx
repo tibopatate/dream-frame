@@ -32,6 +32,11 @@ const UPSELL_PRODUCTS = [
   },
 ]
 
+function isVideoUrl(url?: string): boolean {
+  if (!url) return false
+  return /\.(mp4|webm|mov|ogg)(\?.*)?$/i.test(url)
+}
+
 export default function PanierPage() {
   const { items, addItem, updateQuantity, removeItem, clearCart, subtotal, count } = useCart()
   const [mounted, setMounted] = useState(false)
@@ -171,8 +176,33 @@ export default function PanierPage() {
           <div className="border border-neutral-800 rounded-2xl divide-y divide-neutral-800/80 bg-neutral-900/60 overflow-hidden shadow-lg">
             {items.map((item) => (
               <div key={item.variantId} className="p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-6 items-center">
-                <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-black border border-neutral-800 overflow-hidden flex-shrink-0">
-                  <Image src={item.image} alt={item.productName} fill className="object-cover" />
+                {/* Miniature Image / Vidéo avec badge quantité */}
+                <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-neutral-950 border border-neutral-800 overflow-hidden flex-shrink-0">
+                  <span className="absolute top-1.5 left-1.5 z-10 px-1.5 py-0.5 rounded bg-black/85 border border-neutral-700 text-[10px] font-mono font-bold text-amber-400 shadow">
+                    ×{item.quantity}
+                  </span>
+
+                  {isVideoUrl(item.image) ? (
+                    <video
+                      src={item.image}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={
+                        item.image ||
+                        'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop'
+                      }
+                      alt={item.productName}
+                      fill
+                      className="object-cover"
+                      sizes="96px"
+                    />
+                  )}
                 </div>
 
                 <div className="flex-1 min-w-0 text-center sm:text-left space-y-1">
@@ -195,38 +225,46 @@ export default function PanierPage() {
                           ({item.formatSize})
                         </span>
                       )}
-                      <span className="text-[10px] text-neutral-500">· Vitrage HD & LED</span>
+                      <span className="text-[10px] text-neutral-500">· Vitrage HD &amp; LED</span>
                     </div>
                   ) : (
                     <p className="text-xs text-neutral-400 font-light">Accessoire d&apos;artisanat officiel</p>
                   )}
                 </div>
 
-                {/* Sélecteur de quantité */}
-                <div className="flex items-center gap-1 bg-black border border-neutral-800 rounded-lg p-1">
-                  <button
-                    onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
-                    className="w-7 h-7 rounded flex items-center justify-center hover:bg-neutral-800 text-neutral-400 hover:text-white transition cursor-pointer"
-                  >
-                    <Minus className="w-3 h-3" />
-                  </button>
-                  <span className="w-7 text-center text-xs font-mono text-white">{item.quantity}</span>
-                  <button
-                    onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
-                    className="w-7 h-7 rounded flex items-center justify-center hover:bg-neutral-800 text-neutral-400 hover:text-white transition cursor-pointer"
-                  >
-                    <Plus className="w-3 h-3" />
-                  </button>
+                {/* Sélecteur de quantité avec libellé explicite */}
+                <div className="flex flex-col items-center sm:items-start gap-1">
+                  <span className="text-[10px] font-mono text-neutral-400 uppercase">
+                    Quantité
+                  </span>
+                  <div className="flex items-center gap-1 bg-black border border-neutral-800 rounded-lg p-1">
+                    <button
+                      onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
+                      className="w-7 h-7 rounded flex items-center justify-center hover:bg-neutral-800 text-neutral-400 hover:text-white transition cursor-pointer"
+                    >
+                      <Minus className="w-3 h-3" />
+                    </button>
+                    <span className="w-8 text-center text-xs font-mono font-bold text-white">{item.quantity}</span>
+                    <button
+                      onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
+                      className="w-7 h-7 rounded flex items-center justify-center hover:bg-neutral-800 text-neutral-400 hover:text-white transition cursor-pointer"
+                    >
+                      <Plus className="w-3 h-3" />
+                    </button>
+                  </div>
                 </div>
 
                 {/* Prix & Suppression */}
                 <div className="text-center sm:text-right space-y-1">
-                  <p className="font-bold text-white text-base">
+                  <p className="font-bold text-white text-base font-mono">
                     {formatPrice(item.price * item.quantity * 100)}
+                  </p>
+                  <p className="text-[11px] text-neutral-400 font-mono">
+                    {item.quantity} × {formatPrice(item.price * 100)}
                   </p>
                   <button
                     onClick={() => removeItem(item.variantId)}
-                    className="text-neutral-500 hover:text-rose-400 transition-colors inline-flex items-center gap-1 text-[10px] uppercase tracking-wider cursor-pointer"
+                    className="text-neutral-500 hover:text-rose-400 transition-colors inline-flex items-center gap-1 text-[10px] uppercase tracking-wider cursor-pointer pt-1"
                   >
                     <Trash2 className="w-3 h-3" />
                     Supprimer

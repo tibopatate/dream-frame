@@ -51,7 +51,7 @@ export default function NouveauProduitPage() {
       id: 'fmt-a4',
       name: 'Standard A4',
       size: '21 x 29.7 cm',
-      price: 49.99,
+      price: 49.90,
       stock: 10,
       isDefault: true,
     },
@@ -59,7 +59,7 @@ export default function NouveauProduitPage() {
       id: 'fmt-a3',
       name: 'Grand Format A3 Collector',
       size: '30 x 42 cm',
-      price: 150.00,
+      price: 149.90,
       stock: 5,
       isDefault: false,
     },
@@ -67,7 +67,7 @@ export default function NouveauProduitPage() {
       id: 'fmt-a2',
       name: 'Prestige Galerie A2',
       size: '50 x 70 cm',
-      price: 250.00,
+      price: 249.90,
       stock: 2,
       isDefault: false,
     },
@@ -262,6 +262,7 @@ export default function NouveauProduitPage() {
                     <input
                       type="number"
                       step="0.01"
+                      min={0}
                       value={fmt.price}
                       onChange={(e) => updateFormat(fmt.id, 'price', parseFloat(e.target.value) || 0)}
                       className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs font-mono font-bold text-white focus:outline-none focus:border-amber-400"

@@ -13,33 +13,43 @@ interface QuickBuyDrawerProps {
   onClose: () => void
 }
 
-const FORMATS = [
-  { id: 'fmt-a4', name: 'Standard A4', size: '21 × 29.7 cm', price: 49.99, scale: '1:24' },
-  { id: 'fmt-a3', name: 'Grand Format A3 Collector', size: '30 × 42 cm', price: 150.0, scale: '1:18 Grand Relief' },
-  { id: 'fmt-a2', name: 'Prestige Galerie A2', size: '50 × 70 cm', price: 250.0, scale: '1:18 Pièce Maîtresse' },
-]
-
 export function QuickBuyDrawer({ product, onClose }: QuickBuyDrawerProps) {
-  const [selectedFormat, setSelectedFormat] = useState(FORMATS[0])
   const [quantity, setQuantity] = useState(1)
   const [isAdded, setIsAdded] = useState(false)
   const addItem = useCart((s) => s.addItem)
 
   if (!product) return null
 
+  const price = Number(product.price) || 49.90
+  const formatName =
+    (product as any).formatName ||
+    (price >= 200
+      ? 'Grand Cadre Prestige'
+      : price >= 100
+      ? 'Cadre Moyen Collector'
+      : 'Petit Cadre Standard')
+
+  const formatSize =
+    (product as any).formatSize ||
+    (price >= 200
+      ? '50 × 70 cm'
+      : price >= 100
+      ? '30 × 42 cm'
+      : '21 × 29.7 cm')
+
   const handleAddToCart = (e: React.MouseEvent) => {
     triggerFlyToCart(e, { image: product.images[0], quantity })
     addItem({
-      variantId: `${product.id}-${selectedFormat.id}`,
+      variantId: `${product.id}-unique`,
       productId: product.id,
       productName: product.name,
       slug: product.slug,
       brand: product.brand,
       image: product.images[0],
-      price: selectedFormat.price,
+      price,
       quantity,
-      formatName: selectedFormat.name,
-      formatSize: selectedFormat.size,
+      formatName,
+      formatSize,
     })
     setIsAdded(true)
     setTimeout(() => {
@@ -55,7 +65,7 @@ export function QuickBuyDrawer({ product, onClose }: QuickBuyDrawerProps) {
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-neutral-400 hover:text-white rounded-lg bg-neutral-900 border border-neutral-800 transition"
+          className="absolute top-4 right-4 p-2 text-neutral-400 hover:text-white rounded-lg bg-neutral-900 border border-neutral-800 transition cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
@@ -83,37 +93,19 @@ export function QuickBuyDrawer({ product, onClose }: QuickBuyDrawerProps) {
           </div>
         </div>
 
-        {/* Sélecteur de Formats */}
-        <div className="space-y-2">
-          <label className="text-xs font-mono uppercase tracking-wider text-neutral-400 font-semibold block">
-            Choisir le format
-          </label>
-          <div className="grid grid-cols-1 gap-2">
-            {FORMATS.map((fmt) => {
-              const isSelected = selectedFormat.id === fmt.id
-              return (
-                <button
-                  key={fmt.id}
-                  type="button"
-                  onClick={() => setSelectedFormat(fmt)}
-                  className={`p-3 rounded-xl border text-left flex items-center justify-between transition cursor-pointer ${
-                    isSelected
-                      ? 'bg-neutral-900 border-amber-400 shadow-sm'
-                      : 'bg-black/50 border-neutral-800 hover:border-neutral-700'
-                  }`}
-                >
-                  <div>
-                    <span className="text-xs font-bold text-white block">{fmt.name}</span>
-                    <span className="text-[10px] text-neutral-400 font-mono">
-                      {fmt.size} · {fmt.scale}
-                    </span>
-                  </div>
-                  <span className="text-sm font-bold text-amber-400">
-                    {fmt.price.toFixed(2).replace('.', ',')} €
-                  </span>
-                </button>
-              )
-            })}
+        {/* Format Unique Certifié (Non sélectionnable côté client) */}
+        <div className="p-4 bg-black/50 border border-neutral-800 rounded-xl space-y-1">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold block">
+            Format d'Art Unique Certifié
+          </span>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-bold text-white">{formatName}</p>
+              <p className="text-[11px] text-neutral-400 font-mono">Dimensions : {formatSize}</p>
+            </div>
+            <span className="text-base font-bold text-amber-400 font-mono">
+              {price.toFixed(2).replace('.', ',')} €
+            </span>
           </div>
         </div>
 
@@ -125,7 +117,7 @@ export function QuickBuyDrawer({ product, onClose }: QuickBuyDrawerProps) {
               <button
                 type="button"
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="px-2.5 py-1 text-xs text-neutral-400 hover:text-white"
+                className="px-2.5 py-1 text-xs text-neutral-400 hover:text-white cursor-pointer"
               >
                 -
               </button>
@@ -133,7 +125,7 @@ export function QuickBuyDrawer({ product, onClose }: QuickBuyDrawerProps) {
               <button
                 type="button"
                 onClick={() => setQuantity(quantity + 1)}
-                className="px-2.5 py-1 text-xs text-neutral-400 hover:text-white"
+                className="px-2.5 py-1 text-xs text-neutral-400 hover:text-white cursor-pointer"
               >
                 +
               </button>
@@ -141,9 +133,9 @@ export function QuickBuyDrawer({ product, onClose }: QuickBuyDrawerProps) {
           </div>
 
           <div className="text-right">
-            <span className="text-[10px] text-neutral-400 block font-light">Total TTC</span>
-            <span className="text-lg font-bold text-white">
-              {(selectedFormat.price * quantity).toFixed(2).replace('.', ',')} €
+            <span className="text-[10px] text-neutral-500 uppercase tracking-wider block font-mono">Total TTC</span>
+            <span className="text-lg font-bold text-white font-mono">
+              {(price * quantity).toFixed(2).replace('.', ',')} €
             </span>
           </div>
         </div>

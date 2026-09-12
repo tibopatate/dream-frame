@@ -61,6 +61,8 @@ export interface StoredProduct {
   sku: string
   stripeProductId?: string
   stripePriceId?: string
+  formatName?: string
+  formatSize?: string
   formats?: ProductFormat[]
   aspectRatio?: '4:3' | '16:9' | '1:1' | '3:4'
   cropPosition?: { x: number; y: number; zoom: number }

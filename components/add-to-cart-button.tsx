@@ -16,6 +16,7 @@ interface AddToCartButtonProps {
   stock: number
   formatName?: string
   formatSize?: string
+  quantity?: number
 }
 
 export function AddToCartButton({
@@ -25,10 +26,11 @@ export function AddToCartButton({
   slug,
   brand,
   image,
-  price = 49.99,
+  price = 49.90,
   stock,
   formatName,
   formatSize,
+  quantity = 1,
 }: AddToCartButtonProps) {
   const addItem = useCart((s) => s.addItem)
   const [added, setAdded] = useState(false)
@@ -46,7 +48,7 @@ export function AddToCartButton({
 
   const handleAdd = (e: React.MouseEvent) => {
     // 1. Déclencher le projectile volant vers le panier
-    triggerFlyToCart(e, { image, quantity: 1 })
+    triggerFlyToCart(e, { image, quantity })
 
     // 2. Ajouter l'article dans le store Zustand
     addItem({
@@ -57,7 +59,7 @@ export function AddToCartButton({
       brand,
       image,
       price,
-      quantity: 1,
+      quantity,
       formatName,
       formatSize,
     })

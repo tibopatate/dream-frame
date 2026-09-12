@@ -20,8 +20,15 @@ import { z } from 'zod'
 const productSchema = z.object({
   name: z.string().min(3, 'Nom trop court').max(200),
   brand: z.string().min(2),
-  description: z.string().min(10, 'Description trop courte'),
-  price: z.coerce.number().positive().default(49.99),
+  description: z.string().min(1, 'Description requise'),
+  price: z.preprocess((val) => {
+    if (typeof val === 'string') {
+      const cleaned = val.trim().replace(',', '.').replace(/[^\d.]/g, '')
+      const num = parseFloat(cleaned)
+      return isNaN(num) ? 0 : num
+    }
+    return typeof val === 'number' ? val : 0
+  }, z.number().min(0, 'Le prix doit être positif ou nul').default(49.90)),
   isActive: z.coerce.boolean().default(true),
   isFeatured: z.coerce.boolean().default(false),
   stock: z.coerce.number().int().min(0).default(10),
@@ -84,9 +91,9 @@ export async function createProduct(
 
   // Récupérer les formats personnalisés (49.99€, 150€, 250€)
   let formats = [
-    { id: 'fmt-a4', name: 'Standard A4', size: '21 x 29.7 cm', price: 49.99, stock: data.stock, isDefault: true },
-    { id: 'fmt-a3', name: 'Grand Format A3 Collector', size: '30 x 42 cm', price: 150.00, stock: 5, isDefault: false },
-    { id: 'fmt-a2', name: 'Prestige Galerie A2', size: '50 x 70 cm', price: 250.00, stock: 2, isDefault: false },
+    { id: 'fmt-a4', name: 'Standard A4', size: '21 x 29.7 cm', price: 49.90, stock: data.stock, isDefault: true },
+    { id: 'fmt-a3', name: 'Grand Format A3 Collector', size: '30 x 42 cm', price: 149.90, stock: 5, isDefault: false },
+    { id: 'fmt-a2', name: 'Prestige Galerie A2', size: '50 x 70 cm', price: 249.90, stock: 2, isDefault: false },
   ]
   const rawFormats = formData.get('formatsData')
   if (rawFormats && typeof rawFormats === 'string') {

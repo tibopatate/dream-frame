@@ -28,7 +28,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     era: 'MODERN',
     year: 2016,
     description: "Le sommet du luxe et de l'hypercar W16 1 500 ch. Cadre d'ébénisterie 3D avec éclairage LED ambré, immortalisé devant la véritable Bugatti Chiron.",
-    price: 49.99,
+    price: 49.90,
     isActive: true,
     isFeatured: true,
     images: [
@@ -45,7 +45,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     era: 'MODERN',
     year: 2023,
     description: "L'artisanat automobile italien dans ce qu'il a de plus pur. V12 Biturbo AMG de 730 ch sous châssis Carbo-Titane, photographié à côté de son modèle échelle 1.",
-    price: 49.99,
+    price: 49.90,
     isActive: true,
     isFeatured: true,
     images: [
@@ -62,7 +62,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     era: 'MODERN',
     year: 2022,
     description: "Le rugissement du V10 atmosphérique à 8 700 tr/min. Cadre 3D relief sous vitrage acrylique HD avec rétroéclairage LED ambré.",
-    price: 49.99,
+    price: 49.90,
     isActive: true,
     isFeatured: true,
     images: [
@@ -79,7 +79,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     era: 'MODERN',
     year: 2023,
     description: "Teinte mythique Isle of Man Green et calandre verticale acérée. Réalisation 3D de précision sous vitrage acrylique.",
-    price: 49.99,
+    price: 49.90,
     isActive: true,
     isFeatured: true,
     images: [
@@ -96,7 +96,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     era: 'MODERN',
     year: 2021,
     description: "V10 atmosphérique 5.2L et arêtes tranchantes stealth. Cadre d'artisanat avec module LED ambré et finitions haut de gamme.",
-    price: 49.99,
+    price: 49.90,
     isActive: true,
     isFeatured: true,
     images: [
@@ -113,7 +113,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     era: 'MODERN',
     year: 2017,
     description: "La bête de l'Enfer Vert Nürburgring. V8 Biturbo 4.0L sous châssis aluminium et vitrage acrylique optique HD.",
-    price: 49.99,
+    price: 49.90,
     isActive: true,
     isFeatured: false,
     images: [
@@ -130,7 +130,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     era: 'MODERN',
     year: 2019,
     description: "L'élégance Grand Tourisme britannique en relief 3D. V8 Biturbo 620 ch sous cadre d'artisanat bois et éclairage LED supérieur.",
-    price: 49.99,
+    price: 49.90,
     isActive: true,
     isFeatured: true,
     images: [
@@ -140,14 +140,31 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     variants: [{ id: 'var-mclarengt', sku: 'DF-MCLAREN-GT', stock: 5, stockAlert: 2 }],
   },
   {
-    id: 'real-ferrari-f40',
-    slug: 'ferrari-f40-1987-cadre-3d',
-    name: 'Ferrari F40 (1987)',
+    id: 'real-ferrari-moyen',
+    slug: 'ferrari-f40-cadre-moyen-collector',
+    name: 'Ferrari F40 — Cadre Moyen Collector',
     brand: 'Ferrari',
     era: 'VINTAGE',
     year: 1987,
-    description: "Le mythe absolu de Maranello. V8 Twin-Turbo et aileron légendaire sculptés au millimètre sous vitrage d'exception.",
-    price: 49.99,
+    description: "Format Moyen d'artisanat 30 × 42 cm. V8 Biturbo sculpté en relief sous vitrage acrylique et rétroéclairage LED ambré.",
+    price: 149.90,
+    isActive: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop',
+    ],
+    variants: [{ id: 'var-ferrari-moyen', sku: 'DF-FERRARI-MOYEN-001', stock: 5, stockAlert: 2 }],
+  },
+  {
+    id: 'real-ferrari-f40',
+    slug: 'ferrari-f40-1987-cadre-3d',
+    name: 'Ferrari F40 (1987) — Grand Cadre Prestige',
+    brand: 'Ferrari',
+    era: 'VINTAGE',
+    year: 1987,
+    description: "Le mythe absolu de Maranello en Grand Format d'Exception 50 × 70 cm. V8 Twin-Turbo et aileron légendaire sculptés au millimètre sous vitrage d'exception.",
+    price: 249.90,
     isActive: true,
     isFeatured: true,
     images: [
@@ -164,7 +181,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     era: 'MODERN',
     year: 2015,
     description: "L'hypercar hybride absolue de 887 ch. V8 atmosphérique et échappements hauts sculptés en relief 3D.",
-    price: 49.99,
+    price: 49.90,
     isActive: true,
     isFeatured: false,
     images: [

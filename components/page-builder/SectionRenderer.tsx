@@ -112,7 +112,6 @@ export function SectionRenderer({
                 loop
                 muted
                 playsInline
-                poster={heroImage}
                 src={heroVideo}
                 className="w-full h-full object-cover object-center brightness-[1.05] contrast-[1.02] pointer-events-none"
               >

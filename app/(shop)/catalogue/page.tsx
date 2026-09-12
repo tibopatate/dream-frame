@@ -70,7 +70,7 @@ export default async function CataloguePage({ searchParams }: PageProps) {
   })
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8 bg-[#080807] text-white">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-16 space-y-8 bg-[#080807] text-white min-h-screen">
       {/* En-tête de Collection Épuré avec Bouton Filtrer */}
       <CatalogueFilterHeader
         totalCount={baseProducts.length}

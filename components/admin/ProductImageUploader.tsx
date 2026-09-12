@@ -34,6 +34,9 @@ export function ProductImageUploader({
   const [uploadError, setUploadError] = useState<string | null>(null)
   const [urlInput, setUrlInput] = useState('')
   const [showUrlInput, setShowUrlInput] = useState(false)
+  const [draggedCardIdx, setDraggedCardIdx] = useState<number | null>(null)
+  const [touchActiveIdx, setTouchActiveIdx] = useState<number | null>(null)
+  const touchTimerRef = useRef<NodeJS.Timeout | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const imagesRef = useRef(images)
   imagesRef.current = images
@@ -181,6 +184,53 @@ export function ProductImageUploader({
     onChange(next)
   }
 
+  const handleReorder = (fromIndex: number, toIndex: number) => {
+    if (
+      fromIndex === toIndex ||
+      fromIndex < 0 ||
+      toIndex < 0 ||
+      fromIndex >= imagesRef.current.length ||
+      toIndex >= imagesRef.current.length
+    ) {
+      return
+    }
+    const next = [...imagesRef.current]
+    const [moved] = next.splice(fromIndex, 1)
+    next.splice(toIndex, 0, moved)
+    onChange(next)
+  }
+
+  const handleTouchStart = (idx: number) => {
+    if (touchTimerRef.current) clearTimeout(touchTimerRef.current)
+    touchTimerRef.current = setTimeout(() => {
+      setTouchActiveIdx(idx)
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        try {
+          navigator.vibrate(40)
+        } catch {}
+      }
+    }, 250)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchActiveIdx === null) return
+    const touch = e.touches[0]
+    const target = document.elementFromPoint(touch.clientX, touch.clientY)
+    const cardEl = target?.closest('[data-card-index]')
+    if (cardEl) {
+      const targetIdx = Number(cardEl.getAttribute('data-card-index'))
+      if (!isNaN(targetIdx) && targetIdx !== touchActiveIdx) {
+        handleReorder(touchActiveIdx, targetIdx)
+        setTouchActiveIdx(targetIdx)
+      }
+    }
+  }
+
+  const handleTouchEnd = () => {
+    if (touchTimerRef.current) clearTimeout(touchTimerRef.current)
+    setTouchActiveIdx(null)
+  }
+
   return (
     <div className="space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -307,15 +357,38 @@ export function ProductImageUploader({
             💡 Astuce : La première photo est l&apos;image principale. Cliquez sur l&apos;étoile pour définir la photo mise en avant.
           </p>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 select-none">
             {images.map((imgUrl, idx) => {
               const isPrimary = idx === 0
+              const isTouchActive = touchActiveIdx === idx
 
               return (
                 <div
                   key={`${imgUrl}-${idx}`}
-                  className={`group relative aspect-[4/3] rounded-xl overflow-hidden bg-neutral-950 border transition-all ${
-                    isPrimary
+                  data-card-index={idx}
+                  draggable
+                  onDragStart={(e) => {
+                    e.dataTransfer.setData('text/plain', String(idx))
+                    setDraggedCardIdx(idx)
+                  }}
+                  onDragOver={(e) => {
+                    e.preventDefault()
+                    e.dataTransfer.dropEffect = 'move'
+                  }}
+                  onDrop={(e) => {
+                    e.preventDefault()
+                    if (draggedCardIdx !== null && draggedCardIdx !== idx) {
+                      handleReorder(draggedCardIdx, idx)
+                      setDraggedCardIdx(null)
+                    }
+                  }}
+                  onTouchStart={() => handleTouchStart(idx)}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                  className={`group relative aspect-[4/3] rounded-xl overflow-hidden bg-neutral-950 border transition-all cursor-grab active:cursor-grabbing ${
+                    isTouchActive
+                      ? 'scale-105 border-amber-400 ring-4 ring-amber-400/40 shadow-2xl z-30'
+                      : isPrimary
                       ? 'border-amber-400 ring-2 ring-amber-400/30 shadow-lg shadow-amber-400/10'
                       : 'border-neutral-800 hover:border-neutral-700'
                   }`}
@@ -324,7 +397,7 @@ export function ProductImageUploader({
                   {isVideoUrl(imgUrl) ? (
                     <video
                       src={imgUrl}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover pointer-events-none"
                       muted
                       loop
                       playsInline
@@ -335,77 +408,86 @@ export function ProductImageUploader({
                     <img
                       src={imgUrl}
                       alt={`Visuel ${idx + 1}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover pointer-events-none"
                     />
                   )}
 
-                  {/* Top Badges */}
-                  <div className="absolute top-2 left-2 flex items-center gap-1">
+                  {/* Top Badges (Left) */}
+                  <div className="absolute top-2 left-2 flex items-center gap-1 z-10 pointer-events-none">
                     {isPrimary ? (
                       <span className="px-2 py-0.5 rounded-full bg-amber-400 text-black text-[9px] font-bold uppercase tracking-wider flex items-center gap-1 shadow">
                         <Star className="w-2.5 h-2.5 fill-black" />
                         Principale
                       </span>
                     ) : (
-                      <button
-                        type="button"
-                        onClick={() => handleSetPrimary(idx)}
-                        className="px-2 py-0.5 rounded-full bg-black/80 hover:bg-amber-400 hover:text-black text-neutral-300 text-[9px] font-mono transition flex items-center gap-1 cursor-pointer"
-                        title="Définir comme image principale"
-                      >
-                        <Star className="w-2.5 h-2.5" />
+                      <span className="px-2 py-0.5 rounded-full bg-black/80 text-neutral-300 text-[9px] font-mono shadow">
                         #{idx + 1}
-                      </button>
+                      </span>
                     )}
                     {isVideoUrl(imgUrl) && (
                       <span className="px-1.5 py-0.5 rounded-full bg-black/85 border border-neutral-700 text-amber-300 text-[9px] font-mono flex items-center gap-1 shadow">
                         <Film className="w-2.5 h-2.5 text-amber-400" />
-                        Vidéo HD
+                        Vidéo
                       </span>
                     )}
                   </div>
 
-                  {/* Actions Overlay */}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-1.5 p-2">
-                    {idx > 0 && (
-                      <button
-                        type="button"
-                        onClick={() => handleMove(idx, 'left')}
-                        className="p-1.5 bg-neutral-900/90 hover:bg-neutral-800 text-white rounded-lg transition cursor-pointer"
-                        title="Déplacer vers la gauche"
-                      >
-                        <ArrowLeft className="w-3.5 h-3.5" />
-                      </button>
-                    )}
+                  {/* Top Delete Button (Right) — ALWAYS ACCESSIBLE WITH 1 TAP ON MOBILE */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleRemove(idx)
+                    }}
+                    className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/85 hover:bg-rose-600 text-rose-400 hover:text-white border border-rose-500/40 flex items-center justify-center transition shadow-md z-20 cursor-pointer active:scale-95"
+                    title="Supprimer ce média"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+
+                  {/* Bottom Quick Controls (Always visible on mobile/touch, hover on desktop) */}
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/80 to-transparent pt-4 pb-1.5 px-2 flex items-center justify-between sm:opacity-0 sm:group-hover:opacity-100 transition-all z-20 pointer-events-auto">
+                    <div className="flex items-center gap-1">
+                      {idx > 0 && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleMove(idx, 'left')
+                          }}
+                          className="p-1.5 bg-neutral-800/90 hover:bg-neutral-700 active:bg-neutral-600 text-white rounded-lg transition text-xs flex items-center justify-center cursor-pointer shadow"
+                          title="Déplacer vers la gauche"
+                        >
+                          <ArrowLeft className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                      {idx < images.length - 1 && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleMove(idx, 'right')
+                          }}
+                          className="p-1.5 bg-neutral-800/90 hover:bg-neutral-700 active:bg-neutral-600 text-white rounded-lg transition text-xs flex items-center justify-center cursor-pointer shadow"
+                          title="Déplacer vers la droite"
+                        >
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
 
                     {!isPrimary && (
                       <button
                         type="button"
-                        onClick={() => handleSetPrimary(idx)}
-                        className="p-1.5 bg-neutral-900/90 hover:bg-amber-400 hover:text-black text-amber-300 rounded-lg transition cursor-pointer"
-                        title="Mettre en principale"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleSetPrimary(idx)
+                        }}
+                        className="px-2.5 py-1 bg-amber-400 hover:bg-amber-300 text-black text-[10px] font-bold rounded-full transition flex items-center gap-1 shadow cursor-pointer active:scale-95"
+                        title="Définir comme photo principale"
                       >
-                        <Star className="w-3.5 h-3.5" />
-                      </button>
-                    )}
-
-                    <button
-                      type="button"
-                      onClick={() => handleRemove(idx)}
-                      className="p-1.5 bg-neutral-900/90 hover:bg-rose-600 text-rose-300 hover:text-white rounded-lg transition cursor-pointer"
-                      title="Supprimer la photo"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-
-                    {idx < images.length - 1 && (
-                      <button
-                        type="button"
-                        onClick={() => handleMove(idx, 'right')}
-                        className="p-1.5 bg-neutral-900/90 hover:bg-neutral-800 text-white rounded-lg transition cursor-pointer"
-                        title="Déplacer vers la droite"
-                      >
-                        <ArrowRight className="w-3.5 h-3.5" />
+                        <Star className="w-3 h-3 fill-black" />
+                        <span>1ère</span>
                       </button>
                     )}
                   </div>
@@ -418,3 +500,4 @@ export function ProductImageUploader({
     </div>
   )
 }
+

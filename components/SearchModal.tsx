@@ -3,18 +3,47 @@
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Search, X, ShoppingBag, ArrowRight, Zap } from 'lucide-react'
-import { MOCK_PRODUCTS } from '@/lib/mock-data'
+import { Search, X, ShoppingBag, ArrowRight, Zap, Loader2 } from 'lucide-react'
 import { useCartStore } from '@/lib/store/cart'
 import { triggerFlyToCart } from '@/components/FlyToCart'
 
-const POPULAR_SEARCHES = ['Porsche GT3 RS', 'Ferrari F40', 'Vintage', 'Lamborghini', 'Mercedes 300 SL']
+const POPULAR_SEARCHES = ['Porsche', 'Ferrari', 'Bugatti', 'Vintage', 'McLaren']
+
+function isVideoUrl(url?: string): boolean {
+  if (!url) return false
+  return /\.(mp4|webm|mov|ogg)(\?.*)?$/i.test(url)
+}
 
 export function SearchModal({ className }: { className?: string } = {}) {
   const [isOpen, setIsOpen] = useState(false)
   const [query, setQuery] = useState('')
+  const [products, setProducts] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const addItem = useCartStore((s) => s.addItem)
+
+  // Charger les vrais produits dynamiques du store
+  useEffect(() => {
+    let isMounted = true
+    async function fetchProducts() {
+      try {
+        setIsLoading(true)
+        const res = await fetch('/api/products')
+        const data = await res.json()
+        if (isMounted && data.products && Array.isArray(data.products)) {
+          setProducts(data.products)
+        }
+      } catch {
+        // En cas d'erreur de réseau, garder la liste vide ou existante
+      } finally {
+        if (isMounted) setIsLoading(false)
+      }
+    }
+    fetchProducts()
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   // Raccourci clavier Cmd+K / Ctrl+K
   useEffect(() => {
@@ -39,22 +68,23 @@ export function SearchModal({ className }: { className?: string } = {}) {
     }
   }, [isOpen])
 
-  // Filtrage intelligent
-  const results = query.trim() === ''
-    ? MOCK_PRODUCTS.slice(0, 4)
-    : MOCK_PRODUCTS.filter((p) => {
-        const q = query.toLowerCase()
-        return (
-          p.name.toLowerCase().includes(q) ||
-          p.brand.toLowerCase().includes(q) ||
-          p.era.toLowerCase().includes(q) ||
-          p.description.toLowerCase().includes(q) ||
-          (p.year && p.year.toString().includes(q))
-        )
-      })
+  // Filtrage intelligent sur les vrais produits
+  const results =
+    query.trim() === ''
+      ? products.slice(0, 5)
+      : products.filter((p) => {
+          const q = query.toLowerCase()
+          return (
+            p.name?.toLowerCase().includes(q) ||
+            p.brand?.toLowerCase().includes(q) ||
+            p.era?.toLowerCase().includes(q) ||
+            p.description?.toLowerCase().includes(q) ||
+            (p.year && p.year.toString().includes(q))
+          )
+        })
 
-  const handleQuickAdd = (product: typeof MOCK_PRODUCTS[0], e: React.MouseEvent) => {
-    const imgUrl = product.images?.[0] || '/cadre1.jpg'
+  const handleQuickAdd = (product: any, e: React.MouseEvent) => {
+    const imgUrl = product.images?.[0] || 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop'
     triggerFlyToCart(e, {
       image: imgUrl,
       quantity: 1,
@@ -63,12 +93,12 @@ export function SearchModal({ className }: { className?: string } = {}) {
       variantId: product.variants?.[0]?.id || `var-${product.id}`,
       productId: product.id,
       productName: product.name,
-      sku: product.variants?.[0]?.sku || `DF-${product.brand.toUpperCase()}-001`,
-      price: product.price,
+      sku: product.sku || product.variants?.[0]?.sku || `DF-${(product.brand || 'DF').toUpperCase()}-001`,
+      price: product.price || 49.90,
       quantity: 1,
       image: imgUrl,
       options: {
-        dimensions: 'A4 (21 x 29.7 cm)',
+        dimensions: product.formatSize || 'A4 (21 x 29.7 cm)',
         ledColor: 'Ambre Chaud 3000K',
       },
     })
@@ -161,13 +191,27 @@ export function SearchModal({ className }: { className?: string } = {}) {
                       className="flex items-center gap-3.5 flex-1 min-w-0"
                     >
                       <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-neutral-900 border border-neutral-800 flex-shrink-0">
-                        <Image
-                          src={product.images?.[0] || '/cadre1.jpg'}
-                          alt={product.name}
-                          fill
-                          className="object-cover group-hover:scale-105 transition"
-                          sizes="60px"
-                        />
+                        {isVideoUrl(product.images?.[0]) ? (
+                          <video
+                            src={product.images[0]}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className="w-full h-full object-cover group-hover:scale-105 transition pointer-events-none"
+                          />
+                        ) : (
+                          <Image
+                            src={
+                              product.images?.[0] ||
+                              'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop'
+                            }
+                            alt={product.name}
+                            fill
+                            className="object-cover group-hover:scale-105 transition"
+                            sizes="60px"
+                          />
+                        )}
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
@@ -175,14 +219,14 @@ export function SearchModal({ className }: { className?: string } = {}) {
                             {product.brand}
                           </span>
                           <span className="text-[10px] text-neutral-500 font-mono">
-                            {product.year}
+                            {product.year || 'Édition Spéciale'}
                           </span>
                         </div>
                         <p className="text-sm font-bold text-white truncate group-hover:text-amber-300 transition">
                           {product.name}
                         </p>
                         <p className="text-xs font-semibold text-neutral-300">
-                          {product.price.toFixed(2).replace('.', ',')} €{' '}
+                          {(Number(product.price) || 49.90).toFixed(2).replace('.', ',')} €{' '}
                           <span className="text-[10px] text-neutral-500 font-normal">· Livraison Offerte</span>
                         </p>
                       </div>

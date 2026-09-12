@@ -2,60 +2,60 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Search, Package, Truck, CheckCircle2, Clock, ShieldCheck, ArrowRight, Sparkles, MapPin } from 'lucide-react'
+import {
+  Search,
+  Package,
+  Truck,
+  CheckCircle2,
+  Clock,
+  ShieldCheck,
+  ArrowRight,
+  Sparkles,
+  MapPin,
+  Loader2,
+  AlertCircle,
+  Box,
+} from 'lucide-react'
 
 export default function SuiviCommandePage() {
   const [orderNumber, setOrderNumber] = useState('')
   const [email, setEmail] = useState('')
   const [trackingResult, setTrackingResult] = useState<any>(null)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
   const [hasSearched, setHasSearched] = useState(false)
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault()
     setHasSearched(true)
+    setErrorMessage(null)
+    setTrackingResult(null)
 
-    const cleanNumber = orderNumber.trim().toUpperCase()
+    const cleanNumber = orderNumber.trim()
     if (!cleanNumber) return
 
-    // Données de suivi dynamiques réalistes
-    setTrackingResult({
-      orderId: cleanNumber.startsWith('DF-') ? cleanNumber : `DF-${cleanNumber}`,
-      createdAt: '11 Septembre 2026',
-      carrier: 'Colissimo La Poste',
-      trackingCode: '6A' + Math.floor(10000000000 + Math.random() * 90000000000),
-      currentStep: 3, // 1: Validée, 2: Atelier, 3: Expédiée, 4: Livrée
-      estimatedDelivery: '14 - 15 Septembre 2026',
-      items: [
-        { name: 'Ferrari F40 (1987) — Cadre 3D d’Art Automobile', format: 'Format Standard (A4)', qty: 1 }
-      ],
-      steps: [
-        {
-          title: 'Paiement Sécurisé Validé',
-          desc: 'La commande a été confirmée et transmise à notre atelier.',
-          date: '11 Sept. · 10:14',
-          done: true,
-        },
-        {
-          title: 'Confection & Contrôle en Atelier',
-          desc: 'Montage de la miniature, fixation sous passe-partout 310g et test du module LED 3000K.',
-          date: '11 Sept. · 14:30',
-          done: true,
-        },
-        {
-          title: 'Colis Expédié en Colissimo Suivi',
-          desc: 'Prise en charge par le centre de tri postal de Paris. Acheminement en cours.',
-          date: '11 Sept. · 18:45',
-          done: true,
-          current: true,
-        },
-        {
-          title: 'Livraison à Domicile',
-          desc: 'Remise en boîte aux lettres ou en mains propres sans signature.',
-          date: 'Estimation : 14 Sept.',
-          done: false,
-        },
-      ]
-    })
+    setIsLoading(true)
+    try {
+      const res = await fetch('/api/orders/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderNumber: cleanNumber,
+          email: email.trim(),
+        }),
+      })
+
+      const data = await res.json()
+      if (!res.ok || data.error) {
+        setErrorMessage(data.error || 'Commande introuvable.')
+      } else {
+        setTrackingResult(data.order)
+      }
+    } catch (err: any) {
+      setErrorMessage('Une erreur réseau est survenue. Veuillez réessayer.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const fillExample = () => {
@@ -64,15 +64,15 @@ export default function SuiviCommandePage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#080807] text-white selection:bg-amber-400 selection:text-black py-16 px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-[#080807] text-white selection:bg-amber-400 selection:text-black pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto space-y-12">
-        {/* En-tête */}
+        {/* En-tête avec marge supérieure adaptée au header fixe */}
         <div className="text-center space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-amber-400 text-xs font-mono uppercase tracking-wider">
             <Package className="w-3.5 h-3.5" />
             <span>Suivi Logistique Atelier</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-white font-serif">
             Suivre Ma Commande
           </h1>
           <p className="text-xs sm:text-sm text-neutral-400 font-light max-w-md mx-auto leading-relaxed">
@@ -104,8 +104,7 @@ export default function SuiviCommandePage() {
                 </label>
                 <input
                   type="email"
-                  required
-                  placeholder="votre@email.fr"
+                  placeholder="votre@email.fr (optionnel)"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-4 py-3 bg-neutral-950 border border-neutral-800 focus:border-amber-400 rounded-xl text-white text-sm outline-none transition"
@@ -119,42 +118,104 @@ export default function SuiviCommandePage() {
                 onClick={fillExample}
                 className="text-xs text-neutral-500 hover:text-amber-400 underline transition cursor-pointer"
               >
-                Remplir avec un exemple de démonstration
+                Remplir avec l&apos;exemple DF-84920
               </button>
 
               <button
                 type="submit"
-                className="w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-neutral-100 text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+                disabled={isLoading}
+                className="w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-neutral-100 disabled:bg-neutral-800 disabled:text-neutral-500 text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer active:scale-95"
               >
-                <Search className="w-4 h-4" />
-                <span>Rechercher</span>
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-neutral-600" />
+                    <span>Recherche en cours...</span>
+                  </>
+                ) : (
+                  <>
+                    <Search className="w-4 h-4" />
+                    <span>Rechercher</span>
+                  </>
+                )}
               </button>
             </div>
           </form>
         </div>
 
-        {/* Résultat du suivi */}
+        {/* Message d'erreur */}
+        {errorMessage && (
+          <div className="p-4 bg-red-950/40 border border-red-800/60 rounded-xl flex items-start gap-3 text-red-300 text-xs animate-fade-in">
+            <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="font-semibold">{errorMessage}</p>
+              <p className="text-red-400/80 mt-1">
+                Vérifiez votre référence de commande reçue par e-mail ou contactez notre assistance si besoin.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Résultat du suivi réel */}
         {trackingResult && (
           <div className="bg-neutral-900/60 border border-neutral-800 rounded-2xl p-6 sm:p-8 space-y-8 shadow-2xl animate-fade-in">
             {/* Header Commande */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-800 pb-6">
               <div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <span className="text-xl font-bold font-mono text-white">{trackingResult.orderId}</span>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase bg-amber-400/10 text-amber-400 border border-amber-400/30">
-                    En cours d&apos;acheminement
+                  <span
+                    className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase border ${
+                      trackingResult.status === 'DELIVERED'
+                        ? 'bg-emerald-950/60 border-emerald-800/60 text-emerald-300'
+                        : trackingResult.status === 'SHIPPED'
+                        ? 'bg-sky-950/60 border-sky-800/60 text-sky-300'
+                        : 'bg-amber-400/10 border-amber-400/30 text-amber-400'
+                    }`}
+                  >
+                    {trackingResult.status === 'DELIVERED'
+                      ? 'Livrée'
+                      : trackingResult.status === 'SHIPPED'
+                      ? 'Expédiée'
+                      : trackingResult.status === 'PROCESSING'
+                      ? 'En confection atelier'
+                      : 'Commande confirmée'}
                   </span>
                 </div>
                 <p className="text-xs text-neutral-400 mt-1">
-                  Expédié via {trackingResult.carrier} · Numéro : <span className="font-mono text-white">{trackingResult.trackingCode}</span>
+                  Expédié via {trackingResult.carrier} · Réf. suivi :{' '}
+                  <span className="font-mono text-white">{trackingResult.trackingCode}</span>
                 </p>
               </div>
 
               <div className="text-left sm:text-right">
-                <span className="text-xs text-neutral-400 block">Livraison estimée :</span>
-                <span className="text-sm font-bold text-emerald-400 font-mono">{trackingResult.estimatedDelivery}</span>
+                <span className="text-xs text-neutral-400 block">Date de commande :</span>
+                <span className="text-sm font-bold text-amber-400 font-mono">{trackingResult.createdAt}</span>
               </div>
             </div>
+
+            {/* Articles de la commande */}
+            {trackingResult.items && trackingResult.items.length > 0 && (
+              <div className="space-y-3 p-4 bg-neutral-950/60 border border-neutral-800/80 rounded-xl">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 font-bold block">
+                  Pièces confectionnées :
+                </span>
+                <div className="divide-y divide-neutral-800/60">
+                  {trackingResult.items.map((item: any, idx: number) => (
+                    <div key={idx} className="py-2.5 flex items-center justify-between text-xs">
+                      <div className="space-y-0.5">
+                        <p className="text-white font-bold">{item.name}</p>
+                        <p className="text-[11px] text-neutral-400 font-mono">
+                          {item.format} {item.size ? `· ${item.size}` : ''} × {item.qty}
+                        </p>
+                      </div>
+                      <span className="font-mono text-neutral-300 font-semibold">
+                        {(item.price * item.qty).toFixed(2).replace('.', ',')} €
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Timeline Étapes */}
             <div className="space-y-6">
@@ -182,13 +243,9 @@ export default function SuiviCommandePage() {
                         <h4 className={`text-sm font-semibold ${step.done ? 'text-white' : 'text-neutral-500'}`}>
                           {step.title}
                         </h4>
-                        <span className="text-[10px] font-mono text-neutral-400">
-                          {step.date}
-                        </span>
+                        <span className="text-[10px] font-mono text-neutral-400">{step.date}</span>
                       </div>
-                      <p className="text-xs text-neutral-400 font-light leading-relaxed">
-                        {step.desc}
-                      </p>
+                      <p className="text-xs text-neutral-400 font-light leading-relaxed">{step.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -201,19 +258,10 @@ export default function SuiviCommandePage() {
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
                 <span>Colis garanti contre la casse et le vol jusqu&apos;à la livraison</span>
               </div>
-              <a
-                href="mailto:contact@dreamframe.fr"
-                className="text-amber-400 hover:underline font-semibold"
-              >
+              <a href="mailto:contact@dreamframe.fr" className="text-amber-400 hover:underline font-semibold">
                 Besoin d&apos;aide ? Contacter l&apos;atelier
               </a>
             </div>
-          </div>
-        )}
-
-        {hasSearched && !trackingResult && (
-          <div className="text-center py-8 text-neutral-400 text-xs">
-            Veuillez vérifier les informations renseignées.
           </div>
         )}
       </div>

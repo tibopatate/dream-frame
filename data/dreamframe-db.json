@@ -6,7 +6,7 @@
       "name": "Bugatti Chiron (2016)",
       "brand": "Bugatti",
       "description": "Le sommet du luxe et de l'hypercar W16 1 500 ch. Cadre d'ébénisterie 3D avec éclairage LED ambré, immortalisé devant la véritable Bugatti Chiron.",
-      "price": 49.99,
+      "price": 49.9,
       "era": "MODERN",
       "year": 2016,
       "isActive": true,
@@ -19,7 +19,9 @@
       "stockAlert": 2,
       "sku": "DF-BUGATTI-CHIRON",
       "stripePriceId": "",
-      "createdAt": "2026-09-08T12:00:00.000Z"
+      "createdAt": "2026-09-08T12:00:00.000Z",
+      "formatName": "Petit Cadre Standard",
+      "formatSize": "21 × 29.7 cm"
     },
     {
       "id": "real-pagani-huayra",
@@ -27,7 +29,7 @@
       "name": "Pagani Huayra V12",
       "brand": "Pagani",
       "description": "L'artisanat automobile italien dans ce qu'il a de plus pur. V12 Biturbo AMG de 730 ch sous châssis Carbo-Titane, photographié à côté de son modèle échelle 1.",
-      "price": 49.99,
+      "price": 49.9,
       "era": "MODERN",
       "year": 2023,
       "isActive": true,
@@ -40,7 +42,9 @@
       "stockAlert": 2,
       "sku": "DF-PAGANI-HUAYRA",
       "stripePriceId": "",
-      "createdAt": "2026-09-08T12:00:00.000Z"
+      "createdAt": "2026-09-08T12:00:00.000Z",
+      "formatName": "Petit Cadre Standard",
+      "formatSize": "21 × 29.7 cm"
     },
     {
       "id": "real-audi-r8v10",
@@ -48,7 +52,7 @@
       "name": "Audi R8 (2018)",
       "brand": "Audi",
       "description": "Le rugissement du V10 atmosphérique à 8 700 tr/min. Cadre 3D relief sous vitrage acrylique HD avec rétroéclairage LED ambré.",
-      "price": 49.99,
+      "price": 49.9,
       "era": "MODERN",
       "year": 2018,
       "isActive": true,
@@ -61,7 +65,9 @@
       "stockAlert": 3,
       "sku": "DF-AUDI-R8V10",
       "stripePriceId": "",
-      "createdAt": "2026-09-09T08:03:01.308Z"
+      "createdAt": "2026-09-09T08:03:01.308Z",
+      "formatName": "Petit Cadre Standard",
+      "formatSize": "21 × 29.7 cm"
     },
     {
       "id": "real-bmw-m4comp",
@@ -69,7 +75,7 @@
       "name": "BMW M4 Competition (G82)",
       "brand": "BMW",
       "description": "Teinte mythique Isle of Man Green et calandre verticale acérée. Réalisation 3D de précision sous vitrage acrylique.",
-      "price": 49.99,
+      "price": 49.9,
       "era": "MODERN",
       "year": 2023,
       "isActive": true,
@@ -82,7 +88,9 @@
       "stockAlert": 2,
       "sku": "DF-BMW-M4COMP",
       "stripePriceId": "",
-      "createdAt": "2026-09-08T12:00:00.000Z"
+      "createdAt": "2026-09-08T12:00:00.000Z",
+      "formatName": "Petit Cadre Standard",
+      "formatSize": "21 × 29.7 cm"
     },
     {
       "id": "real-lambo-huracan",
@@ -90,7 +98,7 @@
       "name": "Lamborghini Huracán LP 610-4",
       "brand": "Lamborghini",
       "description": "V10 atmosphérique 5.2L et arêtes tranchantes stealth. Cadre d'artisanat avec module LED ambré et finitions haut de gamme.",
-      "price": 49.99,
+      "price": 49.9,
       "era": "MODERN",
       "year": 2021,
       "isActive": true,
@@ -103,7 +111,9 @@
       "stockAlert": 2,
       "sku": "DF-LAMBO-HURACAN",
       "stripePriceId": "",
-      "createdAt": "2026-09-08T12:00:00.000Z"
+      "createdAt": "2026-09-08T12:00:00.000Z",
+      "formatName": "Petit Cadre Standard",
+      "formatSize": "21 × 29.7 cm"
     },
     {
       "id": "real-mercedes-amggtr",
@@ -111,7 +121,7 @@
       "name": "Mercedes-AMG GT R (2017)",
       "brand": "Mercedes-Benz",
       "description": "La bête de l'Enfer Vert Nürburgring. V8 Biturbo 4.0L sous châssis aluminium et vitrage acrylique optique HD.",
-      "price": 49.99,
+      "price": 49.9,
       "era": "MODERN",
       "year": 2017,
       "isActive": true,
@@ -124,7 +134,9 @@
       "stockAlert": 2,
       "sku": "DF-MERCEDES-AMGGTR",
       "stripePriceId": "",
-      "createdAt": "2026-09-08T12:00:00.000Z"
+      "createdAt": "2026-09-08T12:00:00.000Z",
+      "formatName": "Petit Cadre Standard",
+      "formatSize": "21 × 29.7 cm"
     },
     {
       "id": "real-mclaren-gt",
@@ -132,7 +144,7 @@
       "name": "McLaren GT (2019)",
       "brand": "McLaren",
       "description": "L'élégance Grand Tourisme britannique en relief 3D. V8 Biturbo 620 ch sous cadre d'artisanat bois et éclairage LED supérieur.",
-      "price": 49.99,
+      "price": 49.9,
       "era": "MODERN",
       "year": 2019,
       "isActive": true,
@@ -145,7 +157,9 @@
       "stockAlert": 2,
       "sku": "DF-MCLAREN-GT",
       "stripePriceId": "",
-      "createdAt": "2026-09-09T08:03:01.307Z"
+      "createdAt": "2026-09-09T08:03:01.307Z",
+      "formatName": "Petit Cadre Standard",
+      "formatSize": "21 × 29.7 cm"
     },
     {
       "id": "real-porsche-918",
@@ -153,7 +167,7 @@
       "name": "Porsche 918 Spyder (2015)",
       "brand": "Porsche",
       "description": "L'hypercar hybride absolue de 887 ch. V8 atmosphérique et échappements hauts sculptés en relief 3D.",
-      "price": 49.99,
+      "price": 49.9,
       "era": "MODERN",
       "year": 2015,
       "isActive": true,
@@ -166,15 +180,17 @@
       "stockAlert": 2,
       "sku": "DF-PORSCHE-918",
       "stripePriceId": "",
-      "createdAt": "2026-09-08T12:00:00.000Z"
+      "createdAt": "2026-09-08T12:00:00.000Z",
+      "formatName": "Petit Cadre Standard",
+      "formatSize": "21 × 29.7 cm"
     },
     {
       "id": "real-ferrari-f40",
       "slug": "ferrari-f40-1987-cadre-3d",
-      "name": "Ferrari F40 (1987)",
+      "name": "Ferrari F40 (1987) — Grand Cadre Prestige",
       "brand": "Ferrari",
-      "description": "Le mythe absolu de Maranello. V8 Twin-Turbo et aileron légendaire sculptés au millimètre sous vitrage d'exception.",
-      "price": 49.99,
+      "description": "Le mythe absolu de Maranello en Grand Format d'Exception 50 × 70 cm. V8 Twin-Turbo et aileron légendaire sculptés au millimètre sous vitrage d'artisanat et rétroéclairage LED ambré.",
+      "price": 249.9,
       "era": "VINTAGE",
       "year": 1987,
       "isActive": true,
@@ -187,10 +203,72 @@
       "stockAlert": 2,
       "sku": "DF-FERRARI-F40",
       "stripePriceId": "",
-      "createdAt": "2026-09-09T08:03:01.308Z"
+      "createdAt": "2026-09-09T08:03:01.308Z",
+      "formatName": "Grand Cadre Prestige",
+      "formatSize": "50 × 70 cm"
+    },
+    {
+      "id": "real-ferrari-moyen",
+      "slug": "ferrari-f40-cadre-moyen-collector",
+      "name": "Ferrari F40 — Cadre Moyen Collector",
+      "brand": "Ferrari",
+      "description": "Format Moyen d'artisanat 30 × 42 cm. V8 Biturbo italien sculpté en relief sous vitrage acrylique haute transparence avec module LED ambré 3000K.",
+      "price": 149.9,
+      "era": "VINTAGE",
+      "year": 1987,
+      "isActive": true,
+      "isFeatured": true,
+      "formatName": "Cadre Moyen Collector",
+      "formatSize": "30 × 42 cm",
+      "images": [
+        "https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop"
+      ],
+      "stock": 5,
+      "stockAlert": 2,
+      "sku": "DF-FERRARI-MOYEN-001",
+      "stripePriceId": "",
+      "createdAt": "2026-09-12T21:42:46.805Z"
     }
   ],
-  "orders": [],
+  "orders": [
+    {
+      "id": "ord-84920",
+      "orderNumber": "DF-84920",
+      "status": "PROCESSING",
+      "customerEmail": "client@exemple.fr",
+      "customerFirstName": "Alexandre",
+      "customerLastName": "Dupont",
+      "customerPhone": "06 12 34 56 78",
+      "shippingAddress": "12 Rue de la Paix",
+      "shippingCity": "Paris",
+      "shippingPostalCode": "75001",
+      "shippingCountry": "FR",
+      "subtotal": 149.90,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "total": 149.90,
+      "carrier": "Colissimo La Poste Suivi",
+      "trackingNumber": "6A84920194821",
+      "createdAt": "2026-09-12T10:14:00.000Z",
+      "items": [
+        {
+          "id": "item-84920-1",
+          "productId": "real-ferrari-moyen",
+          "variantId": "var-ferrari-moyen",
+          "sku": "DF-FERRARI-MOYEN-001",
+          "productName": "Ferrari F40 — Cadre Moyen Collector",
+          "brand": "Ferrari",
+          "era": "VINTAGE",
+          "unitPrice": 149.90,
+          "quantity": 1,
+          "total": 149.90,
+          "formatName": "Cadre Moyen Collector",
+          "formatSize": "30 × 42 cm"
+        }
+      ]
+    }
+  ],
   "movements": [],
   "settings": {
     "carrier": "Colissimo Suivi",
