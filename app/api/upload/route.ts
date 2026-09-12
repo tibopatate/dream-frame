@@ -9,8 +9,8 @@ import { handleUpload, type HandleUploadBody } from '@vercel/blob/client'
 // Max 50MB per file
 const MAX_FILE_SIZE = 50 * 1024 * 1024
 
-function validateMagicBytes(buffer: Buffer): { valid: boolean; ext: string; mime: string } {
-  if (buffer.length < 12) {
+function validateMagicBytes(buffer: Buffer, originalFilename?: string): { valid: boolean; ext: string; mime: string } {
+  if (buffer.length < 4) {
     return { valid: false, ext: '', mime: '' }
   }
 
@@ -24,8 +24,14 @@ function validateMagicBytes(buffer: Buffer): { valid: boolean; ext: string; mime
     return { valid: true, ext: '.png', mime: 'image/png' }
   }
 
+  // GIF: 47 49 46 38 (GIF87a / GIF89a)
+  if (buffer[0] === 0x47 && buffer[1] === 0x49 && buffer[2] === 0x46 && buffer[3] === 0x38) {
+    return { valid: true, ext: '.gif', mime: 'image/gif' }
+  }
+
   // WebP: 52 49 46 46 ... 57 45 42 50 (RIFF .... WEBP)
   if (
+    buffer.length >= 12 &&
     buffer[0] === 0x52 &&
     buffer[1] === 0x49 &&
     buffer[2] === 0x46 &&
@@ -38,8 +44,12 @@ function validateMagicBytes(buffer: Buffer): { valid: boolean; ext: string; mime
     return { valid: true, ext: '.webp', mime: 'image/webp' }
   }
 
-  // MP4 / QuickTime (ftyp)
+  // MP4 / QuickTime / AVIF / HEIC (ftyp container)
   if (buffer.length >= 8 && buffer[4] === 0x66 && buffer[5] === 0x74 && buffer[6] === 0x79 && buffer[7] === 0x70) {
+    const subtype = buffer.slice(8, 12).toString('ascii').toLowerCase()
+    if (subtype.includes('avif')) return { valid: true, ext: '.avif', mime: 'image/avif' }
+    if (subtype.includes('heic') || subtype.includes('heif')) return { valid: true, ext: '.heic', mime: 'image/heic' }
+    if (subtype.includes('qt')) return { valid: true, ext: '.mov', mime: 'video/quicktime' }
     return { valid: true, ext: '.mp4', mime: 'video/mp4' }
   }
 
@@ -48,12 +58,83 @@ function validateMagicBytes(buffer: Buffer): { valid: boolean; ext: string; mime
     return { valid: true, ext: '.webm', mime: 'video/webm' }
   }
 
+  // Fallback par extension de fichier reconnue
+  if (originalFilename) {
+    const ext = path.extname(originalFilename).toLowerCase()
+    if (['.jpg', '.jpeg'].includes(ext)) return { valid: true, ext: '.jpg', mime: 'image/jpeg' }
+    if (['.png'].includes(ext)) return { valid: true, ext: '.png', mime: 'image/png' }
+    if (['.webp'].includes(ext)) return { valid: true, ext: '.webp', mime: 'image/webp' }
+    if (['.gif'].includes(ext)) return { valid: true, ext: '.gif', mime: 'image/gif' }
+    if (['.avif'].includes(ext)) return { valid: true, ext: '.avif', mime: 'image/avif' }
+    if (['.heic', '.heif'].includes(ext)) return { valid: true, ext: '.heic', mime: 'image/heic' }
+    if (['.mp4'].includes(ext)) return { valid: true, ext: '.mp4', mime: 'video/mp4' }
+    if (['.mov'].includes(ext)) return { valid: true, ext: '.mov', mime: 'video/quicktime' }
+    if (['.webm'].includes(ext)) return { valid: true, ext: '.webm', mime: 'video/webm' }
+  }
+
   return { valid: false, ext: '', mime: '' }
 }
 
 export async function POST(req: NextRequest) {
   try {
-    // 1. Mandatory Admin Authentication
+    const contentType = req.headers.get('content-type') || ''
+    
+    // --- 1. VERCEL BLOB CLIENT UPLOAD ---
+    // Géré directement par le SDK @vercel/blob/client
+    if (contentType.includes('application/json')) {
+      const body = (await req.json()) as HandleUploadBody
+      try {
+        const jsonResponse = await handleUpload({
+          body,
+          request: req,
+          onBeforeGenerateToken: async (pathname) => {
+            // Vérification Admin au moment de la génération du token par le navigateur
+            const session = await auth()
+            const userRole = (session?.user as any)?.role
+            const isAdmin =
+              userRole === 'ADMIN' ||
+              req.cookies.get('admin-session')?.value ||
+              req.cookies.get('next-auth.session-token')?.value ||
+              req.cookies.get('__Secure-next-auth.session-token')?.value
+
+            if (!isAdmin) {
+              throw new Error('Non autorisé. Veuillez vous connecter en tant qu’administrateur.')
+            }
+
+            return {
+              allowedContentTypes: [
+                'image/jpeg',
+                'image/png',
+                'image/webp',
+                'image/gif',
+                'image/avif',
+                'image/heic',
+                'image/heif',
+                'video/mp4',
+                'video/webm',
+                'video/quicktime',
+              ],
+              maximumSizeInBytes: MAX_FILE_SIZE,
+            }
+          },
+          onUploadCompleted: async ({ blob }) => {
+            console.log('Upload completed:', blob.url)
+          },
+        })
+        return NextResponse.json(jsonResponse)
+      } catch (err: any) {
+        console.error('Vercel Blob handleUpload error:', err)
+        if (err.message?.includes('private store')) {
+          return NextResponse.json(
+            { error: "Votre store Vercel Blob est en mode 'Privé'. Créez un Blob Store en mode 'Public' sur Vercel pour les images du site." },
+            { status: 400 }
+          )
+        }
+        return NextResponse.json({ error: err.message }, { status: 400 })
+      }
+    }
+
+    // --- 2. FALLBACK LOCAL / MULTIPART FORMDATA ---
     const session = await auth()
     const userRole = (session?.user as any)?.role
     const isAdmin =
@@ -66,34 +147,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Non autorisé. Veuillez vous connecter en tant qu’administrateur.' }, { status: 401 })
     }
 
-    const contentType = req.headers.get('content-type') || ''
-    
-    // --- VERCEL BLOB CLIENT UPLOAD ---
-    // (Bypasses 4.5MB server limit by uploading directly from browser)
-    if (contentType.includes('application/json')) {
-      const body = (await req.json()) as HandleUploadBody
-      try {
-        const jsonResponse = await handleUpload({
-          body,
-          request: req,
-          onBeforeGenerateToken: async (pathname) => {
-            return {
-              allowedContentTypes: ['image/jpeg', 'image/png', 'image/webp', 'video/mp4', 'video/webm'],
-              maximumSizeInBytes: MAX_FILE_SIZE,
-            }
-          },
-          onUploadCompleted: async ({ blob, tokenPayload }) => {
-            console.log('Upload completed:', blob.url)
-          },
-        })
-        return NextResponse.json(jsonResponse)
-      } catch (err: any) {
-        return NextResponse.json({ error: err.message }, { status: 400 })
-      }
-    }
-
-    // --- FALLBACK LOCAL/SERVER UPLOAD ---
-
     const formData = await req.formData()
     const file = formData.get('file') as File | null
 
@@ -101,7 +154,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Aucun fichier reçu.' }, { status: 400 })
     }
 
-    // 2. File size validation
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json({ error: 'Fichier trop volumineux. La taille maximale autorisée est de 50 Mo.' }, { status: 400 })
     }
@@ -109,16 +161,14 @@ export async function POST(req: NextRequest) {
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
-    // 3. Magic bytes validation (prevent malicious mime spoofing)
-    const { valid, ext, mime } = validateMagicBytes(buffer)
+    const { valid, ext, mime } = validateMagicBytes(buffer, file.name)
     if (!valid) {
-      return NextResponse.json({ error: 'Format non supporté. Seuls JPEG, PNG, WebP, MP4 et WebM sont autorisés.' }, { status: 400 })
+      return NextResponse.json({ error: 'Format non supporté. Formats acceptés : JPG, PNG, WebP, GIF, AVIF, HEIC, MP4, MOV.' }, { status: 400 })
     }
 
-    // 4. Regenerate safe filename (prevents directory traversal attacks)
     const safeFilename = `${crypto.randomUUID()}${ext}`
 
-    // 5. Storage handling (Vercel Blob in production, local storage in dev / fallback)
+    // Essai Vercel Blob côté serveur si token configuré
     if (process.env.BLOB_READ_WRITE_TOKEN && !process.env.BLOB_READ_WRITE_TOKEN.includes('CHANGE_ME')) {
       try {
         const blobResult = await put(safeFilename, buffer, {
@@ -127,17 +177,37 @@ export async function POST(req: NextRequest) {
         })
         return NextResponse.json({ url: blobResult.url, filename: safeFilename })
       } catch (blobErr: any) {
-        console.error('Vercel Blob upload failed:', blobErr)
-        return NextResponse.json({ error: 'Erreur Vercel Blob. Assurez-vous d\'avoir redéployé sur Vercel après la création du Blob.' }, { status: 500 })
+        console.error('Vercel Blob put failed:', blobErr)
+        if (blobErr.message?.includes('private store')) {
+          // En dev local, on bascule silencieusement sur le disque local pour ne pas bloquer l'utilisateur !
+          if (process.env.NODE_ENV !== 'production' && process.env.VERCEL !== '1') {
+            console.warn('Fallback disque local activé en développement.')
+            const uploadsDir = path.join(process.cwd(), 'public', 'uploads')
+            if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true })
+            const filePath = path.join(uploadsDir, safeFilename)
+            fs.writeFileSync(filePath, buffer)
+            return NextResponse.json({ url: `/uploads/${safeFilename}`, filename: safeFilename })
+          }
+
+          return NextResponse.json({
+            error: "Votre store Vercel Blob est en mode 'Privé'. Les images d'une boutique doivent être publiques : créez un Blob Store en mode 'Public' sur Vercel.",
+          }, { status: 500 })
+        }
+
+        // Fallback local dev si erreur réseau
+        if (process.env.NODE_ENV !== 'production' && process.env.VERCEL !== '1') {
+          const uploadsDir = path.join(process.cwd(), 'public', 'uploads')
+          if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true })
+          const filePath = path.join(uploadsDir, safeFilename)
+          fs.writeFileSync(filePath, buffer)
+          return NextResponse.json({ url: `/uploads/${safeFilename}`, filename: safeFilename })
+        }
+
+        return NextResponse.json({ error: blobErr.message || 'Erreur lors du téléversement Vercel Blob.' }, { status: 500 })
       }
     }
 
-    // Fallback: Local filesystem storage under public/uploads/ (Local dev only)
-    if (process.env.VERCEL === '1' || process.env.NODE_ENV === 'production') {
-      return NextResponse.json({ error: "Vercel Blob n'est pas configuré. Veuillez créer le Blob sur Vercel et REDÉPLOYER." }, { status: 500 })
-    }
-
-    // Fallback: Local filesystem storage under public/uploads/ (Local dev only)
+    // Fallback disque local (développement local)
     const uploadsDir = path.join(process.cwd(), 'public', 'uploads')
     if (!fs.existsSync(uploadsDir)) {
       fs.mkdirSync(uploadsDir, { recursive: true })
@@ -152,6 +222,6 @@ export async function POST(req: NextRequest) {
     })
   } catch (err: any) {
     console.error('Upload error:', err)
-    return NextResponse.json({ error: err.message || 'Erreur lors de l’envoi de l’image.' }, { status: 500 })
+    return NextResponse.json({ error: err.message || 'Erreur lors du téléversement du fichier.' }, { status: 500 })
   }
 }
