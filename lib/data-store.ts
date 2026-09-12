@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { MOCK_PRODUCTS } from './mock-data'
+import { prisma, isPrismaConfigured } from './db'
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'dreamframe-db.json')
 
@@ -818,6 +819,73 @@ export function writeDatabase(db: DatabaseSchema): void {
 }
 
 // ─── Fonctions CRUD de Haut Niveau pour l'Admin ──────────────────────────────
+
+export async function getUnifiedProducts(): Promise<any[]> {
+  try {
+    await syncDatabaseWithCloud()
+  } catch {}
+
+  const stored = getAllProducts().filter((p) => p.isActive !== false)
+  const productMap = new Map<string, any>()
+
+  // 1. Initialiser avec tous les cadres de la boutique (11 modèles réels)
+  for (const p of stored) {
+    const priceNum = Number(p.price) || 49.90
+    const formatName = (p as any).formatName || (priceNum >= 200 ? 'Ferrari F40 — Grand Cadre Prestige' : priceNum >= 100 ? 'Ferrari F40 — Cadre Moyen Collector' : 'Petit Cadre Standard')
+    const formatSize = (p as any).formatSize || (priceNum >= 200 ? '50 × 70 cm' : priceNum >= 100 ? '30 × 42 cm' : '21 × 29.7 cm')
+
+    productMap.set(p.slug, {
+      ...p,
+      price: priceNum,
+      formatName,
+      formatSize,
+      variants: (p as any).variants || [{ id: p.id, stock: p.stock ?? 5, stockAlert: p.stockAlert ?? 2, sku: p.sku }],
+    })
+  }
+
+  // 2. Fusionner avec Prisma si présent (sans jamais écraser ou faire disparaître les autres voitures)
+  if (isPrismaConfigured()) {
+    try {
+      const dbProducts = await prisma.product.findMany({
+        where: { isActive: true },
+        include: { variants: true },
+        orderBy: { createdAt: 'desc' },
+      })
+      for (const dbP of dbProducts) {
+        const priceNum = Number(dbP.price) || 49.90
+        const formatName = (dbP as any).formatName || (priceNum >= 200 ? 'Grand Format Prestige' : priceNum >= 100 ? 'Cadre Moyen Collector' : 'Petit Cadre Standard')
+        const formatSize = (dbP as any).formatSize || (priceNum >= 200 ? '50 × 70 cm' : priceNum >= 100 ? '30 × 42 cm' : '21 × 29.7 cm')
+        const existing = productMap.get(dbP.slug)
+
+        productMap.set(dbP.slug, {
+          ...(existing || {}),
+          ...dbP,
+          price: priceNum,
+          formatName,
+          formatSize,
+          images: (dbP.images && dbP.images.length > 0) ? dbP.images : (existing?.images || []),
+          variants: (dbP.variants && dbP.variants.length > 0) ? dbP.variants : (existing?.variants || [{ id: dbP.id, stock: 5, stockAlert: 2, sku: `DF-${dbP.slug}` }]),
+        })
+      }
+    } catch (err: any) {
+      console.warn('Prisma getUnifiedProducts warning:', err.message)
+    }
+  }
+
+  // 3. Fallback sécurité vers MOCK_PRODUCTS si vide
+  if (productMap.size === 0) {
+    for (const p of MOCK_PRODUCTS) {
+      productMap.set(p.slug, p)
+    }
+  }
+
+  return Array.from(productMap.values())
+}
+
+export async function getUnifiedProductBySlug(slug: string): Promise<any | null> {
+  const products = await getUnifiedProducts()
+  return products.find((p) => p.slug === slug || p.id === slug) || null
+}
 
 export function getAllProducts(): StoredProduct[] {
   const db = readDatabase()

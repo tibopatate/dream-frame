@@ -67,20 +67,22 @@ export function AddToCartButton({
     setTimeout(() => setAdded(false), 2000)
   }
 
+  const totalPrice = price * quantity
+
   return (
     <button
       onClick={handleAdd}
-      className="w-full py-4 bg-white hover:bg-neutral-100 text-black font-semibold uppercase tracking-wider text-xs rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-xl shadow-white/10 cursor-pointer"
+      className="w-full h-12 px-6 bg-white hover:bg-neutral-100 text-black font-semibold uppercase tracking-wider text-xs rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg shadow-white/5 active:scale-[0.98] cursor-pointer"
     >
       {added ? (
         <>
           <Check className="w-4 h-4 text-emerald-600" />
-          Ajouté à la collection !
+          <span>Ajouté au panier</span>
         </>
       ) : (
         <>
           <ShoppingBag className="w-4 h-4 text-black" />
-          Ajouter à ma collection — {price.toFixed(2).replace('.', ',')} €
+          <span>Ajouter à ma collection · {totalPrice.toFixed(2).replace('.', ',')} €</span>
         </>
       )}
     </button>

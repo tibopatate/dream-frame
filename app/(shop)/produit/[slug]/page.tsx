@@ -9,7 +9,7 @@ import { ProductGallery } from '@/components/product/ProductGallery'
 import { ProductPurchaseSection } from '@/components/ProductPurchaseSection'
 import { ProductReviewsSection } from '@/components/reviews/ProductReviewsSection'
 import { ProductFAQSection } from '@/components/product/ProductFAQSection'
-import { getProductById, DEFAULT_FORMATS, getAllReviews, syncDatabaseWithCloud } from '@/lib/data-store'
+import { getUnifiedProductBySlug, DEFAULT_FORMATS, getAllReviews } from '@/lib/data-store'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,33 +19,15 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  await syncDatabaseWithCloud()
-  let product = null
-
-  if (isPrismaConfigured()) {
-    try {
-      product = await prisma.product.findUnique({
-        where: { slug, isActive: true },
-        select: { name: true, description: true, images: true },
-      })
-    } catch (error) {
-      product = null
-    }
-  }
-
-  if (!product) {
-    const stored = getProductById(slug)
-    product = stored || MOCK_PRODUCTS.find((p) => p.slug === slug) || null
-  }
-
+  const product = await getUnifiedProductBySlug(slug)
   if (!product) return {}
 
   return {
     title: `${product.name} — Cadre 3D d'Exception | Dream Frame`,
-    description: product.description.slice(0, 160),
+    description: product.description ? product.description.slice(0, 160) : '',
     openGraph: {
-      title: product.name,
-      description: product.description.slice(0, 160),
+      title: `${product.name} | Dream Frame`,
+      description: product.description ? product.description.slice(0, 160) : '',
       images: product.images?.[0] ? [{ url: product.images[0] }] : [],
     },
   }
@@ -53,36 +35,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params
-  await syncDatabaseWithCloud()
-  let product: any = null
-
-  if (isPrismaConfigured()) {
-    try {
-      product = await prisma.product.findUnique({
-        where: { slug, isActive: true },
-        include: { variants: true },
-      })
-    } catch (error) {
-      product = null
-    }
-  }
-
-  // Fallback data-store puis mock
-  const stored = getProductById(slug)
-  if (!product && stored) {
-    product = {
-      ...stored,
-      variants: [{ id: stored.id, sku: stored.sku, stock: stored.stock, price: stored.price }],
-    }
-  }
-
-  if (!product) {
-    product = MOCK_PRODUCTS.find((p) => p.slug === slug)
-  }
-
+  const product = await getUnifiedProductBySlug(slug)
   if (!product) notFound()
 
   // S'assurer que les formats sont présents (formats personnalisés du produit ou formats par défaut A4 49,90€, A3 149,90€, A2 249,90€)
+  const stored = product
   const productFormats = stored?.formats && stored.formats.length > 0 ? stored.formats : DEFAULT_FORMATS
 
   const variant = product.variants?.[0]

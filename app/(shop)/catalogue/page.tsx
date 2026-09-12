@@ -1,8 +1,6 @@
 import { Suspense } from 'react'
 import type { Metadata } from 'next'
-import { MOCK_PRODUCTS } from '@/lib/mock-data'
-import { getAllProducts, syncDatabaseWithCloud } from '@/lib/data-store'
-import { prisma, isPrismaConfigured } from '@/lib/db'
+import { getUnifiedProducts } from '@/lib/data-store'
 import { CatalogueFilterHeader } from '@/components/catalogue/CatalogueFilterHeader'
 import { CatalogueProductGrid } from '@/components/catalogue/CatalogueProductGrid'
 
@@ -26,43 +24,8 @@ export default async function CataloguePage({ searchParams }: PageProps) {
   const activeEra = params.era || ''
   const searchQuery = params.search || ''
 
-  try {
-    await syncDatabaseWithCloud()
-  } catch {}
-
-  // 1. Récupération des vrais produits dynamiques de la boutique
-  let baseProducts: any[] = []
-
-  if (isPrismaConfigured()) {
-    try {
-      const dbProducts = await prisma.product.findMany({
-        where: { isActive: true },
-        include: { variants: true },
-        orderBy: { createdAt: 'desc' },
-      })
-      if (dbProducts.length > 0) baseProducts = dbProducts
-    } catch {}
-  }
-
-  if (baseProducts.length === 0) {
-    try {
-      const stored = getAllProducts().filter((p) => p.isActive)
-      if (stored.length > 0) {
-        baseProducts = stored.map((p) => ({
-          ...p,
-          variants: [{ id: p.id, stock: p.stock, stockAlert: p.stockAlert, sku: p.sku }],
-        }))
-      } else {
-        baseProducts = MOCK_PRODUCTS
-      }
-    } catch {
-      baseProducts = MOCK_PRODUCTS
-    }
-  }
-
-  if (baseProducts.length === 0) {
-    baseProducts = MOCK_PRODUCTS
-  }
+  // Récupération de l'intégralité des cadres de la boutique (Collection complète unifiée)
+  const baseProducts = await getUnifiedProducts()
 
   const brands = Array.from(new Set(baseProducts.map((p: any) => p.brand))).sort()
 
