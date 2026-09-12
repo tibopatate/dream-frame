@@ -23,7 +23,18 @@ const productSchema = z.object({
   isFeatured: z.coerce.boolean().default(false),
   stock: z.coerce.number().int().min(0).default(10),
   stockAlert: z.coerce.number().int().min(0).default(3),
-  images: z.array(z.string().url()).min(1, 'Au moins 1 image requise'),
+  images: z
+    .array(
+      z.string().min(1, 'Chemin d’image invalide').refine(
+        (val) =>
+          val.startsWith('/') ||
+          val.startsWith('http://') ||
+          val.startsWith('https://') ||
+          val.startsWith('data:image/'),
+        { message: 'Format d’URL ou de chemin d’image invalide' }
+      )
+    )
+    .min(1, 'Au moins 1 image requise'),
   stripePriceId: z.string().optional(),
 })
 

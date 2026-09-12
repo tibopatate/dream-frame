@@ -39,7 +39,12 @@ export function ProductImageUploader({
       const validFiles: File[] = []
       for (let i = 0; i < files.length; i++) {
         const f = files[i]
-        if (f.type.startsWith('image/') || f.type.startsWith('video/')) {
+        const ext = f.name.split('.').pop()?.toLowerCase() || ''
+        const isMedia =
+          f.type.startsWith('image/') ||
+          f.type.startsWith('video/') ||
+          ['jpg', 'jpeg', 'png', 'webp', 'gif', 'avif', 'heic', 'heif', 'mp4', 'mov', 'webm'].includes(ext)
+        if (isMedia) {
           validFiles.push(f)
         }
       }
@@ -227,7 +232,7 @@ export function ProductImageUploader({
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"
+          accept="image/jpeg,image/png,image/webp,image/gif,image/avif,image/heic,image/heif,video/mp4,video/webm,video/quicktime,.heic,.heif,.mov"
           multiple
           onChange={handleFileInputChange}
           className="hidden"
