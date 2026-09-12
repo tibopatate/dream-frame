@@ -58,3 +58,17 @@ export function truncate(str: string, maxLength: number): string {
   if (str.length <= maxLength) return str
   return str.slice(0, maxLength - 3) + '...'
 }
+
+/** Vérifie si une URL de média est une vidéo (MP4, WebM, MOV, M4V, OGG) */
+export function isVideoUrl(url?: string | null): boolean {
+  if (!url || typeof url !== 'string') return false
+  const clean = url.split('?')[0].split('#')[0].toLowerCase()
+  return (
+    clean.endsWith('.mp4') ||
+    clean.endsWith('.webm') ||
+    clean.endsWith('.mov') ||
+    clean.endsWith('.m4v') ||
+    clean.endsWith('.ogg') ||
+    clean.includes('video/')
+  )
+}

@@ -12,6 +12,7 @@ import {
 import { SectionRenderer } from './SectionRenderer'
 import { SnapshotsModal } from './SnapshotsModal'
 import { ProductImageUploader } from '@/components/admin/ProductImageUploader'
+import { isVideoUrl } from '@/lib/utils'
 import {
   saveDraftAction,
   publishAction,
@@ -587,10 +588,23 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
                     </div>
 
                     <div className="pt-2 border-t border-slate-200 space-y-2">
-                      <label className="text-[10px] uppercase font-mono text-slate-500 font-bold block">Image de fond Hero</label>
+                      <label className="text-[10px] uppercase font-mono text-slate-500 font-bold block">Image ou Vidéo de fond Hero</label>
                       <ProductImageUploader
-                        images={activeSection.settings.bgImage ? [activeSection.settings.bgImage] : []}
-                        onChange={(imgs) => handleUpdateSectionSettings(activeSection.id, { bgImage: imgs[0] || 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop' })}
+                        images={
+                          (activeSection.settings.bgVideo || activeSection.settings.bgImage)
+                            ? [activeSection.settings.bgVideo || activeSection.settings.bgImage]
+                            : []
+                        }
+                        onChange={(imgs) => {
+                          const url = imgs[0] || ''
+                          if (!url) {
+                            handleUpdateSectionSettings(activeSection.id, { bgImage: '', bgVideo: '' })
+                          } else if (isVideoUrl(url)) {
+                            handleUpdateSectionSettings(activeSection.id, { bgVideo: url, bgImage: url })
+                          } else {
+                            handleUpdateSectionSettings(activeSection.id, { bgImage: url, bgVideo: '' })
+                          }
+                        }}
                         maxImages={1}
                       />
                     </div>

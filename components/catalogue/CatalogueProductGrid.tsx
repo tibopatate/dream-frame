@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { ArrowRight, ShoppingBag, Zap } from 'lucide-react'
 import type { MockProduct } from '@/lib/mock-data'
 import { QuickBuyDrawer } from '@/components/catalogue/QuickBuyDrawer'
+import { isVideoUrl } from '@/lib/utils'
 
 interface CatalogueProductGridProps {
   products: MockProduct[]
@@ -46,23 +47,47 @@ export function CatalogueProductGrid({ products }: CatalogueProductGridProps) {
               >
                 {product.images[0] ? (
                   <>
-                    <Image
-                      src={product.images[0]}
-                      alt={product.name}
-                      fill
-                      className={`object-cover transition-all duration-500 ${
-                        product.images[1] ? 'group-hover:opacity-0 group-hover:scale-105' : 'group-hover:scale-105'
-                      }`}
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    />
-                    {product.images[1] && (
+                    {isVideoUrl(product.images[0]) ? (
+                      <video
+                        src={product.images[0]}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className={`w-full h-full object-cover transition-all duration-500 ${
+                          product.images[1] ? 'group-hover:opacity-0 group-hover:scale-105' : 'group-hover:scale-105'
+                        }`}
+                      />
+                    ) : (
                       <Image
-                        src={product.images[1]}
-                        alt={`${product.name} - Vue 2`}
+                        src={product.images[0]}
+                        alt={product.name}
                         fill
-                        className="object-cover opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 pointer-events-none"
+                        className={`object-cover transition-all duration-500 ${
+                          product.images[1] ? 'group-hover:opacity-0 group-hover:scale-105' : 'group-hover:scale-105'
+                        }`}
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       />
+                    )}
+                    {product.images[1] && (
+                      isVideoUrl(product.images[1]) ? (
+                        <video
+                          src={product.images[1]}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 pointer-events-none"
+                        />
+                      ) : (
+                        <Image
+                          src={product.images[1]}
+                          alt={`${product.name} - Vue 2`}
+                          fill
+                          className="object-cover opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 pointer-events-none"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        />
+                      )
                     )}
                   </>
                 ) : (

@@ -21,7 +21,7 @@ import {
 } from 'lucide-react'
 import { ProductDemonstrationSection } from '@/components/home/ProductDemonstrationSection'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
-import { formatPriceFromDecimal } from '@/lib/utils'
+import { formatPriceFromDecimal, isVideoUrl } from '@/lib/utils'
 
 interface SectionRendererProps {
   section: PageSection
@@ -80,7 +80,10 @@ export function SectionRenderer({
 
   // ─── SECTION 1: HERO SHOWROOM D'EXCEPTION ─────────────────────────────────
   if (section.type === 'hero') {
-    const heroImage = s.bgImage || liveProducts?.[0]?.images?.[0] || 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop'
+    const isHeroVideo = isVideoUrl(s.bgVideo) || isVideoUrl(s.bgImage)
+    const heroVideo = isVideoUrl(s.bgVideo) ? s.bgVideo : (isVideoUrl(s.bgImage) ? s.bgImage : (s.bgVideo || ''))
+    const fallbackImage = liveProducts?.[0]?.images?.find((img: string) => !isVideoUrl(img)) || liveProducts?.[0]?.images?.[0] || 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop'
+    const heroImage = (!isVideoUrl(s.bgImage) && s.bgImage) ? s.bgImage : fallbackImage
 
     return (
       <div
@@ -94,7 +97,7 @@ export function SectionRenderer({
             <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
               isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
             }`}>
-              HERO SHOWROOM · {section.name}
+              HERO SHOWROOM · {section.name} {isHeroVideo ? '(VIDÉO ACTIVE)' : ''}
             </span>
           </div>
         )}
@@ -102,16 +105,18 @@ export function SectionRenderer({
         <section className="relative min-h-[62vh] sm:min-h-[70vh] lg:min-h-[76vh] flex flex-col justify-between items-center px-4 sm:px-6 pt-16 sm:pt-20 pb-16 sm:pb-28 overflow-hidden bg-[#080807]">
           {/* Vidéo Réelle d'Art Automobile en Fond ou Photographie d'Exception */}
           <div className="absolute inset-0 z-0 overflow-hidden">
-            {Boolean(s.bgVideo) ? (
+            {isHeroVideo && heroVideo ? (
               <video
+                key={heroVideo}
                 autoPlay
                 loop
                 muted
                 playsInline
                 poster={heroImage}
+                src={heroVideo}
                 className="w-full h-full object-cover object-center brightness-[1.05] contrast-[1.02] pointer-events-none"
               >
-                <source src={s.bgVideo} type="video/mp4" />
+                <source src={heroVideo} type={heroVideo.includes('.webm') ? 'video/webm' : (heroVideo.includes('.mov') ? 'video/quicktime' : 'video/mp4')} />
               </video>
             ) : (
               /* eslint-disable-next-line @next/next/no-img-element */
@@ -341,23 +346,47 @@ export function SectionRenderer({
                   className="relative w-full aspect-[3/4] rounded-xl p-1.5 sm:p-2 bg-neutral-900/60 border border-neutral-800 ring-1 ring-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.95),0_0_15px_rgba(251,191,36,0.03)] hover:shadow-[0_20px_45px_rgba(0,0,0,1),0_0_25px_rgba(251,191,36,0.15)] hover:border-amber-400/60 transition-all duration-500 overflow-hidden block group/frame"
                 >
                   <div className="relative w-full h-full rounded-lg bg-neutral-950 overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item.image}
-                      alt={`${item.name} — Véritable Cadre 3D Dream Frame`}
-                      className={`w-full h-full object-cover object-center transition-all duration-500 ${
-                        item.imageHover ? 'group-hover/frame:opacity-0 group-hover/frame:scale-105' : 'group-hover/frame:scale-105'
-                      }`}
-                    />
-
-                    {/* Image 2 au survol sur PC */}
-                    {item.imageHover && (
+                    {isVideoUrl(item.image) ? (
+                      <video
+                        src={item.image}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className={`w-full h-full object-cover object-center transition-all duration-500 ${
+                          item.imageHover ? 'group-hover/frame:opacity-0 group-hover/frame:scale-105' : 'group-hover/frame:scale-105'
+                        }`}
+                      />
+                    ) : (
                       /* eslint-disable-next-line @next/next/no-img-element */
                       <img
-                        src={item.imageHover}
-                        alt={`${item.name} — Vue 2 Dream Frame`}
-                        className="absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover/frame:opacity-100 group-hover/frame:scale-105 transition-all duration-500 pointer-events-none"
+                        src={item.image}
+                        alt={`${item.name} — Véritable Cadre 3D Dream Frame`}
+                        className={`w-full h-full object-cover object-center transition-all duration-500 ${
+                          item.imageHover ? 'group-hover/frame:opacity-0 group-hover/frame:scale-105' : 'group-hover/frame:scale-105'
+                        }`}
                       />
+                    )}
+
+                    {/* Image / Vidéo 2 au survol sur PC */}
+                    {item.imageHover && (
+                      isVideoUrl(item.imageHover) ? (
+                        <video
+                          src={item.imageHover}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover/frame:opacity-100 group-hover/frame:scale-105 transition-all duration-500 pointer-events-none"
+                        />
+                      ) : (
+                        /* eslint-disable-next-line @next/next/no-img-element */
+                        <img
+                          src={item.imageHover}
+                          alt={`${item.name} — Vue 2 Dream Frame`}
+                          className="absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover/frame:opacity-100 group-hover/frame:scale-105 transition-all duration-500 pointer-events-none"
+                        />
+                      )
                     )}
 
                     {/* Reflet de vitrage optique */}

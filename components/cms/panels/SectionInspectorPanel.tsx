@@ -18,6 +18,7 @@ import {
   Package,
 } from 'lucide-react'
 import { ProductImageUploader } from '@/components/admin/ProductImageUploader'
+import { isVideoUrl } from '@/lib/utils'
 import type { PageSection } from '@/lib/page-builder/types'
 
 interface SectionInspectorPanelProps {
@@ -99,7 +100,15 @@ function AccordionSection({ title, defaultOpen, children }: { title: string; def
 }
 
 // ─── Hero Section Content ────────────────────────────────────────────
-function HeroContentFields({ s, onChange }: { s: Record<string, any>; onChange: (k: string, v: any) => void }) {
+function HeroContentFields({
+  s,
+  onChange,
+}: {
+  s: Record<string, any>
+  onChange: (k: string | Record<string, any>, v?: any) => void
+}) {
+  const currentMedia = s.bgVideo || s.bgImage || ''
+
   return (
     <>
       <AccordionSection title="Textes du Hero" defaultOpen>
@@ -129,11 +138,23 @@ function HeroContentFields({ s, onChange }: { s: Record<string, any>; onChange: 
         </FieldGroup>
       </AccordionSection>
 
-      <AccordionSection title="Photographie d'arrière-plan" defaultOpen>
-        <FieldGroup label="Image de fond principale du Hero Showroom" helpText="Téléversez la photographie de la supercar de votre choix (hébergée en haute définition sur Vercel Blob)">
+      <AccordionSection title="Arrière-plan Vidéo ou Photographie" defaultOpen>
+        <FieldGroup
+          label="Média de fond principal du Hero Showroom"
+          helpText="Téléversez une vidéo d'exception (MP4, WebM, MOV) ou une photographie HD de supercar. La vidéo se lancera automatiquement en arrière-plan."
+        >
           <ProductImageUploader
-            images={s.bgImage ? [s.bgImage] : []}
-            onChange={(imgs) => onChange('bgImage', imgs[0] || '')}
+            images={currentMedia ? [currentMedia] : []}
+            onChange={(imgs) => {
+              const url = imgs[0] || ''
+              if (!url) {
+                onChange({ bgImage: '', bgVideo: '' })
+              } else if (isVideoUrl(url)) {
+                onChange({ bgVideo: url, bgImage: url })
+              } else {
+                onChange({ bgImage: url, bgVideo: '' })
+              }
+            }}
             maxImages={1}
           />
         </FieldGroup>
@@ -919,8 +940,12 @@ export function SectionInspectorPanel({
   const [activeTab, setActiveTab] = useState('content')
   const s = section.settings || {}
 
-  const handleChange = (key: string, value: any) => {
-    onUpdateSettings(section.id, { [key]: value })
+  const handleChange = (keyOrUpdates: string | Record<string, any>, value?: any) => {
+    if (typeof keyOrUpdates === 'string') {
+      onUpdateSettings(section.id, { [keyOrUpdates]: value })
+    } else {
+      onUpdateSettings(section.id, keyOrUpdates)
+    }
   }
 
   const contentFieldsMap: Record<string, React.ReactNode> = {

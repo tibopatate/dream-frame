@@ -14,7 +14,9 @@ import {
   CheckCircle,
   AlertCircle,
   Link as LinkIcon,
+  Film,
 } from 'lucide-react'
+import { isVideoUrl } from '@/lib/utils'
 
 interface ProductImageUploaderProps {
   images: string[]
@@ -319,7 +321,7 @@ export function ProductImageUploader({
                   }`}
                 >
                   {/* Render Video or Image based on extension */}
-                  {imgUrl.match(/\.(mp4|webm|mov)$/i) ? (
+                  {isVideoUrl(imgUrl) ? (
                     <video
                       src={imgUrl}
                       className="w-full h-full object-cover"
@@ -354,6 +356,12 @@ export function ProductImageUploader({
                         <Star className="w-2.5 h-2.5" />
                         #{idx + 1}
                       </button>
+                    )}
+                    {isVideoUrl(imgUrl) && (
+                      <span className="px-1.5 py-0.5 rounded-full bg-black/85 border border-neutral-700 text-amber-300 text-[9px] font-mono flex items-center gap-1 shadow">
+                        <Film className="w-2.5 h-2.5 text-amber-400" />
+                        Vidéo HD
+                      </span>
                     )}
                   </div>
 
