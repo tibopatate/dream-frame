@@ -121,7 +121,7 @@ export default async function ProductPage({ params }: Props) {
   }
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-16 bg-[#080807] text-white">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-20 bg-[#080807] text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
@@ -167,9 +167,6 @@ export default async function ProductPage({ params }: Props) {
                 3D ART FRAME · SCULPTURE MURALE
               </p>
             </div>
-            {variant?.sku && (
-              <p className="text-xs text-neutral-400 font-mono tracking-wider">SKU : {variant.sku}</p>
-            )}
           </div>
 
           {/* Bloc d'Achat & Format d'Art Certifié */}

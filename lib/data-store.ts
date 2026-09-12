@@ -153,6 +153,11 @@ export interface StoredSettings {
   animationsType?: 'fade-up' | 'hero-zoom' | 'slide-in' | 'none'
   animationsSpeed?: 'slow' | 'normal' | 'fast'
   glowEffectsEnabled?: boolean
+  // Panier & Upsells
+  cartUpsellsEnabled?: boolean
+  cartUpsellChevaletEnabled?: boolean
+  cartUpsellMicrofibreEnabled?: boolean
+  cartUpsellGiftEnabled?: boolean
   // Hero & Accès direct
   heroBadgeText?: string
   heroTitle?: string

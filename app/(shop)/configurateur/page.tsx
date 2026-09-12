@@ -108,7 +108,7 @@ export default function AtelierConfigurateurPage() {
   }
 
   return (
-    <main className="min-h-screen bg-obsidian text-porcelain selection:bg-champagne selection:text-obsidian pb-24 sm:pb-28">
+    <main className="min-h-screen bg-obsidian text-porcelain selection:bg-champagne selection:text-obsidian pt-32 sm:pt-40 pb-24 sm:pb-28">
       {/* Navigation de retour galerie */}
       <div className="max-w-7xl mx-auto px-6 py-4 border-b border-graphite/60 flex items-center justify-between flex-wrap gap-3">
         <Link

@@ -421,7 +421,7 @@ export function ProductImageUploader({
                       </span>
                     ) : (
                       <span className="px-2 py-0.5 rounded-full bg-black/80 text-neutral-300 text-[9px] font-mono shadow">
-                        #{idx + 1}
+                        Vue {idx + 1}
                       </span>
                     )}
                     {isVideoUrl(imgUrl) && (

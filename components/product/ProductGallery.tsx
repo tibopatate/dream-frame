@@ -32,6 +32,8 @@ export function ProductGallery({
 
   const [activeIdx, setActiveIdx] = useState(0)
   const [fullscreenModal, setFullscreenModal] = useState(false)
+  const touchStartX = useState<number | null>(null)
+  const touchStartY = useState<number | null>(null)
 
   const activeMedia = mediaList[activeIdx] || mediaList[0]
   const isCurrentVideo = isVideo(activeMedia)
@@ -43,6 +45,29 @@ export function ProductGallery({
   const goToNext = useCallback(() => {
     setActiveIdx((prev) => (prev < mediaList.length - 1 ? prev + 1 : 0))
   }, [mediaList.length])
+
+  // Gestion du swipe tactile fluide droite / gauche
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX[1](e.touches[0].clientX)
+    touchStartY[1](e.touches[0].clientY)
+  }
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX[0] === null || touchStartY[0] === null) return
+    const deltaX = e.changedTouches[0].clientX - touchStartX[0]
+    const deltaY = e.changedTouches[0].clientY - touchStartY[0]
+
+    // Vérifier que le geste est majoritairement horizontal et supérieur à 40px
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+      if (deltaX < 0) {
+        goToNext() // Glisser vers la gauche -> image suivante
+      } else {
+        goToPrev() // Glisser vers la droite -> image précédente
+      }
+    }
+    touchStartX[1](null)
+    touchStartY[1](null)
+  }
 
   // Navigation au clavier (flèches gauche/droite)
   useEffect(() => {
@@ -57,8 +82,12 @@ export function ProductGallery({
 
   return (
     <div className="space-y-4 select-none">
-      {/* ─── Visualiseur Principal ─── */}
-      <div className="relative group">
+      {/* ─── Visualiseur Principal avec support Touch Swipe ─── */}
+      <div
+        className="relative group touch-pan-y"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
         {isCurrentVideo ? (
           <div className="relative w-full max-w-[440px] mx-auto aspect-[4/3] rounded-3xl overflow-hidden bg-black border border-neutral-800 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
             <video
@@ -160,11 +189,6 @@ export function ProductGallery({
                       sizes="80px"
                     />
                   )}
-
-                  {/* Numéro de photo */}
-                  <span className="absolute bottom-1 right-1 text-[8px] font-mono font-bold bg-black/80 px-1 rounded text-neutral-300">
-                    #{i + 1}
-                  </span>
                 </button>
               )
             })}

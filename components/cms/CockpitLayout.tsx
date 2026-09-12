@@ -19,6 +19,7 @@ import { SettingsPanel } from './panels/SettingsPanel'
 import { DomainPanel } from './panels/DomainPanel'
 import { IntegrationsPanel } from './panels/IntegrationsPanel'
 import { HelpPanel } from './panels/HelpPanel'
+import { CartPanel } from './panels/CartPanel'
 import { SnapshotsModal } from '@/components/page-builder/SnapshotsModal'
 import {
   saveDraftAction,
@@ -317,6 +318,8 @@ export function CockpitLayout({ initialDocument, initialProducts = [] }: Cockpit
             onDrop={handleDrop}
           />
         )
+      case 'cart':
+        return <CartPanel />
       case 'catalogue':
         return (
           <CataloguePanel

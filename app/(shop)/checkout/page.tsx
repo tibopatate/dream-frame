@@ -95,7 +95,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12 bg-[#080807] text-white">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-24 bg-[#080807] text-white">
       <Link
         href="/panier"
         className="inline-flex items-center gap-2 text-xs text-neutral-400 hover:text-white mb-8 transition font-light"

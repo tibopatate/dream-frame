@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import type { Metadata } from 'next'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
 import { getAllProducts, syncDatabaseWithCloud } from '@/lib/data-store'
@@ -25,7 +26,9 @@ export default async function CataloguePage({ searchParams }: PageProps) {
   const activeEra = params.era || ''
   const searchQuery = params.search || ''
 
-  await syncDatabaseWithCloud()
+  try {
+    await syncDatabaseWithCloud()
+  } catch {}
 
   // 1. Récupération des vrais produits dynamiques de la boutique
   let baseProducts: any[] = []
@@ -42,15 +45,23 @@ export default async function CataloguePage({ searchParams }: PageProps) {
   }
 
   if (baseProducts.length === 0) {
-    const stored = getAllProducts().filter((p) => p.isActive)
-    if (stored.length > 0) {
-      baseProducts = stored.map((p) => ({
-        ...p,
-        variants: [{ id: p.id, stock: p.stock, stockAlert: p.stockAlert, sku: p.sku }],
-      }))
-    } else {
+    try {
+      const stored = getAllProducts().filter((p) => p.isActive)
+      if (stored.length > 0) {
+        baseProducts = stored.map((p) => ({
+          ...p,
+          variants: [{ id: p.id, stock: p.stock, stockAlert: p.stockAlert, sku: p.sku }],
+        }))
+      } else {
+        baseProducts = MOCK_PRODUCTS
+      }
+    } catch {
       baseProducts = MOCK_PRODUCTS
     }
+  }
+
+  if (baseProducts.length === 0) {
+    baseProducts = MOCK_PRODUCTS
   }
 
   const brands = Array.from(new Set(baseProducts.map((p: any) => p.brand))).sort()
@@ -70,18 +81,20 @@ export default async function CataloguePage({ searchParams }: PageProps) {
   })
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-16 space-y-8 bg-[#080807] text-white min-h-screen">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-20 space-y-8 bg-[#080807] text-white min-h-screen">
       {/* En-tête de Collection Épuré avec Bouton Filtrer */}
-      <CatalogueFilterHeader
-        totalCount={baseProducts.length}
-        filteredCount={products.length}
-        brands={brands}
-        activeBrand={activeBrand}
-        activeEra={activeEra}
-        searchQuery={searchQuery}
-        vintageCount={baseProducts.filter((p: any) => p.era === 'VINTAGE' || (p.year && p.year < 2000)).length}
-        modernCount={baseProducts.filter((p: any) => p.era === 'MODERN' || !p.year || p.year >= 2000).length}
-      />
+      <Suspense fallback={<div className="h-20 animate-pulse bg-neutral-900 rounded-2xl" />}>
+        <CatalogueFilterHeader
+          totalCount={baseProducts.length}
+          filteredCount={products.length}
+          brands={brands}
+          activeBrand={activeBrand}
+          activeEra={activeEra}
+          searchQuery={searchQuery}
+          vintageCount={baseProducts.filter((p: any) => p.era === 'VINTAGE' || (p.year && p.year < 2000)).length}
+          modernCount={baseProducts.filter((p: any) => p.era === 'MODERN' || !p.year || p.year >= 2000).length}
+        />
+      </Suspense>
 
       {/* Grille Produits Épurée avec Achat Rapide intégré */}
       <CatalogueProductGrid products={products} />

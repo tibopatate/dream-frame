@@ -84,7 +84,7 @@ export function SearchModal({ className }: { className?: string } = {}) {
         })
 
   const handleQuickAdd = (product: any, e: React.MouseEvent) => {
-    const imgUrl = product.images?.[0] || 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop'
+    const imgUrl = product.images?.find((img: string) => !isVideoUrl(img)) || product.images?.[0] || 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop'
     triggerFlyToCart(e, {
       image: imgUrl,
       quantity: 1,

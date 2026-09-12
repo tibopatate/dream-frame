@@ -197,7 +197,8 @@
       "isFeatured": true,
       "images": [
         "https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop",
+        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074438-NeUYfhCEOmLrJoUn19iHpNsGZZtume.mp4"
       ],
       "stock": 4,
       "stockAlert": 2,
@@ -206,6 +207,29 @@
       "createdAt": "2026-09-09T08:03:01.308Z",
       "formatName": "Grand Cadre Prestige",
       "formatSize": "50 × 70 cm"
+    },
+    {
+      "id": "real-porsche-cayenne",
+      "slug": "porsche-cayenne-turbo-2016-cadre-3d",
+      "name": "Porsche Cayenne Turbo (2016)",
+      "brand": "Porsche",
+      "description": "La puissance souveraine du V8 Biturbo 570 ch. Silhouette musclée immortalisée en cadre d'artisanat d'art contemporain sous vitrage acrylique HD.",
+      "price": 49.9,
+      "era": "MODERN",
+      "year": 2016,
+      "isActive": true,
+      "isFeatured": true,
+      "images": [
+        "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop"
+      ],
+      "stock": 6,
+      "stockAlert": 2,
+      "sku": "DF-PORSCHE-CAYENNE",
+      "stripePriceId": "",
+      "createdAt": "2026-09-09T08:03:01.308Z",
+      "formatName": "Petit Cadre Standard",
+      "formatSize": "21 × 29.7 cm"
     },
     {
       "id": "real-ferrari-moyen",

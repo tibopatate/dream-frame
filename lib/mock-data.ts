@@ -190,4 +190,21 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     ],
     variants: [{ id: 'var-porsche918', sku: 'DF-PORSCHE-918', stock: 4, stockAlert: 2 }],
   },
+  {
+    id: 'real-porsche-cayenne',
+    slug: 'porsche-cayenne-turbo-2016-cadre-3d',
+    name: 'Porsche Cayenne Turbo (2016)',
+    brand: 'Porsche',
+    era: 'MODERN',
+    year: 2016,
+    description: "La puissance souveraine du V8 Biturbo 570 ch. Silhouette musclée immortalisée en cadre d'artisanat d'art contemporain sous vitrage acrylique HD.",
+    price: 49.90,
+    isActive: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop',
+    ],
+    variants: [{ id: 'var-cayenne', sku: 'DF-PORSCHE-CAYENNE', stock: 6, stockAlert: 2 }],
+  },
 ]

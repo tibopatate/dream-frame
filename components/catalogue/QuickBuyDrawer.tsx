@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { X, Check, ShoppingBag, ArrowRight, Truck, ShieldCheck, Zap } from 'lucide-react'
 import { useCart } from '@/lib/store/cart'
 import { triggerFlyToCart } from '@/components/FlyToCart'
+import { isVideoUrl } from '@/lib/utils'
 import type { MockProduct } from '@/lib/mock-data'
 
 interface QuickBuyDrawerProps {
@@ -38,14 +39,15 @@ export function QuickBuyDrawer({ product, onClose }: QuickBuyDrawerProps) {
       : '21 × 29.7 cm')
 
   const handleAddToCart = (e: React.MouseEvent) => {
-    triggerFlyToCart(e, { image: product.images[0], quantity })
+    const preferredImage = product.images.find((img: string) => !isVideoUrl(img)) || product.images[0] || ''
+    triggerFlyToCart(e, { image: preferredImage, quantity })
     addItem({
       variantId: `${product.id}-unique`,
       productId: product.id,
       productName: product.name,
       slug: product.slug,
       brand: product.brand,
-      image: product.images[0],
+      image: preferredImage,
       price,
       quantity,
       formatName,

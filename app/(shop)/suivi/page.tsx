@@ -64,7 +64,7 @@ export default function SuiviCommandePage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#080807] text-white selection:bg-amber-400 selection:text-black pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-[#080807] text-white selection:bg-amber-400 selection:text-black pt-32 sm:pt-40 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto space-y-12">
         {/* En-tête avec marge supérieure adaptée au header fixe */}
         <div className="text-center space-y-4">

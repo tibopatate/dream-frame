@@ -48,8 +48,28 @@ export default function PanierPage() {
   const [promoSuccess, setPromoSuccess] = useState('')
   const [showStickyCheckout, setShowStickyCheckout] = useState(false)
 
+  const [upsellSettings, setUpsellSettings] = useState({
+    cartUpsellsEnabled: false,
+    cartUpsellChevaletEnabled: false,
+    cartUpsellMicrofibreEnabled: false,
+    cartUpsellGiftEnabled: false,
+  })
+
   useEffect(() => {
     setMounted(true)
+    fetch('/api/settings/cart')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) {
+          setUpsellSettings({
+            cartUpsellsEnabled: Boolean(data.cartUpsellsEnabled),
+            cartUpsellChevaletEnabled: Boolean(data.cartUpsellChevaletEnabled),
+            cartUpsellMicrofibreEnabled: Boolean(data.cartUpsellMicrofibreEnabled),
+            cartUpsellGiftEnabled: Boolean(data.cartUpsellGiftEnabled),
+          })
+        }
+      })
+      .catch(() => {})
   }, [])
 
   // Observer pour détecter quand le bouton principal sort du champ de vision
@@ -189,18 +209,23 @@ export default function PanierPage() {
                       loop
                       muted
                       playsInline
+                      poster="https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=600&auto=format&fit=crop"
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <Image
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
                       src={
-                        item.image ||
-                        'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop'
+                        item.image && item.image.trim() !== ''
+                          ? item.image
+                          : 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=600&auto=format&fit=crop'
                       }
                       alt={item.productName}
-                      fill
-                      className="object-cover"
-                      sizes="96px"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=600&auto=format&fit=crop'
+                      }}
+                      className="w-full h-full object-cover"
                     />
                   )}
                 </div>
@@ -274,101 +299,116 @@ export default function PanierPage() {
             ))}
           </div>
 
-          {/* Option Cadeau Prestige */}
-          <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-5 space-y-4">
-            <label className="flex items-start gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={isGift}
-                onChange={(e) => setIsGift(e.target.checked)}
-                className="mt-1 w-4 h-4 rounded border-neutral-700 bg-neutral-950 text-amber-400 focus:ring-amber-400 cursor-pointer accent-amber-400"
-              />
-              <div className="space-y-0.5">
-                <span className="text-sm font-semibold text-white flex items-center gap-2">
-                  <Gift className="w-4 h-4 text-amber-400" />
-                  Offrir ce cadre — Emballage Cadeau Luxe &amp; Ruban (+4,90 €)
-                </span>
-                <p className="text-xs text-neutral-400 font-light">
-                  Papier cadeau noir mat texturé, sceau de cire d&apos;atelier et carte de vœux manuscrite.
-                </p>
-              </div>
-            </label>
-
-            {isGift && (
-              <div className="pt-2 pl-7 space-y-1.5 animate-fade-in">
-                <label className="block text-xs font-mono uppercase text-neutral-400 tracking-wider">
-                  Votre mot personnalisé manuscrit :
-                </label>
-                <textarea
-                  rows={2}
-                  maxLength={180}
-                  value={giftMessage}
-                  onChange={(e) => setGiftMessage(e.target.value)}
-                  placeholder="Ex : Joyeux anniversaire Lucas ! Pour sublimer ton bureau avec cette F40 légendaire."
-                  className="w-full px-4 py-2.5 bg-neutral-950 border border-neutral-800 focus:border-amber-400 rounded-xl text-white text-xs outline-none transition resize-none"
+          {/* Option Cadeau Prestige (Configurable depuis le personnalisateur) */}
+          {upsellSettings.cartUpsellsEnabled && upsellSettings.cartUpsellGiftEnabled && (
+            <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-5 space-y-4">
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={isGift}
+                  onChange={(e) => setIsGift(e.target.checked)}
+                  className="mt-1 w-4 h-4 rounded border-neutral-700 bg-neutral-950 text-amber-400 focus:ring-amber-400 cursor-pointer accent-amber-400"
                 />
-              </div>
-            )}
-          </div>
+                <div className="space-y-0.5">
+                  <span className="text-sm font-semibold text-white flex items-center gap-2">
+                    <Gift className="w-4 h-4 text-amber-400" />
+                    Offrir ce cadre — Emballage Cadeau Luxe &amp; Ruban (+4,90 €)
+                  </span>
+                  <p className="text-xs text-neutral-400 font-light">
+                    Papier cadeau noir mat texturé, sceau de cire d&apos;atelier et carte de vœux manuscrite.
+                  </p>
+                </div>
+              </label>
 
-          {/* Upsell Compléments d'Atelier */}
-          <div className="space-y-4 pt-2">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <h3 className="text-sm font-bold uppercase tracking-wider text-white">
-                Complétez votre pièce d&apos;art
-              </h3>
+              {isGift && (
+                <div className="pt-2 pl-7 space-y-1.5 animate-fade-in">
+                  <label className="block text-xs font-mono uppercase text-neutral-400 tracking-wider">
+                    Votre mot personnalisé manuscrit :
+                  </label>
+                  <textarea
+                    rows={2}
+                    maxLength={180}
+                    value={giftMessage}
+                    onChange={(e) => setGiftMessage(e.target.value)}
+                    placeholder="Ex : Joyeux anniversaire Lucas ! Pour sublimer ton bureau avec cette F40 légendaire."
+                    className="w-full px-4 py-2.5 bg-neutral-950 border border-neutral-800 focus:border-amber-400 rounded-xl text-white text-xs outline-none transition resize-none"
+                  />
+                </div>
+              )}
             </div>
+          )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {UPSELL_PRODUCTS.map((upsell) => {
-                const alreadyInCart = items.some((i) => i.productId === upsell.id)
-                return (
-                  <div
-                    key={upsell.id}
-                    className="p-4 rounded-xl border border-neutral-800/80 bg-neutral-900/40 hover:border-neutral-700 transition flex flex-col justify-between space-y-3"
-                  >
-                    <div className="space-y-1.5">
-                      <h4 className="text-xs font-bold text-white leading-snug">
-                        {upsell.name}
-                      </h4>
-                      <p className="text-[11px] text-neutral-400 leading-relaxed font-light line-clamp-2">
-                        {upsell.desc}
-                      </p>
-                    </div>
+          {/* Upsell Compléments d'Atelier (Désactivé par défaut, activable depuis le personnalisateur) */}
+          {(() => {
+            const activeUpsells = UPSELL_PRODUCTS.filter((upsell) => {
+              if (!upsellSettings.cartUpsellsEnabled) return false
+              if (upsell.id === 'acc-chevalet-alu' && !upsellSettings.cartUpsellChevaletEnabled) return false
+              if (upsell.id === 'acc-microfibre' && !upsellSettings.cartUpsellMicrofibreEnabled) return false
+              return true
+            })
 
-                    <div className="flex items-center justify-between pt-2 border-t border-neutral-800/60">
-                      <span className="text-xs font-bold text-amber-400 font-mono">
-                        {upsell.price.toFixed(2).replace('.', ',')} €
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => handleAddUpsell(upsell)}
-                        disabled={alreadyInCart}
-                        className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition flex items-center gap-1 cursor-pointer ${
-                          alreadyInCart
-                            ? 'bg-neutral-800 text-neutral-500 cursor-default'
-                            : 'bg-white hover:bg-neutral-200 text-black active:scale-95 shadow'
-                        }`}
+            if (activeUpsells.length === 0) return null
+
+            return (
+              <div className="space-y-4 pt-2">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-amber-400" />
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-white">
+                    Complétez votre pièce d&apos;art
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {activeUpsells.map((upsell) => {
+                    const alreadyInCart = items.some((i) => i.productId === upsell.id)
+                    return (
+                      <div
+                        key={upsell.id}
+                        className="p-4 rounded-xl border border-neutral-800/80 bg-neutral-900/40 hover:border-neutral-700 transition flex flex-col justify-between space-y-3"
                       >
-                        {alreadyInCart ? (
-                          <>
-                            <Check className="w-3 h-3 text-emerald-500" />
-                            <span>Ajouté</span>
-                          </>
-                        ) : (
-                          <>
-                            <PlusCircle className="w-3 h-3" />
-                            <span>Ajouter</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
+                        <div className="space-y-1.5">
+                          <h4 className="text-xs font-bold text-white leading-snug">
+                            {upsell.name}
+                          </h4>
+                          <p className="text-[11px] text-neutral-400 leading-relaxed font-light line-clamp-2">
+                            {upsell.desc}
+                          </p>
+                        </div>
+
+                        <div className="flex items-center justify-between pt-2 border-t border-neutral-800/60">
+                          <span className="text-xs font-bold text-amber-400 font-mono">
+                            {upsell.price.toFixed(2).replace('.', ',')} €
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => handleAddUpsell(upsell)}
+                            disabled={alreadyInCart}
+                            className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition flex items-center gap-1 cursor-pointer ${
+                              alreadyInCart
+                                ? 'bg-neutral-800 text-neutral-500 cursor-default'
+                                : 'bg-white hover:bg-neutral-200 text-black active:scale-95 shadow'
+                            }`}
+                          >
+                            {alreadyInCart ? (
+                              <>
+                                <Check className="w-3 h-3 text-emerald-500" />
+                                <span>Ajouté</span>
+                              </>
+                            ) : (
+                              <>
+                                <PlusCircle className="w-3 h-3" />
+                                <span>Ajouter</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )
+          })()}
 
           <button
             onClick={clearCart}

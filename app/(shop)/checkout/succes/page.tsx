@@ -25,7 +25,7 @@ export default function SuccesPage() {
   }
 
   return (
-    <main className="min-h-[80vh] bg-[#080807] text-white flex items-center justify-center px-4 py-16">
+    <main className="min-h-[80vh] bg-[#080807] text-white flex items-center justify-center px-4 pt-32 sm:pt-40 pb-20">
       <div className="max-w-lg w-full text-center space-y-8">
 
         {/* Icône de succès animée */}

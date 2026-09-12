@@ -122,9 +122,16 @@ export function CatalogueProductGrid({ products }: CatalogueProductGridProps) {
               {/* Informations & CTA */}
               <div className="p-5 space-y-4">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 font-bold block">
-                    0{idx + 1} — {product.brand.toUpperCase()}
-                  </span>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold block">
+                      {product.brand.toUpperCase()}
+                    </span>
+                    {(variant?.stock ?? 10) <= 3 && (
+                      <span className="text-[9px] font-mono font-semibold text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
+                        Plus que {variant?.stock} ex.
+                      </span>
+                    )}
+                  </div>
                   <Link
                     href={`/produit/${product.slug}`}
                     className="text-base text-white group-hover:text-amber-300 block truncate transition-colors"
@@ -143,7 +150,7 @@ export function CatalogueProductGrid({ products }: CatalogueProductGridProps) {
                       À partir de
                     </span>
                     <p className="text-base font-bold text-white ">
-                      {product.price.toFixed(2).replace('.', ',')} €
+                      {(Number(product.price) || 49.90).toFixed(2).replace('.', ',')} €
                     </p>
                   </div>
 

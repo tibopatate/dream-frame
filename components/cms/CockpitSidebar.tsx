@@ -59,6 +59,7 @@ export function CockpitSidebar({
       label: 'ÉDITEUR DE SECTIONS',
       items: [
         { id: 'homepage', label: "Sections d'accueil", icon: LayoutGrid },
+        { id: 'cart', label: 'Panier & Upsells', icon: ShoppingBag },
       ],
     },
     {

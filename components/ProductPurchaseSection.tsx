@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { AddToCartButton } from '@/components/add-to-cart-button'
 import { Truck, RotateCcw, ShieldCheck, Zap, Sparkles, CheckCircle2, Award } from 'lucide-react'
+import { isVideoUrl } from '@/lib/utils'
 import type { ProductFormat } from '@/lib/data-store'
 
 interface ProductPurchaseSectionProps {
@@ -82,6 +83,51 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
     <div className="space-y-4 sm:space-y-6">
       {/* Bloc Tarif, Format Unique & Panier */}
       <div className="bg-neutral-900/90 border border-neutral-800/90 rounded-xl p-4 sm:p-6 space-y-4 sm:space-y-6 shadow-xl">
+        {/* ─── Mise en Avant du Stock Produit (Prominent Luxury Stock Indicator) ─── */}
+        <div>
+          {stock <= 3 ? (
+            <div className="p-3 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-300 flex items-center justify-between shadow-lg shadow-amber-500/5">
+              <div className="flex items-center gap-2.5">
+                <span className="relative flex h-3 w-3 flex-shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-80" />
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500" />
+                </span>
+                <div>
+                  <p className="text-xs font-mono font-bold tracking-wider uppercase text-amber-300">
+                    Stock Critique · Plus que {stock} exemplaire{stock > 1 ? 's' : ''} en atelier
+                  </p>
+                  <p className="text-[10px] text-amber-400/80 font-light">
+                    Forte demande · Confection et certificat numéroté inclus
+                  </p>
+                </div>
+              </div>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/70 border border-amber-500/40 text-amber-400 uppercase font-bold">
+                {stock} DISPO
+              </span>
+            </div>
+          ) : (
+            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-between shadow-lg shadow-emerald-500/5">
+              <div className="flex items-center gap-2.5">
+                <span className="relative flex h-2.5 w-2.5 flex-shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+                </span>
+                <div>
+                  <p className="text-xs font-mono font-bold tracking-wider uppercase text-emerald-300">
+                    En stock atelier : {stock} exemplaires confectionnés
+                  </p>
+                  <p className="text-[10px] text-emerald-400/80 font-light">
+                    Prêt pour expédition express sous 24/48h
+                  </p>
+                </div>
+              </div>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/70 border border-emerald-500/30 text-emerald-400 uppercase font-bold">
+                EN STOCK
+              </span>
+            </div>
+          )}
+        </div>
+
         {/* Prix dynamique et Livraison */}
         <div className="flex items-baseline justify-between flex-wrap gap-2">
           <div>
@@ -172,7 +218,7 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
           productName={product.name}
           slug={product.slug}
           brand={product.brand}
-          image={product.images[0] ?? ''}
+          image={product.images?.find((img: string) => !isVideoUrl(img)) || product.images?.[0] || ''}
           price={price}
           stock={stock}
           formatName={formatName}

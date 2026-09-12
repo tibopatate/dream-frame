@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function MentionsLegalesPage() {
   return (
-    <main className="min-h-screen bg-[#080807] text-white selection:bg-amber-400 selection:text-black py-16 px-4 sm:px-6 lg:px-8 overflow-x-hidden">
+    <main className="min-h-screen bg-[#080807] text-white selection:bg-amber-400 selection:text-black pt-32 sm:pt-40 pb-20 px-4 sm:px-6 lg:px-8 overflow-x-hidden">
       <div className="max-w-4xl mx-auto space-y-12 w-full overflow-hidden">
         {/* En-tête */}
         <div className="space-y-4 border-b border-neutral-800 pb-8">

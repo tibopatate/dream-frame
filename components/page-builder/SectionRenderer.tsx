@@ -198,7 +198,7 @@ export function SectionRenderer({
 
   // ─── SECTION 3: NOTRE COLLECTION (4 VRAIS CADRES DE LA BOUTIQUE) ───────────
   if (section.type === 'collection') {
-    // 4 véritables cadres de la boutique (Ferrari F40, Bugatti Chiron, Pagani Huayra, Audi R8)
+    // Tous les cadres de la boutique
     const REAL_STORE_FRAMES = [
       {
         id: 'real-ferrari-f40',
@@ -207,10 +207,22 @@ export function SectionRenderer({
         year: 1987,
         brand: 'Ferrari',
         specs: 'V8 Twin-Turbo · 478 CH',
-        tag: 'Atelier France · Pièce Réelle',
+        tag: 'Grand Format d’Exception',
         image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop',
         imageHover: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop',
-        price: '49,90 €',
+        price: '249,90 €',
+      },
+      {
+        id: 'real-ferrari-moyen',
+        slug: 'ferrari-f40-cadre-moyen-collector',
+        name: 'Ferrari F40 — Moyen Collector',
+        year: 1987,
+        brand: 'Ferrari',
+        specs: 'V8 Biturbo · 30 × 42 cm',
+        tag: 'Format Collector A3',
+        image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop',
+        imageHover: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop',
+        price: '149,90 €',
       },
       {
         id: 'real-bugatti-chiron',
@@ -260,6 +272,66 @@ export function SectionRenderer({
         imageHover: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=1200&auto=format&fit=crop',
         price: '49,90 €',
       },
+      {
+        id: 'real-lambo-huracan',
+        slug: 'lamborghini-huracan-lp-610-4-cadre-3d',
+        name: 'Lamborghini Huracán',
+        year: 2021,
+        brand: 'Lamborghini',
+        specs: 'V10 Atmos 5.2L · 610 CH',
+        tag: 'Design Stealth & LED',
+        image: 'https://images.unsplash.com/photo-1519245659620-e859806a8d3b?q=80&w=1200&auto=format&fit=crop',
+        imageHover: 'https://images.unsplash.com/photo-1541348263662-e0c8de4259ba?q=80&w=1200&auto=format&fit=crop',
+        price: '49,90 €',
+      },
+      {
+        id: 'real-mercedes-amggtr',
+        slug: 'mercedes-amg-gt-r-2017-cadre-3d',
+        name: 'Mercedes-AMG GT R',
+        year: 2017,
+        brand: 'Mercedes-Benz',
+        specs: 'V8 Biturbo 4.0L · Green Hell',
+        tag: 'Atelier France · Pièce Réelle',
+        image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?q=80&w=1200&auto=format&fit=crop',
+        imageHover: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop',
+        price: '49,90 €',
+      },
+      {
+        id: 'real-mclaren-gt',
+        slug: 'mclaren-gt-2019-cadre-3d',
+        name: 'McLaren GT',
+        year: 2019,
+        brand: 'McLaren',
+        specs: 'V8 Biturbo · 620 CH',
+        tag: 'Grand Tourisme & Relief',
+        image: 'https://images.unsplash.com/photo-1621135802920-133df287f89c?q=80&w=1200&auto=format&fit=crop',
+        imageHover: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
+        price: '49,90 €',
+      },
+      {
+        id: 'real-porsche-918',
+        slug: 'porsche-918-spyder-2015-cadre-3d',
+        name: 'Porsche 918 Spyder',
+        year: 2015,
+        brand: 'Porsche',
+        specs: 'V8 Hybride · 887 CH',
+        tag: 'Hypercar d’Exception',
+        image: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop',
+        imageHover: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop',
+        price: '49,90 €',
+      },
+      {
+        id: 'real-porsche-cayenne',
+        slug: 'porsche-cayenne-turbo-2016-cadre-3d',
+        name: 'Porsche Cayenne Turbo',
+        year: 2016,
+        brand: 'Porsche',
+        specs: 'V8 Biturbo · 570 CH',
+        tag: 'Artisanat Contemporain',
+        image: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop',
+        imageHover: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop',
+        price: '49,90 €',
+      },
     ]
 
     return (
@@ -307,7 +379,7 @@ export function SectionRenderer({
                   .map((id: string) => allAvailable.find((p: any) => p.id === id || p.slug === id))
                   .filter(Boolean)
                 if (displayed.length === 0) {
-                  displayed = allAvailable.slice(0, s.limit || 5)
+                  displayed = allAvailable
                 }
               } else {
                 if (s.category && s.category !== 'ALL') {
@@ -315,7 +387,9 @@ export function SectionRenderer({
                 } else {
                   displayed = allAvailable
                 }
-                displayed = displayed.slice(0, s.limit || 5)
+                if (s.limit && s.limit > 0) {
+                  displayed = displayed.slice(0, Math.max(s.limit, 10))
+                }
               }
 
               return displayed.map((rawItem: any, idx: number) => {
@@ -335,9 +409,7 @@ export function SectionRenderer({
                 return (
                   <div
                     key={item.id}
-                    className={`snap-start shrink-0 w-[55vw] sm:w-[190px] md:w-[210px] lg:w-[230px] group flex-col items-center space-y-3 ${
-                      idx >= 4 ? 'hidden sm:flex' : 'flex'
-                    }`}
+                    className="snap-start shrink-0 w-[55vw] sm:w-[190px] md:w-[210px] lg:w-[230px] group flex flex-col items-center space-y-3"
                   >
                 {/* Vrai Cadre d'Art de la Boutique (aspect-[3/4] élégant) */}
                 <Link
