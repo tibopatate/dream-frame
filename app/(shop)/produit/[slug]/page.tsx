@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
 import { Interactive3DFrame } from '@/components/3d/Interactive3DFrame'
+import { ProductGallery } from '@/components/product/ProductGallery'
 import { ProductPurchaseSection } from '@/components/ProductPurchaseSection'
 import { ProductReviewsSection } from '@/components/reviews/ProductReviewsSection'
 import { ProductFAQSection } from '@/components/product/ProductFAQSection'
@@ -143,26 +144,15 @@ export default async function ProductPage({ params }: Props) {
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-        {/* ─── Visuel 3D Interactif ─── */}
+        {/* ─── Visuel 3D & Galerie Complète Multi-Photos / Vidéos ─── */}
         <div className="lg:col-span-7 space-y-6">
-          <Interactive3DFrame
-            imageSrc={product.images[0] || 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop'}
+          <ProductGallery
+            images={product.images || []}
             carName={product.name}
             brand={product.brand}
             year={product.year || 1987}
             isVintage={isVintage}
           />
-
-          {/* Galerie de détails */}
-          {product.images.length > 1 && (
-            <div className="flex gap-3 overflow-x-auto no-scrollbar py-2">
-              {product.images.map((img: string, i: number) => (
-                <div key={i} className="relative w-20 h-20 rounded-xl overflow-hidden bg-neutral-900 border border-neutral-800 cursor-pointer">
-                  <Image src={img} alt={`Angle ${i + 1}`} fill className="object-cover" sizes="80px" />
-                </div>
-              ))}
-            </div>
-          )}
         </div>
 
         {/* ─── Informations d'Achat ─── */}

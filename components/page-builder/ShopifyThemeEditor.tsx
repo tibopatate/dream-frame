@@ -300,7 +300,7 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
         primaryBtnLink: '/catalogue',
         secondaryBtnText: 'Créer mon Dream Frame',
         secondaryBtnLink: '/configurateur',
-        bgImage: '/atelier/chiron-wall.jpg',
+        bgImage: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
       }
     } else if (type === 'collection') {
       newSection.settings = {
@@ -590,7 +590,7 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
                       <label className="text-[10px] uppercase font-mono text-slate-500 font-bold block">Image de fond Hero</label>
                       <ProductImageUploader
                         images={activeSection.settings.bgImage ? [activeSection.settings.bgImage] : []}
-                        onChange={(imgs) => handleUpdateSectionSettings(activeSection.id, { bgImage: imgs[0] || '/atelier/chiron-wall.jpg' })}
+                        onChange={(imgs) => handleUpdateSectionSettings(activeSection.id, { bgImage: imgs[0] || 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop' })}
                         maxImages={1}
                       />
                     </div>

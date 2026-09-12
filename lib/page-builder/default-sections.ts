@@ -15,7 +15,7 @@ export const DEFAULT_PAGE_SECTIONS: PageSection[] = [
       secondaryBtnText: 'Notre collection passionnée',
       secondaryBtnLink: '/catalogue',
       bgImage: '/images/hero-f40-real.jpg',
-      bgVideo: '/videos/hero-bg.mp4',
+      bgVideo: '',
       zoomAnimation: false,
       showBrands: false,
       showReassuranceBadges: false,

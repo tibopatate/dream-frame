@@ -32,8 +32,8 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     isActive: true,
     isFeatured: true,
     images: [
-      '/atelier/chiron-wall.jpg',
-      '/atelier/chiron-trunk.jpg',
+      'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1600793575654-910699b5e4d4?q=80&w=1200&auto=format&fit=crop',
     ],
     variants: [{ id: 'var-chiron', sku: 'DF-BUGATTI-CHIRON', stock: 5, stockAlert: 2 }],
   },
@@ -48,7 +48,10 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: true,
-    images: ['/atelier/huayra-real.jpg'],
+    images: [
+      'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop',
+    ],
     variants: [{ id: 'var-huayra', sku: 'DF-PAGANI-HUAYRA', stock: 4, stockAlert: 2 }],
   },
   {
@@ -62,7 +65,10 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: true,
-    images: ['/atelier/r8v10-real.jpg'],
+    images: [
+      'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?q=80&w=1200&auto=format&fit=crop',
+    ],
     variants: [{ id: 'var-r8v10', sku: 'DF-AUDI-R8V10', stock: 7, stockAlert: 3 }],
   },
   {
@@ -76,7 +82,10 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: true,
-    images: ['/atelier/m4comp-real.jpg'],
+    images: [
+      'https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=1200&auto=format&fit=crop',
+    ],
     variants: [{ id: 'var-m4comp', sku: 'DF-BMW-M4COMP', stock: 6, stockAlert: 2 }],
   },
   {
@@ -90,7 +99,10 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: true,
-    images: ['/atelier/huracan-real.jpg'],
+    images: [
+      'https://images.unsplash.com/photo-1519245659620-e859806a8d3b?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1541348263662-e0c8de4259ba?q=80&w=1200&auto=format&fit=crop',
+    ],
     variants: [{ id: 'var-huracan', sku: 'DF-LAMBO-HURACAN', stock: 5, stockAlert: 2 }],
   },
   {
@@ -104,7 +116,10 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: false,
-    images: ['/atelier/amggtr-real.jpg'],
+    images: [
+      'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop',
+    ],
     variants: [{ id: 'var-amggtr', sku: 'DF-MERCEDES-AMGGTR', stock: 4, stockAlert: 2 }],
   },
   {
@@ -118,22 +133,11 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: true,
-    images: ['/atelier/mclarengt-real.jpg'],
+    images: [
+      'https://images.unsplash.com/photo-1621135802920-133df287f89c?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
+    ],
     variants: [{ id: 'var-mclarengt', sku: 'DF-MCLAREN-GT', stock: 5, stockAlert: 2 }],
-  },
-  {
-    id: 'real-audi-r8v10',
-    slug: 'audi-r8-v10-performance-cadre-3d',
-    name: 'Audi R8 (2018)',
-    brand: 'Audi',
-    era: 'MODERN',
-    year: 2018,
-    description: "Le rugissement du V10 atmosphérique à 8 700 tr/min. Cadre 3D relief sous vitrage acrylique HD avec rétroéclairage LED ambré.",
-    price: 49.99,
-    isActive: true,
-    isFeatured: true,
-    images: ['/atelier/r8v10-real.jpg'],
-    variants: [{ id: 'var-r8v10', sku: 'DF-AUDI-R8V10', stock: 7, stockAlert: 3 }],
   },
   {
     id: 'real-ferrari-f40',
@@ -146,7 +150,10 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: true,
-    images: ['/atelier/f40-real.jpg'],
+    images: [
+      'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop',
+    ],
     variants: [{ id: 'var-f40', sku: 'DF-FERRARI-F40', stock: 4, stockAlert: 2 }],
   },
   {
@@ -160,7 +167,10 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     price: 49.99,
     isActive: true,
     isFeatured: false,
-    images: ['/atelier/porsche918-real.jpg'],
+    images: [
+      'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop',
+    ],
     variants: [{ id: 'var-porsche918', sku: 'DF-PORSCHE-918', stock: 4, stockAlert: 2 }],
   },
 ]

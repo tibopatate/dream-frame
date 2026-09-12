@@ -12,7 +12,7 @@ const COLLECTIONS = [
     subtitle: 'Élite & Prestige W16',
     description:
       'Châssis 3D relief sous vitrine d’exposition avec rétroéclairage LED ambré, immortalisé en situation réelle devant la véritable Bugatti Chiron.',
-    image: '/atelier/chiron-wall.jpg',
+    image: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
     tag: 'Collection Royale',
     count: 'Éditions Limitées',
     href: '/produit/bugatti-chiron-2016-cadre-3d',
@@ -24,7 +24,7 @@ const COLLECTIONS = [
     subtitle: 'Artisanat & V12 Atmos',
     description:
       'L’aérodynamique de pointe et la furie des V12 d’exception : Pagani Huayra, Audi R8 V10, BMW M4 Competition.',
-    image: '/atelier/huayra-real.jpg',
+    image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop',
     tag: 'Haute Horlogerie',
     count: 'Pièces d’Orfèvre',
     href: '/catalogue?era=MODERN',
@@ -36,7 +36,7 @@ const COLLECTIONS = [
     subtitle: 'Création Unique 1:18 & 1:24',
     description:
       'Votre propre véhicule ou modèle de rêve configuré sur-mesure dans notre atelier avec rétroéclairage LED personnalisé et gravure de plaque.',
-    image: '/atelier/m4comp-real.jpg',
+    image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200&auto=format&fit=crop',
     tag: 'Personnalisation Totale',
     count: 'Configuration 3D Live',
     href: '/configurateur',

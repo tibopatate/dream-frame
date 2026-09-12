@@ -120,7 +120,7 @@ export function AboutStorytellingSection({
         <ScrollReveal direction="right" delay={0.2} className="lg:col-span-6 relative">
           <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-neutral-800 shadow-2xl group">
             <Image
-              src={craftImage || "/atelier/huayra-real.jpg"}
+              src={craftImage || "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop"}
               alt="Atelier d'artisanat Dream Frame"
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-700"

@@ -12,7 +12,8 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "/atelier/chiron-wall.jpg"
+        "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1600793575654-910699b5e4d4?q=80&w=1200&auto=format&fit=crop"
       ],
       "stock": 5,
       "stockAlert": 2,
@@ -32,7 +33,8 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "/atelier/huayra-real.jpg"
+        "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop"
       ],
       "stock": 4,
       "stockAlert": 2,
@@ -52,7 +54,8 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "/atelier/r8v10-real.jpg"
+        "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?q=80&w=1200&auto=format&fit=crop"
       ],
       "stock": 7,
       "stockAlert": 3,
@@ -72,7 +75,8 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "/atelier/m4comp-real.jpg"
+        "https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=1200&auto=format&fit=crop"
       ],
       "stock": 6,
       "stockAlert": 2,
@@ -92,7 +96,8 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "/atelier/huracan-real.jpg"
+        "https://images.unsplash.com/photo-1519245659620-e859806a8d3b?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1541348263662-e0c8de4259ba?q=80&w=1200&auto=format&fit=crop"
       ],
       "stock": 5,
       "stockAlert": 2,
@@ -112,7 +117,8 @@
       "isActive": true,
       "isFeatured": false,
       "images": [
-        "/atelier/amggtr-real.jpg"
+        "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop"
       ],
       "stock": 4,
       "stockAlert": 2,
@@ -132,7 +138,8 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "/atelier/mclarengt-real.jpg"
+        "https://images.unsplash.com/photo-1621135802920-133df287f89c?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop"
       ],
       "stock": 5,
       "stockAlert": 2,
@@ -152,7 +159,8 @@
       "isActive": true,
       "isFeatured": false,
       "images": [
-        "/atelier/porsche918-real.jpg"
+        "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop"
       ],
       "stock": 4,
       "stockAlert": 2,
@@ -161,38 +169,19 @@
       "createdAt": "2026-09-08T12:00:00.000Z"
     },
     {
-      "id": "real-porsche-cayenne",
-      "slug": "porsche-cayenne-turbo-2016-cadre-3d",
-      "name": "Porsche Cayenne Turbo (2016)",
-      "brand": "Porsche",
-      "era": "MODERN",
-      "year": 2016,
-      "description": "La puissance souveraine du V8 Biturbo 570 ch. Silhouette musclée immortalisée en cadre d'artisanat d'art contemporain.",
-      "price": 49.99,
-      "isActive": true,
-      "isFeatured": true,
-      "images": [
-        "/atelier/porsche918-real.jpg"
-      ],
-      "stock": 6,
-      "stockAlert": 2,
-      "sku": "DF-PORSCHE-CAYENNE",
-      "stripePriceId": "",
-      "createdAt": "2026-09-09T08:03:01.308Z"
-    },
-    {
       "id": "real-ferrari-f40",
       "slug": "ferrari-f40-1987-cadre-3d",
       "name": "Ferrari F40 (1987)",
       "brand": "Ferrari",
-      "era": "VINTAGE",
-      "year": 1987,
       "description": "Le mythe absolu de Maranello. V8 Twin-Turbo et aileron légendaire sculptés au millimètre sous vitrage d'exception.",
       "price": 49.99,
+      "era": "VINTAGE",
+      "year": 1987,
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "/atelier/f40-real.jpg"
+        "https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop"
       ],
       "stock": 4,
       "stockAlert": 2,
@@ -209,12 +198,12 @@
     "isShippingFree": true,
     "announcementBarText": "LIVRAISON COLISSIMO SUIVIE 100% OFFERTE · EXPÉDITION 24/48H",
     "announcementBarEnabled": true,
-    "craftSectionImage": "/atelier/huayra-real.jpg",
+    "craftSectionImage": "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop",
     "adminTheme": "light",
     "realDataOnly": true,
     "instagramUrl": "https://www.instagram.com/dreamframe996?stkn=cW9yb2NxOG8wOXFw",
     "tiktokUrl": "https://www.tiktok.com/@dreamframe_officiel",
-    "heroVideo": "/videos/hero-bg.mp4"
+    "heroVideo": ""
   },
   "collaborators": [
     {

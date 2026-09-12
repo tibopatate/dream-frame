@@ -47,22 +47,22 @@ const REVIEWS = [
 
 const GALLERY_PHOTOS = [
   {
-    url: '/atelier/huayra-real.jpg',
+    url: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop',
     title: 'Pagani Huayra & Cadre Relief 3D',
     model: 'Pagani Huayra V12',
   },
   {
-    url: '/atelier/r8v10-real.jpg',
+    url: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1200&auto=format&fit=crop',
     title: 'Audi R8 V10 Performance',
     model: 'Audi R8 V10',
   },
   {
-    url: '/atelier/m4comp-real.jpg',
+    url: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200&auto=format&fit=crop',
     title: 'BMW M4 Competition Isle of Man',
     model: 'BMW M4 Competition',
   },
   {
-    url: '/atelier/chiron-wall.jpg',
+    url: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
     title: 'Finition Artisanale Atelier France',
     model: 'Bugatti Chiron W16',
   },

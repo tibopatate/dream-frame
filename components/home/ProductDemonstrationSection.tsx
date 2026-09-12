@@ -22,19 +22,19 @@ export function ProductDemonstrationSection() {
       title: 'Bureau de Direction & Espace de Travail',
       subtitle: 'Posé sur son chevalet ou fixé au mur',
       desc: 'Le cadre capte immédiatement le regard lors de vos réunions ou appels vidéo. La finition biseautée et le verre anti-reflet confèrent une autorité naturelle à votre espace.',
-      image: '/atelier/chiron-wall.jpg',
+      image: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
     },
     salon: {
       title: 'Salon Contemporain & Réception',
       subtitle: 'Mise en valeur sur mur sombre ou boiserie',
       desc: 'De jour, le relief sculpté joue avec la lumière naturelle de la pièce. De nuit, l’éclairage LED ambré 3000K diffuse une lueur d’ambiance feutrée sans jamais éblouir.',
-      image: '/atelier/huayra-real.jpg',
+      image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop',
     },
     setup: {
       title: 'Espace Passionné & Setup Moderne',
       subtitle: 'L’accord parfait avec un éclairage tamisé',
       desc: 'Pensé pour les passionnés d’automobile et d’ingénierie mécanique. Chaque écope, aileron et ligne de fuite ressort avec une précision chirurgicale.',
-      image: '/atelier/m4comp-real.jpg',
+      image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200&auto=format&fit=crop',
     },
   }
 
@@ -113,7 +113,7 @@ export function ProductDemonstrationSection() {
               <div className="lg:col-span-7 relative flex flex-col items-center">
                 <div className="relative w-full max-w-lg aspect-[4/3] rounded-2xl overflow-hidden border border-neutral-800 bg-neutral-900 shadow-2xl">
                   <Image
-                    src={metamorphoseState === 'car' ? '/atelier/huayra-real.jpg' : '/atelier/chiron-wall.jpg'}
+                    src={metamorphoseState === 'car' ? 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop' : 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop'}
                     alt="Métamorphose automobile"
                     fill
                     className="object-cover transition-all duration-500"
@@ -162,10 +162,10 @@ export function ProductDemonstrationSection() {
                   <Image
                     src={
                       angleState === 'face'
-                        ? '/atelier/chiron-wall.jpg'
+                        ? 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop'
                         : angleState === 'angle'
-                        ? '/atelier/chiron-trunk.jpg'
-                        : '/atelier/m4comp-real.jpg'
+                        ? 'https://images.unsplash.com/photo-1600793575654-910699b5e4d4?q=80&w=1200&auto=format&fit=crop'
+                        : 'https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200&auto=format&fit=crop'
                     }
                     alt="Angles et relief 3D"
                     fill
@@ -226,7 +226,7 @@ export function ProductDemonstrationSection() {
 
                 <div className="relative w-full max-w-lg aspect-[4/3] rounded-2xl overflow-hidden border border-neutral-800 bg-neutral-900 shadow-2xl group">
                   <Image
-                    src="/atelier/chiron-wall.jpg"
+                    src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop"
                     alt="Démonstration du cadre 3D Bugatti Chiron"
                     fill
                     className={`object-cover transition-all duration-700 ${

@@ -99,7 +99,7 @@ export function SectionRenderer({
         <section className="relative min-h-[62vh] sm:min-h-[70vh] lg:min-h-[76vh] flex flex-col justify-between items-center px-4 sm:px-6 pt-16 sm:pt-20 pb-16 sm:pb-28 overflow-hidden bg-[#080807]">
           {/* Vidéo Réelle d'Art Automobile en Fond ou Photographie d'Exception */}
           <div className="absolute inset-0 z-0 overflow-hidden">
-            {s.bgVideo !== '' ? (
+            {Boolean(s.bgVideo) ? (
               <video
                 autoPlay
                 loop
@@ -108,7 +108,7 @@ export function SectionRenderer({
                 poster={s.bgImage || '/images/hero-f40-real.jpg'}
                 className="w-full h-full object-cover object-center brightness-[1.05] contrast-[1.02] pointer-events-none"
               >
-                <source src={s.bgVideo || '/videos/hero-bg.mp4'} type="video/mp4" />
+                <source src={s.bgVideo} type="video/mp4" />
               </video>
             ) : (
               /* eslint-disable-next-line @next/next/no-img-element */
@@ -201,7 +201,8 @@ export function SectionRenderer({
         brand: 'Ferrari',
         specs: 'V8 Twin-Turbo · 478 CH',
         tag: 'Atelier France · Pièce Réelle',
-        image: '/atelier/f40-real.jpg',
+        image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop',
+        imageHover: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop',
         price: '49,99 €',
       },
       {
@@ -212,7 +213,8 @@ export function SectionRenderer({
         brand: 'Bugatti',
         specs: 'W16 Quadri-Turbo · 1 500 CH',
         tag: 'Ébénisterie & LED',
-        image: '/atelier/chiron-wall.jpg',
+        image: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
+        imageHover: 'https://images.unsplash.com/photo-1600793575654-910699b5e4d4?q=80&w=1200&auto=format&fit=crop',
         price: '49,99 €',
       },
       {
@@ -223,7 +225,8 @@ export function SectionRenderer({
         brand: 'Pagani',
         specs: 'V12 Biturbo AMG · 730 CH',
         tag: 'Carbo-Titane & Relief',
-        image: '/atelier/huayra-real.jpg',
+        image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop',
+        imageHover: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop',
         price: '49,99 €',
       },
       {
@@ -234,7 +237,8 @@ export function SectionRenderer({
         brand: 'Audi',
         specs: 'V10 Atmosphérique · 620 CH',
         tag: 'Vitrage HD & Module LED',
-        image: '/atelier/r8v10-real.jpg',
+        image: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1200&auto=format&fit=crop',
+        imageHover: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?q=80&w=1200&auto=format&fit=crop',
         price: '49,99 €',
       },
       {
@@ -245,7 +249,8 @@ export function SectionRenderer({
         brand: 'BMW',
         specs: '6 Cyl. Biturbo · 510 CH',
         tag: 'Atelier France · Pièce Réelle',
-        image: '/atelier/m4comp-real.jpg',
+        image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200&auto=format&fit=crop',
+        imageHover: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=1200&auto=format&fit=crop',
         price: '49,99 €',
       },
     ]
@@ -263,7 +268,7 @@ export function SectionRenderer({
             <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
               isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
             }`}>
-              GALERIE · {section.name}
+              {section.name}
             </span>
           </div>
         )}
@@ -303,14 +308,26 @@ export function SectionRenderer({
                     <img
                       src={item.image}
                       alt={`${item.name} — Véritable Cadre 3D Dream Frame`}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                      className={`w-full h-full object-cover object-center transition-all duration-500 ${
+                        item.imageHover ? 'group-hover/frame:opacity-0 group-hover/frame:scale-105' : 'group-hover/frame:scale-105'
+                      }`}
                     />
+
+                    {/* Image 2 au survol sur PC */}
+                    {item.imageHover && (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={item.imageHover}
+                        alt={`${item.name} — Vue 2 Dream Frame`}
+                        className="absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover/frame:opacity-100 group-hover/frame:scale-105 transition-all duration-500 pointer-events-none"
+                      />
+                    )}
 
                     {/* Reflet de vitrage optique */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-transparent pointer-events-none" />
 
                     {/* Badge réel atelier */}
-                    <div className="absolute top-2.5 left-2.5">
+                    <div className="absolute top-2.5 left-2.5 z-10">
                       <span className="px-2.5 py-1 rounded-full bg-black/85 backdrop-blur-md border border-neutral-700 text-amber-300 text-[9px] font-mono uppercase tracking-wider font-semibold">
                         {item.tag}
                       </span>

@@ -14,21 +14,21 @@ const UPSELL_PRODUCTS = [
     name: 'Câble USB 2m Noir Tressé Renforcé',
     desc: 'Longueur idéale pour alimentation murale discrète sans tension.',
     price: 9.90,
-    image: '/atelier/WhatsApp Image 2026-09-08 at 13.45.24.jpeg',
+    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=400&auto=format&fit=crop',
   },
   {
     id: 'acc-chevalet-alu',
     name: 'Chevalet de Table Aluminium Noir Mat',
     desc: 'Exposition élégante sur bureau, commode ou bibliothèque.',
     price: 14.90,
-    image: '/atelier/WhatsApp Image 2026-09-08 at 13.45.27.jpeg',
+    image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=400&auto=format&fit=crop',
   },
   {
     id: 'acc-microfibre',
     name: 'Chiffonnette Optique Microfibre Atelier',
     desc: 'Nettoyage anti-statique sans rayure du vitrage acrylique HD.',
     price: 4.90,
-    image: '/atelier/WhatsApp Image 2026-09-08 at 13.45.30.jpeg',
+    image: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=400&auto=format&fit=crop',
   },
 ]
 

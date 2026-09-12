@@ -644,12 +644,12 @@ function getInitialDatabase(): DatabaseSchema {
     isShippingFree: true,
     announcementBarText: 'LIVRAISON COLISSIMO SUIVIE 100% OFFERTE · EXPÉDITION 24/48H',
     announcementBarEnabled: true,
-    craftSectionImage: '/atelier/huayra-real.jpg',
+    craftSectionImage: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop',
     adminTheme: 'light',
     realDataOnly: true,
     instagramUrl: 'https://www.instagram.com/dreamframe996?stkn=cW9yb2NxOG8wOXFw',
     tiktokUrl: 'https://www.tiktok.com/@dreamframe_officiel',
-    heroVideo: '/videos/hero-bg.mp4',
+    heroVideo: '',
   }
 
   const collaborators: StoredCollaborator[] = [

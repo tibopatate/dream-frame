@@ -32,7 +32,7 @@ const FEATURED_PIECES: FrameShowcase[] = [
     tagline: 'Le Sommet du Luxe & Hypercar W16',
     description:
       'Châssis 3D relief sous vitrine d’exposition avec rétroéclairage LED ambré, immortalisé en situation réelle devant la véritable Bugatti Chiron.',
-    image: '/atelier/chiron-wall.jpg',
+    image: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
     price: 49.99,
   },
   {
@@ -45,7 +45,7 @@ const FEATURED_PIECES: FrameShowcase[] = [
     tagline: "L'Artisanat Automobile Italien d'Exception",
     description:
       'V12 Biturbo AMG de 730 ch sous châssis Carbo-Titane. Cadre d’ébénisterie 3D avec passe-partout mat biseauté et module LED ambré.',
-    image: '/atelier/huayra-real.jpg',
+    image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop',
     price: 49.99,
   },
   {
@@ -58,7 +58,7 @@ const FEATURED_PIECES: FrameShowcase[] = [
     tagline: 'Le Rugissement du V10 Atmosphérique',
     description:
       'V10 atmosphérique hurlant à 8 700 tr/min. Cadre 3D relief sous vitrage acrylique haute clarté anti-UV et finition atelier France.',
-    image: '/atelier/r8v10-real.jpg',
+    image: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1200&auto=format&fit=crop',
     price: 49.99,
   },
   {
@@ -71,7 +71,7 @@ const FEATURED_PIECES: FrameShowcase[] = [
     tagline: 'Teinte Mythique Isle of Man Green',
     description:
       'Calandre verticale acérée et lignes tendues. Réalisation 3D de précision sous vitrage acrylique HD et éclairage LED supérieur.',
-    image: '/atelier/m4comp-real.jpg',
+    image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200&auto=format&fit=crop',
     price: 49.99,
   },
 ]

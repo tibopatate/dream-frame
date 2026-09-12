@@ -45,13 +45,26 @@ export function CatalogueProductGrid({ products }: CatalogueProductGridProps) {
                 className="block relative aspect-[4/3] bg-black overflow-hidden"
               >
                 {product.images[0] ? (
-                  <Image
-                    src={product.images[0]}
-                    alt={product.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  />
+                  <>
+                    <Image
+                      src={product.images[0]}
+                      alt={product.name}
+                      fill
+                      className={`object-cover transition-all duration-500 ${
+                        product.images[1] ? 'group-hover:opacity-0 group-hover:scale-105' : 'group-hover:scale-105'
+                      }`}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    />
+                    {product.images[1] && (
+                      <Image
+                        src={product.images[1]}
+                        alt={`${product.name} - Vue 2`}
+                        fill
+                        className="object-cover opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 pointer-events-none"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      />
+                    )}
+                  </>
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center bg-neutral-950">
                     <Zap className="w-6 h-6 text-neutral-700" />
