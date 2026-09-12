@@ -62,6 +62,7 @@ export function AdminShell({
   }
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isNavigating, setIsNavigating] = useState(false)
 
   const handleSignOut = async () => {
     try {
@@ -74,8 +75,9 @@ export function AdminShell({
     window.location.href = '/admin/login'
   }
 
-  // Fermer le menu mobile lors d'un changement de page
+  // Fermer le menu mobile et arrêter l'indicateur de navigation lors d'un changement de page
   useEffect(() => {
+    setIsNavigating(false)
     setMobileMenuOpen(false)
   }, [pathname])
 
@@ -88,8 +90,14 @@ export function AdminShell({
   return (
     <div
       data-admin-theme="light"
-      className="min-h-screen flex flex-col md:flex-row bg-slate-50 text-slate-900"
+      className="min-h-screen flex flex-col md:flex-row bg-slate-50 text-slate-900 relative"
     >
+      {/* ─── BARRE DE NAVIGATION SUPÉRIEURE INSTANTANÉE (0ms) ─── */}
+      {isNavigating && (
+        <div className="fixed top-0 left-0 right-0 h-1 z-50 overflow-hidden pointer-events-none">
+          <div className="h-full bg-gradient-to-r from-red-600 via-amber-400 to-red-600 animate-[progress_1s_ease-in-out_infinite] shadow-[0_0_12px_rgba(220,38,38,0.7)]" />
+        </div>
+      )}
       {/* ─── MOBILE TOPBAR (Visible uniquement sur mobile < md) ─── */}
       <header className="sticky top-0 z-40 h-14 bg-white border-b border-slate-200 px-4 flex items-center justify-between md:hidden shadow-xs">
         <Link href="/admin/dashboard" className="flex items-center gap-2.5">
@@ -196,8 +204,11 @@ export function AdminShell({
                 <Link
                   key={href}
                   href={href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all ${
+                  onClick={() => {
+                    if (pathname !== href) setIsNavigating(true)
+                    setMobileMenuOpen(false)
+                  }}
+                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] ${
                     isActive
                       ? 'bg-red-50 text-red-600 font-bold border border-red-100 shadow-2xs'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent'
@@ -289,7 +300,10 @@ export function AdminShell({
                 <Link
                   key={href}
                   href={href}
-                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all ${
+                  onClick={() => {
+                    if (pathname !== href) setIsNavigating(true)
+                  }}
+                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] ${
                     isActive
                       ? 'bg-red-50 text-red-600 font-bold border border-red-100 shadow-sm'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent'

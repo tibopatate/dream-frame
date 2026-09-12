@@ -727,7 +727,15 @@ export function readDatabase(): DatabaseSchema {
 
 const LIVE_BLOB_DB_URL = 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/dreamframe-db-live.json'
 
+let lastBlobSyncTime = 0
+const BLOB_SYNC_GRACE_MS = 2500
+
 export async function syncDatabaseWithCloud(): Promise<DatabaseSchema> {
+  // Fast-path: return in-memory cache if synchronized recently
+  if (globalForDb.dreamFrameDb && Date.now() - lastBlobSyncTime < BLOB_SYNC_GRACE_MS) {
+    return globalForDb.dreamFrameDb
+  }
+
   const blobToken = process.env.BLOB_READ_WRITE_TOKEN
   if (blobToken && !blobToken.includes('CHANGE_ME')) {
     try {
@@ -737,6 +745,7 @@ export async function syncDatabaseWithCloud(): Promise<DatabaseSchema> {
         if (parsed && Array.isArray(parsed.products) && parsed.products.length > 0) {
           if (!parsed.reviews) parsed.reviews = []
           globalForDb.dreamFrameDb = parsed
+          lastBlobSyncTime = Date.now()
           try {
             fs.writeFileSync(TMP_FILE, JSON.stringify(parsed, null, 2), 'utf-8')
           } catch {}
@@ -767,6 +776,7 @@ export async function writeDatabaseAsync(db: DatabaseSchema): Promise<void> {
 }
 
 export function writeDatabase(db: DatabaseSchema): void {
+  lastBlobSyncTime = 0
   // 1. Mettre à jour le cache mémoire global
   globalForDb.dreamFrameDb = db
 
