@@ -232,8 +232,8 @@ export function SectionRenderer({
         brand: 'Bugatti',
         specs: 'W16 Quadri-Turbo · 1 500 CH',
         tag: 'Ébénisterie & LED',
-        image: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
-        imageHover: 'https://images.unsplash.com/photo-1600793575654-910699b5e4d4?q=80&w=1200&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1627454820516-dc767bcb4d3e?q=80&w=1200&auto=format&fit=crop',
+        imageHover: 'https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1200&auto=format&fit=crop',
         price: '49,90 €',
       },
       {
@@ -304,8 +304,8 @@ export function SectionRenderer({
         brand: 'McLaren',
         specs: 'V8 Biturbo · 620 CH',
         tag: 'Grand Tourisme & Relief',
-        image: 'https://images.unsplash.com/photo-1621135802920-133df287f89c?q=80&w=1200&auto=format&fit=crop',
-        imageHover: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1516298252535-cf2ac5147f9b?q=80&w=1200&auto=format&fit=crop',
+        imageHover: 'https://images.unsplash.com/photo-1617814086906-d847a8bc6fca?q=80&w=1200&auto=format&fit=crop',
         price: '49,90 €',
       },
       {
@@ -316,7 +316,7 @@ export function SectionRenderer({
         brand: 'Porsche',
         specs: 'V8 Hybride · 887 CH',
         tag: 'Hypercar d’Exception',
-        image: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1556868682-675067febf35?q=80&w=1200&auto=format&fit=crop',
         imageHover: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop',
         price: '49,90 €',
       },
@@ -328,8 +328,8 @@ export function SectionRenderer({
         brand: 'Porsche',
         specs: 'V8 Biturbo · 570 CH',
         tag: 'Artisanat Contemporain',
-        image: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop',
-        imageHover: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1699325929994-b94ae0c8f552?q=80&w=1200&auto=format&fit=crop',
+        imageHover: 'https://images.unsplash.com/photo-1654159866298-e3c8ee93e43b?q=80&w=1200&auto=format&fit=crop',
         price: '49,90 €',
       },
     ]
@@ -368,8 +368,8 @@ export function SectionRenderer({
             </Link>
           </div>
 
-          {/* Liste Horizontale des Cadres : 4 sur mobile, 5 sur PC */}
-          <div className="flex overflow-x-auto pb-8 -mx-4 px-4 sm:mx-0 sm:px-0 gap-4 sm:gap-5 lg:gap-6 snap-x snap-mandatory hide-scrollbar sm:justify-center">
+          {/* Liste Horizontale des Cadres aérée et fluide */}
+          <div className="flex overflow-x-auto pb-14 pt-2 -mx-4 px-6 sm:mx-0 sm:px-2 gap-5 sm:gap-6 lg:gap-7 snap-x snap-mandatory hide-scrollbar">
             {(() => {
               const allAvailable = (liveProducts && liveProducts.length > 0) ? liveProducts : REAL_STORE_FRAMES
               let displayed: any[] = []
@@ -409,12 +409,12 @@ export function SectionRenderer({
                 return (
                   <div
                     key={item.id}
-                    className="snap-start shrink-0 w-[55vw] sm:w-[190px] md:w-[210px] lg:w-[230px] group flex flex-col items-center space-y-3"
+                    className="snap-start shrink-0 w-[70vw] sm:w-[250px] md:w-[270px] lg:w-[290px] group flex flex-col items-center space-y-3.5"
                   >
                 {/* Vrai Cadre d'Art de la Boutique (aspect-[3/4] élégant) */}
                 <Link
                   href={isEditor ? '#' : `/produit/${item.slug}`}
-                  className="relative w-full aspect-[3/4] rounded-xl p-1.5 sm:p-2 bg-neutral-900/60 border border-neutral-800 ring-1 ring-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.95),0_0_15px_rgba(251,191,36,0.03)] hover:shadow-[0_20px_45px_rgba(0,0,0,1),0_0_25px_rgba(251,191,36,0.15)] hover:border-amber-400/60 transition-all duration-500 overflow-hidden block group/frame"
+                  className="relative w-full aspect-[3/4] rounded-2xl p-2 bg-neutral-900/60 border border-neutral-800 ring-1 ring-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.95)] hover:shadow-[0_20px_45px_rgba(0,0,0,1),0_0_25px_rgba(251,191,36,0.12)] hover:border-amber-400/50 transition-all duration-500 overflow-hidden block group/frame"
                 >
                   <div className="relative w-full h-full rounded-lg bg-neutral-950 overflow-hidden">
                     {isVideoUrl(item.image) ? (
@@ -462,35 +462,28 @@ export function SectionRenderer({
 
                     {/* Reflet de vitrage optique */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-transparent pointer-events-none" />
-
-                    {/* Badge réel atelier */}
-                    <div className="absolute top-2.5 left-2.5 z-10">
-                      <span className="px-2.5 py-1 rounded-full bg-black/85 backdrop-blur-md border border-neutral-700 text-amber-300 text-[9px] font-mono uppercase tracking-wider font-semibold">
-                        {item.tag}
-                      </span>
-                    </div>
                   </div>
                 </Link>
 
-                {/* Fiche Descriptive & Boutons */}
-                <div className="w-full text-center space-y-1.5 pt-1">
+                {/* Fiche Descriptive & Boutons sans rognage */}
+                <div className="w-full text-center space-y-2 pt-1 px-1">
                   <div className="flex items-center justify-between text-neutral-400 text-[10px] font-mono uppercase tracking-widest px-1">
-                    <span>{item.brand} · {item.year}</span>
-                    <span className="text-amber-400/90 font-semibold">{item.price}</span>
+                    <span className="text-neutral-300 font-medium">{item.brand} · {item.year}</span>
+                    <span className="text-amber-400 font-semibold font-mono text-xs">{item.price}</span>
                   </div>
 
-                  <h3 className="text-sm tracking-[0.2em] text-white uppercase group-hover:text-amber-300 transition-colors">
+                  <h3 className="text-xs sm:text-sm font-semibold tracking-wider text-white uppercase group-hover:text-amber-300 transition-colors truncate px-1">
                     {item.name}
                   </h3>
 
-                  <p className="text-[11px] text-neutral-400 font-light">
+                  <p className="text-[11px] text-neutral-400 font-light line-clamp-2 px-1">
                     {item.specs}
                   </p>
 
                   <div className="pt-2 flex items-center justify-center">
                     <Link
                       href={isEditor ? '#' : `/produit/${item.slug}`}
-                      className="px-5 py-2 rounded-full border border-neutral-700 hover:border-amber-400/80 bg-neutral-900/90 hover:bg-neutral-800 text-white text-[11px] font-semibold uppercase tracking-wider transition-all shadow-sm"
+                      className="px-5 py-2.5 rounded-full border border-neutral-700 hover:border-white bg-neutral-900/90 hover:bg-white hover:text-black text-white text-[11px] font-semibold uppercase tracking-wider transition-all duration-300 shadow-md active:scale-95"
                     >
                       Découvrir le cadre
                     </Link>

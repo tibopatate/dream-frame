@@ -32,8 +32,8 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     isActive: true,
     isFeatured: true,
     images: [
-      'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1600793575654-910699b5e4d4?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1627454820516-dc767bcb4d3e?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1200&auto=format&fit=crop',
     ],
     variants: [{ id: 'var-chiron', sku: 'DF-BUGATTI-CHIRON', stock: 5, stockAlert: 2 }],
   },
@@ -134,8 +134,8 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     isActive: true,
     isFeatured: true,
     images: [
-      'https://images.unsplash.com/photo-1621135802920-133df287f89c?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1516298252535-cf2ac5147f9b?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1617814086906-d847a8bc6fca?q=80&w=1200&auto=format&fit=crop',
     ],
     variants: [{ id: 'var-mclarengt', sku: 'DF-MCLAREN-GT', stock: 5, stockAlert: 2 }],
   },
@@ -185,7 +185,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     isActive: true,
     isFeatured: false,
     images: [
-      'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1556868682-675067febf35?q=80&w=1200&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop',
     ],
     variants: [{ id: 'var-porsche918', sku: 'DF-PORSCHE-918', stock: 4, stockAlert: 2 }],
@@ -202,8 +202,8 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     isActive: true,
     isFeatured: true,
     images: [
-      'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1699325929994-b94ae0c8f552?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1654159866298-e3c8ee93e43b?q=80&w=1200&auto=format&fit=crop',
     ],
     variants: [{ id: 'var-cayenne', sku: 'DF-PORSCHE-CAYENNE', stock: 6, stockAlert: 2 }],
   },

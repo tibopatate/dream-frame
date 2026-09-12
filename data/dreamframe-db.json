@@ -12,8 +12,8 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600793575654-910699b5e4d4?q=80&w=1200&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1627454820516-dc767bcb4d3e?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1200&auto=format&fit=crop"
       ],
       "stock": 5,
       "stockAlert": 2,
@@ -35,8 +35,8 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1635974066296-b71d03049ed7?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop"
       ],
       "stock": 4,
       "stockAlert": 2,
@@ -150,8 +150,8 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "https://images.unsplash.com/photo-1621135802920-133df287f89c?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1516298252535-cf2ac5147f9b?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1617814086906-d847a8bc6fca?q=80&w=1200&auto=format&fit=crop"
       ],
       "stock": 5,
       "stockAlert": 2,
@@ -173,7 +173,7 @@
       "isActive": true,
       "isFeatured": false,
       "images": [
-        "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1556868682-675067febf35?q=80&w=1200&auto=format&fit=crop",
         "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop"
       ],
       "stock": 4,
@@ -220,8 +220,8 @@
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1699325929994-b94ae0c8f552?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1654159866298-e3c8ee93e43b?q=80&w=1200&auto=format&fit=crop"
       ],
       "stock": 6,
       "stockAlert": 2,
@@ -245,8 +245,8 @@
       "formatName": "Cadre Moyen Collector",
       "formatSize": "30 × 42 cm",
       "images": [
-        "https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop"
+        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg",
+        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074211-n6Iutq4tW8tjyXGxKWldSGFLRPpdgN.jpg"
       ],
       "stock": 5,
       "stockAlert": 2,
@@ -268,10 +268,10 @@
       "shippingCity": "Paris",
       "shippingPostalCode": "75001",
       "shippingCountry": "FR",
-      "subtotal": 149.90,
+      "subtotal": 149.9,
       "shippingCost": 0,
       "taxAmount": 0,
-      "total": 149.90,
+      "total": 149.9,
       "carrier": "Colissimo La Poste Suivi",
       "trackingNumber": "6A84920194821",
       "createdAt": "2026-09-12T10:14:00.000Z",
@@ -284,9 +284,9 @@
           "productName": "Ferrari F40 — Cadre Moyen Collector",
           "brand": "Ferrari",
           "era": "VINTAGE",
-          "unitPrice": 149.90,
+          "unitPrice": 149.9,
           "quantity": 1,
-          "total": 149.90,
+          "total": 149.9,
           "formatName": "Cadre Moyen Collector",
           "formatSize": "30 × 42 cm"
         }
