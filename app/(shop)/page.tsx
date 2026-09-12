@@ -9,7 +9,7 @@ import { MOCK_PRODUCTS } from '@/lib/mock-data'
 export const metadata: Metadata = {
   title: "Dream Frame — Art Automobile 3D d'Exception | Atelier France",
   description:
-    'Cadres 3D d’art automobile sous vitrage haute définition avec rétroéclairage LED intégré. Fait main en France. À partir de 49,99 € · Livraison Colissimo 100% offerte.',
+    'Cadres 3D d’art automobile sous vitrage haute définition avec rétroéclairage LED intégré. Fait main en France. À partir de 49,90 € · Livraison Colissimo 100% offerte.',
 }
 
 export const dynamic = 'force-dynamic'

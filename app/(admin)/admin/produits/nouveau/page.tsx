@@ -45,7 +45,7 @@ export default function NouveauProduitPage() {
   })
   const [showCropper, setShowCropper] = useState(false)
 
-  // 3 Formats de Cadres (Standard 49,99€, Grand 150€, Prestige 250€)
+  // 3 Formats de Cadres (Standard 49,90€, Grand 149,90€, Prestige 249,90€)
   const [formats, setFormats] = useState<FormatItem[]>([
     {
       id: 'fmt-a4',
@@ -157,7 +157,7 @@ export default function NouveauProduitPage() {
           Ajouter un Cadre 3D
         </h1>
         <p className="text-neutral-400 text-xs mt-1">
-          Configurez les 3 formats (49,99 €, 150 € et 250 €), recadrez vos visuels et synchronisez avec Stripe en 1 clic
+          Configurez les 3 formats (49,90 €, 149,90 € et 249,90 €), recadrez vos visuels et synchronisez avec Stripe en 1 clic
         </p>
       </div>
 
@@ -336,7 +336,7 @@ export default function NouveauProduitPage() {
                   <span>Créer et synchroniser automatiquement ce produit sur Stripe</span>
                 </label>
                 <p className="text-[11px] text-neutral-400 mt-1">
-                  Crée la fiche produit et les 3 prix (49,99 €, 150 € et 250 €) directement sur votre compte Stripe. Zéro démarche technique.
+                  Crée la fiche produit et les 3 prix (49,90 €, 149,90 € et 249,90 €) directement sur votre compte Stripe. Zéro démarche technique.
                 </p>
               </div>
             </div>

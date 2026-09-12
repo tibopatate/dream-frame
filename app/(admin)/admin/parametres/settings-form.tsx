@@ -536,7 +536,7 @@ export function SettingsForm({
 
         <p className="text-xs text-neutral-400 leading-relaxed font-light">
           Les paiements passent directement par **Stripe Checkout**. Les fonds arrivent directement sur votre compte bancaire.
-          <strong className="text-white"> Aucun produit n&apos;est à créer manuellement dans Stripe</strong> : le système envoie en direct le nom du modèle (Ferrari F40, GT3 RS...), le prix (49,99 €) et le visuel lors de chaque commande client.
+          <strong className="text-white"> Aucun produit n&apos;est à créer manuellement dans Stripe</strong> : le système envoie en direct le nom du modèle (Ferrari F40, GT3 RS...), le prix (49,90 €) et le visuel lors de chaque commande client.
         </p>
 
         {/* ── Formulaire Connexion 1-Clic Stripe (Pour débutant) ── */}

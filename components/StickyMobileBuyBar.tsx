@@ -132,7 +132,7 @@ export function StickyMobileBuyBar({ product }: StickyMobileBuyBarProps) {
             Collection Dream Frame
           </p>
           <p className="text-[11px] text-amber-400 font-mono">
-            À partir de 49,99 € · Livraison Offerte
+            À partir de 49,90 € · Livraison Offerte
           </p>
         </div>
 

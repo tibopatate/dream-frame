@@ -212,9 +212,9 @@ export function LeaveReviewModal({
                     onChange={(e) => setFormatPurchased(e.target.value)}
                     className="w-full bg-black/60 border border-neutral-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400/80 transition"
                   >
-                    <option value="Format Standard A4">Standard A4 (49,99 €)</option>
-                    <option value="Grand Format A3 Collector">Grand A3 Collector (150,00 €)</option>
-                    <option value="Prestige Galerie A2">Prestige Galerie A2 (250,00 €)</option>
+                    <option value="Format Standard A4">Standard A4 (49,90 €)</option>
+                    <option value="Grand Format A3 Collector">Grand A3 Collector (149,90 €)</option>
+                    <option value="Prestige Galerie A2">Prestige Galerie A2 (249,90 €)</option>
                     <option value="Atelier Sur-Mesure">Pièce Sur-Mesure</option>
                   </select>
                 </div>

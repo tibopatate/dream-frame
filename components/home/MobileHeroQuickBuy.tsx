@@ -15,7 +15,7 @@ const FEATURED_MODELS = [
     shortName: 'GT3 RS',
     brand: 'Porsche',
     image: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1000&auto=format&fit=crop',
-    price: 49.99,
+    price: 49.90,
     sku: 'DF-PORSCHE-001',
   },
   {
@@ -25,7 +25,7 @@ const FEATURED_MODELS = [
     shortName: 'Ferrari F40',
     brand: 'Ferrari',
     image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1000&auto=format&fit=crop',
-    price: 49.99,
+    price: 49.90,
     sku: 'DF-FERRARI-001',
   },
   {
@@ -35,7 +35,7 @@ const FEATURED_MODELS = [
     shortName: 'Revuelto',
     brand: 'Lamborghini',
     image: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1000&auto=format&fit=crop',
-    price: 49.99,
+    price: 49.90,
     sku: 'DF-LAMBO-001',
   },
 ]
@@ -119,7 +119,7 @@ export function MobileHeroQuickBuy() {
               <span className="text-[9px] text-amber-400 font-mono uppercase tracking-wider">
                 {activeModel.brand}
               </span>
-              <span className="text-xs font-black text-white">49,99 €</span>
+              <span className="text-xs font-black text-white">49,90 €</span>
             </div>
             <h3 className="text-xs font-bold text-white truncate leading-snug">
               {activeModel.name}

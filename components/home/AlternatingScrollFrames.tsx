@@ -33,7 +33,7 @@ const FEATURED_PIECES: FrameShowcase[] = [
     description:
       'Châssis 3D relief sous vitrine d’exposition avec rétroéclairage LED ambré, immortalisé en situation réelle devant la véritable Bugatti Chiron.',
     image: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
-    price: 49.99,
+    price: 49.90,
   },
   {
     id: 'real-pagani-huayra',
@@ -46,7 +46,7 @@ const FEATURED_PIECES: FrameShowcase[] = [
     description:
       'V12 Biturbo AMG de 730 ch sous châssis Carbo-Titane. Cadre d’ébénisterie 3D avec passe-partout mat biseauté et module LED ambré.',
     image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop',
-    price: 49.99,
+    price: 49.90,
   },
   {
     id: 'real-audi-r8v10',
@@ -59,7 +59,7 @@ const FEATURED_PIECES: FrameShowcase[] = [
     description:
       'V10 atmosphérique hurlant à 8 700 tr/min. Cadre 3D relief sous vitrage acrylique haute clarté anti-UV et finition atelier France.',
     image: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1200&auto=format&fit=crop',
-    price: 49.99,
+    price: 49.90,
   },
   {
     id: 'real-bmw-m4comp',
@@ -72,7 +72,7 @@ const FEATURED_PIECES: FrameShowcase[] = [
     description:
       'Calandre verticale acérée et lignes tendues. Réalisation 3D de précision sous vitrage acrylique HD et éclairage LED supérieur.',
     image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200&auto=format&fit=crop',
-    price: 49.99,
+    price: 49.90,
   },
 ]
 
@@ -180,7 +180,7 @@ function PieceRow({ piece, index, onAdd, addedId }: RowProps) {
           {/* Prix & Livraison — Design sobre et haut de gamme, sans bordure fluo */}
           <div className="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-1">
             <span className="text-2xl sm:text-3xl font-bold text-white">
-              49,99 €{' '}
+              49,90 €{' '}
               <span className="text-xs text-neutral-400 font-normal">TTC</span>
             </span>
             <span className="text-xs text-neutral-400 font-light tracking-wide flex items-center gap-1.5">
@@ -212,7 +212,7 @@ function PieceRow({ piece, index, onAdd, addedId }: RowProps) {
               ) : (
                 <>
                   <ShoppingBag className="w-4 h-4" />
-                  Ajouter au Panier — 49,99 €
+                  Ajouter au Panier — 49,90 €
                 </>
               )}
             </button>

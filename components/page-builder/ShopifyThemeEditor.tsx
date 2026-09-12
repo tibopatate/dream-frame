@@ -296,7 +296,7 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
         badgeText: 'Atelier Français · Cadres Décoratifs Supercars',
         title: "L'art de la supercar, sculpté en relief 3D.",
         subtitle: 'Cadres d’ébénisterie automobile sous vitrage optique anti-UV avec rétroéclairage LED ambré intégré.',
-        priceText: 'À partir de 49,99 € · Livraison Colissimo 100% Offerte.',
+        priceText: 'À partir de 49,90 € · Livraison Colissimo 100% Offerte.',
         primaryBtnText: 'Découvrir la Collection',
         primaryBtnLink: '/catalogue',
         secondaryBtnText: 'Créer mon Dream Frame',
@@ -307,7 +307,7 @@ export function ShopifyThemeEditor({ initialDocument }: { initialDocument: PageT
       newSection.settings = {
         badge: 'Catalogue Collector',
         title: "Nos Cadres 3D d'Art Automobile",
-        startingPrice: '49,99 €',
+        startingPrice: '49,90 €',
         category: 'ALL',
         limit: 8,
       }

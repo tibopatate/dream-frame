@@ -40,7 +40,7 @@ const REVIEWS = [
     rating: 5,
     date: 'Il y a 2 semaines',
     comment:
-      "Cadeau pour mon frère passionné de supercars. Il était ému aux larmes en allumant la lueur LED ambrée. Le prix de 49,99 € est incroyable pour une qualité artisanale pareille.",
+      "Cadeau pour mon frère passionné de supercars. Il était ému aux larmes en allumant la lueur LED ambrée. Le prix de 49,90 € est incroyable pour une qualité artisanale pareille.",
     interior: 'Espace Collectionneur',
   },
 ]

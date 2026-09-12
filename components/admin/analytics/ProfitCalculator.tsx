@@ -28,7 +28,7 @@ interface ProfitCalculatorProps {
 const PRESETS = {
   a4: {
     name: 'Format Standard A4',
-    sellingPrice: 49.99,
+    sellingPrice: 49.90,
     unitsSold: 30,
     frameCost: 7.50,
     carCost: 9.00,
@@ -42,7 +42,7 @@ const PRESETS = {
   },
   a3: {
     name: 'Grand Format A3 Collector',
-    sellingPrice: 150.00,
+    sellingPrice: 149.90,
     unitsSold: 15,
     frameCost: 18.00,
     carCost: 18.00,
@@ -56,7 +56,7 @@ const PRESETS = {
   },
   a2: {
     name: 'Prestige Galerie A2',
-    sellingPrice: 250.00,
+    sellingPrice: 249.90,
     unitsSold: 8,
     frameCost: 32.00,
     carCost: 35.00,
@@ -245,7 +245,7 @@ export function ProfitCalculator({
                 selectedPreset === 'a4' ? 'bg-white text-red-600 shadow-2xs font-bold' : 'text-slate-600'
               }`}
             >
-              A4 (49,99€)
+              A4 (49,90€)
             </button>
             <button
               type="button"
@@ -254,7 +254,7 @@ export function ProfitCalculator({
                 selectedPreset === 'a3' ? 'bg-white text-red-600 shadow-2xs font-bold' : 'text-slate-600'
               }`}
             >
-              A3 (150€)
+              A3 (149,90€)
             </button>
             <button
               type="button"
@@ -263,7 +263,7 @@ export function ProfitCalculator({
                 selectedPreset === 'a2' ? 'bg-white text-red-600 shadow-2xs font-bold' : 'text-slate-600'
               }`}
             >
-              A2 (250€)
+              A2 (249,90€)
             </button>
           </div>
 

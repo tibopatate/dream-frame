@@ -82,7 +82,7 @@ export default async function ProductPage({ params }: Props) {
 
   if (!product) notFound()
 
-  // S'assurer que les formats sont présents (formats personnalisés du produit ou formats par défaut A4 49,99€, A3 150€, A2 250€)
+  // S'assurer que les formats sont présents (formats personnalisés du produit ou formats par défaut A4 49,90€, A3 149,90€, A2 249,90€)
   const productFormats = stored?.formats && stored.formats.length > 0 ? stored.formats : DEFAULT_FORMATS
 
   const variant = product.variants?.[0]
@@ -121,7 +121,7 @@ export default async function ProductPage({ params }: Props) {
   }
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 bg-[#080807] text-white">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-16 bg-[#080807] text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
@@ -172,7 +172,7 @@ export default async function ProductPage({ params }: Props) {
             )}
           </div>
 
-          {/* Bloc d'Achat & Choix de Formats Dynamiques (Standard A4 49,99€, Grand A3 150€, Prestige A2 250€) */}
+          {/* Bloc d'Achat & Format d'Art Certifié */}
           <ProductPurchaseSection
             product={{
               id: product.id,
@@ -181,9 +181,11 @@ export default async function ProductPage({ params }: Props) {
               slug: product.slug,
               images: product.images || [],
               description: product.description,
-              price: product.price || 49.99,
+              price: Number(product.price) || 49.90,
               sku: variant?.sku,
               stock: variant?.stock ?? 10,
+              formatName: (product as any).formatName,
+              formatSize: (product as any).formatSize,
               formats: productFormats,
             }}
           />

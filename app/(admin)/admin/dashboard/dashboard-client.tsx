@@ -91,7 +91,7 @@ export function DashboardClient({ initialOrders, products, isDbConnected }: Dash
 
     const revenue = paidOrders.reduce((sum, o) => sum + Number(o.total), 0)
     const salesCount = paidOrders.length
-    const aov = salesCount > 0 ? revenue / salesCount : 49.99
+    const aov = salesCount > 0 ? revenue / salesCount : 49.90
 
     let vintageCount = 0
     let modernCount = 0
@@ -190,7 +190,7 @@ export function DashboardClient({ initialOrders, products, isDbConnected }: Dash
         label: labelFormat(d),
         date: d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' }),
         amount: Math.max(amount, i === 0 ? metrics.revenue * 0.35 : (metrics.revenue / pointsCount) * (0.6 + (i % 3) * 0.3)),
-        count: Math.max(matchOrders.length, Math.round(amount / 49.99)),
+        count: Math.max(matchOrders.length, Math.round(amount / 49.90)),
       })
     }
 
@@ -291,7 +291,7 @@ export function DashboardClient({ initialOrders, products, isDbConnected }: Dash
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-xs">
             <div className="p-3 bg-black/40 border border-neutral-800 rounded-xl space-y-1">
               <span className="text-[10px] font-bold text-amber-400 uppercase">1. Création automatique</span>
-              <p className="text-neutral-400 font-light">Pas besoin de créer des fiches dans Stripe. Chaque cadre est facturé à 49,99 € automatiquement au passage en caisse.</p>
+              <p className="text-neutral-400 font-light">Pas besoin de créer des fiches dans Stripe. Chaque cadre est facturé à 49,90 € automatiquement au passage en caisse.</p>
             </div>
             <div className="p-3 bg-black/40 border border-neutral-800 rounded-xl space-y-1">
               <span className="text-[10px] font-bold text-emerald-400 uppercase">2. Virement direct</span>
@@ -416,7 +416,7 @@ export function DashboardClient({ initialOrders, products, isDbConnected }: Dash
             {formatPriceFromDecimal(metrics.aov)}
           </p>
           <p className="text-xs text-neutral-500 font-light">
-            Tarif unique atelier : 49,99 €
+            Tarif unique atelier : 49,90 €
           </p>
         </div>
 

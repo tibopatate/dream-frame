@@ -210,7 +210,7 @@ export function SectionRenderer({
         tag: 'Atelier France · Pièce Réelle',
         image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop',
         imageHover: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop',
-        price: '49,99 €',
+        price: '49,90 €',
       },
       {
         id: 'real-bugatti-chiron',
@@ -222,7 +222,7 @@ export function SectionRenderer({
         tag: 'Ébénisterie & LED',
         image: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
         imageHover: 'https://images.unsplash.com/photo-1600793575654-910699b5e4d4?q=80&w=1200&auto=format&fit=crop',
-        price: '49,99 €',
+        price: '49,90 €',
       },
       {
         id: 'real-pagani-huayra',
@@ -234,7 +234,7 @@ export function SectionRenderer({
         tag: 'Carbo-Titane & Relief',
         image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop',
         imageHover: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop',
-        price: '49,99 €',
+        price: '49,90 €',
       },
       {
         id: 'real-audi-r8v10',
@@ -246,7 +246,7 @@ export function SectionRenderer({
         tag: 'Vitrage HD & Module LED',
         image: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1200&auto=format&fit=crop',
         imageHover: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?q=80&w=1200&auto=format&fit=crop',
-        price: '49,99 €',
+        price: '49,90 €',
       },
       {
         id: 'real-bmw-m4comp',
@@ -258,7 +258,7 @@ export function SectionRenderer({
         tag: 'Atelier France · Pièce Réelle',
         image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200&auto=format&fit=crop',
         imageHover: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=1200&auto=format&fit=crop',
-        price: '49,99 €',
+        price: '49,90 €',
       },
     ]
 

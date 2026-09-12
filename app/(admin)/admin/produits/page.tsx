@@ -123,7 +123,9 @@ export default async function AdminProduitsPage() {
 
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                   <div>
-                    <span className="text-base font-bold text-slate-900">49,99 €</span>
+                    <span className="text-base font-bold text-slate-900 font-mono">
+                      {(Number(product.price) || 49.90).toFixed(2).replace('.', ',')} €
+                    </span>
                     <span className="text-[10px] text-emerald-600 block font-medium">Livraison offerte</span>
                   </div>
 

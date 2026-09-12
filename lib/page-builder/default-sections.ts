@@ -28,7 +28,7 @@ export const DEFAULT_PAGE_SECTIONS: PageSection[] = [
     settings: {
       badge: '',
       title: 'NOTRE COLLECTION',
-      startingPrice: '49,99 €',
+      startingPrice: '49,90 €',
       category: 'ALL',
       limit: 4,
     },

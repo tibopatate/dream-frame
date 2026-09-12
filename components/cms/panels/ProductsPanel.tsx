@@ -16,14 +16,14 @@ interface ProductItem {
 
 export function ProductsPanel() {
   const [products, setProducts] = useState<ProductItem[]>([
-    { id: '1', name: 'Ferrari F40 (1987)', price: '49,99 €', brand: 'Ferrari', active: true, featured: true, stock: 12 },
-    { id: '2', name: 'Bugatti Chiron (2016)', price: '49,99 €', brand: 'Bugatti', active: true, featured: true, stock: 8 },
-    { id: '3', name: 'Pagani Huayra V12', price: '49,99 €', brand: 'Pagani', active: true, featured: true, stock: 5 },
-    { id: '4', name: 'Audi R8 V10 Performance', price: '49,99 €', brand: 'Audi Sport', active: true, featured: true, stock: 15 },
-    { id: '5', name: 'Porsche 911 GT3 RS', price: '49,99 €', brand: 'Porsche', active: true, featured: false, stock: 9 },
-    { id: '6', name: 'Lamborghini Aventador SVJ', price: '49,99 €', brand: 'Lamborghini', active: true, featured: false, stock: 6 },
-    { id: '7', name: 'McLaren P1 Hybrid', price: '49,99 €', brand: 'McLaren', active: true, featured: false, stock: 4 },
-    { id: '8', name: 'Aston Martin Valkyrie', price: '49,99 €', brand: 'Aston Martin', active: false, featured: false, stock: 0 },
+    { id: '1', name: 'Ferrari F40 (1987)', price: '49,90 €', brand: 'Ferrari', active: true, featured: true, stock: 12 },
+    { id: '2', name: 'Bugatti Chiron (2016)', price: '49,90 €', brand: 'Bugatti', active: true, featured: true, stock: 8 },
+    { id: '3', name: 'Pagani Huayra V12', price: '49,90 €', brand: 'Pagani', active: true, featured: true, stock: 5 },
+    { id: '4', name: 'Audi R8 V10 Performance', price: '49,90 €', brand: 'Audi Sport', active: true, featured: true, stock: 15 },
+    { id: '5', name: 'Porsche 911 GT3 RS', price: '49,90 €', brand: 'Porsche', active: true, featured: false, stock: 9 },
+    { id: '6', name: 'Lamborghini Aventador SVJ', price: '49,90 €', brand: 'Lamborghini', active: true, featured: false, stock: 6 },
+    { id: '7', name: 'McLaren P1 Hybrid', price: '49,90 €', brand: 'McLaren', active: true, featured: false, stock: 4 },
+    { id: '8', name: 'Aston Martin Valkyrie', price: '49,90 €', brand: 'Aston Martin', active: false, featured: false, stock: 0 },
   ])
 
   const toggleProductActive = (id: string) => {

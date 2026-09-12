@@ -6,7 +6,7 @@ export interface MockProduct {
   era: 'VINTAGE' | 'MODERN'
   year: number
   description: string
-  price: number // 49.99 € TTC
+  price: number // 49.90 € TTC
   isActive: boolean
   isFeatured: boolean
   images: string[]

@@ -255,9 +255,9 @@ export function AvisClient({ initialReviews }: { initialReviews: StoredReview[] 
                 onChange={(e) => setFormatPurchased(e.target.value)}
                 className="w-full bg-slate-50 dark:bg-black/60 border border-slate-200 dark:border-neutral-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-amber-400"
               >
-                <option value="Format Standard A4">Standard A4 (49,99 €)</option>
-                <option value="Grand Format A3 Collector">Grand A3 Collector (150,00 €)</option>
-                <option value="Prestige Galerie A2">Prestige Galerie A2 (250,00 €)</option>
+                <option value="Format Standard A4">Standard A4 (49,90 €)</option>
+                <option value="Grand Format A3 Collector">Grand A3 Collector (149,90 €)</option>
+                <option value="Prestige Galerie A2">Prestige Galerie A2 (249,90 €)</option>
               </select>
             </div>
           </div>

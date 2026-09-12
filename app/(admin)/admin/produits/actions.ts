@@ -89,7 +89,7 @@ export async function createProduct(
   const baseSlug = slugify(data.name)
   const sku = generateSku(data.brand, Math.floor(Math.random() * 100))
 
-  // Récupérer les formats personnalisés (49.99€, 150€, 250€)
+  // Récupérer les formats personnalisés (49.90€, 149.90€, 249.90€)
   let formats = [
     { id: 'fmt-a4', name: 'Standard A4', size: '21 x 29.7 cm', price: 49.90, stock: data.stock, isDefault: true },
     { id: 'fmt-a3', name: 'Grand Format A3 Collector', size: '30 x 42 cm', price: 149.90, stock: 5, isDefault: false },
@@ -185,7 +185,7 @@ export async function syncProductToStripe(params: {
   if (!key || !key.startsWith('sk_') || key === 'sk_test_placeholder') {
     return {
       success: true,
-      message: 'Mode simulation actif. Vos tarifs (49,99€, 150€, 250€) sont enregistrés dans l&apos;atelier. Dès que votre clé Stripe sera configurée dans Paramètres, les produits seront synchronisés en 1 clic.',
+      message: 'Mode simulation actif. Vos tarifs (49,90€, 149,90€, 249,90€) sont enregistrés dans l&apos;atelier. Dès que votre clé Stripe sera configurée dans Paramètres, les produits seront synchronisés en 1 clic.',
     }
   }
 

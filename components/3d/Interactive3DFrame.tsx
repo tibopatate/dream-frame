@@ -194,7 +194,7 @@ export function Interactive3DFrame({
               </p>
             </div>
             <div className="text-right">
-              <span className="text-amber-400 text-sm font-bold block">49,99 €</span>
+              <span className="text-amber-400 text-sm font-bold block">49,90 €</span>
               <span className="text-[8px] text-neutral-500 tracking-wider uppercase block">
                 Livraison Offerte
               </span>
