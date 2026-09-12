@@ -28,6 +28,7 @@ interface SectionRendererProps {
   isEditor?: boolean
   isSelected?: boolean
   isHovered?: boolean
+  liveProducts?: any[]
   onSelect?: () => void
   onHover?: (hovering: boolean) => void
   onMoveUp?: () => void
@@ -40,6 +41,7 @@ export function SectionRenderer({
   isEditor = false,
   isSelected = false,
   isHovered = false,
+  liveProducts,
   onSelect,
   onHover,
   onMoveUp,
@@ -291,13 +293,27 @@ export function SectionRenderer({
 
           {/* Liste Horizontale des Cadres : 4 sur mobile, 5 sur PC */}
           <div className="flex overflow-x-auto pb-8 -mx-4 px-4 sm:mx-0 sm:px-0 gap-4 sm:gap-5 lg:gap-6 snap-x snap-mandatory hide-scrollbar sm:justify-center">
-            {REAL_STORE_FRAMES.map((item, idx) => (
-              <div
-                key={item.id}
-                className={`snap-start shrink-0 w-[55vw] sm:w-[190px] md:w-[210px] lg:w-[230px] group flex-col items-center space-y-3 ${
-                  idx >= 4 ? 'hidden sm:flex' : 'flex'
-                }`}
-              >
+            {(liveProducts && liveProducts.length > 0 ? liveProducts : REAL_STORE_FRAMES).slice(0, 5).map((rawItem: any, idx: number) => {
+              const item = {
+                id: rawItem.id,
+                slug: rawItem.slug,
+                name: rawItem.name,
+                year: rawItem.year || 2023,
+                brand: rawItem.brand,
+                specs: rawItem.specs || rawItem.description?.slice(0, 50) || 'Atelier France · Pièce Réelle',
+                tag: rawItem.tag || (rawItem.era === 'VINTAGE' ? 'Pièce Historique' : 'Atelier France · Pièce Réelle'),
+                image: rawItem.image || rawItem.images?.[0] || 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
+                imageHover: rawItem.imageHover || rawItem.images?.[1] || null,
+                price: typeof rawItem.price === 'number' ? `${rawItem.price.toFixed(2).replace('.', ',')} €` : rawItem.price,
+              }
+
+              return (
+                <div
+                  key={item.id}
+                  className={`snap-start shrink-0 w-[55vw] sm:w-[190px] md:w-[210px] lg:w-[230px] group flex-col items-center space-y-3 ${
+                    idx >= 4 ? 'hidden sm:flex' : 'flex'
+                  }`}
+                >
                 {/* Vrai Cadre d'Art de la Boutique (aspect-[3/4] élégant) */}
                 <Link
                   href={isEditor ? '#' : `/produit/${item.slug}`}
@@ -360,7 +376,7 @@ export function SectionRenderer({
                   </div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
 
           {/* Ambiance Atelier & Savoir-faire */}

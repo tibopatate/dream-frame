@@ -3,6 +3,7 @@ import { EditProductForm } from './edit-form'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import { getProductById } from '@/lib/data-store'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
 
 interface Props {
@@ -25,7 +26,25 @@ export default async function ModifierProduitPage({ params }: Props) {
     product = null
   }
 
-  // Fallback sur les données mock si DB déconnectée ou ID mock
+  // 1. Fallback sur le store persistant de la boutique
+  if (!product) {
+    const stored = getProductById(id)
+    if (stored) {
+      product = {
+        id: stored.id,
+        name: stored.name,
+        brand: stored.brand,
+        description: stored.description,
+        price: stored.price,
+        isActive: stored.isActive,
+        isFeatured: stored.isFeatured,
+        images: stored.images,
+        variants: [{ stock: stored.stock, stockAlert: stored.stockAlert, id: stored.id }],
+      }
+    }
+  }
+
+  // 2. Fallback sur les données mock de base
   if (!product) {
     const mock = MOCK_PRODUCTS.find((p) => p.id === id || p.slug === id)
     if (mock) {

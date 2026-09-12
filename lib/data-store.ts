@@ -680,18 +680,44 @@ export function getInitialReviews(): StoredReview[] {
   return []
 }
 
+const globalForDb = globalThis as unknown as {
+  dreamFrameDb?: DatabaseSchema
+}
+
+const TMP_FILE = path.join('/tmp', 'dreamframe-db.json')
+
 export function readDatabase(): DatabaseSchema {
+  // 1. Cache mémoire global (instantané et réactif dans l'instance)
+  if (globalForDb.dreamFrameDb && globalForDb.dreamFrameDb.products && globalForDb.dreamFrameDb.products.length > 0) {
+    return globalForDb.dreamFrameDb
+  }
+
+  // 2. Essai fichier /tmp (accessible en écriture sur Vercel Serverless)
+  try {
+    if (fs.existsSync(TMP_FILE)) {
+      const data = fs.readFileSync(TMP_FILE, 'utf-8')
+      const parsed: DatabaseSchema = JSON.parse(data)
+      if (parsed && parsed.products && parsed.products.length > 0) {
+        if (!parsed.reviews) parsed.reviews = []
+        globalForDb.dreamFrameDb = parsed
+        return parsed
+      }
+    }
+  } catch {}
+
+  // 3. Essai fichier local du dépôt
   try {
     if (fs.existsSync(DATA_FILE)) {
       const data = fs.readFileSync(DATA_FILE, 'utf-8')
       const parsed: DatabaseSchema = JSON.parse(data)
-      if (!parsed.reviews) {
-        parsed.reviews = []
+      if (parsed && parsed.products && parsed.products.length > 0) {
+        if (!parsed.reviews) parsed.reviews = []
+        globalForDb.dreamFrameDb = parsed
+        return parsed
       }
-      return parsed
     }
   } catch (err) {
-    console.warn('Error reading local JSON db, resetting to default:', err)
+    console.warn('Error reading local JSON db:', err)
   }
 
   const initial = getInitialDatabase()
@@ -700,6 +726,17 @@ export function readDatabase(): DatabaseSchema {
 }
 
 export function writeDatabase(db: DatabaseSchema): void {
+  // 1. Mettre à jour le cache mémoire global
+  globalForDb.dreamFrameDb = db
+
+  // 2. Écrire dans /tmp (toujours autorisé sur Vercel Serverless)
+  try {
+    fs.writeFileSync(TMP_FILE, JSON.stringify(db, null, 2), 'utf-8')
+  } catch (err) {
+    // ignore
+  }
+
+  // 3. Écrire dans le fichier local (développement local)
   try {
     const dir = path.dirname(DATA_FILE)
     if (!fs.existsSync(dir)) {
@@ -707,7 +744,7 @@ export function writeDatabase(db: DatabaseSchema): void {
     }
     fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2), 'utf-8')
   } catch (err) {
-    console.error('Error writing to database:', err)
+    // ignore EROFS en production serverless
   }
 }
 
@@ -737,8 +774,37 @@ export function addProduct(product: Omit<StoredProduct, 'id' | 'createdAt'>): St
 
 export function updateProduct(id: string, updates: Partial<StoredProduct>): StoredProduct | null {
   const db = readDatabase()
-  const index = db.products.findIndex((p) => p.id === id)
-  if (index === -1) return null
+  const index = db.products.findIndex((p) => p.id === id || p.slug === id)
+  
+  if (index === -1) {
+    // Si absent du json persistant, récupérer depuis MOCK_PRODUCTS et créer
+    const mock = MOCK_PRODUCTS.find((p) => p.id === id || p.slug === id)
+    if (mock) {
+      const newProduct: StoredProduct = {
+        id: mock.id,
+        slug: mock.slug,
+        name: mock.name,
+        brand: mock.brand,
+        description: mock.description,
+        price: mock.price,
+        era: mock.era || 'MODERN',
+        year: mock.year || 2023,
+        isActive: mock.isActive,
+        isFeatured: mock.isFeatured,
+        images: mock.images,
+        stock: mock.variants?.[0]?.stock ?? 10,
+        stockAlert: mock.variants?.[0]?.stockAlert ?? 3,
+        sku: mock.variants?.[0]?.sku ?? `DF-${mock.slug}`,
+        ...updates,
+        createdAt: updates.createdAt ?? new Date().toISOString(),
+      }
+      db.products.unshift(newProduct)
+      writeDatabase(db)
+      return newProduct
+    }
+    return null
+  }
+
   db.products[index] = { ...db.products[index], ...updates }
   writeDatabase(db)
   return db.products[index]
@@ -747,7 +813,7 @@ export function updateProduct(id: string, updates: Partial<StoredProduct>): Stor
 export function deleteProduct(id: string): boolean {
   const db = readDatabase()
   const initialLen = db.products.length
-  db.products = db.products.filter((p) => p.id !== id)
+  db.products = db.products.filter((p) => p.id !== id && p.slug !== id)
   writeDatabase(db)
   return db.products.length < initialLen
 }

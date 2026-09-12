@@ -34,9 +34,7 @@ export default function NouveauProduitPage() {
 
   // Gérer la liste des URLs d'images
   const [imageUrlInput, setImageUrlInput] = useState('')
-  const [images, setImages] = useState<string[]>([
-    'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop',
-  ])
+  const [images, setImages] = useState<string[]>([])
 
   // Studio de Recadrage & Aspect Ratio
   const [cropSettings, setCropSettings] = useState<CropSettings>({

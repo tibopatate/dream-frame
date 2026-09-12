@@ -33,6 +33,8 @@ export function ProductImageUploader({
   const [urlInput, setUrlInput] = useState('')
   const [showUrlInput, setShowUrlInput] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const imagesRef = useRef(images)
+  imagesRef.current = images
 
   const handleFiles = useCallback(
     async (files: FileList | File[]) => {
@@ -54,7 +56,7 @@ export function ProductImageUploader({
         return
       }
 
-      if (images.length + validFiles.length > maxImages) {
+      if (imagesRef.current.length + validFiles.length > maxImages) {
         setUploadError(`Vous pouvez ajouter au maximum ${maxImages} photos par cadre.`)
         return
       }
@@ -102,12 +104,12 @@ export function ProductImageUploader({
       }
 
       if (uploadedUrls.length > 0) {
-        onChange([...images, ...uploadedUrls])
+        onChange([...imagesRef.current, ...uploadedUrls])
       }
 
       setUploading(false)
     },
-    [images, maxImages, onChange]
+    [maxImages, onChange]
   )
 
   const onDragOver = (e: React.DragEvent) => {
@@ -154,21 +156,23 @@ export function ProductImageUploader({
   }
 
   const handleRemove = (index: number) => {
-    const next = images.filter((_, i) => i !== index)
+    const next = imagesRef.current.filter((_, i) => i !== index)
     onChange(next)
   }
 
   const handleSetPrimary = (index: number) => {
     if (index === 0) return
-    const target = images[index]
-    const remaining = images.filter((_, i) => i !== index)
+    const current = imagesRef.current
+    const target = current[index]
+    const remaining = current.filter((_, i) => i !== index)
     onChange([target, ...remaining])
   }
 
   const handleMove = (index: number, direction: 'left' | 'right') => {
     const targetIndex = direction === 'left' ? index - 1 : index + 1
-    if (targetIndex < 0 || targetIndex >= images.length) return
-    const next = [...images]
+    const current = imagesRef.current
+    if (targetIndex < 0 || targetIndex >= current.length) return
+    const next = [...current]
     const temp = next[index]
     next[index] = next[targetIndex]
     next[targetIndex] = temp
