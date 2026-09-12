@@ -294,27 +294,47 @@ export function SectionRenderer({
 
           {/* Liste Horizontale des Cadres : 4 sur mobile, 5 sur PC */}
           <div className="flex overflow-x-auto pb-8 -mx-4 px-4 sm:mx-0 sm:px-0 gap-4 sm:gap-5 lg:gap-6 snap-x snap-mandatory hide-scrollbar sm:justify-center">
-            {(liveProducts && liveProducts.length > 0 ? liveProducts : REAL_STORE_FRAMES).slice(0, 5).map((rawItem: any, idx: number) => {
-              const item = {
-                id: rawItem.id,
-                slug: rawItem.slug,
-                name: rawItem.name,
-                year: rawItem.year || 2023,
-                brand: rawItem.brand,
-                specs: rawItem.specs || rawItem.description?.slice(0, 50) || 'Atelier France · Pièce Réelle',
-                tag: rawItem.tag || (rawItem.era === 'VINTAGE' ? 'Pièce Historique' : 'Atelier France · Pièce Réelle'),
-                image: rawItem.image || rawItem.images?.[0] || 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
-                imageHover: rawItem.imageHover || rawItem.images?.[1] || null,
-                price: typeof rawItem.price === 'number' ? `${rawItem.price.toFixed(2).replace('.', ',')} €` : rawItem.price,
+            {(() => {
+              const allAvailable = (liveProducts && liveProducts.length > 0) ? liveProducts : REAL_STORE_FRAMES
+              let displayed: any[] = []
+
+              if (s.mode === 'manual' && Array.isArray(s.selectedProductIds) && s.selectedProductIds.length > 0) {
+                displayed = s.selectedProductIds
+                  .map((id: string) => allAvailable.find((p: any) => p.id === id || p.slug === id))
+                  .filter(Boolean)
+                if (displayed.length === 0) {
+                  displayed = allAvailable.slice(0, s.limit || 5)
+                }
+              } else {
+                if (s.category && s.category !== 'ALL') {
+                  displayed = allAvailable.filter((p: any) => p.era === s.category)
+                } else {
+                  displayed = allAvailable
+                }
+                displayed = displayed.slice(0, s.limit || 5)
               }
 
-              return (
-                <div
-                  key={item.id}
-                  className={`snap-start shrink-0 w-[55vw] sm:w-[190px] md:w-[210px] lg:w-[230px] group flex-col items-center space-y-3 ${
-                    idx >= 4 ? 'hidden sm:flex' : 'flex'
-                  }`}
-                >
+              return displayed.map((rawItem: any, idx: number) => {
+                const item = {
+                  id: rawItem.id,
+                  slug: rawItem.slug,
+                  name: rawItem.name,
+                  year: rawItem.year || 2023,
+                  brand: rawItem.brand,
+                  specs: rawItem.specs || rawItem.description?.slice(0, 50) || 'Atelier France · Pièce Réelle',
+                  tag: rawItem.tag || (rawItem.era === 'VINTAGE' ? 'Pièce Historique' : 'Atelier France · Pièce Réelle'),
+                  image: rawItem.image || rawItem.images?.[0] || 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
+                  imageHover: rawItem.imageHover || rawItem.images?.[1] || null,
+                  price: typeof rawItem.price === 'number' ? `${rawItem.price.toFixed(2).replace('.', ',')} €` : rawItem.price,
+                }
+
+                return (
+                  <div
+                    key={item.id}
+                    className={`snap-start shrink-0 w-[55vw] sm:w-[190px] md:w-[210px] lg:w-[230px] group flex-col items-center space-y-3 ${
+                      idx >= 4 ? 'hidden sm:flex' : 'flex'
+                    }`}
+                  >
                 {/* Vrai Cadre d'Art de la Boutique (aspect-[3/4] élégant) */}
                 <Link
                   href={isEditor ? '#' : `/produit/${item.slug}`}
@@ -377,8 +397,10 @@ export function SectionRenderer({
                   </div>
                 </div>
               </div>
-            )})}
-          </div>
+            )
+          })
+        })()}
+      </div>
 
           {/* Ambiance Atelier & Savoir-faire */}
           <div className="pt-8 border-t border-neutral-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
@@ -657,6 +679,14 @@ export function SectionRenderer({
 
   // ─── SECTION: FAQ ──────────────────────────────────────────────────────────
   if (section.type === 'faq') {
+    const faqItems = (Array.isArray(s.items) && s.items.length > 0)
+      ? s.items
+      : [
+          { q: s.q1 || 'Quels sont les délais de fabrication et de livraison ?', a: s.a1 || 'Chaque cadre étant assemblé à la main à la demande, il faut compter 4 à 6 jours ouvrés pour la confection et l\'expédition.' },
+          { q: s.q2 || 'Comment s\'alimente le rétroéclairage LED ?', a: s.a2 || 'Nos cadres sont fournis avec une batterie discrète rechargeable par USB-C, garantissant un rendu propre sans câble apparent.' },
+          { q: s.q3 || 'Puis-je commander un modèle spécifique sur-mesure ?', a: s.a3 || 'Oui, notre atelier sur-mesure vous permet de configurer le cadre avec le véhicule de votre choix.' },
+        ].filter((it) => it.q || it.a)
+
     return (
       <div
         className={`${outlineClass} ${section.hidden ? 'opacity-40 grayscale' : ''}`}
@@ -675,21 +705,26 @@ export function SectionRenderer({
         )}
 
         <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-neutral-950/30">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-12">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-12">
             <h2 className="text-2xl sm:text-4xl font-black text-center text-white tracking-tight">
               {s.title || 'Questions Fréquentes'}
             </h2>
             
-            <div className="space-y-6">
-              {[1, 2, 3].map((i) => {
-                const q = s[`q${i}`]
-                const a = s[`a${i}`]
-                if (!q && !a && i > 3) return null
+            <div className="space-y-4 sm:space-y-5">
+              {faqItems.map((item: any, idx: number) => {
+                if (!item.q && !item.a) return null
                 
                 return (
-                  <div key={i} className="p-6 rounded-2xl bg-neutral-900/60 border border-neutral-800">
-                    <h3 className="text-lg font-bold text-white mb-2">{q || `Question ${i}?`}</h3>
-                    <p className="text-sm text-neutral-400 leading-relaxed">{a || `Réponse détaillée à la question ${i}.`}</p>
+                  <div
+                    key={item.id || idx}
+                    className="p-5 sm:p-6 rounded-2xl bg-neutral-900/70 border border-neutral-800 transition-all hover:border-neutral-700 space-y-2"
+                  >
+                    <h3 className="text-base sm:text-lg font-bold text-white tracking-wide">
+                      {item.q}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+                      {item.a}
+                    </p>
                   </div>
                 )
               })}

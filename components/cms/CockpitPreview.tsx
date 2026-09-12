@@ -8,6 +8,7 @@ interface CockpitPreviewProps {
   activeDevice: 'desktop' | 'mobile'
   activeSectionId: string | null
   hoveredSectionId: string | null
+  liveProducts?: any[]
   onSelectSection: (id: string) => void
   onHoverSection: (id: string | null) => void
 }
@@ -17,6 +18,7 @@ export function CockpitPreview({
   activeDevice,
   activeSectionId,
   hoveredSectionId,
+  liveProducts = [],
   onSelectSection,
   onHoverSection,
 }: CockpitPreviewProps) {
@@ -36,6 +38,7 @@ export function CockpitPreview({
             isEditor={true}
             isSelected={activeSectionId === section.id}
             isHovered={hoveredSectionId === section.id}
+            liveProducts={liveProducts}
             onSelect={() => onSelectSection(section.id)}
             onHover={(hovering) => onHoverSection(hovering ? section.id : null)}
           />

@@ -62,9 +62,10 @@ const AVAILABLE_SECTIONS: { type: SectionType; name: string; desc: string; icon:
 
 interface CockpitLayoutProps {
   initialDocument: PageTreeDocument
+  initialProducts?: any[]
 }
 
-export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
+export function CockpitLayout({ initialDocument, initialProducts = [] }: CockpitLayoutProps) {
   // ─── Core State ─────────────────────────────────────────────────────
   const [doc, setDoc] = useState<PageTreeDocument>(initialDocument)
   const [history, setHistory] = useState<PageTreeDocument[]>([])
@@ -283,6 +284,7 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
       return (
         <SectionInspectorPanel
           section={activeSection}
+          products={initialProducts}
           onBack={() => setActiveSectionId(null)}
           onUpdateSettings={handleUpdateSectionSettings}
           onDeleteSection={handleDeleteSection}
@@ -348,7 +350,22 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
       case 'help':
         return <HelpPanel />
       default:
-        return <DashboardPanel onNavigate={handleCategoryChange} lastSavedTime={lastSavedTime} />
+        return (
+          <PageSectionsPanel
+            sections={doc.sections}
+            activeSectionId={activeSectionId}
+            hoveredSectionId={hoveredSectionId}
+            onSelectSection={setActiveSectionId}
+            onHoverSection={setHoveredSectionId}
+            onToggleSection={handleToggleSection}
+            onMoveSection={handleMoveSection}
+            onDeleteSection={handleDeleteSection}
+            onAddSection={() => setShowAddSection(true)}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          />
+        )
     }
   }
 
@@ -435,6 +452,7 @@ export function CockpitLayout({ initialDocument }: CockpitLayoutProps) {
                 activeDevice={activeDevice}
                 activeSectionId={activeSectionId}
                 hoveredSectionId={hoveredSectionId}
+                liveProducts={initialProducts}
                 onSelectSection={(id) => {
                   setActiveSectionId(id)
                   setActiveCategory('homepage')

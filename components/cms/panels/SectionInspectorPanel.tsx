@@ -11,13 +11,18 @@ import {
   Settings2,
   ChevronDown,
   ChevronRight,
+  ChevronUp,
   Trash2,
+  Plus,
+  Check,
+  Package,
 } from 'lucide-react'
 import { ProductImageUploader } from '@/components/admin/ProductImageUploader'
 import type { PageSection } from '@/lib/page-builder/types'
 
 interface SectionInspectorPanelProps {
   section: PageSection
+  products?: any[]
   onBack: () => void
   onUpdateSettings: (sectionId: string, updates: Record<string, any>) => void
   onDeleteSection: (sectionId: string) => void
@@ -125,7 +130,7 @@ function HeroContentFields({ s, onChange }: { s: Record<string, any>; onChange: 
       </AccordionSection>
 
       <AccordionSection title="Photographie d'arrière-plan" defaultOpen>
-        <FieldGroup label="Image de fond principale du Hero Showroom">
+        <FieldGroup label="Image de fond principale du Hero Showroom" helpText="Téléversez la photographie de la supercar de votre choix (hébergée en haute définition sur Vercel Blob)">
           <ProductImageUploader
             images={s.bgImage ? [s.bgImage] : []}
             onChange={(imgs) => onChange('bgImage', imgs[0] || '')}
@@ -137,53 +142,263 @@ function HeroContentFields({ s, onChange }: { s: Record<string, any>; onChange: 
   )
 }
 
-// ─── Collection Section Content ──────────────────────────────────────
-function CollectionContentFields({ s, onChange }: { s: Record<string, any>; onChange: (k: string, v: any) => void }) {
+// ─── Collection Section Content (WITH PRODUCT PICKER) ────────────────
+function CollectionContentFields({
+  s,
+  onChange,
+  products = [],
+}: {
+  s: Record<string, any>
+  onChange: (k: string, v: any) => void
+  products?: any[]
+}) {
+  const mode = s.mode || 'auto' // 'auto' | 'manual'
+  const selectedProductIds: string[] = Array.isArray(s.selectedProductIds) ? s.selectedProductIds : []
+
+  const toggleProductSelection = (productId: string) => {
+    let nextIds: string[]
+    if (selectedProductIds.includes(productId)) {
+      nextIds = selectedProductIds.filter((id) => id !== productId)
+    } else {
+      nextIds = [...selectedProductIds, productId]
+    }
+    onChange('selectedProductIds', nextIds)
+    if (mode !== 'manual') {
+      onChange('mode', 'manual')
+    }
+  }
+
+  const moveProductInSelection = (index: number, direction: 'up' | 'down') => {
+    const target = direction === 'up' ? index - 1 : index + 1
+    if (target < 0 || target >= selectedProductIds.length) return
+    const updated = [...selectedProductIds]
+    const temp = updated[index]
+    updated[index] = updated[target]
+    updated[target] = temp
+    onChange('selectedProductIds', updated)
+  }
+
   return (
-    <AccordionSection title="Affichage de la collection" defaultOpen>
-      <FieldGroup label="Titre de la section">
-        <TextInput value={s.title || ''} onChange={(v) => onChange('title', v)} placeholder="NOTRE COLLECTION" />
-      </FieldGroup>
-      <FieldGroup label="Sous-titre">
-        <TextInput value={s.subtitle || ''} onChange={(v) => onChange('subtitle', v)} placeholder="Des légendes, une seule passion" />
-      </FieldGroup>
-      <FieldGroup label="Catégorie affichée">
-        <select
-          value={s.category || 'ALL'}
-          onChange={(e) => onChange('category', e.target.value)}
-          className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
-        >
-          <option value="ALL">Toutes les époques (Toutes supercars)</option>
-          <option value="VINTAGE">Époque Vintage / Iconiques</option>
-          <option value="MODERN">Époque Moderne &amp; Hypercars</option>
-        </select>
-      </FieldGroup>
-      <FieldGroup label="Nombre de cadres à présenter">
-        <select
-          value={s.limit || 4}
-          onChange={(e) => onChange('limit', Number(e.target.value))}
-          className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
-        >
-          <option value={4}>4 Cadres (1 rangée)</option>
-          <option value={8}>8 Cadres (2 rangées)</option>
-          <option value={12}>12 Cadres (Collection complète)</option>
-        </select>
-      </FieldGroup>
-    </AccordionSection>
+    <>
+      <AccordionSection title="En-tête de la Collection" defaultOpen>
+        <FieldGroup label="Titre de la section">
+          <TextInput value={s.title || ''} onChange={(v) => onChange('title', v)} placeholder="NOTRE COLLECTION PASSIONNÉE" />
+        </FieldGroup>
+        <FieldGroup label="Sous-titre">
+          <TextInput value={s.subtitle || ''} onChange={(v) => onChange('subtitle', v)} placeholder="Des légendes, une seule passion" />
+        </FieldGroup>
+      </AccordionSection>
+
+      <AccordionSection title="Sélection des Cadres Automobiles" defaultOpen>
+        <FieldGroup label="Mode de sélection des cadres">
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => onChange('mode', 'auto')}
+              className={`p-2.5 rounded-lg border text-xs font-semibold text-left transition cursor-pointer ${
+                mode === 'auto'
+                  ? 'border-red-500 bg-red-50 text-red-600 ring-1 ring-red-500'
+                  : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
+              }`}
+            >
+              <span className="block font-bold">Automatique</span>
+              <span className="text-[10px] text-slate-500 font-normal">Derniers ajouts</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => onChange('mode', 'manual')}
+              className={`p-2.5 rounded-lg border text-xs font-semibold text-left transition cursor-pointer ${
+                mode === 'manual'
+                  ? 'border-red-500 bg-red-50 text-red-600 ring-1 ring-red-500'
+                  : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
+              }`}
+            >
+              <span className="block font-bold">Sélection Manuelle</span>
+              <span className="text-[10px] text-slate-500 font-normal">Choisir au cas par cas</span>
+            </button>
+          </div>
+        </FieldGroup>
+
+        {mode === 'manual' ? (
+          <div className="space-y-3 pt-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-semibold text-slate-700">
+                Cadres sélectionnés ({selectedProductIds.length})
+              </span>
+              {selectedProductIds.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => onChange('selectedProductIds', [])}
+                  className="text-[10px] text-red-600 hover:underline cursor-pointer"
+                >
+                  Tout désélectionner
+                </button>
+              )}
+            </div>
+
+            {products.length === 0 ? (
+              <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 text-center text-xs text-slate-500">
+                <Package className="w-5 h-5 mx-auto mb-1 text-slate-400" />
+                Aucun produit trouvé dans la boutique. Créez des produits dans l'onglet Produits.
+              </div>
+            ) : (
+              <div className="space-y-2 max-h-[380px] overflow-y-auto pr-1">
+                {products.map((prod) => {
+                  const isSelected = selectedProductIds.includes(prod.id)
+                  const selectedIndex = selectedProductIds.indexOf(prod.id)
+
+                  return (
+                    <div
+                      key={prod.id}
+                      onClick={() => toggleProductSelection(prod.id)}
+                      className={`flex items-center gap-3 p-2 rounded-lg border transition cursor-pointer ${
+                        isSelected
+                          ? 'border-red-400 bg-red-50/40 shadow-xs'
+                          : 'border-slate-200 bg-white hover:border-slate-300'
+                      }`}
+                    >
+                      {/* Checkbox */}
+                      <div
+                        className={`w-4 h-4 rounded flex items-center justify-center border flex-shrink-0 transition ${
+                          isSelected ? 'bg-red-600 border-red-600 text-white' : 'border-slate-300 bg-white'
+                        }`}
+                      >
+                        {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                      </div>
+
+                      {/* Photo Miniature */}
+                      <div className="w-10 h-10 rounded-md bg-neutral-900 overflow-hidden flex-shrink-0 border border-slate-200 relative">
+                        {prod.images?.[0] ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img
+                            src={prod.images[0]}
+                            alt={prod.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-[10px] text-slate-400">
+                            Sans photo
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Infos Produit */}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-bold text-slate-800 truncate">{prod.name}</p>
+                        <p className="text-[10px] text-slate-500 font-mono">
+                          {prod.brand} · {prod.price} €
+                        </p>
+                      </div>
+
+                      {/* Ordre de tri dans la sélection */}
+                      {isSelected && (
+                        <div
+                          className="flex flex-col gap-0.5 flex-shrink-0"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <button
+                            type="button"
+                            disabled={selectedIndex === 0}
+                            onClick={() => moveProductInSelection(selectedIndex, 'up')}
+                            className="p-1 text-slate-400 hover:text-slate-700 disabled:opacity-20 cursor-pointer"
+                            title="Monter"
+                          >
+                            <ChevronUp className="w-3 h-3" />
+                          </button>
+                          <button
+                            type="button"
+                            disabled={selectedIndex === selectedProductIds.length - 1}
+                            onClick={() => moveProductInSelection(selectedIndex, 'down')}
+                            className="p-1 text-slate-400 hover:text-slate-700 disabled:opacity-20 cursor-pointer"
+                            title="Descendre"
+                          >
+                            <ChevronDown className="w-3 h-3" />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="space-y-3 pt-2">
+            <FieldGroup label="Catégorie affichée">
+              <select
+                value={s.category || 'ALL'}
+                onChange={(e) => onChange('category', e.target.value)}
+                className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+              >
+                <option value="ALL">Toutes les époques (Toutes supercars)</option>
+                <option value="VINTAGE">Époque Vintage / Iconiques</option>
+                <option value="MODERN">Époque Moderne &amp; Hypercars</option>
+              </select>
+            </FieldGroup>
+            <FieldGroup label="Nombre maximum de cadres">
+              <select
+                value={s.limit || 5}
+                onChange={(e) => onChange('limit', Number(e.target.value))}
+                className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+              >
+                <option value={4}>4 Cadres</option>
+                <option value={5}>5 Cadres (Recommandé)</option>
+                <option value={8}>8 Cadres</option>
+                <option value={12}>12 Cadres</option>
+              </select>
+            </FieldGroup>
+          </div>
+        )}
+      </AccordionSection>
+    </>
   )
 }
 
-// ─── Craft Section Content ───────────────────────────────────────────
+// ─── Craft Section Content (Savoir-Faire 5 Couches) ──────────────────
 function CraftContentFields({ s, onChange }: { s: Record<string, any>; onChange: (k: string, v: any) => void }) {
   return (
-    <AccordionSection title="Savoir-Faire &amp; Anatomie" defaultOpen>
-      <FieldGroup label="Titre de la section">
-        <TextInput value={s.title || ''} onChange={(v) => onChange('title', v)} placeholder="L'Anatomie d'une Pièce d'Exception" />
-      </FieldGroup>
-      <FieldGroup label="Sous-titre / Description">
-        <TextInput value={s.subtitle || ''} onChange={(v) => onChange('subtitle', v)} placeholder="5 couches de perfection pour donner vie à la légende." multiline />
-      </FieldGroup>
-    </AccordionSection>
+    <>
+      <AccordionSection title="En-tête Savoir-Faire" defaultOpen>
+        <FieldGroup label="Badge supérieur">
+          <TextInput value={s.badge || ''} onChange={(v) => onChange('badge', v)} placeholder="Exigence Artisanale" />
+        </FieldGroup>
+        <FieldGroup label="Titre principal">
+          <TextInput value={s.title || ''} onChange={(v) => onChange('title', v)} placeholder="L'Anatomie d'une Pièce d'Exception" />
+        </FieldGroup>
+        <FieldGroup label="Sous-titre / Description">
+          <TextInput value={s.desc || ''} onChange={(v) => onChange('desc', v)} placeholder="5 couches de matériaux nobles minutieusement assemblées dans notre atelier en France." multiline />
+        </FieldGroup>
+      </AccordionSection>
+
+      <AccordionSection title="Les 5 Couches Artisanales" defaultOpen>
+        {[
+          { num: 1, defaultTitle: "Papier d'Art 310g", defaultDesc: 'Canson Rag Photographique pur coton, résistant plus de 100 ans.' },
+          { num: 2, defaultTitle: 'Découpe Laser Micron', defaultDesc: 'Ailerons, jantes et galbes découpés sans aucune bavure.' },
+          { num: 3, defaultTitle: 'Passe-Partout Biseauté', defaultDesc: 'Biseau 45° taillé à la main dans un carton de conservation sans acide.' },
+          { num: 4, defaultTitle: 'Module LED 3000K', defaultDesc: 'Éclairage blanc chaud basse consommation pour sublimer la silhouette.' },
+          { num: 5, defaultTitle: 'Vitrage Acrylique HD', defaultDesc: 'Transmittance optique 99,2% et cadre aluminium anodisé noir.' },
+        ].map((layer) => (
+          <div key={layer.num} className="p-3 bg-slate-50 border border-slate-200 rounded-lg space-y-2">
+            <p className="text-[11px] font-bold text-slate-800">Couche {layer.num}</p>
+            <FieldGroup label="Titre">
+              <TextInput
+                value={s[`layer${layer.num}Title`] || ''}
+                onChange={(v) => onChange(`layer${layer.num}Title`, v)}
+                placeholder={layer.defaultTitle}
+              />
+            </FieldGroup>
+            <FieldGroup label="Description">
+              <TextInput
+                value={s[`layer${layer.num}Desc`] || ''}
+                onChange={(v) => onChange(`layer${layer.num}Desc`, v)}
+                placeholder={layer.defaultDesc}
+                multiline
+              />
+            </FieldGroup>
+          </div>
+        ))}
+      </AccordionSection>
+    </>
   )
 }
 
@@ -217,21 +432,9 @@ function InteriorsContentFields({ s, onChange }: { s: Record<string, any>; onCha
       <FieldGroup label="Titre de la section">
         <TextInput value={s.title || ''} onChange={(v) => onChange('title', v)} placeholder="Laissez-les sublimer votre pièce" />
       </FieldGroup>
-      <FieldGroup label="Sous-titre">
-        <TextInput value={s.subtitle || ''} onChange={(v) => onChange('subtitle', v)} placeholder="Du salon contemporain au bureau de direction..." />
+      <FieldGroup label="Sous-titre / Description">
+        <TextInput value={s.desc || ''} onChange={(v) => onChange('desc', v)} placeholder="Découvrez comment nos cadres d’exception s’intègrent parfaitement dans tout type d’intérieur." multiline />
       </FieldGroup>
-      <div className="space-y-2 pt-2">
-        <p className="text-[11px] font-bold text-slate-700">Images d&apos;ambiance</p>
-        <FieldGroup label="Image 1 (ex: Salon moderne)">
-          <TextInput value={s.img1 || ''} onChange={(v) => onChange('img1', v)} placeholder="/images/interiors-1.jpg" />
-        </FieldGroup>
-        <FieldGroup label="Image 2 (ex: Bureau exécutif)">
-          <TextInput value={s.img2 || ''} onChange={(v) => onChange('img2', v)} placeholder="/images/interiors-2.jpg" />
-        </FieldGroup>
-        <FieldGroup label="Image 3 (ex: Suite prestige)">
-          <TextInput value={s.img3 || ''} onChange={(v) => onChange('img3', v)} placeholder="/images/interiors-3.jpg" />
-        </FieldGroup>
-      </div>
     </AccordionSection>
   )
 }
@@ -240,13 +443,18 @@ function InteriorsContentFields({ s, onChange }: { s: Record<string, any>; onCha
 function ReassuranceContentFields({ s, onChange }: { s: Record<string, any>; onChange: (k: string, v: any) => void }) {
   return (
     <AccordionSection title="Engagements &amp; Garanties" defaultOpen>
-      {[1, 2, 3, 4].map((i) => (
-        <div key={i} className="p-2.5 bg-slate-50 border border-slate-100 rounded-lg space-y-1.5">
-          <FieldGroup label={`Engagement ${i} — Titre`}>
-            <TextInput value={s[`item${i}Title`] || ''} onChange={(v) => onChange(`item${i}Title`, v)} placeholder={`Garantie ${i}`} />
+      {[
+        { i: 1, defaultT: 'Fabrication Française', defaultD: 'Assemblé à la main avec passion dans notre atelier.' },
+        { i: 2, defaultT: 'Livraison Blindée', defaultD: 'Emballage renforcé sur-mesure résistant aux chocs.' },
+        { i: 3, defaultT: 'LED Garantie 5 Ans', defaultD: 'Composants haute longévité avec batterie discrète.' },
+        { i: 4, defaultT: 'Satisfait ou Remboursé', defaultD: '14 jours pour admirer et tester votre cadre chez vous.' },
+      ].map((item) => (
+        <div key={item.i} className="p-3 bg-slate-50 border border-slate-200 rounded-lg space-y-1.5">
+          <FieldGroup label={`Engagement ${item.i} — Titre`}>
+            <TextInput value={s[`item${item.i}Title`] || ''} onChange={(v) => onChange(`item${item.i}Title`, v)} placeholder={item.defaultT} />
           </FieldGroup>
-          <FieldGroup label={`Engagement ${i} — Description`}>
-            <TextInput value={s[`item${i}Desc`] || ''} onChange={(v) => onChange(`item${i}Desc`, v)} placeholder="Description de l'engagement..." />
+          <FieldGroup label={`Engagement ${item.i} — Description`}>
+            <TextInput value={s[`item${item.i}Desc`] || ''} onChange={(v) => onChange(`item${item.i}Desc`, v)} placeholder={item.defaultD} />
           </FieldGroup>
         </div>
       ))}
@@ -278,34 +486,178 @@ function AboutContentFields({ s, onChange }: { s: Record<string, any>; onChange:
       <FieldGroup label="Titre">
         <TextInput value={s.title || ''} onChange={(v) => onChange('title', v)} placeholder="Qui sommes-nous ?" />
       </FieldGroup>
-      <FieldGroup label="Paragraphe 1">
-        <TextInput value={s.p1 || ''} onChange={(v) => onChange('p1', v)} multiline />
-      </FieldGroup>
-      <FieldGroup label="Paragraphe 2">
-        <TextInput value={s.p2 || ''} onChange={(v) => onChange('p2', v)} multiline />
+      <FieldGroup label="Description de la Maison Dream Frame">
+        <TextInput
+          value={s.desc || ''}
+          onChange={(v) => onChange('desc', v)}
+          placeholder="Dream Frame est né d'une passion commune pour l'automobile et l'artisanat français..."
+          multiline
+        />
       </FieldGroup>
     </AccordionSection>
   )
 }
 
-// ─── FAQ Content ─────────────────────────────────────────────────────
+// ─── FAQ Content (100% DYNAMIC: ADD, REMOVE, REORDER) ────────────────
+interface FaqItem {
+  id: string
+  q: string
+  a: string
+}
+
 function FAQContentFields({ s, onChange }: { s: Record<string, any>; onChange: (k: string, v: any) => void }) {
+  // Convert legacy q1, a1, q2, a2 or initialize array
+  const getInitialItems = (): FaqItem[] => {
+    if (Array.isArray(s.items) && s.items.length > 0) {
+      return s.items
+    }
+    const legacy: FaqItem[] = []
+    for (let i = 1; i <= 10; i++) {
+      if (s[`q${i}`] || s[`a${i}`]) {
+        legacy.push({
+          id: `faq-${i}`,
+          q: s[`q${i}`] || '',
+          a: s[`a${i}`] || '',
+        })
+      }
+    }
+    if (legacy.length > 0) return legacy
+    return [
+      {
+        id: 'faq-1',
+        q: 'Quels sont les délais de fabrication et de livraison ?',
+        a: 'Chaque cadre étant assemblé à la main à la demande dans notre atelier en France, il faut compter 4 à 6 jours ouvrés pour la confection et l\'expédition sécurisée en Colissimo Suivi.',
+      },
+      {
+        id: 'faq-2',
+        q: 'Comment s\'alimente le rétroéclairage LED ?',
+        a: 'Nos cadres intègrent un ruban LED discret blanc chaud 3000K, doté d\'une batterie rechargeable discrète en USB-C (câble fourni), garantissant une pose murale propre sans aucun fil apparent.',
+      },
+      {
+        id: 'faq-3',
+        q: 'Puis-je commander un modèle spécifique sur-mesure ?',
+        a: 'Absolument ! Notre atelier sur-mesure et notre configurateur 3D vous permettent de configurer le cadre avec le véhicule de vos rêves, votre format et vos options.',
+      },
+    ]
+  }
+
+  const items: FaqItem[] = getInitialItems()
+
+  const updateItem = (index: number, field: 'q' | 'a', value: string) => {
+    const updated = [...items]
+    updated[index] = { ...updated[index], [field]: value }
+    onChange('items', updated)
+  }
+
+  const addItem = () => {
+    const newItem: FaqItem = {
+      id: `faq-${Date.now()}`,
+      q: 'Nouvelle question ?',
+      a: 'Réponse détaillée...',
+    }
+    onChange('items', [...items, newItem])
+  }
+
+  const deleteItem = (index: number) => {
+    if (items.length <= 1) {
+      alert('La FAQ doit comporter au moins une question.')
+      return
+    }
+    const updated = items.filter((_, idx) => idx !== index)
+    onChange('items', updated)
+  }
+
+  const moveItem = (index: number, direction: 'up' | 'down') => {
+    const target = direction === 'up' ? index - 1 : index + 1
+    if (target < 0 || target >= items.length) return
+    const updated = [...items]
+    const temp = updated[index]
+    updated[index] = updated[target]
+    updated[target] = temp
+    onChange('items', updated)
+  }
+
   return (
-    <AccordionSection title="Questions fréquentes" defaultOpen>
-      <FieldGroup label="Titre de la section">
-        <TextInput value={s.title || ''} onChange={(v) => onChange('title', v)} placeholder="Questions Fréquentes" />
-      </FieldGroup>
-      {[1, 2, 3].map((i) => (
-        <div key={i} className="space-y-1.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
-          <FieldGroup label={`Question ${i}`}>
-            <TextInput value={s[`q${i}`] || ''} onChange={(v) => onChange(`q${i}`, v)} placeholder={`Question ${i}...`} />
-          </FieldGroup>
-          <FieldGroup label={`Réponse ${i}`}>
-            <TextInput value={s[`a${i}`] || ''} onChange={(v) => onChange(`a${i}`, v)} multiline placeholder={`Réponse ${i}...`} />
-          </FieldGroup>
+    <>
+      <AccordionSection title="En-tête de la FAQ" defaultOpen>
+        <FieldGroup label="Titre de la section">
+          <TextInput value={s.title || ''} onChange={(v) => onChange('title', v)} placeholder="Questions Fréquentes" />
+        </FieldGroup>
+      </AccordionSection>
+
+      <AccordionSection title={`Questions & Réponses (${items.length})`} defaultOpen>
+        <div className="space-y-3">
+          {items.map((item, idx) => (
+            <div
+              key={item.id || idx}
+              className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 relative group"
+            >
+              {/* Header de la question avec contrôles */}
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-700">Question #{idx + 1}</span>
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    disabled={idx === 0}
+                    onClick={() => moveItem(idx, 'up')}
+                    className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-200 disabled:opacity-20 cursor-pointer"
+                    title="Monter"
+                  >
+                    <ChevronUp className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    disabled={idx === items.length - 1}
+                    onClick={() => moveItem(idx, 'down')}
+                    className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-200 disabled:opacity-20 cursor-pointer"
+                    title="Descendre"
+                  >
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => deleteItem(idx)}
+                    className="p-1 rounded text-slate-400 hover:text-red-600 hover:bg-red-50 transition cursor-pointer"
+                    title="Supprimer la question"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Champ Question */}
+              <FieldGroup label="Question">
+                <TextInput
+                  value={item.q}
+                  onChange={(v) => updateItem(idx, 'q', v)}
+                  placeholder="Intitulé de la question..."
+                />
+              </FieldGroup>
+
+              {/* Champ Réponse */}
+              <FieldGroup label="Réponse">
+                <TextInput
+                  value={item.a}
+                  onChange={(v) => updateItem(idx, 'a', v)}
+                  placeholder="Réponse détaillée..."
+                  multiline
+                />
+              </FieldGroup>
+            </div>
+          ))}
+
+          {/* Bouton Ajouter une question */}
+          <button
+            type="button"
+            onClick={addItem}
+            className="w-full py-2.5 px-4 rounded-xl border border-dashed border-red-300 bg-red-50/50 hover:bg-red-50 text-red-600 font-bold text-xs flex items-center justify-center gap-2 transition cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Ajouter une nouvelle question</span>
+          </button>
         </div>
-      ))}
-    </AccordionSection>
+      </AccordionSection>
+    </>
   )
 }
 
@@ -328,48 +680,55 @@ function DesignTab({ s, onChange }: { s: Record<string, any>; onChange: (k: stri
   const bgOptions = [
     { label: 'Sombre Studio (#080807)', value: '#080807' },
     { label: 'Noir Pur (#000000)', value: '#000000' },
-    { label: 'Anthracite (#0c0c0a)', value: '#0c0c0a' },
-    { label: 'Gris Profond (#18181b)', value: '#18181b' },
+    { label: 'Gris Carbone (#121210)', value: '#121210' },
+    { label: 'Gris Ardoise (#1a1a18)', value: '#1a1a18' },
   ]
 
   return (
     <div className="space-y-3 py-1">
-      <AccordionSection title="Couleur de fond" defaultOpen>
+      <AccordionSection title="Couleur d'Arrière-Plan" defaultOpen>
         <FieldGroup label="Fond de la section">
-          <div className="grid grid-cols-2 gap-2">
+          <div className="space-y-1.5">
             {bgOptions.map((opt) => (
               <button
                 key={opt.value}
                 type="button"
                 onClick={() => onChange('bgColor', opt.value)}
-                className={`flex items-center gap-2 p-2 rounded-lg border text-left text-xs transition cursor-pointer ${
+                className={`w-full p-2.5 rounded-lg border text-xs font-mono flex items-center justify-between transition cursor-pointer ${
                   (s.bgColor || '#080807') === opt.value
                     ? 'border-red-500 bg-red-50/20 text-slate-900 font-semibold'
                     : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
                 }`}
               >
-                <span className="w-3.5 h-3.5 rounded-full border border-slate-300 flex-shrink-0" style={{ backgroundColor: opt.value }} />
-                <span className="truncate">{opt.label}</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 rounded-full border border-slate-300 shadow-xs" style={{ backgroundColor: opt.value }} />
+                  <span>{opt.label}</span>
+                </div>
+                {(s.bgColor || '#080807') === opt.value && <span className="w-1.5 h-1.5 rounded-full bg-red-600" />}
               </button>
             ))}
           </div>
         </FieldGroup>
       </AccordionSection>
 
-      <AccordionSection title="Contraste &amp; Éclairage" defaultOpen>
-        <FieldGroup label="Filtre d'assombrissement (Overlay Vignette)">
-          <div className="flex items-center justify-between py-1">
-            <span className="text-xs text-slate-600">Intensité</span>
-            <span className="text-xs font-mono text-slate-500">{s.overlayOpacity ?? 80}%</span>
+      <AccordionSection title="Bordure Supérieure & Séparateur">
+        <FieldGroup label="Ligne de séparation">
+          <div className="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-100">
+            <span className="text-xs font-semibold text-slate-700">Bordure discrète</span>
+            <button
+              type="button"
+              onClick={() => onChange('topBorder', s.topBorder === false ? true : false)}
+              className={`relative w-9 h-5 rounded-full transition-colors cursor-pointer ${
+                s.topBorder !== false ? 'bg-red-600' : 'bg-slate-300'
+              }`}
+            >
+              <div
+                className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-xs transition-transform ${
+                  s.topBorder !== false ? 'translate-x-4.5' : 'translate-x-0.5'
+                }`}
+              />
+            </button>
           </div>
-          <input
-            type="range"
-            min={0}
-            max={100}
-            value={s.overlayOpacity ?? 80}
-            onChange={(e) => onChange('overlayOpacity', Number(e.target.value))}
-            className="w-full accent-red-600"
-          />
         </FieldGroup>
       </AccordionSection>
     </div>
@@ -448,43 +807,24 @@ function AnimationTab({ s, onChange }: { s: Record<string, any>; onChange: (k: s
 
   return (
     <div className="space-y-3 py-1">
-      <AccordionSection title="Effets d'apparition" defaultOpen>
-        <div className="flex items-center justify-between py-1">
-          <span className="text-xs text-slate-700 font-medium">Activer l&apos;animation au scroll</span>
-          <button
-            type="button"
-            onClick={() => onChange('animateEntrance', !s.animateEntrance)}
-            className={`relative w-9 h-5 rounded-full transition-colors cursor-pointer ${
-              s.animateEntrance !== false ? 'bg-red-600' : 'bg-slate-300'
-            }`}
-          >
-            <div
-              className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-xs transition-transform ${
-                s.animateEntrance !== false ? 'translate-x-4.5' : 'translate-x-0.5'
+      <AccordionSection title="Effets d'Apparition" defaultOpen>
+        <div className="space-y-1.5">
+          {anims.map((a) => (
+            <button
+              key={a.value}
+              type="button"
+              onClick={() => onChange('animation', a.value)}
+              className={`w-full p-2.5 text-left rounded-lg border text-xs transition cursor-pointer flex items-center justify-between ${
+                (s.animation || 'fade') === a.value
+                  ? 'border-red-500 bg-red-50 text-red-600 font-semibold'
+                  : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
               }`}
-            />
-          </button>
+            >
+              <span>{a.label}</span>
+              {(s.animation || 'fade') === a.value && <span className="w-1.5 h-1.5 rounded-full bg-red-600" />}
+            </button>
+          ))}
         </div>
-
-        <FieldGroup label="Type d'animation">
-          <div className="space-y-1 pt-1">
-            {anims.map((a) => (
-              <button
-                key={a.value}
-                type="button"
-                onClick={() => onChange('animationType', a.value)}
-                className={`w-full py-2 px-3 text-left rounded-lg border text-xs transition cursor-pointer flex items-center justify-between ${
-                  (s.animationType || 'slide-up') === a.value
-                    ? 'border-red-500 bg-red-50 text-red-600 font-semibold'
-                    : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
-                }`}
-              >
-                <span>{a.label}</span>
-                {(s.animationType || 'slide-up') === a.value && <span className="w-1.5 h-1.5 rounded-full bg-red-600" />}
-              </button>
-            ))}
-          </div>
-        </FieldGroup>
       </AccordionSection>
     </div>
   )
@@ -494,9 +834,9 @@ function AnimationTab({ s, onChange }: { s: Record<string, any>; onChange: (k: s
 function ResponsiveTab({ s, onChange }: { s: Record<string, any>; onChange: (k: string, v: any) => void }) {
   return (
     <div className="space-y-3 py-1">
-      <AccordionSection title="Visibilité par écran" defaultOpen>
-        <div className="space-y-3 pt-1">
-          <div className="flex items-center justify-between p-3 rounded-lg bg-slate-50 border border-slate-100">
+      <AccordionSection title="Visibilité par Appareil" defaultOpen>
+        <div className="space-y-2">
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-100">
             <div>
               <p className="text-xs font-semibold text-slate-800">Masquer sur Mobile</p>
               <p className="text-[10px] text-slate-400">Ne pas afficher sur smartphones</p>
@@ -516,7 +856,7 @@ function ResponsiveTab({ s, onChange }: { s: Record<string, any>; onChange: (k: 
             </button>
           </div>
 
-          <div className="flex items-center justify-between p-3 rounded-lg bg-slate-50 border border-slate-100">
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-100">
             <div>
               <p className="text-xs font-semibold text-slate-800">Masquer sur Ordinateur</p>
               <p className="text-[10px] text-slate-400">Ne pas afficher sur grands écrans</p>
@@ -571,6 +911,7 @@ function AdvancedTab({ section, s, onChange }: { section: PageSection; s: Record
 
 export function SectionInspectorPanel({
   section,
+  products = [],
   onBack,
   onUpdateSettings,
   onDeleteSection,
@@ -584,7 +925,7 @@ export function SectionInspectorPanel({
 
   const contentFieldsMap: Record<string, React.ReactNode> = {
     hero: <HeroContentFields s={s} onChange={handleChange} />,
-    collection: <CollectionContentFields s={s} onChange={handleChange} />,
+    collection: <CollectionContentFields s={s} onChange={handleChange} products={products} />,
     craft: <CraftContentFields s={s} onChange={handleChange} />,
     custom_atelier: <AtelierContentFields s={s} onChange={handleChange} />,
     interiors: <InteriorsContentFields s={s} onChange={handleChange} />,

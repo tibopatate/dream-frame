@@ -2,37 +2,25 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import {
   LayoutDashboard,
-  FileText,
-  Grid3X3,
-  Package,
-  Layers,
-  Camera,
-  Star,
-  Mail,
-  FileEdit,
-  LayoutTemplate,
   LayoutGrid,
-  Files,
-  Boxes,
   Palette,
   Type,
-  Columns2,
-  Square,
-  Sparkles,
   Compass,
-  PanelTop,
   Search,
   Settings,
-  Globe,
-  Plug,
-  HelpCircle,
+  Package,
+  ShoppingBag,
+  Star,
+  BarChart3,
   ChevronDown,
   ChevronRight,
   ChevronLeft,
-  Briefcase,
   X,
+  ArrowLeft,
+  ExternalLink,
 } from 'lucide-react'
 
 interface CockpitSidebarProps {
@@ -54,11 +42,11 @@ export function CockpitSidebar({
 }: CockpitSidebarProps) {
   // Collapsible accordion state for categories
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
-    content: true,
-    customization: true,
+    builder: true,
     design: true,
     navigation: true,
     settings: true,
+    admin: true,
   })
 
   const toggleGroup = (key: string) => {
@@ -67,58 +55,33 @@ export function CockpitSidebar({
 
   const navSections = [
     {
-      key: 'content',
-      label: 'CONTENU DU SITE',
+      key: 'builder',
+      label: 'ÉDITEUR DE SECTIONS',
       items: [
-        { id: 'homepage', label: "Pages d'accueil", icon: FileText },
-        { id: 'catalogue', label: 'Catalogue / Collections', icon: Grid3X3 },
-        { id: 'products', label: 'Produits / Articles', icon: Package },
-        { id: 'services', label: 'Services', icon: Briefcase },
-        { id: 'craft', label: 'Savoir-faire', icon: Layers },
-        { id: 'gallery', label: 'Galerie', icon: Camera },
-        { id: 'reviews', label: 'Avis clients', icon: Star },
-        { id: 'newsletter', label: 'Newsletter', icon: Mail },
-        { id: 'forms', label: 'Formulaires', icon: FileEdit },
-        { id: 'footer', label: 'Footer', icon: LayoutTemplate },
-      ],
-    },
-    {
-      key: 'customization',
-      label: 'PERSONNALISATION DES PAGES',
-      items: [
-        { id: 'sections', label: 'Gestion des sections', icon: LayoutGrid },
-        { id: 'page-templates', label: 'Modèles de pages', icon: Files },
-        { id: 'components-lib', label: 'Bibliothèque de composants', icon: Boxes },
+        { id: 'homepage', label: "Sections d'accueil", icon: LayoutGrid },
       ],
     },
     {
       key: 'design',
-      label: 'DESIGN & APPARENCE',
+      label: 'DESIGN & STYLE GLOBAL',
       items: [
-        { id: 'design-colors', label: 'Couleurs', icon: Palette },
-        { id: 'fonts', label: 'Typographie', icon: Type },
-        { id: 'design-layout', label: 'Mise en page', icon: Columns2 },
-        { id: 'design-borders', label: 'Bordures & Ombres', icon: Square },
-        { id: 'design-animations', label: 'Animations', icon: Sparkles },
+        { id: 'design', label: 'Style & Couleurs', icon: Palette },
+        { id: 'fonts', label: 'Polices & Typographie', icon: Type },
       ],
     },
     {
       key: 'navigation',
       label: 'NAVIGATION & MENU',
       items: [
-        { id: 'navigation', label: 'Menu principal', icon: Compass },
-        { id: 'header-footer', label: 'Header & Footer', icon: PanelTop },
+        { id: 'navigation', label: 'Menu & En-Tête (Header)', icon: Compass },
       ],
     },
     {
       key: 'settings',
-      label: 'PARAMÈTRES & OUTILS',
+      label: 'RÉFÉRENCEMENT & OUTILS',
       items: [
         { id: 'seo', label: 'SEO & Référencement', icon: Search },
         { id: 'settings', label: 'Paramètres du site', icon: Settings },
-        { id: 'domain', label: 'Domaine & Hébergement', icon: Globe },
-        { id: 'integrations', label: 'Intégrations', icon: Plug },
-        { id: 'help', label: 'Aide & Support', icon: HelpCircle },
       ],
     },
   ]
@@ -146,9 +109,9 @@ export function CockpitSidebar({
                 DREAM FRAME
               </h1>
               <div className="flex items-center gap-1.5 mt-0.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse flex-shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
                 <span className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold truncate">
-                  COCKPIT ADMIN
+                  PERSONNALISATEUR
                 </span>
               </div>
             </div>
@@ -186,31 +149,6 @@ export function CockpitSidebar({
       {/* Navigation items */}
       <div className="flex-1 overflow-y-auto py-3 scrollbar-hide">
         <nav className="flex flex-col gap-1">
-          {/* Main Dashboard Button */}
-          <div className="px-2 mb-1">
-            <button
-              type="button"
-              onClick={() => handleSelect('dashboard')}
-              className={`w-full flex items-center rounded-lg text-xs font-medium transition-all cursor-pointer border ${
-                collapsed ? 'justify-center p-2.5' : 'gap-2.5 px-3 py-2'
-              } ${
-                activeCategory === 'dashboard'
-                  ? 'bg-red-50 text-red-600 border-red-100 font-bold shadow-2xs'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border-transparent'
-              }`}
-              title={collapsed ? 'Tableau de bord' : undefined}
-            >
-              <div
-                className={`flex items-center justify-center flex-shrink-0 ${
-                  activeCategory === 'dashboard' ? 'text-red-600' : 'text-slate-400'
-                }`}
-              >
-                <LayoutDashboard className="w-4 h-4" />
-              </div>
-              {!collapsed && <span className="truncate">Tableau de bord</span>}
-            </button>
-          </div>
-
           {/* Grouped Accordions */}
           {navSections.map((group) => {
             const isOpen = openGroups[group.key] ?? true
@@ -248,10 +186,10 @@ export function CockpitSidebar({
                             type="button"
                             onClick={() => handleSelect(item.id)}
                             className={`w-full flex items-center rounded-lg text-xs font-medium transition-all cursor-pointer border ${
-                              collapsed ? 'justify-center p-2.5' : 'gap-2.5 px-3 py-1.5'
+                              collapsed ? 'justify-center p-2.5' : 'gap-2.5 px-3 py-2'
                             } ${
                               isActive
-                                ? 'bg-red-50 text-red-600 border-red-100 font-bold shadow-2xs'
+                                ? 'bg-red-50 text-red-600 border-red-200 font-bold shadow-2xs'
                                 : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border-transparent'
                             }`}
                             title={collapsed ? item.label : undefined}
@@ -261,7 +199,7 @@ export function CockpitSidebar({
                                 isActive ? 'text-red-600' : 'text-slate-400'
                               }`}
                             >
-                              <Icon className="w-3.5 h-3.5" />
+                              <Icon className="w-4 h-4" />
                             </div>
                             {!collapsed && <span className="truncate">{item.label}</span>}
                           </button>
@@ -273,10 +211,87 @@ export function CockpitSidebar({
               </div>
             )
           })}
+
+          {/* LIENS DIRECTS ADMINISTRATION GÉNÉRALE */}
+          <div className="mt-4 pt-3 border-t border-slate-100 px-2">
+            {!collapsed && (
+              <p className="px-3 py-1 text-[9px] uppercase tracking-wider font-bold text-slate-400">
+                GESTION COMMERCIALE
+              </p>
+            )}
+
+            <div className="flex flex-col gap-0.5">
+              <Link
+                href="/admin/dashboard"
+                className={`w-full flex items-center rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all ${
+                  collapsed ? 'justify-center p-2.5' : 'gap-2.5 px-3 py-1.5'
+                }`}
+                title="Tableau de bord"
+              >
+                <LayoutDashboard className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+                {!collapsed && <span className="truncate">Tableau de bord</span>}
+              </Link>
+
+              <Link
+                href="/admin/produits"
+                className={`w-full flex items-center rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all ${
+                  collapsed ? 'justify-center p-2.5' : 'gap-2.5 px-3 py-1.5'
+                }`}
+                title="Catalogue Cadres"
+              >
+                <Package className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+                {!collapsed && <span className="truncate">Catalogue Cadres</span>}
+              </Link>
+
+              <Link
+                href="/admin/commandes"
+                className={`w-full flex items-center rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all ${
+                  collapsed ? 'justify-center p-2.5' : 'gap-2.5 px-3 py-1.5'
+                }`}
+                title="Commandes"
+              >
+                <ShoppingBag className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+                {!collapsed && <span className="truncate">Commandes</span>}
+              </Link>
+
+              <Link
+                href="/admin/avis"
+                className={`w-full flex items-center rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all ${
+                  collapsed ? 'justify-center p-2.5' : 'gap-2.5 px-3 py-1.5'
+                }`}
+                title="Avis Clients"
+              >
+                <Star className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+                {!collapsed && <span className="truncate">Avis Clients</span>}
+              </Link>
+
+              <Link
+                href="/admin/stock"
+                className={`w-full flex items-center rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all ${
+                  collapsed ? 'justify-center p-2.5' : 'gap-2.5 px-3 py-1.5'
+                }`}
+                title="Gestion des Stocks"
+              >
+                <BarChart3 className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+                {!collapsed && <span className="truncate">Gestion des Stocks</span>}
+              </Link>
+
+              <Link
+                href="/admin/parametres"
+                className={`w-full flex items-center rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all ${
+                  collapsed ? 'justify-center p-2.5' : 'gap-2.5 px-3 py-1.5'
+                }`}
+                title="Paramètres Boutique"
+              >
+                <Settings className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+                {!collapsed && <span className="truncate">Paramètres Boutique</span>}
+              </Link>
+            </div>
+          </div>
         </nav>
       </div>
 
-      {/* User Profile */}
+      {/* User Profile / Quitter */}
       <div className="p-3 border-t border-slate-100 flex-shrink-0 mt-auto bg-slate-50/50">
         <div className={`flex items-center ${collapsed ? 'justify-center' : 'gap-2.5'}`}>
           <div className="w-8 h-8 rounded-full bg-red-100 text-red-600 font-bold flex items-center justify-center flex-shrink-0 text-xs">
@@ -285,7 +300,13 @@ export function CockpitSidebar({
           {!collapsed && (
             <div className="flex-1 min-w-0">
               <p className="text-xs font-semibold text-slate-900 truncate">Morgan</p>
-              <p className="text-[10px] text-slate-500 truncate font-mono">admin@dreamframe.fr</p>
+              <Link
+                href="/admin/dashboard"
+                className="text-[10px] text-red-600 hover:underline flex items-center gap-1 font-semibold"
+              >
+                <ArrowLeft className="w-3 h-3" />
+                <span>Quitter le personnalisateur</span>
+              </Link>
             </div>
           )}
         </div>
