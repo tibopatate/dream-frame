@@ -963,6 +963,24 @@ export function updateOrderStatus(
   return order
 }
 
+export async function createOrderAsync(orderData: Omit<StoredOrder, 'id' | 'createdAt'>): Promise<StoredOrder> {
+  const order = createOrder(orderData)
+  await writeDatabaseAsync(readDatabase())
+  return order
+}
+
+export async function updateOrderStatusAsync(
+  orderId: string,
+  status: StoredOrder['status'],
+  extra?: { trackingNumber?: string; carrier?: string; internalNote?: string }
+): Promise<StoredOrder | null> {
+  const order = updateOrderStatus(orderId, status, extra)
+  if (order) {
+    await writeDatabaseAsync(readDatabase())
+  }
+  return order
+}
+
 export function getSettings(): StoredSettings {
   const db = readDatabase()
   return db.settings
@@ -973,6 +991,12 @@ export function updateSettings(settings: Partial<StoredSettings>): StoredSetting
   db.settings = { ...db.settings, ...settings }
   writeDatabase(db)
   return db.settings
+}
+
+export async function updateSettingsAsync(settings: Partial<StoredSettings>): Promise<StoredSettings> {
+  const updated = updateSettings(settings)
+  await writeDatabaseAsync(readDatabase())
+  return updated
 }
 
 export function getCollaborators(): StoredCollaborator[] {
@@ -1084,5 +1108,27 @@ export function deleteReview(id: string): boolean {
   db.reviews = db.reviews.filter((r) => r.id !== id)
   writeDatabase(db)
   return db.reviews.length < initialLen
+}
+
+export async function addReviewAsync(review: Omit<StoredReview, 'id' | 'createdAt'>): Promise<StoredReview> {
+  const added = addReview(review)
+  await writeDatabaseAsync(readDatabase())
+  return added
+}
+
+export async function updateReviewStatusAsync(id: string, status: 'APPROVED' | 'PENDING'): Promise<StoredReview | null> {
+  const updated = updateReviewStatus(id, status)
+  if (updated) {
+    await writeDatabaseAsync(readDatabase())
+  }
+  return updated
+}
+
+export async function deleteReviewAsync(id: string): Promise<boolean> {
+  const deleted = deleteReview(id)
+  if (deleted) {
+    await writeDatabaseAsync(readDatabase())
+  }
+  return deleted
 }
 

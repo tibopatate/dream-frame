@@ -4,7 +4,7 @@ import { prisma } from '@/lib/db'
 import { auth } from '@/lib/auth'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { updateSettings as updateStoreSettings, getSettings } from '@/lib/data-store'
+import { updateSettings as updateStoreSettings, updateSettingsAsync, getSettings } from '@/lib/data-store'
 import Stripe from 'stripe'
 import fs from 'fs'
 import path from 'path'
@@ -41,20 +41,20 @@ export async function updateSettings(
   try {
     await requireAdmin()
 
-    // 1. Sauvegarde dans le store persistant
+    // 1. Sauvegarde dans le store persistant et synchro Vercel Blob
     if (key === 'shipping') {
-      updateStoreSettings({
+      await updateSettingsAsync({
         carrier: value.carrier ?? 'Colissimo Suivi',
         shippingCost: value.defaultCostEur ?? 0,
         isShippingFree: value.isAlwaysFree ?? true,
       })
     } else if (key === 'announcement') {
-      updateStoreSettings({
+      await updateSettingsAsync({
         announcementBarText: value.text,
         announcementBarEnabled: value.enabled,
       })
     } else if (key === 'customizer') {
-      updateStoreSettings({
+      await updateSettingsAsync({
         headerLogoPosition: value.headerLogoPosition,
         headerStyle: value.headerStyle,
         announcementBarPosition: value.announcementBarPosition,
@@ -132,8 +132,8 @@ export async function testAndSaveStripeKey(
       }
     }
 
-    // 1. Persister dans data-store local
-    updateStoreSettings({ stripeSecretKey: trimmed })
+    // 1. Persister dans data-store et Vercel Blob
+    await updateSettingsAsync({ stripeSecretKey: trimmed })
 
     // 2. Mettre à jour .env.local et process.env
     updateEnvLocal('STRIPE_SECRET_KEY', trimmed)
@@ -170,7 +170,7 @@ export async function updateStripePricesAction(data: {
 }): Promise<{ success: boolean; error?: string }> {
   try {
     await requireAdmin()
-    updateStoreSettings({
+    await updateSettingsAsync({
       stripePriceA4: data.priceA4.trim(),
       stripePriceA3: data.priceA3.trim(),
       stripePriceA2: data.priceA2.trim(),

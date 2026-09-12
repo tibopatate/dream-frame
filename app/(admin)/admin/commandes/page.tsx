@@ -1,5 +1,5 @@
 import { prisma, isPrismaConfigured } from '@/lib/db'
-import { getAllOrders, StoredOrder } from '@/lib/data-store'
+import { getAllOrders, StoredOrder, syncDatabaseWithCloud } from '@/lib/data-store'
 import { formatPriceFromDecimal, formatDate } from '@/lib/utils'
 import Link from 'next/link'
 import { Search, ShoppingBag, Truck, CheckCircle2, ArrowRight } from 'lucide-react'
@@ -9,11 +9,14 @@ interface PageProps {
 }
 
 export const metadata = { title: 'Suivi des Commandes — Dream Frame Admin' }
+export const dynamic = 'force-dynamic'
 
 export default async function AdminCommandesPage({ searchParams }: PageProps) {
   const params = await searchParams
   const activeStatus = params.status || ''
   const searchQuery = params.search || ''
+
+  await syncDatabaseWithCloud()
 
   let orders: any[] = []
 

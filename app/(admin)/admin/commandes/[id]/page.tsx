@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/db'
-import { getOrderById } from '@/lib/data-store'
+import { getOrderById, syncDatabaseWithCloud } from '@/lib/data-store'
 import { OrderDetails } from './order-details'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -10,9 +10,11 @@ interface Props {
 }
 
 export const metadata = { title: 'Détail de la commande — Dream Frame Admin' }
+export const dynamic = 'force-dynamic'
 
 export default async function AdminOrderDetailPage({ params }: Props) {
   const { id } = await params
+  await syncDatabaseWithCloud()
 
   let order: any = null
 

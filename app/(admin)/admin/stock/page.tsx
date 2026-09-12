@@ -1,11 +1,13 @@
 import { prisma, isPrismaConfigured } from '@/lib/db'
 import { StockTable } from './stock-table'
 import { ArrowLeftRight, Calendar } from 'lucide-react'
-import { getAllProducts, getAllMovements } from '@/lib/data-store'
+import { getAllProducts, getAllMovements, syncDatabaseWithCloud } from '@/lib/data-store'
 
 export const metadata = { title: 'Gestion des Stocks — Dream Frame Admin' }
+export const dynamic = 'force-dynamic'
 
 export default async function AdminStockPage() {
+  await syncDatabaseWithCloud()
   let stockItems: any[] = []
   let recentMovements: any[] = []
 

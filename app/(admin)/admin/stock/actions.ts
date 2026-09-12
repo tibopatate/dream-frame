@@ -3,7 +3,7 @@ import { prisma } from '@/lib/db'
 import { auth } from '@/lib/auth'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { adjustProductStock } from '@/lib/data-store'
+import { adjustProductStock, writeDatabaseAsync, readDatabase } from '@/lib/data-store'
 
 async function requireAdmin() {
   const session = await auth()
@@ -18,8 +18,9 @@ export async function adjustStock(
   try {
     await requireAdmin()
 
-    // 1. Toujours persister dans data-store local (garantit la persistance sur disque)
+    // 1. Toujours persister dans data-store local et Vercel Blob
     adjustProductStock(variantId, quantityChange, note)
+    await writeDatabaseAsync(readDatabase())
 
     // 2. Tenter la mise à jour Prisma si connectée
     try {

@@ -3,7 +3,7 @@
 import { prisma } from '@/lib/db'
 import { auth } from '@/lib/auth'
 import { reintegrateStock } from '@/lib/order'
-import { updateOrderStatus as updateStoreOrderStatus } from '@/lib/data-store'
+import { updateOrderStatus as updateStoreOrderStatus, updateOrderStatusAsync } from '@/lib/data-store'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
@@ -56,8 +56,8 @@ export async function updateOrderStatus(
         }
       })
     } catch {
-      // 2. Si PostgreSQL n'est pas encore en ligne, enregistrer dans le store persistant local
-      updateStoreOrderStatus(orderId, status, {
+      // 2. Si PostgreSQL n'est pas encore en ligne, enregistrer dans le store persistant Vercel Blob
+      await updateOrderStatusAsync(orderId, status, {
         trackingNumber: shippingData?.trackingNumber,
         carrier: shippingData?.carrier,
       })
@@ -86,7 +86,7 @@ export async function updateInternalNote(
         data: { internalNote: note },
       })
     } catch {
-      updateStoreOrderStatus(orderId, 'PAID', { internalNote: note })
+      await updateOrderStatusAsync(orderId, 'PAID', { internalNote: note })
     }
 
     revalidatePath(`/admin/commandes/${orderId}`)

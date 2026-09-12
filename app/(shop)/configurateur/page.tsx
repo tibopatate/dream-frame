@@ -89,6 +89,14 @@ export default function AtelierConfigurateurPage() {
       image: currentCar.imageUrl || '',
       price: price.totalTtcCents / 100,
       quantity: 1,
+      formatName: currentDimension.subtitle,
+      formatSize: currentDimension.name,
+      options: {
+        dimensions: currentDimension.subtitle,
+        finish: currentFinish.name,
+        car: currentCar.name,
+        scale: currentScale.name,
+      },
     })
 
     setIsAdding(false)

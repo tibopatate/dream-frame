@@ -1,6 +1,6 @@
 'use server'
 
-import { addReview, deleteReview, updateReviewStatus } from '@/lib/data-store'
+import { addReviewAsync, deleteReviewAsync, updateReviewStatusAsync } from '@/lib/data-store'
 import { revalidatePath } from 'next/cache'
 
 export async function createAdminReviewAction(formData: {
@@ -13,7 +13,7 @@ export async function createAdminReviewAction(formData: {
   comment: string
 }) {
   try {
-    const newRev = addReview({
+    const newRev = await addReviewAsync({
       name: formData.name.trim(),
       location: formData.location?.trim() || 'France',
       productName: formData.productName || 'Cadre Dream Frame',
@@ -35,7 +35,7 @@ export async function createAdminReviewAction(formData: {
 
 export async function toggleReviewStatusAction(id: string, status: 'APPROVED' | 'PENDING') {
   try {
-    const res = updateReviewStatus(id, status)
+    const res = await updateReviewStatusAsync(id, status)
     revalidatePath('/')
     revalidatePath('/admin/avis')
     return { success: !!res }
@@ -46,7 +46,7 @@ export async function toggleReviewStatusAction(id: string, status: 'APPROVED' | 
 
 export async function deleteReviewAction(id: string) {
   try {
-    const res = deleteReview(id)
+    const res = await deleteReviewAsync(id)
     revalidatePath('/')
     revalidatePath('/admin/avis')
     return { success: res }
