@@ -5,7 +5,6 @@ import {
   X,
   ArrowUpRight,
   Check,
-  Zap,
 } from 'lucide-react'
 
 export interface InAppBrowserInfo {
@@ -91,8 +90,8 @@ export function detectInAppBrowser(): InAppBrowserInfo {
 }
 
 /**
- * Pop-up propre et moderne pour les visiteurs arrivant depuis les réseaux sociaux.
- * Propose d'ouvrir dans Safari / Chrome en 1 tap tout en laissant naviguer librement.
+ * Pop-up ultra-épuré pour les visiteurs arrivant depuis les réseaux sociaux.
+ * Titre direct + bouton d'action 1-tap, sans encombrement.
  */
 export function InAppBrowserRedirector() {
   const [browserInfo, setBrowserInfo] = useState<InAppBrowserInfo | null>(null)
@@ -194,7 +193,7 @@ export function InAppBrowserRedirector() {
         aria-hidden="true"
       />
 
-      {/* ─── Pop-up Propre et Épuré (positionné en bas pour une excellente ergonomie mobile) ─── */}
+      {/* ─── Pop-up Ultra-Épuré et Propre ─── */}
       <aside
         role="dialog"
         aria-modal="true"
@@ -205,30 +204,22 @@ export function InAppBrowserRedirector() {
           {/* Liseré lumineux or discret */}
           <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400/70 to-transparent" />
 
-          {/* En-tête : Badge app & bouton fermer ✕ */}
-          <div className="flex items-center justify-between gap-2 mb-2.5">
-            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-amber-400/10 border border-amber-400/25 text-amber-400 text-[10px] font-mono tracking-wider uppercase font-semibold">
-              <Zap className="w-3 h-3" />
-              <span>{browserInfo.appName}</span>
-            </div>
-
+          {/* Bouton fermer ✕ discret en haut à droite */}
+          <div className="flex justify-end mb-1">
             <button
               type="button"
               onClick={handleDismiss}
               aria-label="Fermer le pop-up"
-              className="w-7 h-7 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800/60 flex items-center justify-center transition cursor-pointer"
+              className="w-7 h-7 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800/60 flex items-center justify-center transition cursor-pointer -mr-1 -mt-1"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Titre & Sous-titre */}
-          <h3 className="text-sm sm:text-base font-bold text-white tracking-tight leading-snug mb-1">
+          {/* Titre Unique & Direct */}
+          <h3 className="text-sm sm:text-base font-bold text-white tracking-tight leading-snug mb-3 pr-4">
             Ouvrir dans un navigateur pour plus de rapidité
           </h3>
-          <p className="text-xs text-neutral-300 font-light leading-relaxed mb-4">
-            Profitez du rendu 3D haute fluidité et du paiement express sécurisé Apple Pay / Google Pay.
-          </p>
 
           {/* Boutons d'action */}
           <div className="flex flex-col gap-2">
@@ -259,9 +250,9 @@ export function InAppBrowserRedirector() {
             <button
               type="button"
               onClick={handleDismiss}
-              className="w-full py-1.5 text-center text-[11px] text-neutral-400 hover:text-neutral-200 transition cursor-pointer"
+              className="w-full py-1 text-center text-[11px] text-neutral-400 hover:text-neutral-200 transition cursor-pointer"
             >
-              Continuer sur {browserInfo.appName}
+              Continuer sur le site
             </button>
           </div>
         </div>
