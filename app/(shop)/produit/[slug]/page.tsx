@@ -99,7 +99,15 @@ export default async function ProductPage({ params }: Props) {
             images={product.images || []}
             carName={product.name}
             brand={product.brand}
-            year={product.year || 1987}
+            year={product.year}
+            price={Number(product.price) || 49.90}
+            formatScale={
+              Number(product.price) >= 200
+                ? '1:18 Grand Format'
+                : Number(product.price) >= 100
+                ? '1:18 Atelier'
+                : '1:24 Atelier'
+            }
             isVintage={isVintage}
           />
         </div>

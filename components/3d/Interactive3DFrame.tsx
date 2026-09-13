@@ -9,6 +9,8 @@ interface Interactive3DFrameProps {
   carName: string
   brand: string
   year?: number
+  price?: number
+  formatScale?: string
   isVintage?: boolean
 }
 
@@ -24,7 +26,9 @@ export function Interactive3DFrame({
   imageSrc,
   carName,
   brand,
-  year = 1987,
+  year,
+  price,
+  formatScale,
   isVintage = true,
 }: Interactive3DFrameProps) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -61,6 +65,10 @@ export function Interactive3DFrame({
     : isVintage
     ? 'radial-gradient(circle, rgba(199,167,122,0.3) 0%, rgba(200,16,46,0.12) 70%, transparent 100%)'
     : 'radial-gradient(circle, rgba(199,167,122,0.28) 0%, rgba(30,30,28,0.6) 70%, transparent 100%)'
+
+  const isF40 =
+    carName?.toLowerCase().includes('f40') ||
+    Boolean(brand?.toLowerCase().includes('ferrari') && carName?.toLowerCase().includes('f40'))
 
   return (
     <div className={`relative w-full max-w-[440px] mx-auto py-6 select-none rounded-3xl transition-all duration-500 ${
@@ -160,9 +168,15 @@ export function Interactive3DFrame({
             style={{ transform: 'translateZ(8px)' }}
           >
             <span className="text-neutral-200 font-bold tracking-wider">{brand}</span>
-            <span className="text-amber-400 border border-amber-400/30 px-1.5 py-0.5 rounded text-[7px]">
-              ÉDITION COLLECTOR · {year}
-            </span>
+            {isF40 ? (
+              <span className="text-amber-400 border border-amber-400/30 px-1.5 py-0.5 rounded text-[7px] font-semibold">
+                ÉDITION COLLECTOR · 1987
+              </span>
+            ) : year ? (
+              <span className="text-neutral-400 border border-neutral-800 px-1.5 py-0.5 rounded text-[7px] font-mono">
+                {year}
+              </span>
+            ) : null}
           </div>
 
           {/* Véhicule flottant */}
@@ -190,11 +204,13 @@ export function Interactive3DFrame({
                 {carName}
               </p>
               <p className="text-[9px] text-neutral-500 tracking-[0.18em] uppercase mt-1">
-                Atelier Dream Frame · 1:24 Relief
+                Atelier Dream Frame · {formatScale || (price && price >= 100 ? '1:18 Atelier' : '1:24 Relief')}
               </p>
             </div>
             <div className="text-right">
-              <span className="text-amber-400 text-sm font-bold block">49,90 €</span>
+              <span className="text-amber-400 text-sm font-bold block">
+                {(Number(price) || 49.90).toFixed(2).replace('.', ',')} €
+              </span>
               <span className="text-[8px] text-neutral-500 tracking-wider uppercase block">
                 Livraison Offerte
               </span>

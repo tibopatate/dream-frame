@@ -10,6 +10,8 @@ interface ProductGalleryProps {
   carName: string
   brand: string
   year?: number
+  price?: number
+  formatScale?: string
   isVintage?: boolean
 }
 
@@ -22,7 +24,9 @@ export function ProductGallery({
   images = [],
   carName,
   brand,
-  year = 1987,
+  year,
+  price,
+  formatScale,
   isVintage = true,
 }: ProductGalleryProps) {
   // Garantir au moins une image de fallback si vide
@@ -112,6 +116,8 @@ export function ProductGallery({
             carName={carName}
             brand={brand}
             year={year}
+            price={price}
+            formatScale={formatScale}
             isVintage={isVintage}
           />
         )}

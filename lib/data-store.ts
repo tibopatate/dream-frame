@@ -931,6 +931,7 @@ export async function getUnifiedProducts(): Promise<any[]> {
         productMap.set(dbP.slug, {
           ...(existing || {}),
           ...dbP,
+          year: (dbP as any).year || existing?.year,
           price: priceNum,
           formatName,
           formatSize,
