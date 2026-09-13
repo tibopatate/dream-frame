@@ -10,6 +10,7 @@ import { SearchModal } from '@/components/SearchModal'
 import { FloatingContactWidget } from '@/components/FloatingContactWidget'
 import { StickyMobileBuyBar } from '@/components/StickyMobileBuyBar'
 import { VisitorBeacon } from '@/components/analytics/VisitorBeacon'
+import { InAppBrowserRedirector } from '@/components/InAppBrowserRedirector'
 import { getSettings } from '@/lib/data-store'
 
 export const metadata = {
@@ -20,6 +21,8 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
   return (
     <div className="min-h-screen bg-[#080807] text-white flex flex-col antialiased selection:bg-amber-400 selection:text-black">
       <VisitorBeacon />
+      {/* Détecteur & Redirecteur vers Navigateur Externe (Instagram, TikTok, etc.) */}
+      <InAppBrowserRedirector />
       <ShopHeader />
       {/* Animation Projectile : Boule ronde blanche qui vole du bouton vers le panier */}
       <FlyToCart />
