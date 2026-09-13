@@ -395,18 +395,18 @@ export function ProductDemonstrationSection() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                id: 'a4',
-                name: 'Standard A4',
-                size: '21 × 29,7 cm',
+                id: 'standard-10x15',
+                name: 'Petit Cadre Standard',
+                size: '10 × 15 cm (espace cadre)',
                 price: '49,90 €',
                 usage: 'Bureau de travail, console d’entrée, étagère bibliothèque',
                 scale: 'Miniature 1:24 sous vitrage relief',
                 badge: 'Format Idéal Cadeau',
               },
               {
-                id: 'a3',
-                name: 'Grand Format A3 Collector',
-                size: '30 × 42 cm',
+                id: 'collector-30x40',
+                name: 'Cadre Moyen Collector',
+                size: '30 × 40 cm (espace cadre)',
                 price: '149,90 €',
                 usage: 'Salon contemporain, chambre, bureau d’architecte',
                 scale: 'Miniature 1:18 Grand Relief d’atelier',
@@ -414,9 +414,9 @@ export function ProductDemonstrationSection() {
                 highlight: true,
               },
               {
-                id: 'a2',
-                name: 'Prestige Galerie A2',
-                size: '50 × 70 cm',
+                id: 'prestige-40x50',
+                name: 'Grand Cadre Prestige',
+                size: '40 × 50 cm (espace cadre)',
                 price: '249,90 €',
                 usage: 'Pièce maîtresse au-dessus d’un canapé ou mur principal',
                 scale: 'Miniature 1:18 Grand Panorama de collection',

@@ -8,6 +8,7 @@ import { useCart } from '@/lib/store/cart'
 import { triggerFlyToCart } from '@/components/FlyToCart'
 import { isVideoUrl, getProductThumbnail } from '@/lib/utils'
 import type { MockProduct } from '@/lib/mock-data'
+import { getFormatName, getInnerFrameSize } from '@/lib/frame-formats'
 
 interface QuickBuyDrawerProps {
   product: MockProduct | null
@@ -22,21 +23,8 @@ export function QuickBuyDrawer({ product, onClose }: QuickBuyDrawerProps) {
   if (!product) return null
 
   const price = Number(product.price) || 49.90
-  const formatName =
-    (product as any).formatName ||
-    (price >= 200
-      ? 'Grand Cadre Prestige'
-      : price >= 100
-      ? 'Cadre Moyen Collector'
-      : 'Petit Cadre Standard')
-
-  const formatSize =
-    (product as any).formatSize ||
-    (price >= 200
-      ? '50 × 70 cm'
-      : price >= 100
-      ? '30 × 42 cm'
-      : '21 × 29.7 cm')
+  const formatName = getFormatName(price, (product as any).formatName)
+  const formatSize = getInnerFrameSize(price, (product as any).formatSize)
 
   const handleAddToCart = (e: React.MouseEvent) => {
     const preferredImage = product.images.find((img: string) => !isVideoUrl(img)) || product.images[0] || ''
@@ -104,7 +92,7 @@ export function QuickBuyDrawer({ product, onClose }: QuickBuyDrawerProps) {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-bold text-white">{formatName}</p>
-              <p className="text-[11px] text-neutral-400 font-mono">Dimensions : {formatSize}</p>
+              <p className="text-[11px] text-neutral-400 font-mono">Espace dans le cadre : {formatSize}</p>
             </div>
             <span className="text-base font-bold text-amber-400 font-mono">
               {price.toFixed(2).replace('.', ',')} €

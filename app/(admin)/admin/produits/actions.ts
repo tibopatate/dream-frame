@@ -14,6 +14,7 @@ import {
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
+import { getFormatName, getInnerFrameSize } from '@/lib/frame-formats'
 
 // ─── Schéma Zod produit ────────────────────────────────────────────────────
 
@@ -89,11 +90,14 @@ export async function createProduct(
   const baseSlug = slugify(data.name)
   const sku = generateSku(data.brand, Math.floor(Math.random() * 100))
 
+  const formatName = (formData.get('formatName') as string) || getFormatName(data.price)
+  const formatSize = (formData.get('formatSize') as string) || getInnerFrameSize(data.price)
+
   // Récupérer les formats personnalisés (49.90€, 149.90€, 249.90€)
   let formats = [
-    { id: 'fmt-a4', name: 'Standard A4', size: '21 x 29.7 cm', price: 49.90, stock: data.stock, isDefault: true },
-    { id: 'fmt-a3', name: 'Grand Format A3 Collector', size: '30 x 42 cm', price: 149.90, stock: 5, isDefault: false },
-    { id: 'fmt-a2', name: 'Prestige Galerie A2', size: '50 x 70 cm', price: 249.90, stock: 2, isDefault: false },
+    { id: 'fmt-standard-10x15', name: 'Petit Cadre Standard', size: '10 × 15 cm', price: 49.90, stock: data.stock, isDefault: true },
+    { id: 'fmt-collector-30x40', name: 'Cadre Moyen Collector', size: '30 × 40 cm', price: 149.90, stock: 5, isDefault: false },
+    { id: 'fmt-prestige-40x50', name: 'Grand Cadre Prestige', size: '40 × 50 cm', price: 249.90, stock: 2, isDefault: false },
   ]
   const rawFormats = formData.get('formatsData')
   if (rawFormats && typeof rawFormats === 'string') {
@@ -159,6 +163,8 @@ export async function createProduct(
       stockAlert: data.stockAlert,
       sku,
       stripePriceId: data.stripePriceId,
+      formatName,
+      formatSize,
       formats,
       aspectRatio,
       cropPosition,
@@ -247,6 +253,8 @@ export async function updateProduct(
   }
 
   const data = parsed.data
+  const formatName = (formData.get('formatName') as string) || getFormatName(data.price)
+  const formatSize = (formData.get('formatSize') as string) || getInnerFrameSize(data.price)
 
   try {
     const product = await prisma.product.findUniqueOrThrow({
@@ -282,6 +290,8 @@ export async function updateProduct(
       brand: data.brand,
       description: data.description,
       price: data.price,
+      formatName,
+      formatSize,
       isActive: data.isActive,
       isFeatured: data.isFeatured,
       images: data.images,

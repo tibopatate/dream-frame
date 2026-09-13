@@ -5,6 +5,7 @@ import { AddToCartButton } from '@/components/add-to-cart-button'
 import { Truck, ShieldCheck, Award, Sparkles } from 'lucide-react'
 import { isVideoUrl } from '@/lib/utils'
 import type { ProductFormat } from '@/lib/data-store'
+import { getFramePresetByPrice, getInnerFrameSize, getFormatName } from '@/lib/frame-formats'
 
 interface ProductPurchaseSectionProps {
   product: {
@@ -29,28 +30,10 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
   const [quantity, setQuantity] = useState(1)
 
   // Format unique et dédié à chaque cadre (verrouillé pour correspondre au gabarit d'atelier)
-  const formatName =
-    product.formatName ||
-    (price >= 200
-      ? 'Grand Cadre Prestige'
-      : price >= 100
-      ? 'Cadre Moyen Collector'
-      : 'Petit Cadre Standard')
-
-  const formatSize =
-    product.formatSize ||
-    (price >= 200
-      ? '50 × 70 cm'
-      : price >= 100
-      ? '30 × 42 cm'
-      : '21 × 29.7 cm')
-
-  const formatScale =
-    price >= 200
-      ? 'Échelle 1:18 Grand Format'
-      : price >= 100
-      ? 'Échelle 1:18 Atelier'
-      : 'Échelle 1:24 Atelier'
+  const preset = getFramePresetByPrice(price)
+  const formatName = getFormatName(price, product.formatName)
+  const formatSize = getInnerFrameSize(price, product.formatSize)
+  const formatScale = preset.scale
 
   return (
     <div className="space-y-6">
@@ -99,10 +82,10 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
         <div className="py-3 px-4 rounded-xl bg-neutral-950/60 border border-neutral-800/60 flex items-center justify-between text-xs">
           <div className="space-y-0.5">
             <span className="text-[10px] uppercase font-mono tracking-wider text-neutral-400 block">
-              Format d'Art
+              Format d'Art · Espace dans le cadre
             </span>
             <span className="text-white font-medium">
-              {formatName} <span className="text-neutral-400 font-normal">({formatSize})</span>
+              {formatName} <span className="text-amber-400 font-mono font-semibold">({formatSize})</span>
             </span>
           </div>
           <span className="text-[11px] font-mono text-neutral-400">
@@ -176,7 +159,7 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
         </h2>
         <div className="grid grid-cols-2 gap-2 text-xs">
           {[
-            ['Format & Dimensions', formatSize],
+            ['Espace dans le cadre', formatSize],
             ['Reproduction', formatScale],
             ['Châssis', 'Ébénisterie Noir Profond'],
             ['Protection', 'Vitrage HD anti-reflet'],

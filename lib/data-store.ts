@@ -3,6 +3,7 @@ import path from 'path'
 import { MOCK_PRODUCTS } from './mock-data'
 import { prisma, isPrismaConfigured } from './db'
 import { reorderProductImages } from './utils'
+import { getFramePresetByPrice, getInnerFrameSize, getFormatName, FRAME_FORMAT_PRESETS } from './frame-formats'
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'dreamframe-db.json')
 
@@ -18,27 +19,27 @@ export interface ProductFormat {
 
 export const DEFAULT_FORMATS: ProductFormat[] = [
   {
-    id: 'fmt-a4',
-    name: 'Cadre Format 10×15cm | Dream Frame Officiel',
-    size: '10 x 15 cm',
+    id: 'fmt-standard-10x15',
+    name: 'Petit Cadre Standard',
+    size: '10 × 15 cm',
     price: 49.90,
     stock: 10,
     isDefault: true,
     stripePriceId: '',
   },
   {
-    id: 'fmt-a3',
-    name: 'Cadre Format 30×40cm | Dream Frame Officiel',
-    size: '30 x 40 cm',
+    id: 'fmt-collector-30x40',
+    name: 'Cadre Moyen Collector',
+    size: '30 × 40 cm',
     price: 149.90,
     stock: 5,
     isDefault: false,
     stripePriceId: '',
   },
   {
-    id: 'fmt-a2',
-    name: 'Cadre format 40×50cm | Dream Frame Officiel',
-    size: '40 x 50 cm',
+    id: 'fmt-prestige-40x50',
+    name: 'Grand Cadre Prestige',
+    size: '40 × 50 cm',
     price: 249.90,
     stock: 2,
     isDefault: false,
@@ -901,8 +902,8 @@ export async function getUnifiedProducts(): Promise<any[]> {
   // 1. Initialiser avec tous les cadres de la boutique (11 modèles réels)
   for (const p of stored) {
     const priceNum = Number(p.price) || 49.90
-    const formatName = (p as any).formatName || (priceNum >= 200 ? 'Grand Format Prestige' : priceNum >= 100 ? 'Cadre Moyen Collector' : 'Petit Cadre Standard')
-    const formatSize = (p as any).formatSize || (priceNum >= 200 ? '50 × 70 cm' : priceNum >= 100 ? '30 × 42 cm' : '21 × 29.7 cm')
+    const formatName = getFormatName(priceNum, (p as any).formatName)
+    const formatSize = getInnerFrameSize(priceNum, (p as any).formatSize)
 
     productMap.set(p.slug, {
       ...p,
@@ -923,8 +924,8 @@ export async function getUnifiedProducts(): Promise<any[]> {
       })
       for (const dbP of dbProducts) {
         const priceNum = Number(dbP.price) || 49.90
-        const formatName = (dbP as any).formatName || (priceNum >= 200 ? 'Grand Format Prestige' : priceNum >= 100 ? 'Cadre Moyen Collector' : 'Petit Cadre Standard')
-        const formatSize = (dbP as any).formatSize || (priceNum >= 200 ? '50 × 70 cm' : priceNum >= 100 ? '30 × 42 cm' : '21 × 29.7 cm')
+        const formatName = getFormatName(priceNum, (dbP as any).formatName)
+        const formatSize = getInnerFrameSize(priceNum, (dbP as any).formatSize)
         const existing = productMap.get(dbP.slug)
 
         productMap.set(dbP.slug, {

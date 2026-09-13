@@ -21,7 +21,7 @@
       "sku": "DF-PORSCHE-918",
       "stripePriceId": "",
       "formatName": "Petit Cadre Standard",
-      "formatSize": "21 × 29.7 cm",
+      "formatSize": "10 × 15 cm",
       "createdAt": "2026-09-11T12:00:00.000Z"
     },
     {
@@ -46,7 +46,7 @@
       "sku": "DF-AUDI-R8",
       "stripePriceId": "",
       "formatName": "Petit Cadre Standard",
-      "formatSize": "21 × 29.7 cm",
+      "formatSize": "10 × 15 cm",
       "createdAt": "2026-09-11T12:30:00.000Z"
     },
     {
@@ -71,7 +71,7 @@
       "sku": "DF-FERRARI-F40-STD",
       "stripePriceId": "",
       "formatName": "Petit Cadre Standard",
-      "formatSize": "21 × 29.7 cm",
+      "formatSize": "10 × 15 cm",
       "createdAt": "2026-09-11T10:00:00.000Z"
     },
     {
@@ -94,7 +94,7 @@
       "sku": "DF-FERRARI-LAFERRARI",
       "stripePriceId": "",
       "formatName": "Cadre Moyen Collector",
-      "formatSize": "30 × 42 cm",
+      "formatSize": "30 × 40 cm",
       "createdAt": "2026-09-11T09:00:00.000Z"
     }
   ],
@@ -131,7 +131,7 @@
           "quantity": 1,
           "total": 149.9,
           "formatName": "Cadre Moyen Collector",
-          "formatSize": "30 × 42 cm"
+          "formatSize": "30 × 40 cm"
         }
       ]
     }

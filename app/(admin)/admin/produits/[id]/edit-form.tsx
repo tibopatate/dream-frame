@@ -5,6 +5,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Loader2, Plus, Trash, Trash2 } from 'lucide-react'
 import { ProductImageUploader } from '@/components/admin/ProductImageUploader'
+import { SmartPricingSelector } from '@/components/admin/SmartPricingSelector'
 
 interface EditProductFormProps {
   product: {
@@ -13,6 +14,8 @@ interface EditProductFormProps {
     brand: string
     description: string
     price: number | any
+    formatName?: string
+    formatSize?: string
     isActive: boolean
     isFeatured: boolean
     images: string[]
@@ -132,51 +135,44 @@ export function EditProductForm({ product }: EditProductFormProps) {
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {/* Prix */}
-          <div className="space-y-2">
-            <label className="block text-xs font-bold text-neutral-300 uppercase tracking-wider">
-              Prix unique (€ TTC)
-            </label>
-            <input
-              type="number"
-              name="price"
-              step="0.01"
-              defaultValue={Number(product.price) || 49.90}
-              required
-              min={0}
-              className="w-full bg-black/60 border border-neutral-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-amber-400/80 font-mono transition"
-            />
-          </div>
+        {/* ─── FORMAT INTELLIGENT DU CADRE & TARIF ─── */}
+        <div className="border-t border-neutral-800 pt-6 space-y-4">
+          <SmartPricingSelector
+            initialPrice={Number(product.price) || 49.90}
+            initialFormatName={product.formatName}
+            initialFormatSize={product.formatSize}
+          />
 
-          {/* Stock */}
-          <div className="space-y-2">
-            <label className="block text-xs font-bold text-neutral-300 uppercase tracking-wider">
-              Stock
-            </label>
-            <input
-              type="number"
-              name="stock"
-              defaultValue={variant.stock ?? 10}
-              required
-              min={0}
-              className="w-full bg-black/60 border border-neutral-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-amber-400/80 font-mono transition"
-            />
-          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            {/* Stock */}
+            <div className="space-y-1">
+              <label className="text-[10px] text-neutral-400 uppercase font-bold block">
+                Stock
+              </label>
+              <input
+                type="number"
+                name="stock"
+                defaultValue={variant.stock ?? 10}
+                required
+                min={0}
+                className="w-full bg-black/60 border border-neutral-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400/80 font-mono transition"
+              />
+            </div>
 
-          {/* Alert */}
-          <div className="space-y-2">
-            <label className="block text-xs font-bold text-neutral-300 uppercase tracking-wider">
-              Alerte stock bas
-            </label>
-            <input
-              type="number"
-              name="stockAlert"
-              defaultValue={variant.stockAlert ?? 3}
-              required
-              min={0}
-              className="w-full bg-black/60 border border-neutral-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-amber-400/80 font-mono transition"
-            />
+            {/* Alert */}
+            <div className="space-y-1">
+              <label className="text-[10px] text-neutral-400 uppercase font-bold block">
+                Alerte stock bas
+              </label>
+              <input
+                type="number"
+                name="stockAlert"
+                defaultValue={variant.stockAlert ?? 3}
+                required
+                min={0}
+                className="w-full bg-black/60 border border-neutral-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400/80 font-mono transition"
+              />
+            </div>
           </div>
         </div>
 

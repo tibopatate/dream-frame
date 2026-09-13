@@ -17,6 +17,7 @@ import {
 } from 'lucide-react'
 import { ImageCropper, CropSettings } from '@/components/admin/ImageCropper'
 import { ProductImageUploader } from '@/components/admin/ProductImageUploader'
+import { SmartPricingSelector } from '@/components/admin/SmartPricingSelector'
 
 interface FormatItem {
   id: string
@@ -45,33 +46,12 @@ export default function NouveauProduitPage() {
   })
   const [showCropper, setShowCropper] = useState(false)
 
-  // 3 Formats de Cadres (Standard 49,90€, Grand 149,90€, Prestige 249,90€)
-  const [formats, setFormats] = useState<FormatItem[]>([
-    {
-      id: 'fmt-a4',
-      name: 'Standard A4',
-      size: '21 x 29.7 cm',
-      price: 49.90,
-      stock: 10,
-      isDefault: true,
-    },
-    {
-      id: 'fmt-a3',
-      name: 'Grand Format A3 Collector',
-      size: '30 x 42 cm',
-      price: 149.90,
-      stock: 5,
-      isDefault: false,
-    },
-    {
-      id: 'fmt-a2',
-      name: 'Prestige Galerie A2',
-      size: '50 x 70 cm',
-      price: 249.90,
-      stock: 2,
-      isDefault: false,
-    },
-  ])
+  // Format intelligent, prix et taille de l'espace dans le cadre
+  const [selectedPrice, setSelectedPrice] = useState(49.90)
+  const [selectedFormatName, setSelectedFormatName] = useState('Petit Cadre Standard')
+  const [selectedFormatSize, setSelectedFormatSize] = useState('10 × 15 cm')
+  const [stock, setStock] = useState(5)
+  const [stockAlert, setStockAlert] = useState(2)
 
   const [syncWithStripe, setSyncWithStripe] = useState(true)
 
@@ -84,12 +64,6 @@ export default function NouveauProduitPage() {
 
   const removeImage = (index: number) => {
     setImages(images.filter((_, i) => i !== index))
-  }
-
-  const updateFormat = (id: string, field: 'price' | 'stock', value: number) => {
-    setFormats(
-      formats.map((f) => (f.id === id ? { ...f, [field]: value } : f))
-    )
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -107,15 +81,28 @@ export default function NouveauProduitPage() {
     const formData = new FormData(form)
 
     // Injection des métadonnées de formats & cadrage
-    formData.set('formatsData', JSON.stringify(formats))
+    const formatsData = [
+      {
+        id: `fmt-${selectedPrice}`,
+        name: selectedFormatName,
+        size: selectedFormatSize,
+        price: selectedPrice,
+        stock: stock,
+        isDefault: true,
+      },
+    ]
+    formData.set('formatsData', JSON.stringify(formatsData))
     formData.set('aspectRatio', cropSettings.aspectRatio)
     formData.set('cropPosition', JSON.stringify({
       x: cropSettings.panX,
       y: cropSettings.panY,
       zoom: cropSettings.zoom,
     }))
-    formData.set('price', formats[0].price.toString())
-    formData.set('stock', formats.reduce((s, f) => s + f.stock, 0).toString())
+    formData.set('price', selectedPrice.toString())
+    formData.set('formatName', selectedFormatName)
+    formData.set('formatSize', selectedFormatSize)
+    formData.set('stock', stock.toString())
+    formData.set('stockAlert', stockAlert.toString())
 
     try {
       // Synchronisation Stripe si demandée
@@ -124,7 +111,7 @@ export default function NouveauProduitPage() {
           name: formData.get('name') as string,
           description: formData.get('description') as string,
           images,
-          formats,
+          formats: formatsData,
         })
         if (stripeRes.message) {
           setStripeStatus(stripeRes.message)
@@ -219,71 +206,46 @@ export default function NouveauProduitPage() {
           />
         </div>
 
-        {/* ─── NOUVEAUX GRANDS CADRES : LES 3 FORMATS & TARIFS ─── */}
+        {/* ─── FORMAT INTELLIGENT DU CADRE & TARIF ─── */}
         <div className="border-t border-neutral-800 pt-6 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <label className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                <Layers className="w-4 h-4 text-amber-400" />
-                Formats du Cadre &amp; Tarifs Vendeur (Standard, 150 € et 250 €)
+          <SmartPricingSelector
+            initialPrice={selectedPrice}
+            initialFormatName={selectedFormatName}
+            initialFormatSize={selectedFormatSize}
+            onChange={({ price, formatName, formatSize }) => {
+              setSelectedPrice(price)
+              setSelectedFormatName(formatName)
+              setSelectedFormatSize(formatSize)
+            }}
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-neutral-400 uppercase font-bold block">
+                Stock disponible atelier
               </label>
-              <p className="text-[11px] text-neutral-400">
-                Chaque format dispose de son prix et de son stock propre. Votre frère peut adapter les tarifs librement.
-              </p>
+              <input
+                type="number"
+                name="stock"
+                min={0}
+                value={stock}
+                onChange={(e) => setStock(parseInt(e.target.value) || 0)}
+                className="w-full bg-black/60 border border-neutral-800 rounded-xl px-4 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-amber-400/80 transition"
+              />
             </div>
-            <span className="text-[10px] font-mono text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2.5 py-1 rounded-full">
-              3 formats actifs
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-            {formats.map((fmt) => (
-              <div
-                key={fmt.id}
-                className="p-4 rounded-2xl bg-neutral-950 border border-neutral-800 space-y-3"
-              >
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h4 className="text-xs font-bold text-white">{fmt.name}</h4>
-                    <p className="text-[10px] font-mono text-neutral-500">{fmt.size}</p>
-                  </div>
-                  {fmt.isDefault && (
-                    <span className="text-[9px] font-mono uppercase bg-amber-400/20 text-amber-300 px-2 py-0.5 rounded-full font-bold">
-                      Base
-                    </span>
-                  )}
-                </div>
-
-                <div className="space-y-2 text-xs">
-                  <div>
-                    <label className="text-[10px] text-neutral-400 uppercase font-bold block mb-1">
-                      Prix Vente (€ TTC)
-                    </label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      min={0}
-                      value={fmt.price}
-                      onChange={(e) => updateFormat(fmt.id, 'price', parseFloat(e.target.value) || 0)}
-                      className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs font-mono font-bold text-white focus:outline-none focus:border-amber-400"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-[10px] text-neutral-400 uppercase font-bold block mb-1">
-                      Stock Disponible
-                    </label>
-                    <input
-                      type="number"
-                      min={0}
-                      value={fmt.stock}
-                      onChange={(e) => updateFormat(fmt.id, 'stock', parseInt(e.target.value) || 0)}
-                      className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs font-mono text-neutral-200 focus:outline-none focus:border-amber-400"
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
+            <div className="space-y-1">
+              <label className="text-[10px] text-neutral-400 uppercase font-bold block">
+                Alerte stock bas
+              </label>
+              <input
+                type="number"
+                name="stockAlert"
+                min={0}
+                value={stockAlert}
+                onChange={(e) => setStockAlert(parseInt(e.target.value) || 0)}
+                className="w-full bg-black/60 border border-neutral-800 rounded-xl px-4 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-amber-400/80 transition"
+              />
+            </div>
           </div>
         </div>
 

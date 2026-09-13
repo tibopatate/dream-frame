@@ -5,6 +5,7 @@ import { Plus, Edit2, Package, AlertTriangle, Sparkles, Truck } from 'lucide-rea
 import { getAllProducts, syncDatabaseWithCloud } from '@/lib/data-store'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
 import { getProductThumbnail } from '@/lib/utils'
+import { getInnerFrameSize } from '@/lib/frame-formats'
 
 export const metadata = { title: 'Catalogue Cadres — Dream Frame Admin' }
 export const dynamic = 'force-dynamic'
@@ -112,7 +113,12 @@ export default async function AdminProduitsPage() {
                   <h3 className="font-bold text-slate-900 text-sm leading-snug line-clamp-1 group-hover:text-red-600 transition">
                     {product.name}
                   </h3>
-                  <p className="text-slate-500 text-xs line-clamp-2 mt-1 font-light leading-relaxed">
+                  <div className="mt-1 mb-1.5">
+                    <span className="text-[10px] font-mono font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full inline-block">
+                      Espace cadre : {getInnerFrameSize(Number(product.price), product.formatSize)}
+                    </span>
+                  </div>
+                  <p className="text-slate-500 text-xs line-clamp-2 font-light leading-relaxed">
                     {product.description}
                   </p>
                 </div>
