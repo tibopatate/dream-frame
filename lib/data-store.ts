@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { MOCK_PRODUCTS } from './mock-data'
 import { prisma, isPrismaConfigured } from './db'
+import { reorderProductImages } from './utils'
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'dreamframe-db.json')
 
@@ -951,7 +952,10 @@ export async function getUnifiedProducts(): Promise<any[]> {
     }
   }
 
-  return Array.from(productMap.values())
+  return Array.from(productMap.values()).map((p) => ({
+    ...p,
+    images: reorderProductImages(p.images),
+  }))
 }
 
 export async function getUnifiedProductBySlug(slug: string): Promise<any | null> {

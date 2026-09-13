@@ -18,6 +18,7 @@ import {
   Package,
 } from 'lucide-react'
 import Link from 'next/link'
+import { getProductThumbnail } from '@/lib/utils'
 import {
   getCollectionsAction,
   saveCollectionAction,
@@ -321,15 +322,14 @@ export function CataloguePanel({
                       </div>
 
                       <div className="w-8 h-8 rounded bg-neutral-900 overflow-hidden flex-shrink-0 border border-slate-200 relative">
-                        {prod.images?.[0] ? (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img src={prod.images[0]} alt={prod.name} className="w-full h-full object-cover" />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-[8px] text-slate-400">
-                            N/A
-                          </div>
-                        )}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={getProductThumbnail(prod)}
+                          alt={prod.name}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
+
 
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-bold text-slate-800 truncate">{prod.name}</p>

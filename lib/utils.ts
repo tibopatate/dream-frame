@@ -72,3 +72,29 @@ export function isVideoUrl(url?: string | null): boolean {
     clean.includes('video/')
   )
 }
+
+export const DEFAULT_FRAME_IMAGE = 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg'
+
+/** Retourne de manière garantie une vraie URL d'image statique (jamais une vidéo mp4) */
+export function getProductThumbnail(product?: any): string {
+  if (!product) return DEFAULT_FRAME_IMAGE
+  const images: string[] = Array.isArray(product.images)
+    ? product.images
+    : product.image
+    ? [product.image]
+    : []
+
+  const staticImg = images.find((img) => typeof img === 'string' && img.trim() !== '' && !isVideoUrl(img))
+  if (staticImg) return staticImg
+
+  return DEFAULT_FRAME_IMAGE
+}
+
+/** Réordonne les médias d'un produit pour que les photos soient toujours en premier et les vidéos à la fin */
+export function reorderProductImages(images: string[] = []): string[] {
+  if (!Array.isArray(images) || images.length <= 1) return images
+  const staticImages = images.filter((img) => typeof img === 'string' && !isVideoUrl(img))
+  const videoFiles = images.filter((img) => typeof img === 'string' && isVideoUrl(img))
+  return [...staticImages, ...videoFiles]
+}
+

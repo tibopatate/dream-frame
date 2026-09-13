@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Plus, Edit2, Package, AlertTriangle, Sparkles, Truck } from 'lucide-react'
 import { getAllProducts, syncDatabaseWithCloud } from '@/lib/data-store'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
+import { getProductThumbnail } from '@/lib/utils'
 
 export const metadata = { title: 'Catalogue Cadres — Dream Frame Admin' }
 export const dynamic = 'force-dynamic'
@@ -75,21 +76,16 @@ export default async function AdminProduitsPage() {
             >
               {/* Image & Badges */}
               <div className="relative aspect-[4/3] bg-slate-900 overflow-hidden">
-                {product.images?.[0] ? (
-                  <Image
-                    src={product.images[0]}
-                    alt={product.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center text-slate-600 bg-slate-950">
-                    <Package className="w-8 h-8" />
-                  </div>
-                )}
+                <Image
+                  src={getProductThumbnail(product)}
+                  alt={product.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
 
                 {/* Status Badges en haut à gauche */}
+
                 <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
                   <span className="text-[9px] font-bold bg-black/80 backdrop-blur-md text-amber-400 border border-neutral-800 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                     {product.brand}

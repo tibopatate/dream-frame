@@ -18,7 +18,7 @@ import {
   Package,
 } from 'lucide-react'
 import { ProductImageUploader } from '@/components/admin/ProductImageUploader'
-import { isVideoUrl } from '@/lib/utils'
+import { isVideoUrl, getProductThumbnail } from '@/lib/utils'
 import { getCollectionsAction } from '@/app/(admin)/admin/personnalisation/actions'
 import type { StoredCollection } from '@/lib/data-store'
 import type { PageSection } from '@/lib/page-builder/types'
@@ -301,19 +301,14 @@ function CollectionContentFields({
 
                       {/* Photo Miniature */}
                       <div className="w-10 h-10 rounded-md bg-neutral-900 overflow-hidden flex-shrink-0 border border-slate-200 relative">
-                        {prod.images?.[0] ? (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img
-                            src={prod.images[0]}
-                            alt={prod.name}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-[10px] text-slate-400">
-                            Sans photo
-                          </div>
-                        )}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={getProductThumbnail(prod)}
+                          alt={prod.name}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
+
 
                       {/* Infos Produit */}
                       <div className="flex-1 min-w-0">

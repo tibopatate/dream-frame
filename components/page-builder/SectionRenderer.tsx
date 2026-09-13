@@ -21,7 +21,7 @@ import {
 } from 'lucide-react'
 import { ProductDemonstrationSection } from '@/components/home/ProductDemonstrationSection'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
-import { formatPriceFromDecimal, isVideoUrl } from '@/lib/utils'
+import { formatPriceFromDecimal, isVideoUrl, getProductThumbnail, DEFAULT_FRAME_IMAGE } from '@/lib/utils'
 
 interface SectionRendererProps {
   section: PageSection
@@ -57,11 +57,41 @@ export function SectionRenderer({
   // ─── EDITOR OVERLAY ────────────────────────────────────────────────────────
   const outlineClass = isEditor
     ? isSelected
-      ? 'ring-2 ring-amber-400 ring-offset-2 ring-offset-black relative z-20'
+      ? 'ring-1 ring-amber-400/80 shadow-[0_0_25px_rgba(245,158,11,0.12)] relative z-20'
       : isHovered
-      ? 'ring-1 ring-blue-400 ring-offset-1 ring-offset-black/50 relative z-10'
+      ? 'ring-1 ring-neutral-700 relative z-10'
       : 'relative'
     : ''
+
+  const renderEditorBadge = (typeLabel: string, extra?: string) => {
+    if (!isEditor) return null
+    return (
+      <div className="absolute top-3 left-4 sm:left-6 z-30 flex items-center pointer-events-none select-none">
+        <div
+          className={`px-3 py-1 rounded-full text-[10px] font-mono tracking-wider shadow-2xl flex items-center gap-2 backdrop-blur-md transition-all border ${
+            isSelected
+              ? 'bg-neutral-950/95 text-white border-amber-400/80 ring-1 ring-amber-400/40 shadow-black/80'
+              : 'bg-neutral-950/70 text-neutral-400 border-neutral-800/80'
+          }`}
+        >
+          <span
+            className={`w-1.5 h-1.5 rounded-full ${
+              isSelected ? 'bg-amber-400 animate-pulse' : 'bg-neutral-600'
+            }`}
+          />
+          <span className="font-semibold uppercase tracking-widest">{typeLabel}</span>
+          <span className="text-neutral-600">·</span>
+          <span className="text-neutral-300 font-normal">{section.name}</span>
+          {extra && (
+            <>
+              <span className="text-neutral-600">·</span>
+              <span className="text-amber-400/90 text-[9px]">{extra}</span>
+            </>
+          )}
+        </div>
+      </div>
+    )
+  }
 
   const handleClick = (e: React.MouseEvent) => {
     if (isEditor && onSelect) {
@@ -92,15 +122,8 @@ export function SectionRenderer({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {isEditor && (
-          <div className="absolute top-4 left-6 z-30 flex items-center gap-2">
-            <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
-              isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
-            }`}>
-              HERO SHOWROOM · {section.name} {isHeroVideo ? '(VIDÉO ACTIVE)' : ''}
-            </span>
-          </div>
-        )}
+        {renderEditorBadge('HERO SHOWROOM', isHeroVideo ? 'VIDÉO ACTIVE' : undefined)}
+
 
         <section className="relative min-h-[62vh] sm:min-h-[70vh] lg:min-h-[76vh] flex flex-col justify-between items-center px-4 sm:px-6 pt-16 sm:pt-20 pb-16 sm:pb-28 overflow-hidden bg-[#080807]">
           {/* Vidéo Réelle d'Art Automobile en Fond ou Photographie d'Exception */}
@@ -182,15 +205,7 @@ export function SectionRenderer({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {isEditor && (
-          <div className="absolute top-4 left-6 z-30 flex items-center gap-2">
-            <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
-              isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
-            }`}>
-              DÉMONSTRATION 3D · {section.name}
-            </span>
-          </div>
-        )}
+        {renderEditorBadge('DÉMO 3D')}
         <ProductDemonstrationSection />
       </div>
     )
@@ -206,15 +221,8 @@ export function SectionRenderer({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {isEditor && (
-          <div className="absolute top-4 left-6 z-30 flex items-center gap-2">
-            <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
-              isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
-            }`}>
-              {section.name}
-            </span>
-          </div>
-        )}
+        {renderEditorBadge('COLLECTION')}
+
 
         <section className="py-12 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 space-y-8 sm:space-y-12 transition-all duration-700">
           {/* En-tête Collection Minimaliste avec Ligne Fine */}
@@ -284,8 +292,8 @@ export function SectionRenderer({
                   brand: rawItem.brand,
                   specs: rawItem.specs || rawItem.description?.slice(0, 50) || 'Atelier France · Pièce Réelle',
                   tag: rawItem.tag || (rawItem.era === 'VINTAGE' ? 'Pièce Historique' : 'Atelier France · Pièce Réelle'),
-                  image: rawItem.image || rawItem.images?.[0] || 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop',
-                  imageHover: rawItem.imageHover || rawItem.images?.[1] || null,
+                  image: rawItem.image || getProductThumbnail(rawItem),
+                  imageHover: rawItem.imageHover || rawItem.images?.find((img: string, i: number) => i > 0 && !isVideoUrl(img)) || null,
                   price: typeof rawItem.price === 'number' ? `${rawItem.price.toFixed(2).replace('.', ',')} €` : rawItem.price,
                 }
 
@@ -297,7 +305,7 @@ export function SectionRenderer({
                 {/* Vrai Cadre d'Art de la Boutique (aspect-[3/4] élégant) */}
                 <Link
                   href={isEditor ? '#' : `/produit/${item.slug}`}
-                  className="relative w-full aspect-[3/4] rounded-2xl p-2 bg-neutral-900/60 border border-neutral-800 ring-1 ring-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.95)] hover:shadow-[0_20px_45px_rgba(0,0,0,1),0_0_25px_rgba(251,191,36,0.12)] hover:border-amber-400/50 transition-all duration-500 overflow-hidden block group/frame"
+                  className="relative w-full aspect-[3/4] rounded-2xl p-2 bg-neutral-900/60 border border-neutral-800 ring-1 ring-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.95)] hover:shadow-[0_20px_45px_rgba(0,0,0,1),0_0_25px_rgba(255,255,255,0.08)] hover:border-white/50 hover:ring-white/25 transition-all duration-500 overflow-hidden block group/frame"
                 >
                   <div className="relative w-full h-full rounded-lg bg-neutral-950 overflow-hidden">
                     {isVideoUrl(item.image) ? (
@@ -355,7 +363,7 @@ export function SectionRenderer({
                     <span className="text-amber-400 font-semibold font-mono text-xs">{item.price}</span>
                   </div>
 
-                  <h3 className="text-xs sm:text-sm font-semibold tracking-wider text-white uppercase group-hover:text-amber-300 transition-colors truncate px-1">
+                  <h3 className="text-xs sm:text-sm font-semibold tracking-wider text-white uppercase group-hover:text-white transition-colors truncate px-1">
                     {item.name}
                   </h3>
 
@@ -416,15 +424,8 @@ export function SectionRenderer({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {isEditor && (
-          <div className="absolute top-4 left-6 z-30 flex items-center gap-2">
-            <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
-              isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
-            }`}>
-              SAVOIR-FAIRE · {section.name}
-            </span>
-          </div>
-        )}
+        {renderEditorBadge('SAVOIR-FAIRE')}
+
 
         <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-neutral-950/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
@@ -467,15 +468,8 @@ export function SectionRenderer({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {isEditor && (
-          <div className="absolute top-4 left-6 z-30 flex items-center gap-2">
-            <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
-              isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
-            }`}>
-              RÉASSURANCE · {section.name}
-            </span>
-          </div>
-        )}
+        {renderEditorBadge('RÉASSURANCE')}
+
 
         <section className="py-12 border-t border-neutral-800/80 max-w-7xl mx-auto px-4 sm:px-6 bg-[#080807]">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -533,15 +527,8 @@ export function SectionRenderer({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {isEditor && (
-          <div className="absolute top-4 left-6 z-30 flex items-center gap-2">
-            <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
-              isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
-            }`}>
-              ATELIER SUR-MESURE · {section.name}
-            </span>
-          </div>
-        )}
+        {renderEditorBadge('ATELIER')}
+
 
         <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-[#080807]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
@@ -578,15 +565,7 @@ export function SectionRenderer({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {isEditor && (
-          <div className="absolute top-4 left-6 z-30 flex items-center gap-2">
-            <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
-              isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
-            }`}>
-              INTÉRIEURS · {section.name}
-            </span>
-          </div>
-        )}
+        {renderEditorBadge('INTÉRIEURS')}
 
         <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-neutral-950/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
@@ -628,15 +607,7 @@ export function SectionRenderer({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {isEditor && (
-          <div className="absolute top-4 left-6 z-30 flex items-center gap-2">
-            <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
-              isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
-            }`}>
-              À PROPOS · {section.name}
-            </span>
-          </div>
-        )}
+        {renderEditorBadge('À PROPOS')}
 
         <section className="py-20 sm:py-32 border-t border-neutral-800/80 bg-[#080807]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-8">
@@ -670,15 +641,8 @@ export function SectionRenderer({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {isEditor && (
-          <div className="absolute top-4 left-6 z-30 flex items-center gap-2">
-            <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg ${
-              isSelected ? 'bg-amber-400 text-black' : 'bg-blue-600 text-white'
-            }`}>
-              FAQ · {section.name}
-            </span>
-          </div>
-        )}
+        {renderEditorBadge('FAQ')}
+
 
         <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-neutral-950/30">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-12">

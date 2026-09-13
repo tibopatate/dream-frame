@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { X, Check, ShoppingBag, ArrowRight, Truck, ShieldCheck, Zap } from 'lucide-react'
 import { useCart } from '@/lib/store/cart'
 import { triggerFlyToCart } from '@/components/FlyToCart'
-import { isVideoUrl } from '@/lib/utils'
+import { isVideoUrl, getProductThumbnail } from '@/lib/utils'
 import type { MockProduct } from '@/lib/mock-data'
 
 interface QuickBuyDrawerProps {
@@ -76,12 +76,13 @@ export function QuickBuyDrawer({ product, onClose }: QuickBuyDrawerProps) {
         <div className="flex gap-4 items-center">
           <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-neutral-900 border border-neutral-800 flex-shrink-0">
             <Image
-              src={product.images[0]}
+              src={getProductThumbnail(product)}
               alt={product.name}
               fill
               className="object-cover"
               sizes="80px"
             />
+
           </div>
           <div className="min-w-0">
             <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold">
