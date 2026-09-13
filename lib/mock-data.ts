@@ -20,23 +20,6 @@ export interface MockProduct {
 
 export const MOCK_PRODUCTS: MockProduct[] = [
   {
-    id: 'fmt-a4-cadre',
-    slug: 'cadre-format-10x15cm-dream-frame-officiel',
-    name: 'Cadre Format 10×15cm | Dream Frame Officiel',
-    brand: 'Dream Frame Atelier',
-    era: 'MODERN',
-    year: 2024,
-    description: "Cadre d'artisanat d'exception au format intime 10 × 15 cm. Finition galerie d'art, vitrage acrylique de précision et rétroéclairage LED ambré 3000K.",
-    price: 49.90,
-    isActive: true,
-    isFeatured: true,
-    images: [
-      'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074219-CwVVnGj3cqltgmgfmnU553ytSiYGfI.jpg',
-      'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074229-TGotGMk3IfQt1XYoXgIZSZaenYANpf.jpg',
-    ],
-    variants: [{ id: 'var-a4-std', sku: 'DF-STANDARD-10X15', stock: 10, stockAlert: 3 }],
-  },
-  {
     id: 'cmtz0fwum0004l904jcdzyop3',
     slug: 'porsche-918-spyder',
     name: 'Porsche 918 Spyder (2015)',
@@ -93,23 +76,6 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     variants: [{ id: 'var-f40-std', sku: 'DF-FERRARI-F40-STD', stock: 5, stockAlert: 2 }],
   },
   {
-    id: 'real-ferrari-moyen',
-    slug: 'ferrari-f40-cadre-moyen-collector',
-    name: 'Ferrari F40 — Cadre Moyen Collector',
-    brand: 'Ferrari',
-    era: 'VINTAGE',
-    year: 1987,
-    description: "Format Moyen d'artisanat 30 × 42 cm. V8 Biturbo sculpté en relief sous vitrage acrylique haute transparence avec module LED ambré 3000K.",
-    price: 149.90,
-    isActive: true,
-    isFeatured: true,
-    images: [
-      'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg',
-      'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074211-n6Iutq4tW8tjyXGxKWldSGFLRPpdgN.jpg',
-    ],
-    variants: [{ id: 'var-ferrari-moyen', sku: 'DF-FERRARI-MOYEN-001', stock: 5, stockAlert: 2 }],
-  },
-  {
     id: 'cmtyjxs970000i9041p1iabwp',
     slug: 'ferrari-laferrari',
     name: 'Ferrari LaFerrari — Cadre Moyen Collector',
@@ -125,24 +91,6 @@ export const MOCK_PRODUCTS: MockProduct[] = [
       'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074211-n6Iutq4tW8tjyXGxKWldSGFLRPpdgN.jpg',
     ],
     variants: [{ id: 'var-laferrari', sku: 'DF-FERRARI-LAFERRARI', stock: 5, stockAlert: 2 }],
-  },
-  {
-    id: 'real-ferrari-f40',
-    slug: 'ferrari-f40-1987-cadre-3d',
-    name: 'Ferrari F40 (1987) — Grand Cadre Prestige',
-    brand: 'Ferrari',
-    era: 'VINTAGE',
-    year: 1987,
-    description: "Le mythe absolu de Maranello en Grand Format d'Exception 50 × 70 cm. V8 Twin-Turbo et aileron légendaire sculptés au millimètre sous vitrage d'exception et rétroéclairage LED ambré.",
-    price: 249.90,
-    isActive: true,
-    isFeatured: true,
-    images: [
-      'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg',
-      'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074211-n6Iutq4tW8tjyXGxKWldSGFLRPpdgN.jpg',
-      'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074438-NeUYfhCEOmLrJoUn19iHpNsGZZtume.mp4',
-    ],
-    variants: [{ id: 'var-f40', sku: 'DF-FERRARI-F40', stock: 4, stockAlert: 2 }],
   },
 ]
 

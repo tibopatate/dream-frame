@@ -110,10 +110,9 @@ export function SectionRenderer({
 
   // ─── SECTION 1: HERO SHOWROOM D'EXCEPTION ─────────────────────────────────
   if (section.type === 'hero') {
-    const isHeroVideo = isVideoUrl(s.bgVideo) || isVideoUrl(s.bgImage)
-    const heroVideo = isVideoUrl(s.bgVideo) ? s.bgVideo : (isVideoUrl(s.bgImage) ? s.bgImage : (s.bgVideo || ''))
-    const fallbackImage = liveProducts?.[0]?.images?.find((img: string) => !isVideoUrl(img)) || liveProducts?.[0]?.images?.[0] || 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=1200&auto=format&fit=crop'
-    const heroImage = (!isVideoUrl(s.bgImage) && s.bgImage) ? s.bgImage : fallbackImage
+    const DEFAULT_HERO_VIDEO = 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/Home%20Page%20Dream%20Frame-IHlLqyEeHxIkieYCJ4a5o9UPa1ibNP.mp4'
+    const heroMedia = s.bgVideo || s.bgImage || DEFAULT_HERO_VIDEO
+    const isHeroVideo = isVideoUrl(heroMedia)
 
     return (
       <div
@@ -128,22 +127,34 @@ export function SectionRenderer({
         <section className="relative min-h-[62vh] sm:min-h-[70vh] lg:min-h-[76vh] flex flex-col justify-between items-center px-4 sm:px-6 pt-16 sm:pt-20 pb-16 sm:pb-28 overflow-hidden bg-[#080807]">
           {/* Vidéo Réelle d'Art Automobile en Fond ou Photographie d'Exception */}
           <div className="absolute inset-0 z-0 overflow-hidden">
-            {isHeroVideo && heroVideo ? (
+            {isHeroVideo ? (
               <video
-                key={heroVideo}
+                key={heroMedia}
                 autoPlay
                 loop
                 muted
                 playsInline
-                src={heroVideo}
+                controls={false}
+                preload="auto"
+                ref={(el) => {
+                  if (el) {
+                    el.muted = true
+                    el.play().catch(() => {})
+                  }
+                }}
+                onLoadedMetadata={(e) => {
+                  e.currentTarget.muted = true
+                  e.currentTarget.play().catch(() => {})
+                }}
+                src={heroMedia}
                 className="w-full h-full object-cover object-center brightness-[1.05] contrast-[1.02] pointer-events-none"
               >
-                <source src={heroVideo} type={heroVideo.includes('.webm') ? 'video/webm' : (heroVideo.includes('.mov') ? 'video/quicktime' : 'video/mp4')} />
+                <source src={heroMedia} type={heroMedia.includes('.webm') ? 'video/webm' : (heroMedia.includes('.mov') ? 'video/quicktime' : 'video/mp4')} />
               </video>
             ) : (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
-                src={heroImage}
+                src={heroMedia}
                 alt={s.title ? `${s.title} — Cadre 3D d'Art Automobile Dream Frame` : "Art Automobile d'Exception — Cadre 3D Dream Frame"}
                 className="w-full h-full object-cover object-center brightness-[1.0] contrast-[1.05] scale-105"
               />
@@ -284,6 +295,9 @@ export function SectionRenderer({
               }
 
               return displayed.map((rawItem: any, idx: number) => {
+                const productImages = Array.isArray(rawItem.images) ? rawItem.images : []
+                const hoverImage = productImages.length >= 2 ? productImages[1] : null
+
                 const item = {
                   id: rawItem.id,
                   slug: rawItem.slug,
@@ -293,7 +307,7 @@ export function SectionRenderer({
                   specs: rawItem.specs || rawItem.description?.slice(0, 50) || 'Atelier France · Pièce Réelle',
                   tag: rawItem.tag || (rawItem.era === 'VINTAGE' ? 'Pièce Historique' : 'Atelier France · Pièce Réelle'),
                   image: rawItem.image || getProductThumbnail(rawItem),
-                  imageHover: rawItem.imageHover || rawItem.images?.find((img: string, i: number) => i > 0 && !isVideoUrl(img)) || null,
+                  imageHover: hoverImage,
                   price: typeof rawItem.price === 'number' ? `${rawItem.price.toFixed(2).replace('.', ',')} €` : rawItem.price,
                 }
 

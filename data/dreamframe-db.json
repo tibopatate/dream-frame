@@ -1,29 +1,6 @@
 {
   "products": [
     {
-      "id": "fmt-a4-cadre",
-      "slug": "cadre-format-10x15cm-dream-frame-officiel",
-      "name": "Cadre Format 10×15cm | Dream Frame Officiel",
-      "brand": "Dream Frame Atelier",
-      "description": "Cadre d'artisanat d'exception au format intime 10 × 15 cm. Finition galerie d'art, vitrage acrylique de précision et rétroéclairage LED ambré 3000K.",
-      "price": 49.9,
-      "era": "MODERN",
-      "year": 2024,
-      "isActive": true,
-      "isFeatured": true,
-      "images": [
-        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074219-CwVVnGj3cqltgmgfmnU553ytSiYGfI.jpg",
-        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074229-TGotGMk3IfQt1XYoXgIZSZaenYANpf.jpg"
-      ],
-      "stock": 10,
-      "stockAlert": 3,
-      "sku": "DF-STANDARD-10X15",
-      "stripePriceId": "",
-      "formatName": "Petit Cadre Standard",
-      "formatSize": "10 × 15 cm",
-      "createdAt": "2026-09-10T12:00:00.000Z"
-    },
-    {
       "id": "cmtz0fwum0004l904jcdzyop3",
       "slug": "porsche-918-spyder",
       "name": "Porsche 918 Spyder (2015)",
@@ -98,29 +75,6 @@
       "createdAt": "2026-09-11T10:00:00.000Z"
     },
     {
-      "id": "real-ferrari-moyen",
-      "slug": "ferrari-f40-cadre-moyen-collector",
-      "name": "Ferrari F40 — Cadre Moyen Collector",
-      "brand": "Ferrari",
-      "description": "Format Moyen d'artisanat 30 × 42 cm. V8 Biturbo sculpté en relief sous vitrage acrylique haute transparence avec module LED ambré 3000K.",
-      "price": 149.9,
-      "era": "VINTAGE",
-      "year": 1987,
-      "isActive": true,
-      "isFeatured": true,
-      "images": [
-        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg",
-        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074211-n6Iutq4tW8tjyXGxKWldSGFLRPpdgN.jpg"
-      ],
-      "stock": 5,
-      "stockAlert": 2,
-      "sku": "DF-FERRARI-MOYEN-001",
-      "stripePriceId": "",
-      "formatName": "Cadre Moyen Collector",
-      "formatSize": "30 × 42 cm",
-      "createdAt": "2026-09-12T21:42:46.805Z"
-    },
-    {
       "id": "cmtyjxs970000i9041p1iabwp",
       "slug": "ferrari-laferrari",
       "name": "Ferrari LaFerrari — Cadre Moyen Collector",
@@ -142,30 +96,6 @@
       "formatName": "Cadre Moyen Collector",
       "formatSize": "30 × 42 cm",
       "createdAt": "2026-09-11T09:00:00.000Z"
-    },
-    {
-      "id": "real-ferrari-f40",
-      "slug": "ferrari-f40-1987-cadre-3d",
-      "name": "Ferrari F40 (1987) — Grand Cadre Prestige",
-      "brand": "Ferrari",
-      "description": "Le mythe absolu de Maranello en Grand Format d'Exception 50 × 70 cm. V8 Twin-Turbo et aileron légendaire sculptés au millimètre sous vitrage d'exception et rétroéclairage LED ambré.",
-      "price": 249.9,
-      "era": "VINTAGE",
-      "year": 1987,
-      "isActive": true,
-      "isFeatured": true,
-      "images": [
-        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg",
-        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074211-n6Iutq4tW8tjyXGxKWldSGFLRPpdgN.jpg",
-        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074438-NeUYfhCEOmLrJoUn19iHpNsGZZtume.mp4"
-      ],
-      "stock": 4,
-      "stockAlert": 2,
-      "sku": "DF-FERRARI-F40",
-      "stripePriceId": "",
-      "formatName": "Grand Cadre Prestige",
-      "formatSize": "50 × 70 cm",
-      "createdAt": "2026-09-09T08:03:01.308Z"
     }
   ],
   "orders": [
@@ -191,12 +121,12 @@
       "items": [
         {
           "id": "item-84920-1",
-          "productId": "real-ferrari-moyen",
-          "variantId": "var-ferrari-moyen",
-          "sku": "DF-FERRARI-MOYEN-001",
-          "productName": "Ferrari F40 — Cadre Moyen Collector",
+          "productId": "cmtyjxs970000i9041p1iabwp",
+          "variantId": "var-laferrari",
+          "sku": "DF-FERRARI-LAFERRARI",
+          "productName": "Ferrari LaFerrari — Cadre Moyen Collector",
           "brand": "Ferrari",
-          "era": "VINTAGE",
+          "era": "MODERN",
           "unitPrice": 149.9,
           "quantity": 1,
           "total": 149.9,
@@ -218,7 +148,7 @@
     "realDataOnly": true,
     "instagramUrl": "https://www.instagram.com/dreamframe996?stkn=cW9yb2NxOG8wOXFw",
     "tiktokUrl": "https://www.tiktok.com/@dreamframe_officiel",
-    "heroVideo": ""
+    "heroVideo": "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/Home%20Page%20Dream%20Frame-IHlLqyEeHxIkieYCJ4a5o9UPa1ibNP.mp4"
   },
   "collaborators": [
     {
@@ -239,13 +169,10 @@
       "description": "L'intégralité de nos cadres d'art automobile 3D faits main en France avec rétroéclairage LED.",
       "image": "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074340-Yht6vWOelLNIAQ3My66qMboSP0Ngou.jpg",
       "productIds": [
-        "fmt-a4-cadre",
         "cmtz0fwum0004l904jcdzyop3",
         "cmtz0dodt0002l904o55hk2mt",
         "cmtyzzzuk0000l904n1nlhhu4",
-        "real-ferrari-moyen",
-        "cmtyjxs970000i9041p1iabwp",
-        "real-ferrari-f40"
+        "cmtyjxs970000i9041p1iabwp"
       ],
       "isActive": true,
       "isFeatured": true,
@@ -256,10 +183,8 @@
       "slug": "ferrari",
       "name": "Collection Ferrari Maranello",
       "description": "L'excellence mécanique italienne sculptée en relief 3D sous vitrage acrylique et rétroéclairage LED ambré.",
-      "image": "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg",
+      "image": "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074241-wgRZ3XxvHtAcH2NoaABtL3K0tnlXFL.jpg",
       "productIds": [
-        "real-ferrari-f40",
-        "real-ferrari-moyen",
         "cmtyzzzuk0000l904n1nlhhu4",
         "cmtyjxs970000i9041p1iabwp"
       ],
@@ -270,28 +195,15 @@
     {
       "id": "col-supercars",
       "slug": "supercars-hypercars",
-      "name": "Supercars & Écuries de Légende",
+      "name": "Supercars & Hypercars Contemporaines",
       "description": "Porsche 918 Spyder, Audi R8 V10 et icônes contemporaines sous vitrage de précision.",
-      "image": "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074344-UFfkSw76hlBDOHG9V2f1fDVF1hFUR6.jpg",
+      "image": "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074340-Yht6vWOelLNIAQ3My66qMboSP0Ngou.jpg",
       "productIds": [
         "cmtz0fwum0004l904jcdzyop3",
         "cmtz0dodt0002l904o55hk2mt"
       ],
       "isActive": true,
       "isFeatured": true,
-      "createdAt": "2026-09-12T10:00:00.000Z"
-    },
-    {
-      "id": "col-prestige",
-      "slug": "grand-format-prestige",
-      "name": "Grand Format Prestige 50×70cm",
-      "description": "Pièce maîtresse d'exposition grand format avec rétroéclairage LED ambré.",
-      "image": "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074211-n6Iutq4tW8tjyXGxKWldSGFLRPpdgN.jpg",
-      "productIds": [
-        "real-ferrari-f40"
-      ],
-      "isActive": true,
-      "isFeatured": false,
       "createdAt": "2026-09-12T10:00:00.000Z"
     }
   ]

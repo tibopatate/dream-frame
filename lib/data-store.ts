@@ -258,47 +258,44 @@ export interface DatabaseSchema {
 export function getInitialCollections(): StoredCollection[] {
   return [
     {
-      id: 'col-ferrari',
-      slug: 'ferrari',
-      name: 'Collection Ferrari Maranello',
-      description: "L'excellence mécanique italienne sculptée en relief 3D sous vitrage acrylique et rétroéclairage LED ambré.",
-      image: 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg',
-      productIds: ['real-ferrari-f40', 'real-ferrari-moyen', 'fmt-a4-cadre'],
+      id: 'col-tous',
+      slug: 'tous-les-cadres',
+      name: 'Toutes Nos Créations d\'Atelier',
+      description: 'L\'intégralité de nos cadres d\'art automobile 3D faits main en France avec rétroéclairage LED.',
+      image: 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074340-Yht6vWOelLNIAQ3My66qMboSP0Ngou.jpg',
+      productIds: [
+        'cmtz0fwum0004l904jcdzyop3',
+        'cmtz0dodt0002l904o55hk2mt',
+        'cmtyzzzuk0000l904n1nlhhu4',
+        'cmtyjxs970000i9041p1iabwp',
+      ],
       isActive: true,
       isFeatured: true,
       createdAt: '2026-09-12T10:00:00.000Z',
     },
     {
-      id: 'col-prestige',
-      slug: 'grand-format-prestige',
-      name: 'Grand Format Prestige 50×70cm',
-      description: "Pièce maîtresse d'exposition grand format avec rétroéclairage LED ambré.",
-      image: 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074211-n6Iutq4tW8tjyXGxKWldSGFLRPpdgN.jpg',
-      productIds: ['real-ferrari-f40'],
+      id: 'col-ferrari',
+      slug: 'ferrari',
+      name: 'Collection Ferrari Maranello',
+      description: "L'excellence mécanique italienne sculptée en relief 3D sous vitrage acrylique et rétroéclairage LED ambré.",
+      image: 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074241-wgRZ3XxvHtAcH2NoaABtL3K0tnlXFL.jpg',
+      productIds: ['cmtyzzzuk0000l904n1nlhhu4', 'cmtyjxs970000i9041p1iabwp'],
       isActive: true,
-      isFeatured: false,
+      isFeatured: true,
       createdAt: '2026-09-12T10:00:00.000Z',
     },
     {
-      id: 'col-collector',
-      slug: 'cadre-moyen-collector',
-      name: 'Cadre Moyen Collector 30×42cm',
-      description: "Le format de salon par excellence, proportion idéale et finition artisanale.",
-      image: 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg',
-      productIds: ['real-ferrari-moyen'],
+      id: 'col-supercars',
+      slug: 'supercars-hypercars',
+      name: 'Supercars & Hypercars Contemporaines',
+      description: 'Porsche 918 Spyder, Audi R8 V10 et icônes contemporaines sous vitrage de précision.',
+      image: 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074340-Yht6vWOelLNIAQ3My66qMboSP0Ngou.jpg',
+      productIds: [
+        'cmtz0fwum0004l904jcdzyop3',
+        'cmtz0dodt0002l904o55hk2mt',
+      ],
       isActive: true,
-      isFeatured: false,
-      createdAt: '2026-09-12T10:00:00.000Z',
-    },
-    {
-      id: 'col-standard',
-      slug: 'petit-cadre-standard',
-      name: 'Format Standard 10×15cm',
-      description: "Finition bureau ou chevet, discret et élégant.",
-      image: 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074219-CwVVnGj3cqltgmgfmnU553ytSiYGfI.jpg',
-      productIds: ['fmt-a4-cadre'],
-      isActive: true,
-      isFeatured: false,
+      isFeatured: true,
       createdAt: '2026-09-12T10:00:00.000Z',
     },
   ]
@@ -904,7 +901,7 @@ export async function getUnifiedProducts(): Promise<any[]> {
   // 1. Initialiser avec tous les cadres de la boutique (11 modèles réels)
   for (const p of stored) {
     const priceNum = Number(p.price) || 49.90
-    const formatName = (p as any).formatName || (priceNum >= 200 ? 'Ferrari F40 — Grand Cadre Prestige' : priceNum >= 100 ? 'Ferrari F40 — Cadre Moyen Collector' : 'Petit Cadre Standard')
+    const formatName = (p as any).formatName || (priceNum >= 200 ? 'Grand Format Prestige' : priceNum >= 100 ? 'Cadre Moyen Collector' : 'Petit Cadre Standard')
     const formatSize = (p as any).formatSize || (priceNum >= 200 ? '50 × 70 cm' : priceNum >= 100 ? '30 × 42 cm' : '21 × 29.7 cm')
 
     productMap.set(p.slug, {

@@ -61,8 +61,10 @@ export function ProductImageUploader({
         return
       }
 
-      if (imagesRef.current.length + validFiles.length > maxImages) {
-        setUploadError(`Vous pouvez ajouter au maximum ${maxImages} photos par cadre.`)
+      if (maxImages === 1 && validFiles.length === 1) {
+        // Mode remplacement direct autoris
+      } else if (imagesRef.current.length + validFiles.length > maxImages) {
+        setUploadError(`Vous pouvez ajouter au maximum ${maxImages} photo${maxImages > 1 ? 's' : ''}.`)
         return
       }
 
@@ -109,7 +111,11 @@ export function ProductImageUploader({
       }
 
       if (uploadedUrls.length > 0) {
-        onChange([...imagesRef.current, ...uploadedUrls])
+        if (maxImages === 1) {
+          onChange([uploadedUrls[0]])
+        } else {
+          onChange([...imagesRef.current, ...uploadedUrls])
+        }
       }
 
       setUploading(false)
@@ -149,6 +155,13 @@ export function ProductImageUploader({
   const handleAddUrl = () => {
     const trimmed = urlInput.trim()
     if (trimmed) {
+      if (maxImages === 1) {
+        onChange([trimmed])
+        setUrlInput('')
+        setShowUrlInput(false)
+        setUploadError(null)
+        return
+      }
       if (images.length >= maxImages) {
         setUploadError(`Limite de ${maxImages} images atteinte.`)
         return
@@ -320,7 +333,7 @@ export function ProductImageUploader({
 
           <button
             type="button"
-            disabled={uploading || images.length >= maxImages}
+            disabled={uploading || (maxImages > 1 && images.length >= maxImages)}
             onClick={() => fileInputRef.current?.click()}
             className="px-4 py-2 bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-black font-extrabold text-xs uppercase tracking-wider rounded-xl transition shadow-lg shadow-amber-400/10 flex items-center gap-2 cursor-pointer active:scale-[0.98]"
           >
@@ -328,6 +341,11 @@ export function ProductImageUploader({
               <>
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />
                 <span>Téléversement en cours...</span>
+              </>
+            ) : maxImages === 1 && images.length > 0 ? (
+              <>
+                <Upload className="w-3.5 h-3.5" />
+                <span>Remplacer le média (Vidéo / Photo)</span>
               </>
             ) : (
               <>
