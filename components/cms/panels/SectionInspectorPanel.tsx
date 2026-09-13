@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   ArrowLeft,
   Type,
@@ -19,6 +19,8 @@ import {
 } from 'lucide-react'
 import { ProductImageUploader } from '@/components/admin/ProductImageUploader'
 import { isVideoUrl } from '@/lib/utils'
+import { getCollectionsAction } from '@/app/(admin)/admin/personnalisation/actions'
+import type { StoredCollection } from '@/lib/data-store'
 import type { PageSection } from '@/lib/page-builder/types'
 
 interface SectionInspectorPanelProps {
@@ -173,6 +175,16 @@ function CollectionContentFields({
   onChange: (k: string, v: any) => void
   products?: any[]
 }) {
+  const [availableCollections, setAvailableCollections] = useState<StoredCollection[]>([])
+
+  useEffect(() => {
+    getCollectionsAction().then((res) => {
+      if (res.success && res.collections) {
+        setAvailableCollections(res.collections)
+      }
+    })
+  }, [])
+
   const mode = s.mode || 'auto' // 'auto' | 'manual'
   const selectedProductIds: string[] = Array.isArray(s.selectedProductIds) ? s.selectedProductIds : []
 
@@ -345,6 +357,33 @@ function CollectionContentFields({
           </div>
         ) : (
           <div className="space-y-3 pt-2">
+            <FieldGroup label="Collection à afficher">
+              <select
+                value={s.collectionId || 'ALL'}
+                onChange={(e) => {
+                  const val = e.target.value
+                  if (val === 'ALL') {
+                    onChange('collectionId', '')
+                    onChange('collectionProductIds', [])
+                  } else {
+                    const col = availableCollections.find((c) => c.id === val || c.slug === val)
+                    onChange('collectionId', val)
+                    onChange('collectionProductIds', col?.productIds || [])
+                    if (col?.name) {
+                      onChange('title', col.name.toUpperCase())
+                    }
+                  }
+                }}
+                className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+              >
+                <option value="ALL">Toutes les créations de la boutique</option>
+                {availableCollections.map((col) => (
+                  <option key={col.id} value={col.id}>
+                    {col.name} ({col.productIds?.length || 0} cadres)
+                  </option>
+                ))}
+              </select>
+            </FieldGroup>
             <FieldGroup label="Catégorie affichée">
               <select
                 value={s.category || 'ALL'}

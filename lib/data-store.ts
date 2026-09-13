@@ -232,13 +232,75 @@ export interface StoredReview {
   createdAt: string
 }
 
+export interface StoredCollection {
+  id: string
+  slug: string
+  name: string
+  description?: string
+  image?: string
+  productIds: string[]
+  isActive: boolean
+  isFeatured?: boolean
+  createdAt: string
+}
+
 export interface DatabaseSchema {
   products: StoredProduct[]
+  collections?: StoredCollection[]
   orders: StoredOrder[]
   movements: StoredStockMovement[]
   settings: StoredSettings
   collaborators?: StoredCollaborator[]
   reviews?: StoredReview[]
+}
+
+export function getInitialCollections(): StoredCollection[] {
+  return [
+    {
+      id: 'col-ferrari',
+      slug: 'ferrari',
+      name: 'Collection Ferrari Maranello',
+      description: "L'excellence mécanique italienne sculptée en relief 3D sous vitrage acrylique et rétroéclairage LED ambré.",
+      image: 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg',
+      productIds: ['real-ferrari-f40', 'real-ferrari-moyen', 'fmt-a4-cadre'],
+      isActive: true,
+      isFeatured: true,
+      createdAt: '2026-09-12T10:00:00.000Z',
+    },
+    {
+      id: 'col-prestige',
+      slug: 'grand-format-prestige',
+      name: 'Grand Format Prestige 50×70cm',
+      description: "Pièce maîtresse d'exposition grand format avec rétroéclairage LED ambré.",
+      image: 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074211-n6Iutq4tW8tjyXGxKWldSGFLRPpdgN.jpg',
+      productIds: ['real-ferrari-f40'],
+      isActive: true,
+      isFeatured: false,
+      createdAt: '2026-09-12T10:00:00.000Z',
+    },
+    {
+      id: 'col-collector',
+      slug: 'cadre-moyen-collector',
+      name: 'Cadre Moyen Collector 30×42cm',
+      description: "Le format de salon par excellence, proportion idéale et finition artisanale.",
+      image: 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg',
+      productIds: ['real-ferrari-moyen'],
+      isActive: true,
+      isFeatured: false,
+      createdAt: '2026-09-12T10:00:00.000Z',
+    },
+    {
+      id: 'col-standard',
+      slug: 'petit-cadre-standard',
+      name: 'Format Standard 10×15cm',
+      description: "Finition bureau ou chevet, discret et élégant.",
+      image: 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074219-CwVVnGj3cqltgmgfmnU553ytSiYGfI.jpg',
+      productIds: ['fmt-a4-cadre'],
+      isActive: true,
+      isFeatured: false,
+      createdAt: '2026-09-12T10:00:00.000Z',
+    },
+  ]
 }
 
 function getInitialDatabase(): DatabaseSchema {
@@ -680,8 +742,9 @@ function getInitialDatabase(): DatabaseSchema {
   ]
 
   const reviews = getInitialReviews()
+  const collections = getInitialCollections()
 
-  return { products, orders, movements, settings, collaborators, reviews }
+  return { products, collections, orders, movements, settings, collaborators, reviews }
 }
 
 export function getInitialReviews(): StoredReview[] {
@@ -697,6 +760,9 @@ const TMP_FILE = path.join('/tmp', 'dreamframe-db.json')
 export function readDatabase(): DatabaseSchema {
   // 1. Cache mémoire global (instantané et réactif dans l'instance)
   if (globalForDb.dreamFrameDb && globalForDb.dreamFrameDb.products && globalForDb.dreamFrameDb.products.length > 0) {
+    if (!globalForDb.dreamFrameDb.collections) {
+      globalForDb.dreamFrameDb.collections = getInitialCollections()
+    }
     return globalForDb.dreamFrameDb
   }
 
@@ -707,6 +773,7 @@ export function readDatabase(): DatabaseSchema {
       const parsed: DatabaseSchema = JSON.parse(data)
       if (parsed && parsed.products && parsed.products.length > 0) {
         if (!parsed.reviews) parsed.reviews = []
+        if (!parsed.collections) parsed.collections = getInitialCollections()
         globalForDb.dreamFrameDb = parsed
         return parsed
       }
@@ -720,6 +787,7 @@ export function readDatabase(): DatabaseSchema {
       const parsed: DatabaseSchema = JSON.parse(data)
       if (parsed && parsed.products && parsed.products.length > 0) {
         if (!parsed.reviews) parsed.reviews = []
+        if (!parsed.collections) parsed.collections = getInitialCollections()
         globalForDb.dreamFrameDb = parsed
         return parsed
       }
@@ -741,6 +809,9 @@ const BLOB_SYNC_GRACE_MS = 2500
 export async function syncDatabaseWithCloud(): Promise<DatabaseSchema> {
   // Fast-path: return in-memory cache if synchronized recently
   if (globalForDb.dreamFrameDb && Date.now() - lastBlobSyncTime < BLOB_SYNC_GRACE_MS) {
+    if (!globalForDb.dreamFrameDb.collections) {
+      globalForDb.dreamFrameDb.collections = getInitialCollections()
+    }
     return globalForDb.dreamFrameDb
   }
 
@@ -752,6 +823,7 @@ export async function syncDatabaseWithCloud(): Promise<DatabaseSchema> {
         const parsed = await res.json()
         if (parsed && Array.isArray(parsed.products) && parsed.products.length > 0) {
           if (!parsed.reviews) parsed.reviews = []
+          if (!parsed.collections) parsed.collections = getInitialCollections()
           globalForDb.dreamFrameDb = parsed
           lastBlobSyncTime = Date.now()
           try {
@@ -887,6 +959,13 @@ export async function getUnifiedProductBySlug(slug: string): Promise<any | null>
   return products.find((p) => p.slug === slug || p.id === slug) || null
 }
 
+export async function getUnifiedCollections(): Promise<StoredCollection[]> {
+  try {
+    await syncDatabaseWithCloud()
+  } catch {}
+  return getAllCollections()
+}
+
 export function getAllProducts(): StoredProduct[] {
   const db = readDatabase()
   return db.products
@@ -895,6 +974,77 @@ export function getAllProducts(): StoredProduct[] {
 export function getProductById(id: string): StoredProduct | undefined {
   const db = readDatabase()
   return db.products.find((p) => p.id === id || p.slug === id)
+}
+
+// ─── Collections CRUD ────────────────────────────────────────────────────────
+
+export function getAllCollections(): StoredCollection[] {
+  const db = readDatabase()
+  return db.collections || []
+}
+
+export function getCollectionById(id: string): StoredCollection | undefined {
+  const db = readDatabase()
+  return (db.collections || []).find((c) => c.id === id || c.slug === id)
+}
+
+export function getCollectionBySlug(slug: string): StoredCollection | undefined {
+  const db = readDatabase()
+  return (db.collections || []).find((c) => c.slug === slug || c.id === slug)
+}
+
+export function addCollection(col: Omit<StoredCollection, 'id' | 'createdAt'>): StoredCollection {
+  const db = readDatabase()
+  if (!db.collections) db.collections = []
+  const newCol: StoredCollection = {
+    ...col,
+    id: `col-${Date.now()}`,
+    createdAt: new Date().toISOString(),
+  }
+  db.collections.push(newCol)
+  writeDatabase(db)
+  return newCol
+}
+
+export function updateCollection(id: string, updates: Partial<StoredCollection>): StoredCollection | null {
+  const db = readDatabase()
+  if (!db.collections) db.collections = []
+  const idx = db.collections.findIndex((c) => c.id === id || c.slug === id)
+  if (idx === -1) return null
+  db.collections[idx] = { ...db.collections[idx], ...updates }
+  writeDatabase(db)
+  return db.collections[idx]
+}
+
+export function deleteCollection(id: string): boolean {
+  const db = readDatabase()
+  if (!db.collections) return false
+  const initLen = db.collections.length
+  db.collections = db.collections.filter((c) => c.id !== id && c.slug !== id)
+  writeDatabase(db)
+  return db.collections.length < initLen
+}
+
+export async function addCollectionAsync(col: Omit<StoredCollection, 'id' | 'createdAt'>): Promise<StoredCollection> {
+  const added = addCollection(col)
+  await writeDatabaseAsync(readDatabase())
+  return added
+}
+
+export async function updateCollectionAsync(id: string, updates: Partial<StoredCollection>): Promise<StoredCollection | null> {
+  const updated = updateCollection(id, updates)
+  if (updated) {
+    await writeDatabaseAsync(readDatabase())
+  }
+  return updated
+}
+
+export async function deleteCollectionAsync(id: string): Promise<boolean> {
+  const deleted = deleteCollection(id)
+  if (deleted) {
+    await writeDatabaseAsync(readDatabase())
+  }
+  return deleted
 }
 
 export function addProduct(product: Omit<StoredProduct, 'id' | 'createdAt'>): StoredProduct {

@@ -1,249 +1,39 @@
 {
   "products": [
     {
-      "id": "real-bugatti-chiron",
-      "slug": "bugatti-chiron-2016-cadre-3d",
-      "name": "Bugatti Chiron (2016)",
-      "brand": "Bugatti",
-      "description": "Le sommet du luxe et de l'hypercar W16 1 500 ch. Cadre d'ébénisterie 3D avec éclairage LED ambré, immortalisé devant la véritable Bugatti Chiron.",
+      "id": "fmt-a4-cadre",
+      "slug": "cadre-format-10x15cm-dream-frame-officiel",
+      "name": "Cadre Format 10×15cm | Dream Frame Officiel",
+      "brand": "Dream Frame Atelier",
+      "description": "Cadre d'artisanat d'exception au format intime 10 × 15 cm. Finition galerie d'art, vitrage acrylique de précision et rétroéclairage LED ambré 3000K.",
       "price": 49.9,
       "era": "MODERN",
-      "year": 2016,
+      "year": 2024,
       "isActive": true,
       "isFeatured": true,
       "images": [
-        "https://images.unsplash.com/photo-1627454820516-dc767bcb4d3e?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1200&auto=format&fit=crop"
+        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074219-CwVVnGj3cqltgmgfmnU553ytSiYGfI.jpg",
+        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074229-TGotGMk3IfQt1XYoXgIZSZaenYANpf.jpg"
       ],
-      "stock": 5,
-      "stockAlert": 2,
-      "sku": "DF-BUGATTI-CHIRON",
-      "stripePriceId": "",
-      "createdAt": "2026-09-08T12:00:00.000Z",
-      "formatName": "Petit Cadre Standard",
-      "formatSize": "21 × 29.7 cm"
-    },
-    {
-      "id": "real-pagani-huayra",
-      "slug": "pagani-huayra-v12-cadre-3d",
-      "name": "Pagani Huayra V12",
-      "brand": "Pagani",
-      "description": "L'artisanat automobile italien dans ce qu'il a de plus pur. V12 Biturbo AMG de 730 ch sous châssis Carbo-Titane, photographié à côté de son modèle échelle 1.",
-      "price": 49.9,
-      "era": "MODERN",
-      "year": 2023,
-      "isActive": true,
-      "isFeatured": true,
-      "images": [
-        "https://images.unsplash.com/photo-1635974066296-b71d03049ed7?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop"
-      ],
-      "stock": 4,
-      "stockAlert": 2,
-      "sku": "DF-PAGANI-HUAYRA",
-      "stripePriceId": "",
-      "createdAt": "2026-09-08T12:00:00.000Z",
-      "formatName": "Petit Cadre Standard",
-      "formatSize": "21 × 29.7 cm"
-    },
-    {
-      "id": "real-audi-r8v10",
-      "slug": "audi-r8-v10-performance-cadre-3d",
-      "name": "Audi R8 (2018)",
-      "brand": "Audi",
-      "description": "Le rugissement du V10 atmosphérique à 8 700 tr/min. Cadre 3D relief sous vitrage acrylique HD avec rétroéclairage LED ambré.",
-      "price": 49.9,
-      "era": "MODERN",
-      "year": 2018,
-      "isActive": true,
-      "isFeatured": true,
-      "images": [
-        "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?q=80&w=1200&auto=format&fit=crop"
-      ],
-      "stock": 7,
+      "stock": 10,
       "stockAlert": 3,
-      "sku": "DF-AUDI-R8V10",
+      "sku": "DF-STANDARD-10X15",
       "stripePriceId": "",
-      "createdAt": "2026-09-09T08:03:01.308Z",
       "formatName": "Petit Cadre Standard",
-      "formatSize": "21 × 29.7 cm"
-    },
-    {
-      "id": "real-bmw-m4comp",
-      "slug": "bmw-m4-competition-isle-of-man-cadre-3d",
-      "name": "BMW M4 Competition (G82)",
-      "brand": "BMW",
-      "description": "Teinte mythique Isle of Man Green et calandre verticale acérée. Réalisation 3D de précision sous vitrage acrylique.",
-      "price": 49.9,
-      "era": "MODERN",
-      "year": 2023,
-      "isActive": true,
-      "isFeatured": true,
-      "images": [
-        "https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=1200&auto=format&fit=crop"
-      ],
-      "stock": 6,
-      "stockAlert": 2,
-      "sku": "DF-BMW-M4COMP",
-      "stripePriceId": "",
-      "createdAt": "2026-09-08T12:00:00.000Z",
-      "formatName": "Petit Cadre Standard",
-      "formatSize": "21 × 29.7 cm"
-    },
-    {
-      "id": "real-lambo-huracan",
-      "slug": "lamborghini-huracan-lp-610-4-cadre-3d",
-      "name": "Lamborghini Huracán LP 610-4",
-      "brand": "Lamborghini",
-      "description": "V10 atmosphérique 5.2L et arêtes tranchantes stealth. Cadre d'artisanat avec module LED ambré et finitions haut de gamme.",
-      "price": 49.9,
-      "era": "MODERN",
-      "year": 2021,
-      "isActive": true,
-      "isFeatured": true,
-      "images": [
-        "https://images.unsplash.com/photo-1519245659620-e859806a8d3b?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1541348263662-e0c8de4259ba?q=80&w=1200&auto=format&fit=crop"
-      ],
-      "stock": 5,
-      "stockAlert": 2,
-      "sku": "DF-LAMBO-HURACAN",
-      "stripePriceId": "",
-      "createdAt": "2026-09-08T12:00:00.000Z",
-      "formatName": "Petit Cadre Standard",
-      "formatSize": "21 × 29.7 cm"
-    },
-    {
-      "id": "real-mercedes-amggtr",
-      "slug": "mercedes-amg-gt-r-2017-cadre-3d",
-      "name": "Mercedes-AMG GT R (2017)",
-      "brand": "Mercedes-Benz",
-      "description": "La bête de l'Enfer Vert Nürburgring. V8 Biturbo 4.0L sous châssis aluminium et vitrage acrylique optique HD.",
-      "price": 49.9,
-      "era": "MODERN",
-      "year": 2017,
-      "isActive": true,
-      "isFeatured": false,
-      "images": [
-        "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop"
-      ],
-      "stock": 4,
-      "stockAlert": 2,
-      "sku": "DF-MERCEDES-AMGGTR",
-      "stripePriceId": "",
-      "createdAt": "2026-09-08T12:00:00.000Z",
-      "formatName": "Petit Cadre Standard",
-      "formatSize": "21 × 29.7 cm"
-    },
-    {
-      "id": "real-mclaren-gt",
-      "slug": "mclaren-gt-2019-cadre-3d",
-      "name": "McLaren GT (2019)",
-      "brand": "McLaren",
-      "description": "L'élégance Grand Tourisme britannique en relief 3D. V8 Biturbo 620 ch sous cadre d'artisanat bois et éclairage LED supérieur.",
-      "price": 49.9,
-      "era": "MODERN",
-      "year": 2019,
-      "isActive": true,
-      "isFeatured": true,
-      "images": [
-        "https://images.unsplash.com/photo-1516298252535-cf2ac5147f9b?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1617814086906-d847a8bc6fca?q=80&w=1200&auto=format&fit=crop"
-      ],
-      "stock": 5,
-      "stockAlert": 2,
-      "sku": "DF-MCLAREN-GT",
-      "stripePriceId": "",
-      "createdAt": "2026-09-09T08:03:01.307Z",
-      "formatName": "Petit Cadre Standard",
-      "formatSize": "21 × 29.7 cm"
-    },
-    {
-      "id": "real-porsche-918",
-      "slug": "porsche-918-spyder-2015-cadre-3d",
-      "name": "Porsche 918 Spyder (2015)",
-      "brand": "Porsche",
-      "description": "L'hypercar hybride absolue de 887 ch. V8 atmosphérique et échappements hauts sculptés en relief 3D.",
-      "price": 49.9,
-      "era": "MODERN",
-      "year": 2015,
-      "isActive": true,
-      "isFeatured": false,
-      "images": [
-        "https://images.unsplash.com/photo-1556868682-675067febf35?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop"
-      ],
-      "stock": 4,
-      "stockAlert": 2,
-      "sku": "DF-PORSCHE-918",
-      "stripePriceId": "",
-      "createdAt": "2026-09-08T12:00:00.000Z",
-      "formatName": "Petit Cadre Standard",
-      "formatSize": "21 × 29.7 cm"
-    },
-    {
-      "id": "real-ferrari-f40",
-      "slug": "ferrari-f40-1987-cadre-3d",
-      "name": "Ferrari F40 (1987) — Grand Cadre Prestige",
-      "brand": "Ferrari",
-      "description": "Le mythe absolu de Maranello en Grand Format d'Exception 50 × 70 cm. V8 Twin-Turbo et aileron légendaire sculptés au millimètre sous vitrage d'artisanat et rétroéclairage LED ambré.",
-      "price": 249.9,
-      "era": "VINTAGE",
-      "year": 1987,
-      "isActive": true,
-      "isFeatured": true,
-      "images": [
-        "https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop",
-        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074438-NeUYfhCEOmLrJoUn19iHpNsGZZtume.mp4"
-      ],
-      "stock": 4,
-      "stockAlert": 2,
-      "sku": "DF-FERRARI-F40",
-      "stripePriceId": "",
-      "createdAt": "2026-09-09T08:03:01.308Z",
-      "formatName": "Grand Cadre Prestige",
-      "formatSize": "50 × 70 cm"
-    },
-    {
-      "id": "real-porsche-cayenne",
-      "slug": "porsche-cayenne-turbo-2016-cadre-3d",
-      "name": "Porsche Cayenne Turbo (2016)",
-      "brand": "Porsche",
-      "description": "La puissance souveraine du V8 Biturbo 570 ch. Silhouette musclée immortalisée en cadre d'artisanat d'art contemporain sous vitrage acrylique HD.",
-      "price": 49.9,
-      "era": "MODERN",
-      "year": 2016,
-      "isActive": true,
-      "isFeatured": true,
-      "images": [
-        "https://images.unsplash.com/photo-1699325929994-b94ae0c8f552?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1654159866298-e3c8ee93e43b?q=80&w=1200&auto=format&fit=crop"
-      ],
-      "stock": 6,
-      "stockAlert": 2,
-      "sku": "DF-PORSCHE-CAYENNE",
-      "stripePriceId": "",
-      "createdAt": "2026-09-09T08:03:01.308Z",
-      "formatName": "Petit Cadre Standard",
-      "formatSize": "21 × 29.7 cm"
+      "formatSize": "10 × 15 cm",
+      "createdAt": "2026-09-10T12:00:00.000Z"
     },
     {
       "id": "real-ferrari-moyen",
       "slug": "ferrari-f40-cadre-moyen-collector",
       "name": "Ferrari F40 — Cadre Moyen Collector",
       "brand": "Ferrari",
-      "description": "Format Moyen d'artisanat 30 × 42 cm. V8 Biturbo italien sculpté en relief sous vitrage acrylique haute transparence avec module LED ambré 3000K.",
+      "description": "Format Moyen d'artisanat 30 × 42 cm. V8 Biturbo sculpté en relief sous vitrage acrylique haute transparence avec module LED ambré 3000K.",
       "price": 149.9,
       "era": "VINTAGE",
       "year": 1987,
       "isActive": true,
       "isFeatured": true,
-      "formatName": "Cadre Moyen Collector",
-      "formatSize": "30 × 42 cm",
       "images": [
         "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg",
         "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074211-n6Iutq4tW8tjyXGxKWldSGFLRPpdgN.jpg"
@@ -252,7 +42,32 @@
       "stockAlert": 2,
       "sku": "DF-FERRARI-MOYEN-001",
       "stripePriceId": "",
+      "formatName": "Cadre Moyen Collector",
+      "formatSize": "30 × 42 cm",
       "createdAt": "2026-09-12T21:42:46.805Z"
+    },
+    {
+      "id": "real-ferrari-f40",
+      "slug": "ferrari-f40-1987-cadre-3d",
+      "name": "Ferrari F40 (1987) — Grand Cadre Prestige",
+      "brand": "Ferrari",
+      "description": "Le mythe absolu de Maranello en Grand Format d'Exception 50 × 70 cm. V8 Twin-Turbo et aileron légendaire sculptés au millimètre sous vitrage d'exception et rétroéclairage LED ambré.",
+      "price": 249.9,
+      "era": "VINTAGE",
+      "year": 1987,
+      "isActive": true,
+      "isFeatured": true,
+      "images": [
+        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074438-NeUYfhCEOmLrJoUn19iHpNsGZZtume.mp4",
+        "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg"
+      ],
+      "stock": 4,
+      "stockAlert": 2,
+      "sku": "DF-FERRARI-F40",
+      "stripePriceId": "",
+      "formatName": "Grand Cadre Prestige",
+      "formatSize": "50 × 70 cm",
+      "createdAt": "2026-09-09T08:03:01.308Z"
     }
   ],
   "orders": [
@@ -317,5 +132,61 @@
       "createdAt": "2026-09-08T12:00:00.000Z"
     }
   ],
-  "reviews": []
+  "reviews": [],
+  "collections": [
+    {
+      "id": "col-ferrari",
+      "slug": "ferrari",
+      "name": "Collection Ferrari Maranello",
+      "description": "L'excellence mécanique italienne sculptée en relief 3D sous vitrage acrylique et rétroéclairage LED ambré.",
+      "image": "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg",
+      "productIds": [
+        "real-ferrari-f40",
+        "real-ferrari-moyen",
+        "fmt-a4-cadre"
+      ],
+      "isActive": true,
+      "isFeatured": true,
+      "createdAt": "2026-09-12T10:00:00.000Z"
+    },
+    {
+      "id": "col-prestige",
+      "slug": "grand-format-prestige",
+      "name": "Grand Format Prestige 50×70cm",
+      "description": "Pièce maîtresse d'exposition grand format avec rétroéclairage LED ambré.",
+      "image": "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074211-n6Iutq4tW8tjyXGxKWldSGFLRPpdgN.jpg",
+      "productIds": [
+        "real-ferrari-f40"
+      ],
+      "isActive": true,
+      "isFeatured": false,
+      "createdAt": "2026-09-12T10:00:00.000Z"
+    },
+    {
+      "id": "col-collector",
+      "slug": "cadre-moyen-collector",
+      "name": "Cadre Moyen Collector 30×42cm",
+      "description": "Le format de salon par excellence, proportion idéale et finition artisanale.",
+      "image": "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074237-DLrB8wZrK6F91n0aiM5MMjwcwtvEuI.jpg",
+      "productIds": [
+        "real-ferrari-moyen"
+      ],
+      "isActive": true,
+      "isFeatured": false,
+      "createdAt": "2026-09-12T10:00:00.000Z"
+    },
+    {
+      "id": "col-standard",
+      "slug": "petit-cadre-standard",
+      "name": "Format Standard 10×15cm",
+      "description": "Finition bureau ou chevet, discret et élégant.",
+      "image": "https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074219-CwVVnGj3cqltgmgfmnU553ytSiYGfI.jpg",
+      "productIds": [
+        "fmt-a4-cadre"
+      ],
+      "isActive": true,
+      "isFeatured": false,
+      "createdAt": "2026-09-12T10:00:00.000Z"
+    }
+  ]
 }

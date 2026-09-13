@@ -323,9 +323,24 @@ export function CockpitLayout({ initialDocument, initialProducts = [] }: Cockpit
       case 'catalogue':
         return (
           <CataloguePanel
+            products={initialProducts}
             onSelectCollectionSection={() => {
               const colSec = doc.sections.find((s) => s.type === 'collection')
               if (colSec) {
+                setActiveCategory('homepage')
+                setActiveSectionId(colSec.id)
+              }
+            }}
+            onUpdateHomepageCollection={(collectionId, productIds, collectionName) => {
+              const colSec = doc.sections.find((s) => s.type === 'collection')
+              if (colSec) {
+                handleUpdateSectionSettings(colSec.id, {
+                  title: collectionName ? collectionName.toUpperCase() : 'NOTRE COLLECTION',
+                  collectionId,
+                  collectionProductIds: productIds,
+                  selectedProductIds: productIds,
+                  mode: 'manual',
+                })
                 setActiveCategory('homepage')
                 setActiveSectionId(colSec.id)
               }

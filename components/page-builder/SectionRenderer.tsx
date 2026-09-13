@@ -196,144 +196,8 @@ export function SectionRenderer({
     )
   }
 
-  // ─── SECTION 3: NOTRE COLLECTION (4 VRAIS CADRES DE LA BOUTIQUE) ───────────
+  // ─── SECTION 3: NOTRE COLLECTION (CADRES RÉELS DE LA BOUTIQUE) ───────────
   if (section.type === 'collection') {
-    // Tous les cadres de la boutique
-    const REAL_STORE_FRAMES = [
-      {
-        id: 'real-ferrari-f40',
-        slug: 'ferrari-f40-1987-cadre-3d',
-        name: 'Ferrari F40 (1987)',
-        year: 1987,
-        brand: 'Ferrari',
-        specs: 'V8 Twin-Turbo · 478 CH',
-        tag: 'Grand Format d’Exception',
-        image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop',
-        imageHover: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop',
-        price: '249,90 €',
-      },
-      {
-        id: 'real-ferrari-moyen',
-        slug: 'ferrari-f40-cadre-moyen-collector',
-        name: 'Ferrari F40 — Moyen Collector',
-        year: 1987,
-        brand: 'Ferrari',
-        specs: 'V8 Biturbo · 30 × 42 cm',
-        tag: 'Format Collector A3',
-        image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop',
-        imageHover: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop',
-        price: '149,90 €',
-      },
-      {
-        id: 'real-bugatti-chiron',
-        slug: 'bugatti-chiron-2016-cadre-3d',
-        name: 'Bugatti Chiron (2016)',
-        year: 2016,
-        brand: 'Bugatti',
-        specs: 'W16 Quadri-Turbo · 1 500 CH',
-        tag: 'Ébénisterie & LED',
-        image: 'https://images.unsplash.com/photo-1627454820516-dc767bcb4d3e?q=80&w=1200&auto=format&fit=crop',
-        imageHover: 'https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1200&auto=format&fit=crop',
-        price: '49,90 €',
-      },
-      {
-        id: 'real-pagani-huayra',
-        slug: 'pagani-huayra-v12-cadre-3d',
-        name: 'Pagani Huayra V12',
-        year: 2023,
-        brand: 'Pagani',
-        specs: 'V12 Biturbo AMG · 730 CH',
-        tag: 'Carbo-Titane & Relief',
-        image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop',
-        imageHover: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop',
-        price: '49,90 €',
-      },
-      {
-        id: 'real-audi-r8v10',
-        slug: 'audi-r8-v10-performance-cadre-3d',
-        name: 'Audi R8 V10',
-        year: 2018,
-        brand: 'Audi',
-        specs: 'V10 Atmosphérique · 620 CH',
-        tag: 'Vitrage HD & Module LED',
-        image: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1200&auto=format&fit=crop',
-        imageHover: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?q=80&w=1200&auto=format&fit=crop',
-        price: '49,90 €',
-      },
-      {
-        id: 'real-bmw-m4comp',
-        slug: 'bmw-m4-competition-isle-of-man-cadre-3d',
-        name: 'BMW M4 Competition',
-        year: 2023,
-        brand: 'BMW',
-        specs: '6 Cyl. Biturbo · 510 CH',
-        tag: 'Atelier France · Pièce Réelle',
-        image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200&auto=format&fit=crop',
-        imageHover: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=1200&auto=format&fit=crop',
-        price: '49,90 €',
-      },
-      {
-        id: 'real-lambo-huracan',
-        slug: 'lamborghini-huracan-lp-610-4-cadre-3d',
-        name: 'Lamborghini Huracán',
-        year: 2021,
-        brand: 'Lamborghini',
-        specs: 'V10 Atmos 5.2L · 610 CH',
-        tag: 'Design Stealth & LED',
-        image: 'https://images.unsplash.com/photo-1519245659620-e859806a8d3b?q=80&w=1200&auto=format&fit=crop',
-        imageHover: 'https://images.unsplash.com/photo-1541348263662-e0c8de4259ba?q=80&w=1200&auto=format&fit=crop',
-        price: '49,90 €',
-      },
-      {
-        id: 'real-mercedes-amggtr',
-        slug: 'mercedes-amg-gt-r-2017-cadre-3d',
-        name: 'Mercedes-AMG GT R',
-        year: 2017,
-        brand: 'Mercedes-Benz',
-        specs: 'V8 Biturbo 4.0L · Green Hell',
-        tag: 'Atelier France · Pièce Réelle',
-        image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?q=80&w=1200&auto=format&fit=crop',
-        imageHover: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop',
-        price: '49,90 €',
-      },
-      {
-        id: 'real-mclaren-gt',
-        slug: 'mclaren-gt-2019-cadre-3d',
-        name: 'McLaren GT',
-        year: 2019,
-        brand: 'McLaren',
-        specs: 'V8 Biturbo · 620 CH',
-        tag: 'Grand Tourisme & Relief',
-        image: 'https://images.unsplash.com/photo-1516298252535-cf2ac5147f9b?q=80&w=1200&auto=format&fit=crop',
-        imageHover: 'https://images.unsplash.com/photo-1617814086906-d847a8bc6fca?q=80&w=1200&auto=format&fit=crop',
-        price: '49,90 €',
-      },
-      {
-        id: 'real-porsche-918',
-        slug: 'porsche-918-spyder-2015-cadre-3d',
-        name: 'Porsche 918 Spyder',
-        year: 2015,
-        brand: 'Porsche',
-        specs: 'V8 Hybride · 887 CH',
-        tag: 'Hypercar d’Exception',
-        image: 'https://images.unsplash.com/photo-1556868682-675067febf35?q=80&w=1200&auto=format&fit=crop',
-        imageHover: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop',
-        price: '49,90 €',
-      },
-      {
-        id: 'real-porsche-cayenne',
-        slug: 'porsche-cayenne-turbo-2016-cadre-3d',
-        name: 'Porsche Cayenne Turbo',
-        year: 2016,
-        brand: 'Porsche',
-        specs: 'V8 Biturbo · 570 CH',
-        tag: 'Artisanat Contemporain',
-        image: 'https://images.unsplash.com/photo-1699325929994-b94ae0c8f552?q=80&w=1200&auto=format&fit=crop',
-        imageHover: 'https://images.unsplash.com/photo-1654159866298-e3c8ee93e43b?q=80&w=1200&auto=format&fit=crop',
-        price: '49,90 €',
-      },
-    ]
-
     return (
       <div
         id="collection"
@@ -353,7 +217,7 @@ export function SectionRenderer({
         )}
 
         <section className="py-12 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 space-y-8 sm:space-y-12 transition-all duration-700">
-          {/* En-tête Collection Minimaliste avec Ligne Fine (Concept 100% Fidèle) */}
+          {/* En-tête Collection Minimaliste avec Ligne Fine */}
           <div className="flex items-center justify-between gap-4 sm:gap-8">
             <h2 className="text-[10px] sm:text-xs font-light tracking-[0.3em] sm:tracking-[0.4em] text-neutral-200 uppercase font-sans whitespace-nowrap">
               {s.title || 'NOTRE COLLECTION PASSIONNÉE'}
@@ -371,11 +235,18 @@ export function SectionRenderer({
           {/* Liste Horizontale des Cadres aérée et fluide */}
           <div className="flex overflow-x-auto pb-14 pt-2 -mx-4 px-6 sm:mx-0 sm:px-2 gap-5 sm:gap-6 lg:gap-7 snap-x snap-mandatory hide-scrollbar">
             {(() => {
-              const allAvailable = (liveProducts && liveProducts.length > 0) ? liveProducts : REAL_STORE_FRAMES
+              const allAvailable = (liveProducts && liveProducts.length > 0) ? liveProducts : []
               let displayed: any[] = []
 
               if (s.mode === 'manual' && Array.isArray(s.selectedProductIds) && s.selectedProductIds.length > 0) {
                 displayed = s.selectedProductIds
+                  .map((id: string) => allAvailable.find((p: any) => p.id === id || p.slug === id))
+                  .filter(Boolean)
+                if (displayed.length === 0) {
+                  displayed = allAvailable
+                }
+              } else if (s.collectionProductIds && Array.isArray(s.collectionProductIds) && s.collectionProductIds.length > 0) {
+                displayed = s.collectionProductIds
                   .map((id: string) => allAvailable.find((p: any) => p.id === id || p.slug === id))
                   .filter(Boolean)
                 if (displayed.length === 0) {
@@ -390,6 +261,18 @@ export function SectionRenderer({
                 if (s.limit && s.limit > 0) {
                   displayed = displayed.slice(0, Math.max(s.limit, 10))
                 }
+              }
+
+              if (displayed.length === 0) {
+                return (
+                  <div className="w-full py-12 text-center text-neutral-400 space-y-3">
+                    <p className="text-sm font-light">Nos créations d&apos;artisanat d&apos;art sont actuellement en cours d&apos;assemblage dans notre atelier.</p>
+                    <Link href="/catalogue" className="inline-flex items-center gap-2 text-xs text-amber-400 hover:underline">
+                      <span>Explorer la collection complète</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                )
               }
 
               return displayed.map((rawItem: any, idx: number) => {
@@ -508,7 +391,7 @@ export function SectionRenderer({
               href={isEditor ? '#' : '/catalogue'}
               className="sm:hidden w-full px-6 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white text-xs font-medium uppercase tracking-wider text-center"
             >
-              Voir tout le catalogue (8 cadres)
+              Voir tout le catalogue
             </Link>
           </div>
         </section>
