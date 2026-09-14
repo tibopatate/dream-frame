@@ -204,7 +204,7 @@ export function Interactive3DFrame({
                 {carName}
               </p>
               <p className="text-[9px] text-neutral-500 tracking-[0.18em] uppercase mt-1">
-                Atelier Dream Frame · {formatScale || (price && price >= 100 ? '1:18 Atelier' : '1:24 Relief')}
+                Atelier Dream Frame · {formatScale || (price && price >= 100 ? '1:24 Atelier' : '1:43 Atelier')}
               </p>
             </div>
             <div className="text-right">

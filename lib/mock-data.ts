@@ -82,7 +82,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     brand: 'Ferrari',
     era: 'MODERN',
     year: 2013,
-    description: "L'hypercar hybride de Maranello en Format Moyen d'Atelier 30 × 42 cm. Lignes sculptées sous vitrage acrylique haute clarté avec éclairage LED ambré.",
+    description: "L'hypercar hybride de Maranello en Format Moyen d'Atelier 30 × 40 cm (Échelle 1:24). Lignes sculptées sous vitrage acrylique haute clarté avec éclairage LED ambré.",
     price: 149.90,
     isActive: true,
     isFeatured: true,

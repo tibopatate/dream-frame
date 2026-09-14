@@ -400,7 +400,7 @@ export function ProductDemonstrationSection() {
                 size: '10 × 15 cm (espace cadre)',
                 price: '49,90 €',
                 usage: 'Bureau de travail, console d’entrée, étagère bibliothèque',
-                scale: 'Miniature 1:24 sous vitrage relief',
+                scale: 'Miniature 1:43 sous vitrage relief',
                 badge: 'Format Idéal Cadeau',
               },
               {
@@ -409,7 +409,7 @@ export function ProductDemonstrationSection() {
                 size: '30 × 40 cm (espace cadre)',
                 price: '149,90 €',
                 usage: 'Salon contemporain, chambre, bureau d’architecte',
-                scale: 'Miniature 1:18 Grand Relief d’atelier',
+                scale: 'Miniature 1:24 Grand Relief d’atelier',
                 badge: 'Le Plus Équilibré',
                 highlight: true,
               },

@@ -105,8 +105,8 @@ export default async function ProductPage({ params }: Props) {
               Number(product.price) >= 200
                 ? '1:18 Grand Format'
                 : Number(product.price) >= 100
-                ? '1:18 Atelier'
-                : '1:24 Atelier'
+                ? '1:24 Atelier'
+                : '1:43 Atelier'
             }
             isVintage={isVintage}
           />
