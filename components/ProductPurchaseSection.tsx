@@ -148,8 +148,8 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
             ['Reproduction', formatScale],
             ['Châssis', 'Ébénisterie Noir Profond'],
             ['Protection', 'Vitrage HD anti-reflet'],
-            ['Éclairage', 'Système LED ambré intégré'],
-            ['Origine', 'Atelier français certifié'],
+            ['Éclairage', 'Éclairage LED'],
+            ['Origine', 'Atelier Dream Frame'],
           ].map(([label, value]) => (
             <div key={label} className="bg-neutral-900/40 border border-neutral-800/60 rounded-xl p-3">
               <p className="text-neutral-500 text-[10px] uppercase font-mono">{label}</p>

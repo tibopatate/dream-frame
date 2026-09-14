@@ -12,7 +12,7 @@ interface FAQItem {
 const FAQS: FAQItem[] = [
   {
     question: "Comment s'alimente l'éclairage LED intégré ?",
-    answer: "Chaque cadre intègre un ruban LED 3000K (lumière chaude galerie) à basse tension. Il est relié à un câble USB discret fourni. Vous pouvez le brancher directement sur une prise murale USB, un adaptateur de téléphone standard ou même une petite batterie externe dissimulée à l'arrière pour un rendu 100% sans fil apparent.",
+    answer: "Chaque cadre intègre un système d'éclairage LED à basse tension. Il est relié à un câble USB discret fourni. Vous pouvez le brancher directement sur une prise murale USB, un adaptateur de téléphone standard ou même une petite batterie externe dissimulée à l'arrière pour un rendu 100% sans fil apparent.",
     icon: Zap,
   },
   {

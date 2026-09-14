@@ -278,7 +278,7 @@ export function getInitialCollections(): StoredCollection[] {
       id: 'col-ferrari',
       slug: 'ferrari',
       name: 'Collection Ferrari Maranello',
-      description: "L'excellence mécanique italienne sculptée en relief 3D sous vitrage acrylique et rétroéclairage LED ambré.",
+      description: "L'excellence mécanique italienne sculptée en relief 3D sous vitrage acrylique et rétroéclairage LED.",
       image: 'https://brbisdc22g6rfsvd.public.blob.vercel-storage.com/1000074241-wgRZ3XxvHtAcH2NoaABtL3K0tnlXFL.jpg',
       productIds: ['cmtyzzzuk0000l904n1nlhhu4', 'cmtyjxs970000i9041p1iabwp'],
       isActive: true,

@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useRef } from 'react'
 import Image from 'next/image'
@@ -149,7 +149,7 @@ export function ProductRecommendations({
 
                 <div className="absolute bottom-2.5 right-2.5 bg-black/80 backdrop-blur-md text-neutral-300 text-[8px] px-2 py-0.5 rounded-full border border-neutral-800 flex items-center gap-1">
                   <Zap className="w-2.5 h-2.5 text-amber-400" />
-                  LED 3000K
+                  Éclairage LED
                 </div>
               </Link>
 
