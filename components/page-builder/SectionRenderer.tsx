@@ -22,6 +22,7 @@ import {
 import { ProductDemonstrationSection } from '@/components/home/ProductDemonstrationSection'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
 import { formatPriceFromDecimal, isVideoUrl, getProductThumbnail, DEFAULT_FRAME_IMAGE } from '@/lib/utils'
+import { ScrollReveal } from '@/components/ui/ScrollReveal'
 
 interface SectionRendererProps {
   section: PageSection
@@ -399,27 +400,10 @@ export function SectionRenderer({
           })
         })()}
       </div>
-
-          {/* Ambiance Atelier & Savoir-faire */}
-          <div className="pt-8 border-t border-neutral-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-              <p className="text-xs text-neutral-400 font-light">
-                Chaque pièce est assemblée à la main en France sous vitrage optique avec éclairage LED ambré 3000K intégré.
-              </p>
-            </div>
-
-            <Link
-              href={isEditor ? '#' : '/catalogue'}
-              className="sm:hidden w-full px-6 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white text-xs font-medium uppercase tracking-wider text-center"
-            >
-              Voir tout le catalogue
-            </Link>
-          </div>
-        </section>
-      </div>
-    )
-  }
+    </section>
+  </div>
+)
+}
 
   // ─── SECTION 4: CRAFT / SAVOIR-FAIRE ──────────────────────────────────────
   if (section.type === 'craft') {
@@ -431,6 +415,37 @@ export function SectionRenderer({
       { num: '05', title: s.layer5Title || "Vitrage Acrylique HD", desc: s.layer5Desc || "Transmittance optique 99,2% et cadre aluminium anodisé noir." },
     ]
 
+    const craftContent = (
+      <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-neutral-950/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
+          <div className="max-w-2xl mx-auto text-center space-y-2">
+            <span className="text-[10px] sm:text-xs tracking-[0.25em] uppercase text-amber-400 font-semibold">
+              {s.badge || 'Exigence Artisanale'}
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+              {s.title || "L'Anatomie d'une Pièce d'Exception"}
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-400 font-light">
+              {s.desc || '5 couches de matériaux nobles minutieusement assemblées dans notre atelier en France.'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {layers.map((step) => (
+              <div
+                key={step.num}
+                className="p-5 rounded-2xl bg-neutral-900/70 border border-neutral-800 space-y-2"
+              >
+                <span className="text-xs font-mono font-bold text-amber-400 block">{step.num}</span>
+                <h3 className="text-sm font-bold text-white">{step.title}</h3>
+                <p className="text-xs text-neutral-400 font-light leading-relaxed">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+
     return (
       <div
         className={`${outlineClass} ${section.hidden ? 'opacity-40 grayscale' : ''}`}
@@ -439,42 +454,65 @@ export function SectionRenderer({
         onMouseLeave={handleMouseLeave}
       >
         {renderEditorBadge('SAVOIR-FAIRE')}
-
-
-        <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-neutral-950/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
-            <div className="max-w-2xl mx-auto text-center space-y-2">
-              <span className="text-[10px] sm:text-xs tracking-[0.25em] uppercase text-amber-400 font-semibold">
-                {s.badge || 'Exigence Artisanale'}
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-                {s.title || "L'Anatomie d'une Pièce d'Exception"}
-              </h2>
-              <p className="text-xs sm:text-sm text-neutral-400 font-light">
-                {s.desc || '5 couches de matériaux nobles minutieusement assemblées dans notre atelier en France.'}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              {layers.map((step) => (
-                <div
-                  key={step.num}
-                  className="p-5 rounded-2xl bg-neutral-900/70 border border-neutral-800 space-y-2"
-                >
-                  <span className="text-xs font-mono font-bold text-amber-400 block">{step.num}</span>
-                  <h3 className="text-sm font-bold text-white">{step.title}</h3>
-                  <p className="text-xs text-neutral-400 font-light leading-relaxed">{step.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {isEditor ? (
+          craftContent
+        ) : (
+          <ScrollReveal direction="left" distance={40} threshold={0.05}>
+            {craftContent}
+          </ScrollReveal>
+        )}
       </div>
     )
   }
 
   // ─── SECTION 5: REASSURANCE ───────────────────────────────────────────────
   if (section.type === 'reassurance') {
+    const reassuranceContent = (
+      <section className="py-12 border-t border-neutral-800/80 max-w-7xl mx-auto px-4 sm:px-6 bg-[#080807]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="flex items-start gap-3 p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
+            <Truck className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <h4 className="text-xs font-bold text-white">{s.item1Title || 'Livraison 100% Offerte'}</h4>
+              <p className="text-[11px] text-neutral-400 font-light mt-0.5">
+                {s.item1Desc || 'Colissimo Suivi 48h en France avec emballage renforcé anti-choc.'}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
+            <ShieldCheck className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <h4 className="text-xs font-bold text-white">{s.item2Title || 'Droit de Rétractation 14 Jours'}</h4>
+              <p className="text-[11px] text-neutral-400 font-light mt-0.5">
+                {s.item2Desc || 'Retour simple et sécurisé conformément à la législation française.'}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
+            <Zap className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <h4 className="text-xs font-bold text-white">{s.item3Title || 'LED & Fixations Incluses'}</h4>
+              <p className="text-[11px] text-neutral-400 font-light mt-0.5">
+                {s.item3Desc || 'Chaque pièce arrive prête à poser sur un meuble ou à accrocher au mur.'}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
+            <CheckCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <h4 className="text-xs font-bold text-white">{s.item4Title || 'Manufacture & Contrôle Unitaire'}</h4>
+              <p className="text-[11px] text-neutral-400 font-light mt-0.5">
+                {s.item4Desc || 'Chaque cadre est inspecté individuellement avant son expédition.'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+
     return (
       <div
         className={`${outlineClass} ${section.hidden ? 'opacity-40 grayscale' : ''}`}
@@ -483,57 +521,44 @@ export function SectionRenderer({
         onMouseLeave={handleMouseLeave}
       >
         {renderEditorBadge('RÉASSURANCE')}
-
-
-        <section className="py-12 border-t border-neutral-800/80 max-w-7xl mx-auto px-4 sm:px-6 bg-[#080807]">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="flex items-start gap-3 p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
-              <Truck className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-              <div>
-                <h4 className="text-xs font-bold text-white">{s.item1Title || 'Livraison 100% Offerte'}</h4>
-                <p className="text-[11px] text-neutral-400 font-light mt-0.5">
-                  {s.item1Desc || 'Colissimo Suivi 48h en France avec emballage renforcé anti-choc.'}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3 p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
-              <ShieldCheck className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-              <div>
-                <h4 className="text-xs font-bold text-white">{s.item2Title || 'Droit de Rétractation 14 Jours'}</h4>
-                <p className="text-[11px] text-neutral-400 font-light mt-0.5">
-                  {s.item2Desc || 'Retour simple et sécurisé conformément à la législation française.'}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3 p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
-              <Zap className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-              <div>
-                <h4 className="text-xs font-bold text-white">{s.item3Title || 'LED & Fixations Incluses'}</h4>
-                <p className="text-[11px] text-neutral-400 font-light mt-0.5">
-                  {s.item3Desc || 'Chaque pièce arrive prête à poser sur un meuble ou à accrocher au mur.'}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3 p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
-              <CheckCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-              <div>
-                <h4 className="text-xs font-bold text-white">{s.item4Title || 'Manufacture & Contrôle Unitaire'}</h4>
-                <p className="text-[11px] text-neutral-400 font-light mt-0.5">
-                  {s.item4Desc || 'Chaque cadre est inspecté individuellement avant son expédition.'}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        {isEditor ? (
+          reassuranceContent
+        ) : (
+          <ScrollReveal direction="right" distance={40} threshold={0.05}>
+            {reassuranceContent}
+          </ScrollReveal>
+        )}
       </div>
     )
   }
 
   // ─── SECTION 6: CUSTOM ATELIER ───────────────────────────────────────────
   if (section.type === 'custom_atelier') {
+    const customAtelierContent = (
+      <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-[#080807]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
+          <span className="text-xs tracking-[0.2em] uppercase text-amber-400 inline-block font-semibold">
+            {s.badge || 'Configuration Personnalisée'}
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            {s.title || 'Un modèle précis ? Une échelle spécifique ?'}
+          </h2>
+          <p className="text-xs sm:text-sm text-neutral-300 font-light max-w-xl mx-auto leading-relaxed">
+            {s.desc ||
+              'Composez votre cadre idéal : dimensions (A4, A3, A2), modèle automobile et échelle miniature. Notre configurateur live vous permet de visualiser votre projet instantanément.'}
+          </p>
+          <Link
+            href={isEditor ? '#' : (s.btnLink || '/configurateur')}
+            className="relative inline-flex items-center gap-2.5 px-10 py-4 bg-white hover:bg-neutral-100 text-black font-bold text-xs tracking-widest uppercase rounded-xl overflow-hidden transition-all shadow-2xl shadow-white/10 group active:scale-[0.98]"
+          >
+            <Sparkles className="w-4 h-4 text-amber-500" />
+            <span>{s.btnText || "Accéder à l'Atelier Sur-Mesure"}</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </section>
+    )
+
     return (
       <div
         className={`${outlineClass} ${section.hidden ? 'opacity-40 grayscale' : ''}`}
@@ -542,36 +567,49 @@ export function SectionRenderer({
         onMouseLeave={handleMouseLeave}
       >
         {renderEditorBadge('ATELIER')}
-
-
-        <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-[#080807]">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
-            <span className="text-xs tracking-[0.2em] uppercase text-amber-400 inline-block font-semibold">
-              {s.badge || 'Configuration Personnalisée'}
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-              {s.title || 'Un modèle précis ? Une échelle spécifique ?'}
-            </h2>
-            <p className="text-xs sm:text-sm text-neutral-300 font-light max-w-xl mx-auto leading-relaxed">
-              {s.desc ||
-                'Composez votre cadre idéal : dimensions (A4, A3, A2), modèle automobile et échelle miniature. Notre configurateur live vous permet de visualiser votre projet instantanément.'}
-            </p>
-            <Link
-              href={isEditor ? '#' : (s.btnLink || '/configurateur')}
-              className="relative inline-flex items-center gap-2.5 px-10 py-4 bg-white hover:bg-neutral-100 text-black font-bold text-xs tracking-widest uppercase rounded-xl overflow-hidden transition-all shadow-2xl shadow-white/10 group active:scale-[0.98]"
-            >
-              <Sparkles className="w-4 h-4 text-amber-500" />
-              <span>{s.btnText || "Accéder à l'Atelier Sur-Mesure"}</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </section>
+        {isEditor ? (
+          customAtelierContent
+        ) : (
+          <ScrollReveal direction="left" distance={40} threshold={0.05}>
+            {customAtelierContent}
+          </ScrollReveal>
+        )}
       </div>
     )
   }
 
   // ─── SECTION: INTERIORS ────────────────────────────────────────────────────
   if (section.type === 'interiors') {
+    const interiorsContent = (
+      <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-neutral-950/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
+          <div className="max-w-2xl mx-auto text-center space-y-4">
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+              {s.title || 'Laissez les sublimer votre pièce'}
+            </h2>
+            <p className="text-neutral-400 font-light text-sm sm:text-base">
+              {s.desc || 'Découvrez comment nos cadres d’exception s’intègrent parfaitement dans tout type d’intérieur.'}
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden group">
+              <img src="/interiors/lamborghini.jpg" alt="Interior Lamborghini" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+            </div>
+            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden group md:translate-y-8">
+              <img src="/interiors/ferrari.jpg" alt="Interior Ferrari" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+            </div>
+            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden group">
+              <img src="/interiors/porsche.jpg" alt="Interior Porsche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+
     return (
       <div
         className={`${outlineClass} ${section.hidden ? 'opacity-40 grayscale' : ''}`}
@@ -580,40 +618,33 @@ export function SectionRenderer({
         onMouseLeave={handleMouseLeave}
       >
         {renderEditorBadge('INTÉRIEURS')}
-
-        <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-neutral-950/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
-            <div className="max-w-2xl mx-auto text-center space-y-4">
-              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-                {s.title || 'Laissez les sublimer votre pièce'}
-              </h2>
-              <p className="text-neutral-400 font-light text-sm sm:text-base">
-                {s.desc || 'Découvrez comment nos cadres d’exception s’intègrent parfaitement dans tout type d’intérieur.'}
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden group">
-                <img src="/interiors/lamborghini.jpg" alt="Interior Lamborghini" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
-              </div>
-              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden group md:translate-y-8">
-                <img src="/interiors/ferrari.jpg" alt="Interior Ferrari" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
-              </div>
-              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden group">
-                <img src="/interiors/porsche.jpg" alt="Interior Porsche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
-              </div>
-            </div>
-          </div>
-        </section>
+        {isEditor ? (
+          interiorsContent
+        ) : (
+          <ScrollReveal direction="right" distance={40} threshold={0.05}>
+            {interiorsContent}
+          </ScrollReveal>
+        )}
       </div>
     )
   }
 
   // ─── SECTION: ABOUT ────────────────────────────────────────────────────────
   if (section.type === 'about') {
+    const aboutContent = (
+      <section className="py-20 sm:py-32 border-t border-neutral-800/80 bg-[#080807]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-8">
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            {s.title || 'Qui sommes-nous ?'}
+          </h2>
+          <div className="w-16 h-1 bg-amber-400 mx-auto rounded-full" />
+          <p className="text-base sm:text-lg text-neutral-300 font-light leading-relaxed max-w-2xl mx-auto">
+            {s.desc || 'Dream Frame est né d\'une passion commune pour l\'automobile et l\'artisanat français. Nous concevons et assemblons chaque cadre à la main dans notre atelier, avec une exigence de qualité absolue.'}
+          </p>
+        </div>
+      </section>
+    )
+
     return (
       <div
         className={`${outlineClass} ${section.hidden ? 'opacity-40 grayscale' : ''}`}
@@ -622,18 +653,13 @@ export function SectionRenderer({
         onMouseLeave={handleMouseLeave}
       >
         {renderEditorBadge('À PROPOS')}
-
-        <section className="py-20 sm:py-32 border-t border-neutral-800/80 bg-[#080807]">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-8">
-            <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-              {s.title || 'Qui sommes-nous ?'}
-            </h2>
-            <div className="w-16 h-1 bg-amber-400 mx-auto rounded-full" />
-            <p className="text-base sm:text-lg text-neutral-300 font-light leading-relaxed max-w-2xl mx-auto">
-              {s.desc || 'Dream Frame est né d\'une passion commune pour l\'automobile et l\'artisanat français. Nous concevons et assemblons chaque cadre à la main dans notre atelier, avec une exigence de qualité absolue.'}
-            </p>
-          </div>
-        </section>
+        {isEditor ? (
+          aboutContent
+        ) : (
+          <ScrollReveal direction="left" distance={40} threshold={0.05}>
+            {aboutContent}
+          </ScrollReveal>
+        )}
       </div>
     )
   }
@@ -648,6 +674,36 @@ export function SectionRenderer({
           { q: s.q3 || 'Puis-je commander un modèle spécifique sur-mesure ?', a: s.a3 || 'Oui, notre atelier sur-mesure vous permet de configurer le cadre avec le véhicule de votre choix.' },
         ].filter((it) => it.q || it.a)
 
+    const faqContent = (
+      <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-neutral-950/30">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-12">
+          <h2 className="text-2xl sm:text-4xl font-black text-center text-white tracking-tight">
+            {s.title || 'Questions Fréquentes'}
+          </h2>
+          
+          <div className="space-y-4 sm:space-y-5">
+            {faqItems.map((item: any, idx: number) => {
+              if (!item.q && !item.a) return null
+              
+              return (
+                <div
+                  key={item.id || idx}
+                  className="p-5 sm:p-6 rounded-2xl bg-neutral-900/70 border border-neutral-800 transition-all hover:border-neutral-700 space-y-2"
+                >
+                  <h3 className="text-base sm:text-lg font-bold text-white tracking-wide">
+                    {item.q}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+                    {item.a}
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+    )
+
     return (
       <div
         className={`${outlineClass} ${section.hidden ? 'opacity-40 grayscale' : ''}`}
@@ -656,35 +712,13 @@ export function SectionRenderer({
         onMouseLeave={handleMouseLeave}
       >
         {renderEditorBadge('FAQ')}
-
-
-        <section className="py-16 sm:py-24 border-t border-neutral-800/80 bg-neutral-950/30">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-12">
-            <h2 className="text-2xl sm:text-4xl font-black text-center text-white tracking-tight">
-              {s.title || 'Questions Fréquentes'}
-            </h2>
-            
-            <div className="space-y-4 sm:space-y-5">
-              {faqItems.map((item: any, idx: number) => {
-                if (!item.q && !item.a) return null
-                
-                return (
-                  <div
-                    key={item.id || idx}
-                    className="p-5 sm:p-6 rounded-2xl bg-neutral-900/70 border border-neutral-800 transition-all hover:border-neutral-700 space-y-2"
-                  >
-                    <h3 className="text-base sm:text-lg font-bold text-white tracking-wide">
-                      {item.q}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
-                      {item.a}
-                    </p>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
+        {isEditor ? (
+          faqContent
+        ) : (
+          <ScrollReveal direction="right" distance={40} threshold={0.05}>
+            {faqContent}
+          </ScrollReveal>
+        )}
       </div>
     )
   }

@@ -11,6 +11,7 @@ import { FloatingContactWidget } from '@/components/FloatingContactWidget'
 import { StickyMobileBuyBar } from '@/components/StickyMobileBuyBar'
 import { VisitorBeacon } from '@/components/analytics/VisitorBeacon'
 import { InAppBrowserRedirector } from '@/components/InAppBrowserRedirector'
+import { ScrollReveal } from '@/components/ui/ScrollReveal'
 import { getSettings } from '@/lib/data-store'
 
 export const metadata = {
@@ -19,7 +20,7 @@ export const metadata = {
 
 export default async function ShopLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#080807] text-white flex flex-col antialiased selection:bg-amber-400 selection:text-black">
+    <div className="min-h-screen bg-[#080807] text-white flex flex-col antialiased selection:bg-amber-400 selection:text-black overflow-x-hidden">
       <VisitorBeacon />
       {/* Détecteur & Redirecteur vers Navigateur Externe (Instagram, TikTok, etc.) */}
       <InAppBrowserRedirector />
@@ -33,7 +34,9 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
       <div className="flex-1">{children}</div>
       {/* Barre d'Achat Mobile Récurrente Flottante (1-Tap Mobile Conversion) */}
       <StickyMobileBuyBar />
-      <ShopFooter />
+      <ScrollReveal direction="up" distance={40} threshold={0.05}>
+        <ShopFooter />
+      </ScrollReveal>
     </div>
   )
 }

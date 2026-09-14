@@ -78,21 +78,6 @@ export function ProductPurchaseSection({ product }: ProductPurchaseSectionProps)
           </div>
         </div>
 
-        {/* Ligne Format & Dimensions sobre */}
-        <div className="py-3 px-4 rounded-xl bg-neutral-950/60 border border-neutral-800/60 flex items-center justify-between text-xs">
-          <div className="space-y-0.5">
-            <span className="text-[10px] uppercase font-mono tracking-wider text-neutral-400 block">
-              Format d'Art · Espace dans le cadre
-            </span>
-            <span className="text-white font-medium">
-              {formatName} <span className="text-amber-400 font-mono font-semibold">({formatSize})</span>
-            </span>
-          </div>
-          <span className="text-[11px] font-mono text-neutral-400">
-            {formatScale}
-          </span>
-        </div>
-
         {/* Quantité & Bouton Ajouter au Panier */}
         <div className="space-y-3">
           <div className="flex items-center gap-3">
