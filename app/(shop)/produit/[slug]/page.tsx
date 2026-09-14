@@ -10,6 +10,7 @@ import { ProductPurchaseSection } from '@/components/ProductPurchaseSection'
 import { ProductReviewsSection } from '@/components/reviews/ProductReviewsSection'
 import { ProductFAQSection } from '@/components/product/ProductFAQSection'
 import { ProductRecommendations } from '@/components/product/ProductRecommendations'
+import { getSpecialFrameBadge } from '@/lib/frame-formats'
 import { getUnifiedProductBySlug, getUnifiedProducts, DEFAULT_FORMATS, getAllReviews } from '@/lib/data-store'
 
 export const dynamic = 'force-dynamic'
@@ -125,9 +126,11 @@ export default async function ProductPage({ params }: Props) {
               <span className="text-amber-400 text-xs font-mono uppercase tracking-widest">
                 {product.brand} · ATELIER FRANCE
               </span>
-              <span className="text-xs font-mono text-neutral-400 bg-neutral-900 border border-neutral-800 px-3 py-1 rounded-full">
-                {product.year || 'Collection'}
-              </span>
+              {getSpecialFrameBadge(Number(product.price) || 49.90) && (
+                <span className="text-xs font-mono font-bold uppercase tracking-wider bg-amber-400 text-black px-3.5 py-1 rounded-full shadow-[0_0_15px_rgba(251,191,36,0.3)]">
+                  ✦ {getSpecialFrameBadge(Number(product.price) || 49.90)}
+                </span>
+              )}
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl text-white leading-tight">

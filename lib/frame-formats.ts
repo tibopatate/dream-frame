@@ -71,3 +71,16 @@ export function getFormatName(price: number, customName?: string): string {
   }
   return getFramePresetByPrice(price).name
 }
+
+/** Retourne le badge spécial pour les cadres haut de gamme (149,90 € et 249,90 €) */
+export function getSpecialFrameBadge(price: number): 'Grand cadre' | 'Collector' | null {
+  const num = Number(price) || 0
+  if (num >= 200) {
+    return 'Collector'
+  }
+  if (num >= 100) {
+    return 'Grand cadre'
+  }
+  return null
+}
+

@@ -7,6 +7,7 @@ import { ArrowRight, ShoppingBag, Zap } from 'lucide-react'
 import type { MockProduct } from '@/lib/mock-data'
 import { QuickBuyDrawer } from '@/components/catalogue/QuickBuyDrawer'
 import { isVideoUrl } from '@/lib/utils'
+import { getSpecialFrameBadge } from '@/lib/frame-formats'
 
 interface CatalogueProductGridProps {
   products: MockProduct[]
@@ -34,6 +35,8 @@ export function CatalogueProductGrid({ products }: CatalogueProductGridProps) {
         {products.map((product, idx) => {
           const variant = product.variants[0]
           const inStock = (variant?.stock ?? 0) > 0
+          const priceNum = Number(product.price) || 49.90
+          const specialBadge = getSpecialFrameBadge(priceNum)
 
           return (
             <div
@@ -100,9 +103,11 @@ export function CatalogueProductGrid({ products }: CatalogueProductGridProps) {
                   <span className="text-[9px] font-mono font-bold uppercase tracking-wider bg-black/80 backdrop-blur-md text-amber-400 border border-neutral-800 px-2.5 py-1 rounded-full">
                     {product.brand}
                   </span>
-                  <span className="text-[9px] font-mono text-neutral-300 bg-black/80 backdrop-blur-md border border-neutral-800 px-2 py-1 rounded-full">
-                    {product.year}
-                  </span>
+                  {specialBadge && (
+                    <span className="text-[9px] font-mono font-bold uppercase tracking-wider bg-amber-400 text-black px-2.5 py-1 rounded-full shadow-lg">
+                      {specialBadge}
+                    </span>
+                  )}
                 </div>
 
                 <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md text-neutral-300 text-[9px] px-2.5 py-1 rounded-full border border-neutral-800 flex items-center gap-1">
@@ -123,9 +128,16 @@ export function CatalogueProductGrid({ products }: CatalogueProductGridProps) {
               <div className="p-5 space-y-4">
                 <div className="space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold block">
-                      {product.brand.toUpperCase()}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold block">
+                        {product.brand.toUpperCase()}
+                      </span>
+                      {specialBadge && (
+                        <span className="text-[9px] font-mono font-semibold text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
+                          {specialBadge}
+                        </span>
+                      )}
+                    </div>
                     {(variant?.stock ?? 10) <= 3 && (
                       <span className="text-[9px] font-mono font-semibold text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
                         Plus que {variant?.stock} ex.

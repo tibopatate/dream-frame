@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Search, X, ShoppingBag, ArrowRight, Zap, Loader2 } from 'lucide-react'
 import { useCartStore } from '@/lib/store/cart'
 import { triggerFlyToCart } from '@/components/FlyToCart'
+import { getSpecialFrameBadge } from '@/lib/frame-formats'
 
 const POPULAR_SEARCHES = ['Porsche', 'Ferrari', 'Bugatti', 'Vintage', 'McLaren']
 
@@ -218,9 +219,11 @@ export function SearchModal({ className }: { className?: string } = {}) {
                           <span className="text-[10px] font-mono text-amber-400 font-bold uppercase">
                             {product.brand}
                           </span>
-                          <span className="text-[10px] text-neutral-500 font-mono">
-                            {product.year || 'Édition Spéciale'}
-                          </span>
+                          {getSpecialFrameBadge(Number(product.price) || 49.90) && (
+                            <span className="text-[9px] font-mono font-bold uppercase tracking-wider bg-amber-400 text-black px-2 py-0.5 rounded-full shadow-sm">
+                              {getSpecialFrameBadge(Number(product.price) || 49.90)}
+                            </span>
+                          )}
                         </div>
                         <p className="text-sm font-bold text-white truncate group-hover:text-amber-300 transition">
                           {product.name}

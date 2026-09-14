@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { getSpecialFrameBadge } from '@/lib/frame-formats'
 
 interface Interactive3DFrameProps {
   imageSrc: string
@@ -34,6 +35,8 @@ export function Interactive3DFrame({
     carName?.toLowerCase().includes('f40') ||
     Boolean(brand?.toLowerCase().includes('ferrari') && carName?.toLowerCase().includes('f40'))
 
+  const specialBadge = (price ? getSpecialFrameBadge(price) : null) || (isF40 ? 'Collector' : null)
+
   return (
     <div className="relative w-full max-w-[440px] mx-auto py-2 select-none">
       {/* Halo LED d'ambiance doux et discret */}
@@ -43,10 +46,10 @@ export function Interactive3DFrame({
       />
 
       {/* Châssis Cadre d'Art Atelier */}
-      <div className="relative z-10 w-full aspect-[3/4] p-6 sm:p-8 bg-[#0C0C0A] border-[12px] border-[#181816] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] flex flex-col justify-between overflow-hidden rounded-sm">
-        {/* Reflet vitre HD subtil */}
+      <div className="relative aspect-[3/4] bg-neutral-950 rounded-2xl border-[10px] border-neutral-900 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.95)] ring-1 ring-white/10 p-5 flex flex-col justify-between overflow-hidden">
+        {/* Reflet subtil de verre musée anti-reflet */}
         <div
-          className="absolute inset-0 pointer-events-none opacity-20 mix-blend-overlay"
+          className="absolute inset-0 pointer-events-none z-20"
           style={{
             background: 'linear-gradient(115deg, rgba(255,255,255,0.18) 0%, transparent 45%, rgba(255,255,255,0.05) 100%)',
           }}
@@ -55,15 +58,15 @@ export function Interactive3DFrame({
         {/* En-tête passe-partout */}
         <div className="relative z-10 flex justify-between items-start text-[8px] tracking-[0.18em] uppercase text-neutral-500">
           <span className="text-neutral-200 font-bold tracking-wider">{brand}</span>
-          {isF40 ? (
+          {specialBadge ? (
             <span className="text-amber-400 border border-amber-400/30 px-1.5 py-0.5 rounded text-[7px] font-semibold">
-              ÉDITION COLLECTOR · 1987
+              {specialBadge === 'Collector' ? 'ÉDITION COLLECTOR' : 'GRAND CADRE'}
             </span>
-          ) : year ? (
+          ) : (
             <span className="text-neutral-400 border border-neutral-800 px-1.5 py-0.5 rounded text-[7px] font-mono">
-              {year}
+              ATELIER DREAM FRAME
             </span>
-          ) : null}
+          )}
         </div>
 
         {/* Véhicule en relief */}

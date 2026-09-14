@@ -7,6 +7,7 @@ import { ArrowRight, ShoppingBag, Zap, Check, Truck } from 'lucide-react'
 import { useCart } from '@/lib/store/cart'
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import { getSpecialFrameBadge } from '@/lib/frame-formats'
 
 interface FrameShowcase {
   id: string
@@ -142,9 +143,11 @@ function PieceRow({ piece, index, onAdd, addedId }: RowProps) {
             <span className="text-[9px] font-semibold uppercase tracking-widest bg-black/80 backdrop-blur-md text-amber-400 border border-neutral-800 px-2.5 sm:px-3 py-1 rounded-full">
               {piece.brand}
             </span>
-            <span className="hidden sm:inline-block text-[9px] uppercase tracking-wider bg-black/70 backdrop-blur-md text-white border border-neutral-800 px-2.5 py-1 rounded-full">
-              {piece.year}
-            </span>
+            {getSpecialFrameBadge(piece.price) && (
+              <span className="text-[9px] font-mono font-bold uppercase tracking-wider bg-amber-400 text-black px-2.5 sm:px-3 py-1 rounded-full shadow-lg">
+                {getSpecialFrameBadge(piece.price)}
+              </span>
+            )}
           </div>
 
           {/* LED badge discret */}

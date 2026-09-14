@@ -8,7 +8,7 @@ import { useCart } from '@/lib/store/cart'
 import { triggerFlyToCart } from '@/components/FlyToCart'
 import { isVideoUrl, getProductThumbnail } from '@/lib/utils'
 import type { MockProduct } from '@/lib/mock-data'
-import { getFormatName, getInnerFrameSize } from '@/lib/frame-formats'
+import { getFormatName, getInnerFrameSize, getSpecialFrameBadge } from '@/lib/frame-formats'
 
 interface QuickBuyDrawerProps {
   product: MockProduct | null
@@ -73,9 +73,16 @@ export function QuickBuyDrawer({ product, onClose }: QuickBuyDrawerProps) {
 
           </div>
           <div className="min-w-0">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold">
-              {product.brand} · {product.year}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold">
+                {product.brand}
+              </span>
+              {getSpecialFrameBadge(price) && (
+                <span className="text-[9px] font-mono font-bold uppercase tracking-wider bg-amber-400 text-black px-2 py-0.5 rounded-full shadow-sm">
+                  {getSpecialFrameBadge(price)}
+                </span>
+              )}
+            </div>
             <h3 className="text-lg font-bold text-white truncate">{product.name}</h3>
             <p className="text-xs text-neutral-400 font-light mt-0.5 flex items-center gap-1.5">
               <Truck className="w-3.5 h-3.5 text-emerald-400" />
@@ -84,10 +91,10 @@ export function QuickBuyDrawer({ product, onClose }: QuickBuyDrawerProps) {
           </div>
         </div>
 
-        {/* Format Unique Certifié (Non sélectionnable côté client) */}
+        {/* Format Unique Atelier (Non sélectionnable côté client) */}
         <div className="p-4 bg-black/50 border border-neutral-800 rounded-xl space-y-1">
           <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold block">
-            Format d'Art Unique Certifié
+            Atelier Dream Frame · Format Dédié
           </span>
           <div className="flex items-center justify-between">
             <div>

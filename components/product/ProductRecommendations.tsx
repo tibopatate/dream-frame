@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Zap, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { isVideoUrl } from '@/lib/utils'
+import { getSpecialFrameBadge } from '@/lib/frame-formats'
 
 interface ProductRecommendationsProps {
   products: any[]
@@ -72,6 +73,7 @@ export function ProductRecommendations({
       >
         {products.map((p) => {
           const priceNum = Number(p.price) || 49.90
+          const specialBadge = getSpecialFrameBadge(priceNum)
           const primaryImg = p.images?.[0]
           const hoverImg = p.images?.[1]
 
@@ -140,9 +142,9 @@ export function ProductRecommendations({
                   <span className="text-[9px] font-mono font-bold uppercase tracking-wider bg-black/80 backdrop-blur-md text-amber-400 border border-neutral-800 px-2 py-0.5 rounded-full">
                     {p.brand}
                   </span>
-                  {p.year && (
-                    <span className="text-[9px] font-mono text-neutral-300 bg-black/80 backdrop-blur-md border border-neutral-800 px-2 py-0.5 rounded-full">
-                      {p.year}
+                  {specialBadge && (
+                    <span className="text-[9px] font-mono font-bold uppercase tracking-wider bg-amber-400 text-black px-2 py-0.5 rounded-full shadow-md">
+                      {specialBadge}
                     </span>
                   )}
                 </div>

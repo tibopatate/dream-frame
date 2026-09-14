@@ -23,6 +23,7 @@ import { ProductDemonstrationSection } from '@/components/home/ProductDemonstrat
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
 import { formatPriceFromDecimal, isVideoUrl, getProductThumbnail, DEFAULT_FRAME_IMAGE } from '@/lib/utils'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
+import { getSpecialFrameBadge } from '@/lib/frame-formats'
 
 interface SectionRendererProps {
   section: PageSection
@@ -299,12 +300,17 @@ export function SectionRenderer({
                 const productImages = Array.isArray(rawItem.images) ? rawItem.images : []
                 const hoverImage = productImages.length >= 2 ? productImages[1] : null
 
+                const priceNum = typeof rawItem.price === 'number' 
+                  ? rawItem.price 
+                  : parseFloat(String(rawItem.price || '').replace(',', '.')) || 49.90
+                const specialBadge = getSpecialFrameBadge(priceNum)
+
                 const item = {
                   id: rawItem.id,
                   slug: rawItem.slug,
                   name: rawItem.name,
-                  year: rawItem.year || 2023,
                   brand: rawItem.brand,
+                  specialBadge,
                   specs: rawItem.specs || rawItem.description?.slice(0, 50) || 'Atelier France · Pièce Réelle',
                   tag: rawItem.tag || (rawItem.era === 'VINTAGE' ? 'Pièce Historique' : 'Atelier France · Pièce Réelle'),
                   image: rawItem.image || getProductThumbnail(rawItem),
@@ -323,6 +329,15 @@ export function SectionRenderer({
                   className="relative w-full aspect-[3/4] rounded-2xl p-2 bg-neutral-900/60 border border-neutral-800 ring-1 ring-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.95)] hover:shadow-[0_20px_45px_rgba(0,0,0,1),0_0_25px_rgba(255,255,255,0.08)] hover:border-white/50 hover:ring-white/25 transition-all duration-500 overflow-hidden block group/frame"
                 >
                   <div className="relative w-full h-full rounded-lg bg-neutral-950 overflow-hidden">
+                    {/* Badge Spécial Grand Cadre / Collector */}
+                    {specialBadge && (
+                      <div className="absolute top-2.5 right-2.5 z-20 pointer-events-none">
+                        <span className="px-2.5 py-1 rounded-full text-[9px] font-mono uppercase tracking-wider font-bold bg-amber-400 text-black shadow-lg">
+                          {specialBadge}
+                        </span>
+                      </div>
+                    )}
+
                     {isVideoUrl(item.image) ? (
                       <video
                         src={item.image}
@@ -374,8 +389,15 @@ export function SectionRenderer({
                 {/* Fiche Descriptive & Boutons sans rognage */}
                 <div className="w-full text-center space-y-2 pt-1 px-1">
                   <div className="flex items-center justify-between text-neutral-400 text-[10px] font-mono uppercase tracking-widest px-1">
-                    <span className="text-neutral-300 font-medium">{item.brand} · {item.year}</span>
-                    <span className="text-amber-400 font-semibold font-mono text-xs">{item.price}</span>
+                    <div className="flex items-center gap-1.5 truncate">
+                      <span className="text-neutral-300 font-medium">{item.brand}</span>
+                      {specialBadge && (
+                        <span className="text-amber-400 font-bold bg-amber-400/10 border border-amber-400/30 px-1.5 py-0.5 rounded-full text-[8px]">
+                          {specialBadge}
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-amber-400 font-semibold font-mono text-xs shrink-0">{item.price}</span>
                   </div>
 
                   <h3 className="text-xs sm:text-sm font-semibold tracking-wider text-white uppercase group-hover:text-white transition-colors truncate px-1">
