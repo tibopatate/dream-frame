@@ -67,8 +67,6 @@ export function AddToCartButton({
     setTimeout(() => setAdded(false), 2000)
   }
 
-  const totalPrice = price * quantity
-
   return (
     <button
       onClick={handleAdd}
@@ -82,7 +80,7 @@ export function AddToCartButton({
       ) : (
         <>
           <ShoppingBag className="w-4 h-4 text-black" />
-          <span>Ajouter à ma collection · {totalPrice.toFixed(2).replace('.', ',')} €</span>
+          <span>Ajouter au panier</span>
         </>
       )}
     </button>

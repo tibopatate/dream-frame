@@ -41,9 +41,7 @@ export default async function ProductPage({ params }: Props) {
 
   const allProducts = await getUnifiedProducts()
   const otherProducts = allProducts.filter((p) => p.id !== product.id && p.slug !== product.slug)
-  const recommendedProducts = [...otherProducts]
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 4)
+  const recommendedProducts = [...otherProducts].sort(() => Math.random() - 0.5)
 
   // S'assurer que les formats sont présents (formats personnalisés du produit ou formats par défaut A4 49,90€, A3 149,90€, A2 249,90€)
   const stored = product
